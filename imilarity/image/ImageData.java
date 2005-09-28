@@ -13,7 +13,6 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-import image.RgbData;
 
 /**
  * @author Klaas Bosteels
@@ -84,44 +83,30 @@ public class ImageData {
 	}
 	
 	
-	public int getPixelCount() {
-		return image.getWidth() * image.getHeight();
-	}
-	
-	public RgbData getRgb(int x, int y) {
+	public int[] getRgb(int x, int y) {
 		int rgb = image.getRGB(x,y);
 		int r = (rgb & 0x00ff0000) >> 16;
 		int g = (rgb & 0x0000ff00) >> 8;
 		int b = (rgb & 0x000000ff);
-		return new RgbData(r, g, b);
+		return new int[] { r, g, b };
 	}
 	
-	public RgbData getRgb(int pixelNr) {
+	public int[] getRgb(int pixelNr) {
 		int w = image.getWidth();
 		return getRgb(pixelNr % w, pixelNr / w);
 	}
-	
-	public int getCombinedRgb(int x, int y) {
-		return image.getRGB(x,y);
-	}
-	
-	public int getCombinedRgb(int pixelNr) {
-		int w = image.getWidth();
-		return getCombinedRgb(pixelNr % w, pixelNr / w);
-	}
-	
-	public int getGrayscaleValue(int x, int y) {
-		RgbData rgb = getRgb(x,y);
-		return (int) (rgb.getR()*0.2125 + rgb.getG()*0.7154 + rgb.getB()*0.0721);
-	}
-	
-	public int getGrayscaleValue(int pixelNr) {
-		int w = image.getWidth();
-		return getGrayscaleValue(pixelNr % w, pixelNr / w);
-	}
 
 
+	public ColorImage getColorImage() {
+		return new ColorImageAdapter(this);
+	}
+	
+	public GrayscaleImage getGrayscaleImage() {
+		return new GrayscaleImageAdapter(getColorImage());
+	}
+	
 
+	
 	public static ImageData loadFile(String filename) throws IOException {
 		File file = new File(filename); 
 		return new ImageData(ImageIO.read(file), file.getName(), file.toURI().toURL());

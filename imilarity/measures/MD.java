@@ -3,23 +3,24 @@
  */
 package measures;
 
-import image.ImageData;
+import image.GrayscaleImage;
+
 
 /**
  * @author Klaas Bosteels
  */
-public class MD extends MeasureBase {
+public class MD extends GrayscaleMeasureBase {
 
 	/**
-	 * @see measures.Measure#similarity(image.ImageData, image.ImageData)
+	 * @see measures.GrayscaleMeasure#similarity(image.ImageData, image.ImageData)
 	 */
-	public double similarity(ImageData id1, ImageData id2) {
-		if (id1 == null || id2 == null || !sameResolution(id1,id2))
+	public double similarity(GrayscaleImage gi1, GrayscaleImage gi2) {
+		if (gi1 == null || gi2 == null || !sameResolution(gi1,gi2))
 			return 0.0;
-		int pc = id1.getPixelCount();
+		int pc = gi1.getWidth() * gi1.getHeight();
 		int max = 0;
 		for (int i = 0; i < pc; i++) {
-			int difference = Math.abs(id1.getGrayscaleValue(i) - id2.getGrayscaleValue(i));
+			int difference = Math.abs(gi1.getGrayscaleValue(i) - gi2.getGrayscaleValue(i));
 			if (difference > max)
 				max = difference;
 		}

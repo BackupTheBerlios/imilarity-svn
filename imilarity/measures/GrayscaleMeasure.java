@@ -3,19 +3,19 @@
  */
 package measures;
 
-import image.ImageData;
+import image.GrayscaleImage;
 
 
 /**
  * @author Klaas Bosteels
  */
-public interface Measure {
+public interface GrayscaleMeasure {
 
 	/**
 	 * Geeft een getal in het interval [0,1] terug dat de graad van similariteit
-	 * tussen id1 en id2 weergeeft.
+	 * tussen gi1 en gi2 weergeeft.
 	 */
-	public double similarity(ImageData id1, ImageData id2);
+	public double similarity(GrayscaleImage gi1, GrayscaleImage gi2);
 	
 	public String getDescription();
 	
