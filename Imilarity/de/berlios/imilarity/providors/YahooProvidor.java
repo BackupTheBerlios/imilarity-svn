@@ -75,11 +75,10 @@ public class YahooProvidor extends ProvidorBase {
             //        " hits. Using the first " +
 			//		results.getTotalResultsReturned() + ".");
                                                                                 
-            collection = new ImageData[results.listResults().length];
-            for (int i = 0; 
-            	i < results.listResults().length && 
-				((page-1) * PAGE_SIZE) + i < RESULTSET_SIZE; 
-            	i++) {
+            collection = new ImageData[PAGE_SIZE];
+            int i = 0;
+            while(i < results.listResults().length && 
+				((page-1) * PAGE_SIZE) + i < RESULTSET_SIZE) {
                 
             	ImageSearchResult result = results.listResults()[i];
                 try {
@@ -90,6 +89,11 @@ public class YahooProvidor extends ProvidorBase {
                 } catch(IOException e1) {
                 	System.err.println("IOException: " + e1.getMessage());
                 }
+                i++;
+            }
+            while (i < PAGE_SIZE) { // aanvullen met null'en indien nodig
+            	collection[i] = null;
+            	i++;
             }
         }
         catch (SearchException e) {

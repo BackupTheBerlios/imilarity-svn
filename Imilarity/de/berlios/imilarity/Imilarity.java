@@ -145,13 +145,17 @@ public class Imilarity {
 	
 	
 	public void addExample(ImageData image) {
-		examples.add(image);
-		aggregationCalculated = false;
+		if (image != null) {
+			examples.add(image);
+			aggregationCalculated = false;
+		}
 	}
 	
 	public void removeExample(ImageData image) {
-		examples.remove(image);
-		aggregationCalculated = false;
+		if (image != null) {
+			examples.remove(image);
+			aggregationCalculated = false;
+		}
 	}
 	
 	public boolean containsExample(ImageData image) {
@@ -180,9 +184,9 @@ public class Imilarity {
 			if (arg0 == null && arg1 == null)
 				return 0;
 			if (arg0 == null)
-				return -1;
-			if (arg1 == null)
 				return 1;
+			if (arg1 == null)
+				return -1;
 			return ((Comparable)arg0).compareTo(arg1);
 		}
 	};
