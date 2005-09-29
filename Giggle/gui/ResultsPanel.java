@@ -38,6 +38,7 @@ import de.berlios.imilarity.image.ImageData;
 
 import models.ExamplesModel;
 import models.ImageModel;
+import models.ProgressModel;
 import models.SearchModel;
 
 
@@ -50,6 +51,7 @@ public class ResultsPanel extends JPanel implements Observer {
 
 	private SearchModel searchModel;
 	private ImageModel selectedImgModel, fullSizeImgModel;
+	private ProgressModel progressModel;
 	
 	private JProgressBar progressBar, fsProgressBar;
 	private JPanel resultsPanel, centerPanel, sidebar;
@@ -57,7 +59,8 @@ public class ResultsPanel extends JPanel implements Observer {
 	private CardLayout cardLayout;
 	
 	
-	public ResultsPanel(SearchModel searchModel, ExamplesModel examplesModel) {
+	public ResultsPanel(SearchModel searchModel, ExamplesModel examplesModel,
+			ProgressModel progressModel, ImageModel selectedImgModel) {
 		super();
 		
 		if (searchModel == null)
@@ -67,6 +70,14 @@ public class ResultsPanel extends JPanel implements Observer {
 		
 		if (examplesModel == null)
 			throw new NullPointerException("searchModel == null");
+		
+		if (progressModel == null)
+			throw new NullPointerException("progressModel == null");
+		this.progressModel = progressModel;
+		
+		if (selectedImgModel == null)
+			throw new NullPointerException("selectedImgModel == null");
+		this.selectedImgModel = selectedImgModel;
 		
 		setLayout(new BorderLayout());
 		setBorder(BorderFactory.createLoweredBevelBorder());
@@ -112,12 +123,11 @@ public class ResultsPanel extends JPanel implements Observer {
 			}
 		});
 		
-		progressBar = new JProgressBar();
+		progressBar = new ProgressBar(progressModel);
 		progressBar.setStringPainted(true);
 		progressBar.setVisible(false);
 		add(progressBar, BorderLayout.SOUTH);
 		
-		selectedImgModel = new ImageModel();
 		fullSizeImgModel = new ImageModel();
 		fullSizeImgModel.addObserver(this);
 		sidebar = new SideBar(selectedImgModel, fullSizeImgModel, examplesModel);
@@ -133,19 +143,16 @@ public class ResultsPanel extends JPanel implements Observer {
 	private void addImages(ImageData[] images) {
 		for (int i = 0; i < images.length; i++) {
 			if (images[i] != null) {
-				ImageData id = images[i];
-				if (id.getWidth() >= id.getHeight())
-					id = id.getWScaledInstance(90);
-				else
-					id = id.getHScaledInstance(90);
-				JLabel button = new ThumbLabel(id);
+				JLabel label = new ThumbLabel(images[i]);
 				//button.setToolTipText(images[i].getName());
-				button.setPreferredSize(new Dimension(100,100));
-				button.setBackground(Color.WHITE);
-				button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-				resultsPanel.add(button);
+				label.setPreferredSize(new Dimension(100,100));
+				label.setBackground(Color.WHITE);
+				label.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				resultsPanel.add(label);
 			}
 		}
+		revalidate();
+		repaint();
 	}
 	
 	private boolean busy1 = false, busy2 = false;
@@ -157,12 +164,10 @@ public class ResultsPanel extends JPanel implements Observer {
 		if (o == searchModel && !busy1) {
 			busy1 = true;
 			resultsPanel.removeAll();
-			progressBar.setValue(0);
-			progressBar.setMinimum(0);
-			progressBar.setMaximum(searchModel.getPageCount());
-			progressBar.setVisible(true);
-			revalidate();
-			repaint();
+			progressModel.setValue(0);
+			progressModel.setMin(0);
+			progressModel.setMax(searchModel.getPageCount());
+			progressModel.setVisible(true);
 			new Thread(new Runnable() {
 				public void run() {
 					try {
@@ -172,9 +177,7 @@ public class ResultsPanel extends JPanel implements Observer {
 							EventQueue.invokeLater(new Runnable() {
 								public void run() {
 									ResultsPanel.this.addImages(thumbs);
-									progressBar.setValue(page);
-									revalidate();
-									repaint();
+									progressModel.setValue(page);
 								}
 							});
 						}
@@ -189,7 +192,7 @@ public class ResultsPanel extends JPanel implements Observer {
 						ResultsPanel.this.busy1 = false;
 						EventQueue.invokeLater(new Runnable() {
 							public void run() {
-								progressBar.setVisible(false);	
+								progressModel.setVisible(false);	
 								revalidate();
 								repaint();
 							}
@@ -244,8 +247,14 @@ public class ResultsPanel extends JPanel implements Observer {
 		private boolean mouseOver = false;
 		
 		public ThumbLabel(ImageData id) {
-			super(new ShadowIcon(id));
-			this.imageData = id;
+			super();
+			this.setHorizontalAlignment(JLabel.CENTER);
+			imageData = id;
+			if (id.getWidth() >= id.getHeight())
+				id = id.getWScaledInstance(90);
+			else
+				id = id.getHScaledInstance(90);
+			setIcon(new ShadowIcon(id));
 			this.addMouseListener(this);
 		}
 
@@ -258,20 +267,7 @@ public class ResultsPanel extends JPanel implements Observer {
 		}
 		
 		public void mouseClicked(MouseEvent e) {
-			try {
-				int id = imageData.getId();
-				int page = imageData.getPage();
-				ImageData[] images = searchModel.getPage(page);
-				for (int i = 0; i < images.length; i++) {
-					if (images[i].getId() == id) {
-						selectedImgModel.setImageData(images[i]);
-						break;
-					}
-				}
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			selectedImgModel.setImageData(imageData);	
 		}
 
 		public void mousePressed(MouseEvent e) {}

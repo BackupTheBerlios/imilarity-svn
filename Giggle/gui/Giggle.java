@@ -18,6 +18,8 @@ import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
 import de.berlios.imilarity.Imilarity;
 
 import models.ExamplesModel;
+import models.ImageModel;
+import models.ProgressModel;
 import models.SearchModel;
 
 
@@ -55,14 +57,18 @@ public class Giggle extends JFrame {
 		setPreferredSize(new Dimension(800, 600));
 		
 		Imilarity imilarity = new Imilarity();
+		ImageModel selectedImgModel = new ImageModel();
 		ExamplesModel examplesModel = new ExamplesModel(imilarity);
 		SearchModel searchModel = new SearchModel(imilarity);
+		ProgressModel progressModel = new ProgressModel();
 		
 		Container content = getContentPane();
-		content.add(new KeywordsPanel(searchModel), BorderLayout.NORTH);
-		content.add(new ResultsPanel(searchModel, examplesModel));
+		content.add(new SearchStringPanel(searchModel, progressModel), BorderLayout.NORTH);
+		content.add
+			(new ResultsPanel(searchModel, examplesModel, progressModel, selectedImgModel));
 		
-		JPanel examplesPanel = new ExamplesPanel(examplesModel, searchModel);
+		JPanel examplesPanel = 
+			new ExamplesPanel(examplesModel, searchModel, progressModel, selectedImgModel);
 		//examplesPanel.setPreferredSize(new Dimension(800, 100));
 		content.add(examplesPanel, BorderLayout.SOUTH);
 		

@@ -26,12 +26,24 @@ public class SearchModel extends Observable {
 		this.imilarity = imilarity;		
 	}
 	
-	public void setKeywords(String keywords) {
-		imilarity.setProvidor(new YahooProvidor(keywords));
+	public void setSearchString(String str) {
+		imilarity.setProvidor(new YahooProvidor(str));
 		setChanged();
 		notifyObservers();
 	}
 	
+	
+	public boolean isPageLoaded(int page) {
+		return imilarity.isPageLoaded(page);
+	}
+	
+	public boolean areImagesLoaded() {
+		return imilarity.areImagesLoaded();
+	}
+	
+	public void stopLoading() {
+		imilarity.stopLoading();
+	}
 	
 	public int getPageSize() {
 		return imilarity.getPageSize();
@@ -42,6 +54,17 @@ public class SearchModel extends Observable {
 	}
 	
 	public ImageData[] getPage(int page) throws IOException {
-		return imilarity.getImagesPage(page);
+		return imilarity.getPage(page);
+	}
+	
+	
+	public void reorderPage(int page) {
+		imilarity.reorderPage(page);
+	}
+	
+	public void mergeReorderedPages() {
+		imilarity.mergeReorderedPages();
+		setChanged();
+		notifyObservers();
 	}
 }

@@ -5,12 +5,15 @@ package gui;
 
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
@@ -24,6 +27,8 @@ import javax.swing.JScrollPane;
 import de.berlios.imilarity.image.ImageData;
 
 import models.ExamplesModel;
+import models.ImageModel;
+import models.ProgressModel;
 import models.SearchModel;
 
 
@@ -36,11 +41,15 @@ public class ExamplesPanel extends JPanel implements Observer, ActionListener {
 	
 	private ExamplesModel examplesModel;
 	private SearchModel searchModel;
+	private ProgressModel progressModel;
+	private ImageModel selectedImgModel;
 	
 	private JPanel examplesPanel;
 	private JButton firstButton, reorderButton, clearButton;
+
 	
-	public ExamplesPanel(ExamplesModel examplesModel, SearchModel searchModel) {
+	public ExamplesPanel(ExamplesModel examplesModel, SearchModel searchModel,
+			ProgressModel progressModel, ImageModel selectedImgModel) {
 		super(new BorderLayout());
 		
 		if (examplesModel == null)
@@ -51,6 +60,15 @@ public class ExamplesPanel extends JPanel implements Observer, ActionListener {
 		if (searchModel == null)
 			throw new NullPointerException("searchModel == null");
 		this.searchModel = searchModel;
+		
+		if (progressModel == null)
+			throw new NullPointerException("progressModel == null");
+		this.progressModel = progressModel;
+		progressModel.addObserver(this);
+		
+		if (selectedImgModel == null)
+			throw new NullPointerException("selectedImgModel == null");
+		this.selectedImgModel = selectedImgModel;
 		
 		examplesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT,5,0));
 		JScrollPane scrollPane = new JScrollPane(examplesPanel);
@@ -92,17 +110,22 @@ public class ExamplesPanel extends JPanel implements Observer, ActionListener {
 	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
 	 */
 	public void update(Observable o, Object arg) {
-		examplesPanel.removeAll();
-		ImageData[] examples = examplesModel.getExamples();
-		Insets insets = examplesPanel.getInsets();
-		int height = examplesPanel.getHeight() - insets.bottom - insets.top - 5;
-		for (int i = 0; i < examples.length; i++) {
-			ImageData id = examples[i].getHScaledInstance(height);
-			JLabel label = new JLabel(new BorderIcon(id));
-			//label.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			examplesPanel.add(label);
+		if (o == examplesModel) {
+			examplesPanel.removeAll();
+			ImageData[] examples = examplesModel.getExamples();
+			Insets insets = examplesPanel.getInsets();
+			int height = examplesPanel.getHeight() - insets.bottom - insets.top - 5;
+			for (int i = 0; i < examples.length; i++) {
+				JLabel label = new ThumbLabel(examples[i], height);
+				label.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				examplesPanel.add(label);
+			}
+			clearButton.setEnabled(!examplesModel.isEmpty());
+		} else {
+			firstButton.setEnabled(searchModel.isPageLoaded(1));
 		}
-		clearButton.setEnabled(!examplesModel.isEmpty());
+		reorderButton.setEnabled(!examplesModel.isEmpty() &&
+				progressModel.getValue() == progressModel.getMax());
 		examplesPanel.revalidate();
 		examplesPanel.repaint();
 	}
@@ -129,6 +152,53 @@ public class ExamplesPanel extends JPanel implements Observer, ActionListener {
 			}).start();
 		} else if (e.getActionCommand().equals("clear")) {
 			examplesModel.clear();
-		} // TODO: else...
+		} else {
+			progressModel.setMin(0);
+			progressModel.setMax(searchModel.getPageCount() + 1);
+			progressModel.setValue(0);
+			progressModel.setVisible(true);
+			new Thread(new Runnable() {
+				public void run() {
+					for (int i = 1; i <= searchModel.getPageCount(); i++) {
+						searchModel.reorderPage(i);
+						EventQueue.invokeLater(new Runnable() {
+							public void run() {
+								progressModel.incrementValue();
+							}
+						});
+					}
+					EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							searchModel.mergeReorderedPages();
+							progressModel.incrementValue();
+							progressModel.setVisible(false);
+						}
+					});
+				}
+			}).start();
+		}
+	}
+	
+	
+	
+	private class ThumbLabel extends JLabel implements MouseListener {
+		
+		private static final long serialVersionUID = 2632294383862803488L;
+		private ImageData imageData;
+		
+		public ThumbLabel(ImageData id, int height) {
+			super(new BorderIcon(id.getHScaledInstance(height)));
+			imageData = id;
+			this.addMouseListener(this);
+		}
+
+		public void mouseClicked(MouseEvent e) {
+			selectedImgModel.setImageData(imageData);
+		}
+
+		public void mousePressed(MouseEvent e) {}
+		public void mouseReleased(MouseEvent e) {}
+		public void mouseEntered(MouseEvent e) {}
+		public void mouseExited(MouseEvent e) {}
 	}
 }
