@@ -3,7 +3,7 @@
  */
 package measures;
 
-import image.GrayscaleImage;
+import image.ScalableGrayscaleImage;
 
 
 /**
@@ -11,7 +11,7 @@ import image.GrayscaleImage;
  */
 public abstract class GrayscaleMeasureBase implements GrayscaleMeasure {
 
-	public static boolean sameResolution(GrayscaleImage gi1, GrayscaleImage gi2) {
+	public static boolean sameResolution(ScalableGrayscaleImage gi1, ScalableGrayscaleImage gi2) {
 		return 
 			gi1.getWidth() == gi2.getWidth() && 
 			gi1.getHeight() == gi2.getHeight();

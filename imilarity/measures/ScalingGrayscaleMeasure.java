@@ -3,7 +3,7 @@
  */
 package measures;
 
-import image.GrayscaleImage;
+import image.ScalableGrayscaleImage;
 
 
 /**
@@ -19,9 +19,9 @@ public class ScalingGrayscaleMeasure extends GrayscaleMeasureBase {
 		this.measure = measure;
 	}
 	
-	public double similarity(GrayscaleImage gi1, GrayscaleImage gi2) {
-		GrayscaleImage sGi1 = gi1.getScaledInstance(100,100);
-		GrayscaleImage sGi2 = gi2.getScaledInstance(100,100);
+	public double similarity(ScalableGrayscaleImage gi1, ScalableGrayscaleImage gi2) {
+		ScalableGrayscaleImage sGi1 = gi1.getScaledInstance(100,100);
+		ScalableGrayscaleImage sGi2 = gi2.getScaledInstance(100,100);
 		return measure.similarity(sGi1,sGi2);
 	}
 	

@@ -6,11 +6,11 @@ package image;
 /**
  * @author Klaas Bosteels
  */
-public class GrayscaleImageAdapter implements GrayscaleImage {
+public class GrayscaleImageAdapter implements ScalableGrayscaleImage {
 
-	private ColorImage colorImage;
+	private ScalableColorImage colorImage;
 	
-	public GrayscaleImageAdapter(ColorImage colorImage) {
+	public GrayscaleImageAdapter(ScalableColorImage colorImage) {
 		if (colorImage == null)
 			throw new NullPointerException("colorImage == null");
 		this.colorImage = colorImage;
@@ -18,7 +18,7 @@ public class GrayscaleImageAdapter implements GrayscaleImage {
 	
 	
 	/**
-	 * @see image.GrayscaleImage#getGrayscaleValue(int)
+	 * @see image.ScalableGrayscaleImage#getGrayscaleValue(int)
 	 */
 	public int getGrayscaleValue(int pixelNr) {
 		int[] rgb = colorImage.getColorValues(pixelNr);
@@ -26,9 +26,9 @@ public class GrayscaleImageAdapter implements GrayscaleImage {
 	}
 
 	/**
-	 * @see image.GrayscaleImage#getScaledInstance(int, int)
+	 * @see image.ScalableGrayscaleImage#getScaledInstance(int, int)
 	 */
-	public GrayscaleImage getScaledInstance(int w, int h) {
+	public ScalableGrayscaleImage getScaledInstance(int w, int h) {
 		return new GrayscaleImageAdapter(colorImage.getScaledInstance(w,h));
 	}
 

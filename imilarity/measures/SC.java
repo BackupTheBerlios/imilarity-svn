@@ -3,7 +3,7 @@
  */
 package measures;
 
-import image.GrayscaleImage;
+import image.ScalableGrayscaleImage;
 
 
 /**
@@ -14,7 +14,7 @@ public class SC extends GrayscaleMeasureBase {
 	/**
 	 * @see measures.GrayscaleMeasure#similarity(image.ImageData, image.ImageData)
 	 */
-	public double similarity(GrayscaleImage gi1, GrayscaleImage gi2) {
+	public double similarity(ScalableGrayscaleImage gi1, ScalableGrayscaleImage gi2) {
 		if (gi1 == null || gi2 == null || !sameResolution(gi1,gi2))
 			return 0.0;
 		int pc = gi1.getWidth() * gi1.getHeight();

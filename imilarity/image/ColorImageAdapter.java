@@ -6,7 +6,7 @@ package image;
 /**
  * @author Klaas Bosteels
  */
-public class ColorImageAdapter implements ColorImage {
+public class ColorImageAdapter implements ScalableColorImage {
 
 	private ImageData imageData;
 	
@@ -18,16 +18,16 @@ public class ColorImageAdapter implements ColorImage {
 	
 	
 	/**
-	 * @see image.ColorImage#getColorValues(int)
+	 * @see image.ScalableColorImage#getColorValues(int)
 	 */
 	public int[] getColorValues(int pixelNr) {
 		return imageData.getRgb(pixelNr);
 	}
 
 	/**
-	 * @see image.ColorImage#getScaledInstance(int, int)
+	 * @see image.ScalableColorImage#getScaledInstance(int, int)
 	 */
-	public ColorImage getScaledInstance(int w, int h) {
+	public ScalableColorImage getScaledInstance(int w, int h) {
 		return new ColorImageAdapter(imageData.getScaledInstance(w,h));
 	}
 

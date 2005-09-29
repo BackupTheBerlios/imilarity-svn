@@ -3,14 +3,14 @@
  */
 package measures;
 
-import image.ColorImage;
-import image.GrayscaleImage;
+import image.ScalableColorImage;
+import image.ScalableGrayscaleImage;
 import image.GrayscaleImageAdapter;
 
 /**
  * @author Klaas Bosteels
  */
-public class GrayscaledColorMeasure implements ColorMeasure {
+public class GrayscaledColorMeasure extends ColorMeasureBase {
 
 	private GrayscaleMeasure measure;
 	
@@ -23,9 +23,9 @@ public class GrayscaledColorMeasure implements ColorMeasure {
 	/**
 	 * @see measures.ColorMeasure#similarity(image.ColorImage, image.ColorImage)
 	 */
-	public double similarity(ColorImage ci1, ColorImage ci2) {
-		GrayscaleImage gi1 = new GrayscaleImageAdapter(ci1);
-		GrayscaleImage gi2 = new GrayscaleImageAdapter(ci2);
+	public double similarity(ScalableColorImage ci1, ScalableColorImage ci2) {
+		ScalableGrayscaleImage gi1 = new GrayscaleImageAdapter(ci1);
+		ScalableGrayscaleImage gi2 = new GrayscaleImageAdapter(ci2);
 		return measure.similarity(gi1, gi2);
 	}
 

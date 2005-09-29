@@ -97,11 +97,11 @@ public class ImageData {
 	}
 
 
-	public ColorImage getColorImage() {
+	public ScalableColorImage getColorImage() {
 		return new ColorImageAdapter(this);
 	}
 	
-	public GrayscaleImage getGrayscaleImage() {
+	public ScalableGrayscaleImage getGrayscaleImage() {
 		return new GrayscaleImageAdapter(getColorImage());
 	}
 	
