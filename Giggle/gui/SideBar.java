@@ -23,6 +23,7 @@ import de.berlios.imilarity.image.ImageData;
 
 import models.ExamplesModel;
 import models.ImageModel;
+import models.SearchModel;
 
 /**
  * @author Klaas Bosteels
@@ -42,7 +43,7 @@ public class SideBar extends GradientPanel implements Observer, HyperlinkListene
 	private JEditorPane editorPane;
 	
 	public SideBar(ImageModel selectionModel, ImageModel fullSizeModel,
-			ExamplesModel examplesModel) {
+			ExamplesModel examplesModel, SearchModel searchModel) {
 		super(gradient);
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
@@ -56,9 +57,13 @@ public class SideBar extends GradientPanel implements Observer, HyperlinkListene
 		this.fullSizeModel = fullSizeModel;
 		
 		if (examplesModel == null)
-			throw new NullPointerException("searchModel == null");
+			throw new NullPointerException("examplesModel == null");
 		this.examplesModel = examplesModel;
 		examplesModel.addObserver(this);
+		
+		if (searchModel == null)
+			throw new NullPointerException("searchModel == null");
+		searchModel.addObserver(this);
 		
 		setPreferredSize(new Dimension(200,600));
 		setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
@@ -126,11 +131,9 @@ public class SideBar extends GradientPanel implements Observer, HyperlinkListene
 			nameLabel.setText(id.getName());
 			nameLabel.setVisible(true);
 			
-			System.out.println("Similarity = " + id.getSimilarity());
-			
 			StringBuffer sb = new StringBuffer();
-			sb.append("<h3>Relevance</h3>");
-			sb.append("<center>" + id.getSimilarity() + " %</center>");
+			sb.append("<h3>Similarity</h3>");
+			sb.append("<center>" + (id.getSimilarity()*100) + " %</center>");
 			sb.append("<h3>Actions</h3>");
 		    sb.append("<a href=\"fullSize\">View full size image</a><br>");
 		    if (!examplesModel.containsExample(id))

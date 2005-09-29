@@ -130,7 +130,7 @@ public class ResultsPanel extends JPanel implements Observer {
 		
 		fullSizeImgModel = new ImageModel();
 		fullSizeImgModel.addObserver(this);
-		sidebar = new SideBar(selectedImgModel, fullSizeImgModel, examplesModel);
+		sidebar = new SideBar(selectedImgModel, fullSizeImgModel, examplesModel, searchModel);
 		add(sidebar, BorderLayout.WEST);
 	}
 	
