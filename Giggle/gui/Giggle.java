@@ -15,6 +15,8 @@ import com.jgoodies.looks.FontSizeHints;
 import com.jgoodies.looks.Options;
 import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
 
+import de.berlios.imilarity.Imilarity;
+
 import models.ExamplesModel;
 import models.SearchModel;
 
@@ -52,8 +54,9 @@ public class Giggle extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setPreferredSize(new Dimension(800, 600));
 		
-		ExamplesModel examplesModel = new ExamplesModel();
-		SearchModel searchModel = new SearchModel(examplesModel);
+		Imilarity imilarity = new Imilarity();
+		ExamplesModel examplesModel = new ExamplesModel(imilarity);
+		SearchModel searchModel = new SearchModel(imilarity);
 		
 		Container content = getContentPane();
 		content.add(new KeywordsPanel(searchModel), BorderLayout.NORTH);

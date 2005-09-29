@@ -7,11 +7,9 @@ package models;
 import java.io.IOException;
 import java.util.Observable;
 
-
+import de.berlios.imilarity.Imilarity;
 import de.berlios.imilarity.image.ImageData;
-import de.berlios.imilarity.providors.Providor;
 import de.berlios.imilarity.providors.YahooProvidor;
-
 
 
 /**
@@ -19,36 +17,31 @@ import de.berlios.imilarity.providors.YahooProvidor;
  */
 public class SearchModel extends Observable {
 
-	private Providor providor;
+	private Imilarity imilarity;
 	
-	public SearchModel(ExamplesModel examplesModel) {
+	public SearchModel(Imilarity imilarity) {
 		super();
-		if (examplesModel == null)
-			throw new NullPointerException("examplesModel == null");
+		if (imilarity == null)
+			throw new NullPointerException("imilarity == null");
+		this.imilarity = imilarity;		
 	}
 	
 	public void setKeywords(String keywords) {
-		providor = new YahooProvidor(keywords);
+		imilarity.setProvidor(new YahooProvidor(keywords));
 		setChanged();
 		notifyObservers();
 	}
 	
 	
 	public int getPageSize() {
-		if (providor == null) 
-			return 0;
-		return providor.getPageSize();
+		return imilarity.getPageSize();
 	}
 	
 	public int getPageCount() {
-		if (providor == null)
-			return 0;
-		return providor.getPageCount();
+		return imilarity.getPageCount();
 	}
 	
 	public ImageData[] getPage(int page) throws IOException {
-		if (providor == null)
-			return null;
-		return providor.getPage(page);
+		return imilarity.getImagesPage(page);
 	}
 }

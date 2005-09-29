@@ -4,11 +4,9 @@
 package models;
 
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Observable;
 
+import de.berlios.imilarity.Imilarity;
 import de.berlios.imilarity.image.ImageData;
 
 /**
@@ -16,40 +14,41 @@ import de.berlios.imilarity.image.ImageData;
  */
 public class ExamplesModel extends Observable {
 	
-	private Collection examples = new HashSet();
+	private Imilarity imilarity;
 	
+	public ExamplesModel(Imilarity imilarity) {
+		if (imilarity == null)
+			throw new NullPointerException("imilarity == null");
+		this.imilarity = imilarity;
+	}
 	
 	public void addExample(ImageData id) {
-		examples.add(id);
+		imilarity.addExample(id);
 		setChanged();
 		notifyObservers();
 	}
 	
 	public void removeExample(ImageData id) {
-		examples.remove(id);
+		imilarity.removeExample(id);
 		setChanged();
 		notifyObservers();
 	}
 	
 	public boolean containsExample(ImageData id) {
-		return examples.contains(id);
+		return imilarity.containsExample(id);
 	}
 	
 	public void clear() {
-		examples.clear();
+		imilarity.clearExamples();
 		setChanged();
 		notifyObservers();
 	}
 	
 	public boolean isEmpty() {
-		return examples.isEmpty();
+		return imilarity.containsExamples();
 	}
 	
 	public ImageData[] getExamples() {
-		ImageData[] result = new ImageData[examples.size()];
-		Iterator it = examples.iterator();
-		for (int i = 0; it.hasNext(); i++)
-			result[i] = (ImageData) it.next();
-		return result;
+		return imilarity.getExamples();
 	}
 }
