@@ -3,7 +3,7 @@
  */
 package de.berlios.imilarity.measures;
 
-import de.berlios.imilarity.image.ScalableGrayscaleImage;
+import de.berlios.imilarity.image.GrayscaleImage;
 
 
 /**
@@ -11,10 +11,22 @@ import de.berlios.imilarity.image.ScalableGrayscaleImage;
  */
 public abstract class GrayscaleMeasureBase implements GrayscaleMeasure {
 
-	public static boolean sameResolution(ScalableGrayscaleImage gi1, ScalableGrayscaleImage gi2) {
+	public static boolean sameResolution(GrayscaleImage gi1, GrayscaleImage gi2) {
 		return 
 			gi1.getWidth() == gi2.getWidth() && 
 			gi1.getHeight() == gi2.getHeight();
+	}
+
+	private GrayscaleImage image;
+	
+	public void setImage(GrayscaleImage image) {
+		if (image == null)
+			throw new NullPointerException("image == null");
+		this.image = image;
+	}
+	
+	public GrayscaleImage getImage() {
+		return image;
 	}
 	
 	public String toString() {

@@ -41,7 +41,6 @@ public class DirProvidor extends ProvidorBase {
 			throw new IllegalArgumentException("not a directory");
 		files = dirFile.listFiles(filter);
 		pageCount = (files.length + PAGE_SIZE - 1) / PAGE_SIZE;
-		init();
 	}
 	
 	
@@ -67,7 +66,10 @@ public class DirProvidor extends ProvidorBase {
 	}
 	
 	
-	public ImageData[] loadPage(int page) throws IOException {
+	/**
+	 * @see de.berlios.imilarity.providors.Providor#getPage(int)
+	 */
+	public ImageData[] getPage(int page) throws IOException {
 		ImageData[] images = new ImageData[PAGE_SIZE];
 		int begin = ((page - 1) * PAGE_SIZE), end = begin + PAGE_SIZE;
 		for (int i = begin; i < files.length && i < end; i++) {

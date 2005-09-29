@@ -31,7 +31,6 @@ public class YahooProvidor extends ProvidorBase {
 	
 	public YahooProvidor(String keywords) {
 		this.keywords = keywords;
-		init();
 	}
 	
 	
@@ -57,7 +56,10 @@ public class YahooProvidor extends ProvidorBase {
 	}
 	
 	
-	public ImageData[] loadPage(int page) throws IOException {
+	/**
+	 * @see de.berlios.imilarity.providors.Providor#getPage(int) 
+	 */
+	public ImageData[] getPage(int page) throws IOException {
 		SearchClient client = new SearchClient("imilarity");
 		ImageSearchRequest request = new ImageSearchRequest(keywords);
         

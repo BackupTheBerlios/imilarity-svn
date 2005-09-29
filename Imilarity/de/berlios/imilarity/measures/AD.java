@@ -3,6 +3,7 @@
  */
 package de.berlios.imilarity.measures;
 
+import de.berlios.imilarity.image.GrayscaleImage;
 import de.berlios.imilarity.image.ScalableGrayscaleImage;
 
 
@@ -12,15 +13,16 @@ import de.berlios.imilarity.image.ScalableGrayscaleImage;
 public class AD extends GrayscaleMeasureBase {
 
 	/**
-	 * @see de.berlios.imilarity.measures.GrayscaleMeasure#similarity(image.ImageData, image.ImageData)
+	 * @see de.berlios.imilarity.measures.GrayscaleMeasure#similarity(ScalableGrayscaleImage)
 	 */
-	public double similarity(ScalableGrayscaleImage gi1, ScalableGrayscaleImage gi2) {
-		if (gi1 == null || gi2 == null || !sameResolution(gi1,gi2))
+	public double similarity(ScalableGrayscaleImage image) {
+		GrayscaleImage orig = getImage();
+		if (image == null || !sameResolution(orig,image))
 			return 0.0;
-		int pc = gi1.getWidth() * gi2.getHeight();
+		int pc = orig.getWidth() * orig.getHeight();
 		long sum = 0;
 		for (int i = 0; i < pc; i++)
-			sum += Math.abs(gi1.getGrayscaleValue(i) - gi2.getGrayscaleValue(i));
+			sum += Math.abs(orig.getGrayscaleValue(i) - image.getGrayscaleValue(i));
 		return 1 - ((sum / pc) * 1.0 / 255);
 	}
 

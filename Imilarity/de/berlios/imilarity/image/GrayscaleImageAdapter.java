@@ -6,11 +6,11 @@ package de.berlios.imilarity.image;
 /**
  * @author Klaas Bosteels
  */
-public class GrayscaleImageAdapter implements ScalableGrayscaleImage {
+public class GrayscaleImageAdapter implements GrayscaleImage {
 
-	private ScalableColorImage colorImage;
+	private ColorImage colorImage;
 	
-	public GrayscaleImageAdapter(ScalableColorImage colorImage) {
+	public GrayscaleImageAdapter(ColorImage colorImage) {
 		if (colorImage == null)
 			throw new NullPointerException("colorImage == null");
 		this.colorImage = colorImage;
@@ -25,12 +25,6 @@ public class GrayscaleImageAdapter implements ScalableGrayscaleImage {
 		return (int) (rgb[0]*0.2125 + rgb[1]*0.7154 + rgb[2]*0.0721);
 	}
 
-	/**
-	 * @see de.berlios.imilarity.image.ScalableGrayscaleImage#getScaledInstance(int, int)
-	 */
-	public ScalableGrayscaleImage getScaledInstance(int w, int h) {
-		return new GrayscaleImageAdapter(colorImage.getScaledInstance(w,h));
-	}
 
 	/**
 	 * @see de.berlios.imilarity.image.Image#getWidth()

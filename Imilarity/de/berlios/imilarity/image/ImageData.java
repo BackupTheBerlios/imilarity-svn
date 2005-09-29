@@ -17,12 +17,13 @@ import javax.imageio.ImageIO;
 /**
  * @author Klaas Bosteels
  */
-public class ImageData {
+public class ImageData implements Comparable {
 	private final int id;
 	private int page;
 	
 	private BufferedImage image;
 	private String name;
+	private double similarity = 0.0;
 	private URL url;
 	
 	private ImageData(int id, int page, BufferedImage image, String name, URL url) {
@@ -41,12 +42,14 @@ public class ImageData {
 	public int getPage() { return page; }
 	public Image getImage() { return image; }
 	public String getName() { return name; }
+	public double getSimilarity() { return similarity; }
 	public int getWidth() { return image.getWidth(); }
 	public int getHeight() { return image.getHeight(); }
 	public URL getUrl() { return url; }
 	
 	public void setPage(int page) { this.page = page; }
 	public void setName(String name) { this.name = name; }
+	public void setSimilarity(double similarity) { this.similarity = similarity; }
 	public void setUrl(URL url) { this.url = url; }
 	
 	
@@ -102,7 +105,7 @@ public class ImageData {
 	}
 	
 	public ScalableGrayscaleImage getGrayscaleImage() {
-		return new GrayscaleImageAdapter(getColorImage());
+		return new ScalableGrayscaleImageAdapter(getColorImage());
 	}
 	
 
@@ -119,5 +122,12 @@ public class ImageData {
 	public static ImageData loadUrl(String url) throws IOException {
 		URL u = new URL(url);
 		return new ImageData(ImageIO.read(u), url, u);
+	}
+
+	
+	public int compareTo(Object arg0) {
+		Double d1 = new Double(similarity);
+		Double d2 = new Double(((ImageData)arg0).getSimilarity());
+		return d2.compareTo(d1);
 	}
 }
