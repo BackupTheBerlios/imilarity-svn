@@ -32,20 +32,15 @@ public class Imilarity {
 	protected ImageData[][] pages;
 	protected boolean[] pageLoaded;
 	
-
-	public Imilarity() {
-		pages = new ImageData[getPageCount()][getPageSize()];
-		for (int i = 0; i < pages.length; i++)
-			pages[i] = null;
-		pageLoaded = new boolean[getPageCount()];
-	}
-	
-	
 	
 	public void setProvidor(Providor providor) {
 		if (providor == null)
 			throw new NullPointerException("providor == null");
 		this.providor = providor;
+		pages = new ImageData[getPageCount()][getPageSize()];
+		for (int i = 0; i < pages.length; i++)
+			pages[i] = null;
+		pageLoaded = new boolean[getPageCount()];
 	}
 	
 	public void setAggregator(Aggregator aggregator) {
@@ -111,15 +106,15 @@ public class Imilarity {
 	
 	
 	
-	public void addExample(ScalableColorImage image) {
+	public void addExample(ImageData image) {
 		examples.add(image);
 	}
 	
-	public void removeExample(ScalableColorImage image) {
+	public void removeExample(ImageData image) {
 		examples.remove(image);
 	}
 	
-	public boolean containsExample(ScalableColorImage image) {
+	public boolean containsExample(ImageData image) {
 		return examples.contains(image);
 	}
 	
@@ -131,11 +126,11 @@ public class Imilarity {
 		examples.clear();
 	}
 	
-	public ScalableColorImage[] getExamples() {
-		ScalableColorImage[] result = new ScalableColorImage[examples.size()];
+	public ImageData[] getExamples() {
+		ImageData[] result = new ImageData[examples.size()];
 		Iterator it = examples.iterator();
 		for (int i = 0; it.hasNext(); i++)
-			result[i] = (ScalableColorImage) it.next();
+			result[i] = (ImageData) it.next();
 		return result;
 	}
 	
