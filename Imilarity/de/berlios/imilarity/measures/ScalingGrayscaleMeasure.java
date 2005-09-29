@@ -20,6 +20,14 @@ public class ScalingGrayscaleMeasure extends GrayscaleMeasureBase {
 		this.measure = measure;
 	}
 	
+	public void setImage(GrayscaleImage image) {
+		measure.setImage(image);
+	}
+	
+	public GrayscaleImage getImage() {
+		return measure.getImage();
+	}
+	
 	public double similarity(ScalableGrayscaleImage image) {
 		GrayscaleImage orig = getImage();
 		ScalableGrayscaleImage si = image.getScaledInstance(orig.getWidth(),orig.getHeight());

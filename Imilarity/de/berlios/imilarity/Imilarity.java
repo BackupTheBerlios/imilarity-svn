@@ -4,19 +4,27 @@
 package de.berlios.imilarity;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 
 import de.berlios.imilarity.aggregators.Aggregator;
+import de.berlios.imilarity.aggregators.ArithmeticMean;
 import de.berlios.imilarity.image.AggregatedColorImage;
 import de.berlios.imilarity.image.ColorImage;
 import de.berlios.imilarity.image.ImageData;
 import de.berlios.imilarity.image.ScalableColorImage;
 import de.berlios.imilarity.measures.ColorMeasure;
+import de.berlios.imilarity.measures.GrayscaledColorMeasure;
+import de.berlios.imilarity.measures.SC;
+import de.berlios.imilarity.measures.ScalingGrayscaleMeasure;
 import de.berlios.imilarity.providors.Providor;
 import de.berlios.imilarity.util.ArraysBackedList;
+
 
 /**
  * @author Klaas Bosteels
@@ -25,12 +33,15 @@ public class Imilarity {
 
 	
 	private Providor providor;
-	private Aggregator aggregator;
-	private ColorMeasure measure;
+	private Aggregator aggregator = new ArithmeticMean();
+	private ColorMeasure measure = 
+		new GrayscaledColorMeasure(new ScalingGrayscaleMeasure(new SC()));
 	
 	private Collection examples = new HashSet(); 
 	protected ImageData[][] pages;
 	protected boolean[] pageLoaded;
+	
+	private boolean aggregationCalculated = false;
 	
 	
 	public void setProvidor(Providor providor) {
@@ -57,13 +68,38 @@ public class Imilarity {
 	
 	
 	
-	public void loadImagesPage(int page) throws IOException {
-		getImagesPage(page);
+	public void loadPage(int page) throws IOException {
+		getPage(page);
 	}
 	
 	public void loadImages() throws IOException {
 		getImages();
 	}
+	
+	
+	public void stopLoading() {
+		for (int i = 0; i < pageLoaded.length; i++) {
+			pageLoaded[i] = true;
+			if (pages[i] == null) {
+				pages[i] = new ImageData[getPageSize()];
+				for (int j = 0; j < pages[i].length; j++)
+					pages[i][j] = null;
+			}
+		}
+	}
+	
+	
+	public boolean isPageLoaded(int page) {
+		return pageLoaded[page-1];
+	}
+	
+	public boolean areImagesLoaded() {
+		for (int i = 0; i < pageLoaded.length; i++)
+			if (!pageLoaded[i])
+				return false;
+		return true;
+	}
+	
 	
 	public int getPageSize() {
 		if (providor == null) 
@@ -77,7 +113,7 @@ public class Imilarity {
 		return providor.getPageCount();
 	}
 	
-	public ImageData[] getImagesPage(int page) throws IOException {
+	public ImageData[] getPage(int page) throws IOException {
 		if (providor == null)
 			return null;
 		if (page < 1 || page > getPageCount())
@@ -89,15 +125,17 @@ public class Imilarity {
 		// Als deze methode in twee aparte draden uitgevoerd wordt dan kan het 
 		// voorkomen dat 'pages[x]' nog gelijk is aan 'null', terwijl de inhoud
 		// van 'pages[x]' wel al berekend wordt. In dat geval moet er gewacht worden...
-		else while (pages[page-1] == null); 
+		else while (pages[page-1] == null);
 		return pages[page-1];
 	}
 	
 	public ImageData[] getImages() throws IOException {
+		if (providor == null)
+			return null;
 		int ps = getPageSize(), pc = getPageCount();
 		ImageData[] images = new ImageData[ps * pc];
 		for (int i = 0; i < pc; i++) {
-			ImageData[] pageImages = getImagesPage(i);
+			ImageData[] pageImages = getPage(i);
 			for (int j = 0; j < pageImages.length; j++)
 				images[i+j] = pageImages[j];
 		}
@@ -108,10 +146,12 @@ public class Imilarity {
 	
 	public void addExample(ImageData image) {
 		examples.add(image);
+		aggregationCalculated = false;
 	}
 	
 	public void removeExample(ImageData image) {
 		examples.remove(image);
+		aggregationCalculated = false;
 	}
 	
 	public boolean containsExample(ImageData image) {
@@ -124,6 +164,7 @@ public class Imilarity {
 	
 	public void clearExamples() {
 		examples.clear();
+		aggregationCalculated = false;
 	}
 	
 	public ImageData[] getExamples() {
@@ -134,19 +175,50 @@ public class Imilarity {
 		return result;
 	}
 	
+	private static final Comparator comparator = new Comparator() {
+		public int compare(Object arg0, Object arg1) {
+			if (arg0 == null && arg1 == null)
+				return 0;
+			if (arg0 == null)
+				return -1;
+			if (arg1 == null)
+				return 1;
+			return ((Comparable)arg0).compareTo(arg1);
+		}
+	};
+	
+	public void reorderPage(int page) {
+		if (providor == null)
+			return;
+		if (!aggregationCalculated) {
+			aggregationCalculated = true;
+			ScalableColorImage[] scis = new ScalableColorImage[examples.size()];
+			Iterator it = examples.iterator();
+			for (int i = 0; i < scis.length && it.hasNext(); i++)
+				scis[i] = ((ImageData) it.next()).getColorImage();
+			ColorImage aggregation = new AggregatedColorImage(scis, aggregator);
+			measure.setImage(aggregation);
+		}
+		for (int i = 0; i < pages[page-1].length; i++)
+			if (pages[page-1][i] != null)
+				pages[page-1][i].setSimilarity
+					(measure.similarity(pages[page-1][i].getColorImage()));
+		Arrays.sort(pages[page-1], comparator);
+	}
+	
+	public void mergeReorderedPages() {
+		if (providor == null)
+			return;
+		ImageData[][] arrays = new ImageData[getPageCount()][];
+		for (int i = 0; i < getPageCount(); i++)
+			arrays[i] = pages[i];
+		List l = new ArraysBackedList(arrays, getPageSize());
+		Collections.sort(l, comparator);
+	}
 	
 	public void reorderImages() {
-		ColorImage aggregation = 
-			new AggregatedColorImage((ScalableColorImage[])examples.toArray(), aggregator);
-		ArraysBackedList l = new ArraysBackedList(getPageSize());
-		for (int i = 0; i < getPageCount(); i++)
-			l.addArray(pages[i]);
-		measure.setImage(aggregation);
-		Iterator it = l.iterator();
-		while (it.hasNext()) {
-			ImageData id = (ImageData) it.next();
-			id.setSimilarity(measure.similarity(id.getColorImage()));
-		}
-		Collections.sort(l);
+		for (int i = 1; i <= getPageCount(); i++)
+			reorderPage(i);
+		mergeReorderedPages();
 	}
 }

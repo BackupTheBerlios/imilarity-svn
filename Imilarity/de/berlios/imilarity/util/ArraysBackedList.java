@@ -3,39 +3,22 @@
  */
 package de.berlios.imilarity.util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+
 public class ArraysBackedList implements List {
 
-	private List arrays = new ArrayList();
+	private Object[][] arrays;
 	private int totalSize = 0;
 	private int individualSize = 0;
 	
-	public ArraysBackedList(int size) {
+	public ArraysBackedList(Object[][] arrays, int size) {
 		individualSize = size;
-	}
-	
-	public void addArray(Object[] array) {
-		if (array == null)
-			throw new NullPointerException("array == null");
-		if (array.length != individualSize)
-			throw new IllegalArgumentException("length of array must be " + individualSize);
-		arrays.add(array);
-		totalSize += array.length;
-	}
-	
-	public void removeArray(Object[] array) {
-		if (array == null)
-			throw new NullPointerException("array == null");
-		if (!arrays.contains(array))
-			throw new IllegalArgumentException("does not contain array");
-		arrays.remove(array);
-		totalSize -= array.length;
+		totalSize = arrays.length * size;
+		this.arrays = arrays;
 	}
 	
 	public int size() {
@@ -47,10 +30,8 @@ public class ArraysBackedList implements List {
 	}
 
 	public boolean contains(Object o) {
-		Iterator it = arrays.iterator();
-		while (it.hasNext()) {
-			Object obj = it.next();
-			if (obj.equals(o))
+		for (int i = 0; i < arrays.length; i++) {  
+			if (arrays[i].equals(o))
 				return true;
 		}
 		return false;
@@ -62,14 +43,17 @@ public class ArraysBackedList implements List {
 
 	public Object[] toArray() {
 		Object[] result = new Object[totalSize];
-		Iterator it = arrays.iterator();
+		Iterator it = iterator();
 		for (int i = 0; i < result.length && it.hasNext(); i++)
 			result[i] = it.next();
 		return result;
 	}
 
-	public Object[] toArray(Object[] arg0) {
-		return Arrays.copyOf(toArray(), totalSize, arg0.getClass());
+	public Object[] toArray(Object[] a) {
+		a = (Object[])java.lang.reflect.Array.
+			newInstance(a.getClass().getComponentType(), totalSize);
+		System.arraycopy(toArray(), 0, a, 0, totalSize);
+		return a;
 	}
 
 	public boolean add(Object arg0) {
@@ -81,7 +65,7 @@ public class ArraysBackedList implements List {
 	}
 
 	public boolean containsAll(Collection arg0) {
-		Iterator it = arg0.iterator();
+		Iterator it = iterator();
 		while (it.hasNext())
 			if (!contains(it.next()))
 				return false;
@@ -109,12 +93,12 @@ public class ArraysBackedList implements List {
 	}
 
 	public Object get(int index) {
-		return ((Object[])arrays.get(index / individualSize))[index % individualSize];
+		return arrays[index / individualSize][index % individualSize];
 	}
 
-	public Object set(int arg0, Object arg1) {
-		Object prev = ((Object[])arrays.get(arg0 / individualSize))[arg0 % individualSize];
-		((Object[])arrays.get(arg0 / individualSize))[arg0 % individualSize] = arg1;
+	public Object set(int index, Object arg1) {
+		Object prev = arrays[index / individualSize][index % individualSize];
+		arrays[index / individualSize][index % individualSize] = arg1;
 		return prev;
 	}
 
@@ -128,7 +112,7 @@ public class ArraysBackedList implements List {
 
 	public int indexOf(Object o) {
 		int index = 0;
-		Iterator it = arrays.iterator();
+		Iterator it = iterator();
 		while (it.hasNext()) {
 			Object obj = it.next();
 			if (obj.equals(o))
@@ -140,7 +124,7 @@ public class ArraysBackedList implements List {
 
 	public int lastIndexOf(Object o) {
 		int index = 0, i = 0;
-		Iterator it = arrays.iterator();
+		Iterator it = iterator();
 		while (it.hasNext()) {
 			Object obj = it.next();
 			if (obj.equals(o))
@@ -227,13 +211,11 @@ public class ArraysBackedList implements List {
 			a3 = {
 				new Integer(7), new Integer(8), new Integer(9)
 			};
-		ArraysBackedList l = new ArraysBackedList(3);
-		l.addArray(a1);
-		l.addArray(a2);
-		l.addArray(a3);
+		ArraysBackedList l = new ArraysBackedList(new Integer[][] {a1, a2, a3}, 3);
 		l.set(3, new Integer(11));
 		Iterator it = l.iterator();
 		while (it.hasNext())
 			System.out.println(it.next());
 	}
+	
 }

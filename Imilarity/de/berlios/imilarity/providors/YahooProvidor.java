@@ -85,7 +85,6 @@ public class YahooProvidor extends ProvidorBase {
                 try {
                 	//collection[i] = ImageData.loadUrl(result.getUrl());
                 	collection[i] = ImageData.loadUrl(result.getThumbnail().getUrl());
-                	collection[i].setPage(page);
                 	collection[i].setName(result.getTitle());
                 	collection[i].setUrl(new URL(result.getUrl()));
                 } catch(IOException e1) {

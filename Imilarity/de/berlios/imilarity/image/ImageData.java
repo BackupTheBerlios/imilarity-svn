@@ -17,29 +17,23 @@ import javax.imageio.ImageIO;
 /**
  * @author Klaas Bosteels
  */
-public class ImageData implements Comparable {
-	private final int id;
-	private int page;
-	
+public class ImageData implements Comparable {	
 	private BufferedImage image;
 	private String name;
 	private double similarity = 0.0;
 	private URL url;
 	
-	private ImageData(int id, int page, BufferedImage image, String name, URL url) {
-		this.id = id;
-		this.page = page;
+	private ImageData(BufferedImage image, String name, URL url, double similarity) {
 		this.image = image;
 		this.name = name;
 		this.url = url;
+		this.similarity = similarity;
 	}
 	
 	public ImageData(BufferedImage image, String name, URL url) {
-		this(image.hashCode(), 1, image, name, url);
+		this(image, name, url, 0.0);
 	}
 	
-	public int getId() { return id; }
-	public int getPage() { return page; }
 	public Image getImage() { return image; }
 	public String getName() { return name; }
 	public double getSimilarity() { return similarity; }
@@ -47,9 +41,10 @@ public class ImageData implements Comparable {
 	public int getHeight() { return image.getHeight(); }
 	public URL getUrl() { return url; }
 	
-	public void setPage(int page) { this.page = page; }
 	public void setName(String name) { this.name = name; }
-	public void setSimilarity(double similarity) { this.similarity = similarity; }
+	public void setSimilarity(double similarity) {
+		System.out.println("SIMILARITY = " + similarity);
+		this.similarity = similarity; }
 	public void setUrl(URL url) { this.url = url; }
 	
 	
@@ -62,7 +57,7 @@ public class ImageData implements Comparable {
 		AffineTransform tx = new AffineTransform();
 	    tx.setToScale(sx, sy);
 	    AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-		return new ImageData(id, page, op.filter(image,null), name, url);
+		return new ImageData(op.filter(image,null), name, url, similarity);
 	}
 	
 	public ImageData getScaledInstance(int w, int h) {
@@ -101,7 +96,7 @@ public class ImageData implements Comparable {
 
 
 	public ScalableColorImage getColorImage() {
-		return new ColorImageAdapter(this);
+		return new ScalableColorImageAdapter(this);
 	}
 	
 	public ScalableGrayscaleImage getGrayscaleImage() {

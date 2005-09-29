@@ -17,7 +17,8 @@ public class SC extends GrayscaleMeasureBase {
 	 */
 	public double similarity(ScalableGrayscaleImage image) {
 		GrayscaleImage orig = getImage();
-		if (image == null || !sameResolution(orig,image))
+		if (orig == null) System.out.println("orig == null");
+		if (orig == null || image == null || !sameResolution(orig,image))
 			return 0.0;
 		int pc = orig.getWidth() * orig.getHeight();
 		long sum1 = 0, sum2 = 0;

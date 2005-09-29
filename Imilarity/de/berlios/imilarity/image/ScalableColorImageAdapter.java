@@ -6,11 +6,11 @@ package de.berlios.imilarity.image;
 /**
  * @author Klaas Bosteels
  */
-public class ColorImageAdapter implements ScalableColorImage {
+public class ScalableColorImageAdapter implements ScalableColorImage {
 
 	private ImageData imageData;
 	
-	public ColorImageAdapter(ImageData id) {
+	public ScalableColorImageAdapter(ImageData id) {
 		if (id == null)
 			throw new NullPointerException("id == null");
 		imageData = id;
@@ -28,7 +28,7 @@ public class ColorImageAdapter implements ScalableColorImage {
 	 * @see de.berlios.imilarity.image.ScalableColorImage#getScaledInstance(int, int)
 	 */
 	public ScalableColorImage getScaledInstance(int w, int h) {
-		return new ColorImageAdapter(imageData.getScaledInstance(w,h));
+		return new ScalableColorImageAdapter(imageData.getScaledInstance(w,h));
 	}
 
 	/**
