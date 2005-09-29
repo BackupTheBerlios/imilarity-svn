@@ -42,9 +42,7 @@ public class ImageData implements Comparable {
 	public URL getUrl() { return url; }
 	
 	public void setName(String name) { this.name = name; }
-	public void setSimilarity(double similarity) {
-		System.out.println("SIMILARITY = " + similarity);
-		this.similarity = similarity; }
+	public void setSimilarity(double similarity) { this.similarity = similarity; }
 	public void setUrl(URL url) { this.url = url; }
 	
 	
