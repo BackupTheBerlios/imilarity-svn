@@ -125,6 +125,8 @@ public class SideBar extends GradientPanel implements Observer, HyperlinkListene
 		if (id != null) {
 			if (id.getHeight() > 150)
 				id = id.getHScaledInstance(150);
+			if (id.getWidth() > getWidth() - 20)
+				id = id.getWScaledInstance(getWidth() - 20);
 			iconLabel.setIcon(new GlintIcon(id));
 			iconLabel.setVisible(true);
 			

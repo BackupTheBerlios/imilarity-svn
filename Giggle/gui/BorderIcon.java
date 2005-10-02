@@ -37,6 +37,8 @@ public class BorderIcon implements Icon {
 	}
 	
 	public void paintIcon(Component c, Graphics g, int x, int y) {
+		g.setColor(Color.WHITE);
+		g.fillRect(x, y, imageData.getWidth() - 1, imageData.getHeight() - 1);
 		g.drawImage(imageData.getImage(), x, y, null);
 		g.setColor(color);
 		g.drawRect(x, y, imageData.getWidth() - 1, imageData.getHeight() - 1);

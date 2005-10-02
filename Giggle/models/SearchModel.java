@@ -9,7 +9,7 @@ import java.util.Observable;
 
 import de.berlios.imilarity.Imilarity;
 import de.berlios.imilarity.image.ImageData;
-import de.berlios.imilarity.providors.YahooProvidor;
+import de.berlios.imilarity.providors.Providor;
 
 
 /**
@@ -26,8 +26,8 @@ public class SearchModel extends Observable {
 		this.imilarity = imilarity;		
 	}
 	
-	public void setSearchString(String str) {
-		imilarity.setProvidor(new YahooProvidor(str));
+	public void setProvidor(Providor providor) {
+		imilarity.setProvidor(providor);
 		setChanged();
 		notifyObservers();
 	}

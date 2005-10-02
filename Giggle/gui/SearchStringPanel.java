@@ -11,10 +11,15 @@ import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import de.berlios.imilarity.providors.DirProvidor;
+import de.berlios.imilarity.providors.YahooProvidor;
 
 import models.ProgressModel;
 import models.SearchModel;
@@ -30,6 +35,7 @@ public class SearchStringPanel extends JPanel implements ActionListener, Observe
 	private ProgressModel progressModel;
 	
 	private JTextField textField;
+	private JComboBox comboBox;
 	private JButton findButton, stopButton;
 	
 	public SearchStringPanel(SearchModel searchModel, ProgressModel progressModel) {
@@ -50,6 +56,10 @@ public class SearchStringPanel extends JPanel implements ActionListener, Observe
 		textField.setActionCommand("find");
 		textField.addActionListener(this);
 		add(textField);
+		add(new JLabel("using"));
+		comboBox = new JComboBox(new String[] { "Yahoo!", "Directory" });
+		add(comboBox);
+		add(Box.createHorizontalStrut(15));
 		findButton = new JButton("Find now");
 		findButton.setActionCommand("find");
 		findButton.addActionListener(this);
@@ -67,7 +77,14 @@ public class SearchStringPanel extends JPanel implements ActionListener, Observe
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("find")) {
 			stopButton.setEnabled(true);
-			searchModel.setSearchString(textField.getText());
+			try {
+				if (comboBox.getSelectedItem().equals("Directory"))
+					searchModel.setProvidor(new DirProvidor(textField.getText()));
+				else
+					searchModel.setProvidor(new YahooProvidor(textField.getText()));
+			} catch(IllegalArgumentException e1) {
+				System.err.println("ERROR: " + e1.getMessage());
+			}
 			new Thread(new Runnable() {
 				public void run() {
 					for (int i = 0; i <= searchModel.getPageCount(); i++) {
@@ -91,6 +108,7 @@ public class SearchStringPanel extends JPanel implements ActionListener, Observe
 	public void update(Observable o, Object arg) {
 		boolean value = progressModel.getValue() == progressModel.getMax();
 		textField.setEnabled(value);
+		comboBox.setEnabled(value);
 		findButton.setEnabled(value);
 	}
 }
