@@ -131,9 +131,13 @@ public class SideBar extends GradientPanel implements Observer, HyperlinkListene
 			nameLabel.setText(id.getName());
 			nameLabel.setVisible(true);
 			
+			String similarityStr = ("" + (id.getSimilarity()*100));
+			
 			StringBuffer sb = new StringBuffer();
 			sb.append("<h3>Similarity</h3>");
-			sb.append("<center>" + (id.getSimilarity()*100) + " %</center>");
+			sb.append("<center>");
+			sb.append("" + similarityStr.substring(0,Math.min(10,similarityStr.length())));
+			sb.append(" %</center>");
 			sb.append("<h3>Actions</h3>");
 		    sb.append("<a href=\"fullSize\">View full size image</a><br>");
 		    if (!examplesModel.containsExample(id))
