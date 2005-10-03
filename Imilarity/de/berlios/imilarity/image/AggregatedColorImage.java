@@ -8,22 +8,28 @@ import de.berlios.imilarity.aggregators.Aggregator;
 /**
  * @author Klaas Bosteels
  */
-public class AggregatedColorImage implements ColorImage {
+public class AggregatedColorImage implements ScalableColorImage {
 
-	private ColorImage[] scaledImages;
+	private ScalableColorImage[] images, scaledImages;
 	private Aggregator aggregator;
 	
-	private static final int WIDTH = 100, HEIGHT = 100;
+	private static final int DEFAULT_WIDTH = 100, DEFAULT_HEIGHT = 100;
 	
-	public AggregatedColorImage(ScalableColorImage[] images, Aggregator aggregator) {
+	public AggregatedColorImage(ScalableColorImage[] images, Aggregator aggregator,
+			int width, int height) {
 		if (images == null)
 			throw new NullPointerException("images == null");
 		if (aggregator == null)
 			throw new NullPointerException("aggregator == null");
 		this.aggregator = aggregator;
-		scaledImages = new ColorImage[images.length];
+		this.images = images;
+		scaledImages = new ScalableColorImage[images.length];
 		for (int i = 0; i < images.length; i++)
-			scaledImages[i] = images[i].getScaledInstance(WIDTH,HEIGHT);
+			scaledImages[i] = images[i].getScaledInstance(width, height);
+	}
+	
+	public AggregatedColorImage(ScalableColorImage[] images, Aggregator aggregator) {
+		this(images, aggregator, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	}
 	
 	
@@ -47,14 +53,19 @@ public class AggregatedColorImage implements ColorImage {
 	 * @see de.berlios.imilarity.image.Image#getWidth()
 	 */
 	public int getWidth() {
-		return WIDTH;
+		return DEFAULT_WIDTH;
 	}
 
 	/**
 	 * @see de.berlios.imilarity.image.Image#getHeight()
 	 */
 	public int getHeight() {
-		return HEIGHT;
+		return DEFAULT_HEIGHT;
+	}
+
+
+	public ScalableColorImage getScaledInstance(int w, int h) {
+		return new AggregatedColorImage(images, aggregator, w, h);
 	}
 
 }

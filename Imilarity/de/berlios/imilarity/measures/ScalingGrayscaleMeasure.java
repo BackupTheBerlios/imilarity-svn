@@ -3,7 +3,6 @@
  */
 package de.berlios.imilarity.measures;
 
-import de.berlios.imilarity.image.GrayscaleImage;
 import de.berlios.imilarity.image.ScalableGrayscaleImage;
 
 
@@ -20,16 +19,16 @@ public class ScalingGrayscaleMeasure extends GrayscaleMeasureBase {
 		this.measure = measure;
 	}
 	
-	public void setImage(GrayscaleImage image) {
+	public void setImage(ScalableGrayscaleImage image) {
 		measure.setImage(image);
 	}
 	
-	public GrayscaleImage getImage() {
+	public ScalableGrayscaleImage getImage() {
 		return measure.getImage();
 	}
 	
 	public double similarity(ScalableGrayscaleImage image) {
-		GrayscaleImage orig = getImage();
+		ScalableGrayscaleImage orig = getImage();
 		ScalableGrayscaleImage si = image.getScaledInstance(orig.getWidth(),orig.getHeight());
 		return measure.similarity(si);
 	}

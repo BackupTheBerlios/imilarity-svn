@@ -6,8 +6,10 @@ package de.berlios.imilarity.image;
 /**
  * @author Klaas Bosteels
  */
-public interface ScalableGrayscaleImage extends GrayscaleImage {
+public interface ScalableGrayscaleImage extends Image {
 
+	public int getGrayscaleValue(int pixelNr);
+	
 	public ScalableGrayscaleImage getScaledInstance(int w, int h);
 	
 }
