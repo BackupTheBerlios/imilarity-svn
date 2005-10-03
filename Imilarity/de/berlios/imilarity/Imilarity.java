@@ -19,7 +19,7 @@ import de.berlios.imilarity.image.ImageData;
 import de.berlios.imilarity.image.ColorImage;
 import de.berlios.imilarity.measures.AD;
 import de.berlios.imilarity.measures.ColorMeasure;
-import de.berlios.imilarity.measures.GrayscaledColorMeasure;
+import de.berlios.imilarity.measures.CombinedColorMeasure;
 import de.berlios.imilarity.measures.ScalingGrayscaleMeasure;
 import de.berlios.imilarity.providors.Providor;
 import de.berlios.imilarity.util.ArraysBackedList;
@@ -34,7 +34,7 @@ public class Imilarity {
 	private Providor providor;
 	private Aggregator aggregator = new ArithmeticMean();
 	private ColorMeasure measure = 
-		new GrayscaledColorMeasure(new ScalingGrayscaleMeasure(new AD()));
+		new CombinedColorMeasure(new ScalingGrayscaleMeasure(new AD()));
 	
 	private Collection examples = new HashSet(); 
 	protected ImageData[][] pages;

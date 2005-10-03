@@ -5,33 +5,37 @@ package de.berlios.imilarity.measures;
 
 import de.berlios.imilarity.image.ComponentImageAdapter;
 import de.berlios.imilarity.image.ColorImage;
+import de.berlios.imilarity.image.GrayscaleImage;
 
 public class CombinedColorMeasure extends ColorMeasureBase {
 	
-	private GrayscaleMeasure[] measures;
+	private GrayscaleMeasure measure;
+	private GrayscaleImage[] compImages;
 	
-	public CombinedColorMeasure(GrayscaleMeasure[] measures) {
-		if (measures == null)
-			throw new NullPointerException("measures == null");
-		this.measures = measures;
+	public CombinedColorMeasure(GrayscaleMeasure measure) {
+		if (measure == null)
+			throw new NullPointerException("measure == null");
+		this.measure = measure;
+		compImages = new GrayscaleImage[3];
 	}
 	
 	public void setImage(ColorImage image) {
 		super.setImage(image);
 		for (int i = 0; i < 3; i++)
-			measures[i].setImage(new ComponentImageAdapter(image, i));
+			compImages[i] = new ComponentImageAdapter(image, i);
 	}
 	
 	public double similarity(ColorImage image) {
 		double sum = 0.0;
-		for (int i = 0; i < 3; i++)
-			sum += measures[i].similarity(new ComponentImageAdapter(image, i));
+		for (int i = 0; i < 3; i++) {
+			measure.setImage(compImages[i]);
+			sum += measure.similarity(new ComponentImageAdapter(image, i));
+		}
 		return sum / 3;
 	}
 
 	public String getDescription() {
-		return "Combined " + measures[0].getDescription() + ", " +
-			measures[1].getDescription() + " and " + measures[2].getDescription();
+		return "Combined " + measure.getDescription();
 	}
 
 }
