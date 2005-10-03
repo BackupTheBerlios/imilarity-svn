@@ -7,12 +7,12 @@ import de.berlios.imilarity.image.ComponentImageAdapter;
 import de.berlios.imilarity.image.ColorImage;
 import de.berlios.imilarity.image.GrayscaleImage;
 
-public class CombinedColorMeasure extends ColorMeasureBase {
+public class ComponentsColorMeasure extends ColorMeasureBase {
 	
 	private GrayscaleMeasure measure;
 	private GrayscaleImage[] compImages;
 	
-	public CombinedColorMeasure(GrayscaleMeasure measure) {
+	public ComponentsColorMeasure(GrayscaleMeasure measure) {
 		if (measure == null)
 			throw new NullPointerException("measure == null");
 		this.measure = measure;
