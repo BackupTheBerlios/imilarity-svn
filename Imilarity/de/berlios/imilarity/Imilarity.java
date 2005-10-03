@@ -16,7 +16,7 @@ import de.berlios.imilarity.aggregators.Aggregator;
 import de.berlios.imilarity.aggregators.ArithmeticMean;
 import de.berlios.imilarity.image.AggregatedColorImage;
 import de.berlios.imilarity.image.ImageData;
-import de.berlios.imilarity.image.ScalableColorImage;
+import de.berlios.imilarity.image.ColorImage;
 import de.berlios.imilarity.measures.AD;
 import de.berlios.imilarity.measures.ColorMeasure;
 import de.berlios.imilarity.measures.GrayscaledColorMeasure;
@@ -195,11 +195,11 @@ public class Imilarity {
 			return;
 		if (!aggregationCalculated) {
 			aggregationCalculated = true;
-			ScalableColorImage[] scis = new ScalableColorImage[examples.size()];
+			ColorImage[] scis = new ColorImage[examples.size()];
 			Iterator it = examples.iterator();
 			for (int i = 0; i < scis.length && it.hasNext(); i++)
 				scis[i] = ((ImageData) it.next()).getColorImage();
-			ScalableColorImage aggregation = new AggregatedColorImage(scis, aggregator);
+			ColorImage aggregation = new AggregatedColorImage(scis, aggregator);
 			measure.setImage(aggregation);
 		}
 		for (int i = 0; i < pages[page-1].length; i++)

@@ -3,9 +3,9 @@
  */
 package de.berlios.imilarity.measures;
 
-import de.berlios.imilarity.image.ScalableColorImage;
-import de.berlios.imilarity.image.ScalableGrayscaleImage;
-import de.berlios.imilarity.image.ScalableGrayscaleImageAdapter;
+import de.berlios.imilarity.image.ColorImage;
+import de.berlios.imilarity.image.GrayscaleImage;
+import de.berlios.imilarity.image.GrayscaleImageAdapter;
 
 /**
  * @author Klaas Bosteels
@@ -20,16 +20,16 @@ public class GrayscaledColorMeasure extends ColorMeasureBase {
 		this.measure = measure;
 	}
 	
-	public void setImage(ScalableColorImage image) {
+	public void setImage(ColorImage image) {
 		super.setImage(image);
-		measure.setImage(new ScalableGrayscaleImageAdapter(image));
+		measure.setImage(new GrayscaleImageAdapter(image));
 	}
 	
 	/**
-	 * @see de.berlios.imilarity.measures.ColorMeasure#similarity(ScalableGrayscaleImage)
+	 * @see de.berlios.imilarity.measures.ColorMeasure#similarity(GrayscaleImage)
 	 */
-	public double similarity(ScalableColorImage image) {
-		ScalableGrayscaleImage gi = new ScalableGrayscaleImageAdapter(image);
+	public double similarity(ColorImage image) {
+		GrayscaleImage gi = new GrayscaleImageAdapter(image);
 		return measure.similarity(gi);
 	}
 

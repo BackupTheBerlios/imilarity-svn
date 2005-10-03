@@ -6,10 +6,10 @@ package de.berlios.imilarity.image;
 /**
  * @author Klaas Bosteels
  */
-public interface ScalableColorImage extends Image {
+public interface ColorImage extends Image {
 	
 	public int[] getColorValues(int pixelNr);
 	
-	public ScalableColorImage getScaledInstance(int w, int h);
+	public ColorImage getScaledInstance(int w, int h);
 	
 }

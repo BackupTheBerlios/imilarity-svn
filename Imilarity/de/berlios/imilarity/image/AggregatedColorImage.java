@@ -8,14 +8,14 @@ import de.berlios.imilarity.aggregators.Aggregator;
 /**
  * @author Klaas Bosteels
  */
-public class AggregatedColorImage implements ScalableColorImage {
+public class AggregatedColorImage implements ColorImage {
 
-	private ScalableColorImage[] images, scaledImages;
+	private ColorImage[] images, scaledImages;
 	private Aggregator aggregator;
 	
 	private static final int DEFAULT_WIDTH = 100, DEFAULT_HEIGHT = 100;
 	
-	public AggregatedColorImage(ScalableColorImage[] images, Aggregator aggregator,
+	public AggregatedColorImage(ColorImage[] images, Aggregator aggregator,
 			int width, int height) {
 		if (images == null)
 			throw new NullPointerException("images == null");
@@ -23,12 +23,12 @@ public class AggregatedColorImage implements ScalableColorImage {
 			throw new NullPointerException("aggregator == null");
 		this.aggregator = aggregator;
 		this.images = images;
-		scaledImages = new ScalableColorImage[images.length];
+		scaledImages = new ColorImage[images.length];
 		for (int i = 0; i < images.length; i++)
 			scaledImages[i] = images[i].getScaledInstance(width, height);
 	}
 	
-	public AggregatedColorImage(ScalableColorImage[] images, Aggregator aggregator) {
+	public AggregatedColorImage(ColorImage[] images, Aggregator aggregator) {
 		this(images, aggregator, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	}
 	
@@ -64,7 +64,7 @@ public class AggregatedColorImage implements ScalableColorImage {
 	}
 
 
-	public ScalableColorImage getScaledInstance(int w, int h) {
+	public ColorImage getScaledInstance(int w, int h) {
 		return new AggregatedColorImage(images, aggregator, w, h);
 	}
 

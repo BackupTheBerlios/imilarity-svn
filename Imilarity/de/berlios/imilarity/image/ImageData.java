@@ -93,12 +93,12 @@ public class ImageData implements Comparable {
 	}
 
 
-	public ScalableColorImage getColorImage() {
-		return new ScalableColorImageAdapter(this);
+	public ColorImage getColorImage() {
+		return new ColorImageAdapter(this);
 	}
 	
-	public ScalableGrayscaleImage getGrayscaleImage() {
-		return new ScalableGrayscaleImageAdapter(getColorImage());
+	public GrayscaleImage getGrayscaleImage() {
+		return new GrayscaleImageAdapter(getColorImage());
 	}
 	
 

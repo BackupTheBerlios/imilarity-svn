@@ -3,7 +3,7 @@
  */
 package de.berlios.imilarity.measures;
 
-import de.berlios.imilarity.image.ScalableColorImage;
+import de.berlios.imilarity.image.ColorImage;
 
 
 /**
@@ -14,15 +14,15 @@ public interface ColorMeasure {
 	/**
 	 * @param image beeld waarmee vergeleken moet worden
 	 */
-	public void setImage(ScalableColorImage image);
+	public void setImage(ColorImage image);
 	
-	public ScalableColorImage getImage();
+	public ColorImage getImage();
 	
 	/**
 	 * Geeft een getal in het interval [0,1] terug dat de graad van similariteit
 	 * tussen 'image' en het ingestelde beeld weergeeft.
 	 */
-	public double similarity(ScalableColorImage image);
+	public double similarity(ColorImage image);
 	
 	public String getDescription();
 }

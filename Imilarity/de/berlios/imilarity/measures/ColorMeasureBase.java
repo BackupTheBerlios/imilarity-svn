@@ -3,7 +3,7 @@
  */
 package de.berlios.imilarity.measures;
 
-import de.berlios.imilarity.image.ScalableColorImage;
+import de.berlios.imilarity.image.ColorImage;
 
 
 /**
@@ -11,15 +11,15 @@ import de.berlios.imilarity.image.ScalableColorImage;
  */
 public abstract class ColorMeasureBase implements ColorMeasure {
 
-	private ScalableColorImage image;
+	private ColorImage image;
 
-	public void setImage(ScalableColorImage image) {
+	public void setImage(ColorImage image) {
 		if (image == null)
 			throw new NullPointerException("image == null");
 		this.image = image;
 	}
 	
-	public ScalableColorImage getImage() {
+	public ColorImage getImage() {
 		return image;
 	}
 	

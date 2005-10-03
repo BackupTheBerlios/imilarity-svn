@@ -3,7 +3,7 @@
  */
 package de.berlios.imilarity.measures;
 
-import de.berlios.imilarity.image.ScalableGrayscaleImage;
+import de.berlios.imilarity.image.GrayscaleImage;
 
 
 /**
@@ -14,15 +14,15 @@ public interface GrayscaleMeasure {
 	/**
 	 * @param image beeld waarmee vergeleken moet worden
 	 */
-	public void setImage(ScalableGrayscaleImage image);
+	public void setImage(GrayscaleImage image);
 	
-	public ScalableGrayscaleImage getImage();
+	public GrayscaleImage getImage();
 	
 	/**
 	 * Geeft een getal in het interval [0,1] terug dat de graad van similariteit
 	 * van 'image' met het ingestelde beeld weergeeft.
 	 */
-	public double similarity(ScalableGrayscaleImage image);
+	public double similarity(GrayscaleImage image);
 	
 	public String getDescription();
 	
