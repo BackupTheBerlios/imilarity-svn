@@ -3,7 +3,7 @@
  */
 package de.berlios.imilarity.image;
 
-public class ComponentImageAdapter implements GrayscaleImage {
+public class ComponentImageAdapter extends GrayscaleImageBase {
 	
 	private ColorImage colorImage;
 	private int componentNr;

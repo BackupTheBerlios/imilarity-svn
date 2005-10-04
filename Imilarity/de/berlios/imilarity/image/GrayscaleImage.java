@@ -12,4 +12,6 @@ public interface GrayscaleImage extends Image {
 	
 	public GrayscaleImage getScaledInstance(int w, int h);
 	
+	public int[] getHistogram();
+	
 }
