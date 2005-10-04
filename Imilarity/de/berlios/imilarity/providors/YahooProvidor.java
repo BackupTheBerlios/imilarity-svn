@@ -23,7 +23,7 @@ import de.berlios.imilarity.image.ImageData;
  */
 public class YahooProvidor extends ProvidorBase {
 	
-	private static final int PAGE_SIZE = 10;
+	private static final int PAGE_SIZE = 5;
 	private static final int RESULTSET_SIZE = 100;
 	
 	private String keywords;

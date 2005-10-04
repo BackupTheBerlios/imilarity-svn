@@ -17,7 +17,7 @@ public class DirProvidor extends ProvidorBase {
 
 	private final File[] files;
 	
-	private static final int PAGE_SIZE = 8;
+	private static final int PAGE_SIZE = 5;
 	private int pageCount = 0;
 	
 	private static final FilenameFilter filter = new FilenameFilter() {
