@@ -15,6 +15,7 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -83,7 +84,8 @@ public class SearchStringPanel extends JPanel implements ActionListener, Observe
 				else
 					searchModel.setProvidor(new YahooProvidor(textField.getText()));
 			} catch(IllegalArgumentException e1) {
-				System.err.println("ERROR: " + e1.getMessage());
+				JOptionPane.showMessageDialog(this,
+						e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			}
 			new Thread(new Runnable() {
 				public void run() {
