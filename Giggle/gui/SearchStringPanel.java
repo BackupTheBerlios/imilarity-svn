@@ -84,7 +84,7 @@ public class SearchStringPanel extends JPanel implements ActionListener, Observe
 				else
 					searchModel.setProvidor(new YahooProvidor(textField.getText()));
 			} catch(IllegalArgumentException e1) {
-				JOptionPane.showMessageDialog(this,
+				JOptionPane.showMessageDialog(this.getParent(),
 						e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			}
 			new Thread(new Runnable() {
