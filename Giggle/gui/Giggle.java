@@ -54,7 +54,6 @@ public class Giggle extends JFrame {
 		configureUI();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setPreferredSize(new Dimension(800, 600));
 		
 		Imilarity imilarity = new Imilarity();
 		ImageModel selectedImgModel = new ImageModel();
@@ -69,10 +68,10 @@ public class Giggle extends JFrame {
 		
 		JPanel examplesPanel = 
 			new ExamplesPanel(examplesModel, searchModel, progressModel, selectedImgModel);
-		//examplesPanel.setPreferredSize(new Dimension(800, 100));
 		content.add(examplesPanel, BorderLayout.SOUTH);
 		
 		pack();
+		setSize(new Dimension(800, 600));
 		setVisible(true);
 	}
 	
