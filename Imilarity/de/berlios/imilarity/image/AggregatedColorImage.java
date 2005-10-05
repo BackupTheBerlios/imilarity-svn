@@ -8,7 +8,7 @@ import de.berlios.imilarity.aggregators.Aggregator;
 /**
  * @author Klaas Bosteels
  */
-public class AggregatedColorImage implements ColorImage {
+public class AggregatedColorImage extends ColorImageBase {
 
 	private ColorImage[] images, scaledImages;
 	private Aggregator aggregator;
@@ -34,12 +34,12 @@ public class AggregatedColorImage implements ColorImage {
 	
 	
 	/**
-	 * @see de.berlios.imilarity.image.ColorImage#getColorValues(int)
+	 * @see de.berlios.imilarity.image.ColorImage#getColorValues(int,int)
 	 */
-	public int[] getColorValues(int pixelNr) {
+	public int[] getColorValues(int x, int y) {
 		int values[][] = new int[3][scaledImages.length];
 		for (int i = 0; i < scaledImages.length; i++) {
-			int colorValues[] = scaledImages[i].getColorValues(pixelNr);
+			int colorValues[] = scaledImages[i].getColorValues(x, y);
 			for (int j = 0; j < colorValues.length; j++)
 				values[j][i] = colorValues[j];
 		}

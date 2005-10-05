@@ -8,6 +8,7 @@ package de.berlios.imilarity.image;
  */
 public interface ColorImage extends Image {
 	
+	public int[] getColorValues(int x, int y);
 	public int[] getColorValues(int pixelNr);
 	
 	public ColorImage getScaledInstance(int w, int h);

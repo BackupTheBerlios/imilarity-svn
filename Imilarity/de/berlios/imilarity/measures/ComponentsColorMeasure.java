@@ -3,7 +3,7 @@
  */
 package de.berlios.imilarity.measures;
 
-import de.berlios.imilarity.image.ComponentImageAdapter;
+import de.berlios.imilarity.image.ComponentGrayscaleImage;
 import de.berlios.imilarity.image.ColorImage;
 import de.berlios.imilarity.image.GrayscaleImage;
 
@@ -22,14 +22,14 @@ public class ComponentsColorMeasure extends ColorMeasureBase {
 	public void setImage(ColorImage image) {
 		super.setImage(image);
 		for (int i = 0; i < 3; i++)
-			compImages[i] = new ComponentImageAdapter(image, i);
+			compImages[i] = new ComponentGrayscaleImage(image, i);
 	}
 	
 	public double similarity(ColorImage image) {
 		double sum = 0.0;
 		for (int i = 0; i < 3; i++) {
 			measure.setImage(compImages[i]);
-			sum += measure.similarity(new ComponentImageAdapter(image, i));
+			sum += measure.similarity(new ComponentGrayscaleImage(image, i));
 		}
 		return sum / 3;
 	}

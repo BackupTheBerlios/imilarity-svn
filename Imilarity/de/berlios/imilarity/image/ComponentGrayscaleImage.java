@@ -3,12 +3,12 @@
  */
 package de.berlios.imilarity.image;
 
-public class ComponentImageAdapter extends GrayscaleImageBase {
+public class ComponentGrayscaleImage extends GrayscaleImageBase {
 	
 	private ColorImage colorImage;
 	private int componentNr;
 	
-	public ComponentImageAdapter(ColorImage colorImage, int componentNr) {
+	public ComponentGrayscaleImage(ColorImage colorImage, int componentNr) {
 		if (colorImage == null)
 			throw new NullPointerException("colorImage == null");
 		this.colorImage = colorImage;
@@ -17,8 +17,8 @@ public class ComponentImageAdapter extends GrayscaleImageBase {
 		this.componentNr = componentNr;
 	}
 	
-	public int getGrayscaleValue(int pixelNr) {
-		return colorImage.getColorValues(pixelNr)[componentNr];
+	public int getGrayscaleValue(int x, int y) {
+		return colorImage.getColorValues(x, y)[componentNr];
 	}
 
 	public int getWidth() {
@@ -30,7 +30,7 @@ public class ComponentImageAdapter extends GrayscaleImageBase {
 	}
 
 	public GrayscaleImage getScaledInstance(int w, int h) {
-		return new ComponentImageAdapter(colorImage.getScaledInstance(w,h), componentNr);
+		return new ComponentGrayscaleImage(colorImage.getScaledInstance(w,h), componentNr);
 	}
 
 }

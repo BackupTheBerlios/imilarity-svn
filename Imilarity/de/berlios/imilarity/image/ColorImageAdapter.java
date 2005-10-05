@@ -6,7 +6,7 @@ package de.berlios.imilarity.image;
 /**
  * @author Klaas Bosteels
  */
-public class ColorImageAdapter implements ColorImage {
+public class ColorImageAdapter extends ColorImageBase {
 
 	private ImageData imageData;
 	
@@ -18,10 +18,10 @@ public class ColorImageAdapter implements ColorImage {
 	
 	
 	/**
-	 * @see de.berlios.imilarity.image.ColorImage#getColorValues(int)
+	 * @see de.berlios.imilarity.image.ColorImage#getColorValues(int, int)
 	 */
-	public int[] getColorValues(int pixelNr) {
-		return imageData.getRgb(pixelNr);
+	public int[] getColorValues(int x, int y) {
+		return imageData.getRgb(x, y);
 	}
 
 	/**

@@ -5,6 +5,11 @@ package de.berlios.imilarity.image;
 
 public abstract class GrayscaleImageBase implements GrayscaleImage {
 	
+	public int getGrayscaleValue(int pixelNr) {
+		int w = getWidth();
+		return getGrayscaleValue(pixelNr % w, pixelNr / w);
+	}
+	
 	public int[] getHistogram() {
 		int[] histogram = new int[256];
 		int pc = getWidth() * getHeight();

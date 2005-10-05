@@ -13,8 +13,8 @@ public class GrayscaleImageAdapter extends GrayscaleImageBase {
 		this.image = image;
 	}
 
-	public int getGrayscaleValue(int pixelNr) {
-		int[] colors = image.getColorValues(pixelNr);
+	public int getGrayscaleValue(int x, int y) {
+		int[] colors = image.getColorValues(x, y);
 		return (int) (0.3 * colors[0] + 0.59 * colors[1] + 0.11 * colors[2]);
 	}
 

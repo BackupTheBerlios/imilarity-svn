@@ -8,6 +8,7 @@ package de.berlios.imilarity.image;
  */
 public interface GrayscaleImage extends Image {
 
+	public int getGrayscaleValue(int x, int y);
 	public int getGrayscaleValue(int pixelNr);
 	
 	public GrayscaleImage getScaledInstance(int w, int h);
