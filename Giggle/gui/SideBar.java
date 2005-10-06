@@ -94,20 +94,6 @@ public class SideBar extends GradientPanel implements Observer, HyperlinkListene
 		editorPane.setVisible(false);
 	    add(editorPane);
 	    editorPane.addHyperlinkListener(this);
-	    
-//		JButton fullSizeButton = new JButton("View full size image");
-//		fullSizeButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
-//		fullSizeButton.setEnabled(false);
-//		add(fullSizeButton);
-//		
-//		add(Box.createVerticalStrut(10));
-//		
-//		JButton addExampleButton = new JButton("Add to examples");
-//		addExampleButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
-//		addExampleButton.setEnabled(false);
-//		add(addExampleButton);
-		
-		//add(Box.createVerticalStrut(15));
 	}
 
 	

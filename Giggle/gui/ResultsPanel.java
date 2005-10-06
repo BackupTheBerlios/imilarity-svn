@@ -122,7 +122,6 @@ public class ResultsPanel extends JPanel implements Observer {
 		fullSizePanel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				ResultsPanel.this.selectedImgModel.setImageData(null);
-				//cardLayout.show(centerPanel, "results");
 			}
 		});
 		
@@ -158,7 +157,7 @@ public class ResultsPanel extends JPanel implements Observer {
 		repaint();
 	}
 	
-	private boolean busy1 = false, busy2 = false;
+	private boolean busy1 = false;
 	
 	/**
 	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
@@ -208,8 +207,7 @@ public class ResultsPanel extends JPanel implements Observer {
 			fullSizePanel.setImage(null);
 			if (fullSizeImgModel.getImageData() == null) {
 				cardLayout.show(centerPanel, "results");
-			} else if (!busy2) {
-				busy2 = true;
+			} else {
 				fsProgressBar.setVisible(true);
 				cardLayout.show(centerPanel, "fullSize");
 				new Thread(new Runnable() {
@@ -231,7 +229,6 @@ public class ResultsPanel extends JPanel implements Observer {
 								}
 							});
 						} finally {
-							ResultsPanel.this.busy2 = false;
 							EventQueue.invokeLater(new Runnable() {
 								public void run() {
 									fsProgressBar.setVisible(false);
