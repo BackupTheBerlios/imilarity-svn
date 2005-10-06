@@ -121,7 +121,7 @@ public class ResultsPanel extends JPanel implements Observer {
 		
 		fullSizePanel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				ResultsPanel.this.selectedImgModel.setImageData(null);
+				ResultsPanel.this.fullSizeImgModel.setImageData(null);
 			}
 		});
 		
@@ -157,14 +157,15 @@ public class ResultsPanel extends JPanel implements Observer {
 		repaint();
 	}
 	
-	private boolean busy1 = false;
+	private boolean searchingResults = false;
+	private long lastFullSizeStartMillis = 0;
 	
 	/**
 	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
 	 */
 	public void update(Observable o, Object arg) {
-		if (o == searchModel && !busy1) {
-			busy1 = true;
+		if (o == searchModel && !searchingResults) {
+			searchingResults = true;
 			resultsPanel.removeAll();
 			progressModel.setValue(0);
 			progressModel.setMin(0);
@@ -191,7 +192,7 @@ public class ResultsPanel extends JPanel implements Observer {
 							}
 						});
 					} finally  {
-						ResultsPanel.this.busy1 = false;
+						ResultsPanel.this.searchingResults = false;
 						EventQueue.invokeLater(new Runnable() {
 							public void run() {
 								progressModel.setVisible(false);	
@@ -212,12 +213,15 @@ public class ResultsPanel extends JPanel implements Observer {
 				cardLayout.show(centerPanel, "fullSize");
 				new Thread(new Runnable() {
 					public void run() {
+						final long startMillis = System.currentTimeMillis();
+						lastFullSizeStartMillis = startMillis;
 						try {
 							URL url = fullSizeImgModel.getImageData().getUrl();
 							final ImageData id = ImageData.loadUrl(url);
 							EventQueue.invokeLater(new Runnable() {
 								public void run() {
-									fullSizePanel.setImage(id);
+									if (startMillis >= lastFullSizeStartMillis)
+										fullSizePanel.setImage(id);
 								}
 							});
 						} catch (IOException e) {
