@@ -221,11 +221,11 @@ public class ResultsPanel extends JPanel implements Observer {
 								}
 							});
 						} catch (IOException e) {
-							// TODO: dialog
-							System.err.println("ERROR: Cannot load requested image!");
+							JOptionPane.showMessageDialog(ResultsPanel.this.getParent(),
+									"Cannot load full size image: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 							EventQueue.invokeLater(new Runnable() {
 								public void run() {
-									cardLayout.show(centerPanel, "results");
+									fullSizeImgModel.setImageData(null);
 								}
 							});
 						} finally {
