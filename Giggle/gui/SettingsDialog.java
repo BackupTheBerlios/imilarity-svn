@@ -23,8 +23,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import be.ugent.imilarity.aggregators.Aggregator;
-import be.ugent.imilarity.measures.*;
+import de.berlios.imilarity.aggregators.Aggregator;
+import de.berlios.imilarity.measures.*;
+
 
 public class SettingsDialog extends JDialog {
 

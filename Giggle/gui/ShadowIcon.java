@@ -12,7 +12,8 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 
-import be.ugent.imilarity.image.ImageData;
+import de.berlios.imilarity.image.ImageData;
+
 
 
 

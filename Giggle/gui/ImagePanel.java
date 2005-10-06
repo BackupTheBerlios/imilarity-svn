@@ -10,7 +10,8 @@ import java.util.Observer;
 
 import javax.swing.JPanel;
 
-import be.ugent.imilarity.image.ImageData;
+import de.berlios.imilarity.image.ImageData;
+
 
 
 import models.ImageModel;

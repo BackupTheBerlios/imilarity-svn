@@ -11,11 +11,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
-import be.ugent.imilarity.Imilarity;
 
 import com.jgoodies.looks.FontSizeHints;
 import com.jgoodies.looks.Options;
 import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
+
+import de.berlios.imilarity.Imilarity;
 
 
 import models.ExamplesModel;

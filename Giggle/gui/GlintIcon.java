@@ -14,7 +14,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
-import be.ugent.imilarity.image.ImageData;
+import de.berlios.imilarity.image.ImageData;
+
 
 
 

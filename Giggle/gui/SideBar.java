@@ -19,7 +19,8 @@ import javax.swing.JLabel;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
-import be.ugent.imilarity.image.ImageData;
+import de.berlios.imilarity.image.ImageData;
+
 
 
 import models.ExamplesModel;

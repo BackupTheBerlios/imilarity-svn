@@ -34,7 +34,8 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.Scrollable;
 
-import be.ugent.imilarity.image.ImageData;
+import de.berlios.imilarity.image.ImageData;
+
 
 
 import models.ExamplesModel;

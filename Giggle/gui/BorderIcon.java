@@ -10,7 +10,8 @@ import java.awt.Graphics;
 
 import javax.swing.Icon;
 
-import be.ugent.imilarity.image.ImageData;
+import de.berlios.imilarity.image.ImageData;
+
 
 
 /**

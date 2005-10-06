@@ -7,10 +7,11 @@ package models;
 import java.io.IOException;
 import java.util.Observable;
 
-import be.ugent.imilarity.Imilarity;
-import be.ugent.imilarity.image.ImageData;
-import be.ugent.imilarity.measures.ColorMeasure;
-import be.ugent.imilarity.providors.Providor;
+import de.berlios.imilarity.Imilarity;
+import de.berlios.imilarity.image.ImageData;
+import de.berlios.imilarity.measures.ColorMeasure;
+import de.berlios.imilarity.providors.Providor;
+
 
 
 
