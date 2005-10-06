@@ -123,7 +123,7 @@ public class SettingsDialog extends JDialog {
 	
 	public ColorMeasure getMeasure() {
 		try {
-			Class c1 = Class.forName("be.ugent.imilarity.measures." + measure.getSelectedItem());
+			Class c1 = Class.forName("de.berlios.imilarity.measures." + measure.getSelectedItem());
 			FastGrayscaleMeasureFactory factory = new ClassGrayscaleMeasureFactory(c1);
 			if (homogenity.isEnabled() && homogenity.isSelected()) {
 				final FastGrayscaleMeasureFactory f = factory;
@@ -136,7 +136,7 @@ public class SettingsDialog extends JDialog {
 			if (combined.isSelected()) {
 				final FastGrayscaleMeasureFactory f = factory;
 				final Class c2 = 
-					Class.forName("be.ugent.imilarity.measures." + histMeasure.getSelectedItem());
+					Class.forName("de.berlios.imilarity.measures." + histMeasure.getSelectedItem());
 				factory = new FastGrayscaleMeasureFactory() {
 					public FastGrayscaleMeasure createMeasure() {
 						try {
@@ -168,7 +168,7 @@ public class SettingsDialog extends JDialog {
 	
 	public Aggregator getAggregator() {
 		try {
-			Class c = Class.forName("be.ugent.imilarity.aggregators." + aggregator.getSelectedItem());
+			Class c = Class.forName("de.berlios.imilarity.aggregators." + aggregator.getSelectedItem());
 			return (Aggregator) c.newInstance();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
