@@ -65,8 +65,16 @@ public class SettingsDialog extends JDialog {
 		content.add(new JLabel("Grayscale measure:"), c);
 		c.insets = new Insets(0,10,0,0);
 		c.gridy++;
-		measure = new JComboBox(new String[] { "AD", "MD", "M1a", "M2", "M4", "M20", "M20c" });
-		measure.setSelectedItem("M20");
+		measure = new JComboBox(new String[] { 
+				"AD", "MD", 
+				
+				"Fuzzy using M1a", "Fuzzy using M2", "Fuzzy using M3", "Fuzzy using M4", 
+				"Fuzzy using M20", "Fuzzy using M20c",
+				
+				"Fuzzy Histogram using M1a", "Fuzzy Histogram using M2", "Fuzzy Histogram using M3",
+				"Fuzzy Histogram using M4", "Fuzzy Histogram using M20", "Fuzzy Histogram using M20c"
+			});
+		measure.setSelectedItem("Fuzzy using M20");
 		content.add(measure, c);
 		c.insets = new Insets(10,10,0,0);
 		c.gridy++;
@@ -90,8 +98,18 @@ public class SettingsDialog extends JDialog {
 		content.add(combined, c);
 		c.insets = new Insets(5,40,0,0);
 		c.gridy++;
-		histMeasure = new JComboBox(new String[] { "OH3" });
+		histMeasure = new JComboBox(new String[] { 
+				"Fuzzy Histogram using M1a", "Fuzzy Histogram using M2", "Fuzzy Histogram using M3",
+				"Fuzzy Histogram using M4", "Fuzzy Histogram using M20", "Fuzzy Histogram using M20c"
+			});
 		content.add(histMeasure, c);
+		measure.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String selection = (String) measure.getSelectedItem();
+				combined.setEnabled(!selection.contains("Histogram"));	
+				histMeasure.setEnabled(combined.isSelected());
+			}
+		});
 		combined.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				histMeasure.setEnabled(combined.isSelected());
@@ -121,49 +139,78 @@ public class SettingsDialog extends JDialog {
 		pack();
 	}
 	
-	public ColorMeasure getMeasure() {
+	private static FastGrayscaleMeasureFactory getFactoryFromString(String str) {
+		FastGrayscaleMeasureFactory factory = null;
 		try {
-			Class c1 = Class.forName("de.berlios.imilarity.measures." + measure.getSelectedItem());
-			FastGrayscaleMeasureFactory factory = new ClassGrayscaleMeasureFactory(c1);
-			if (homogenity.isEnabled() && homogenity.isSelected()) {
-				final FastGrayscaleMeasureFactory f = factory;
-				factory = new FastGrayscaleMeasureFactory() {
-					public FastGrayscaleMeasure createMeasure() {
-						return new HomGrayscaleMeasure(f.createMeasure());
-					}
-				};
-			}
-			if (combined.isSelected()) {
-				final FastGrayscaleMeasureFactory f = factory;
-				final Class c2 = 
-					Class.forName("de.berlios.imilarity.measures." + histMeasure.getSelectedItem());
-				factory = new FastGrayscaleMeasureFactory() {
-					public FastGrayscaleMeasure createMeasure() {
-						try {
-							return new ProductGrayscaleMeasure
-								((FastGrayscaleMeasure) c2.newInstance(), f.createMeasure());
-						} catch (InstantiationException e) {
-							e.printStackTrace();
-						} catch (IllegalAccessException e) {
-							e.printStackTrace();
+			if (str.contains("Fuzzy")) {
+				String name = str.substring(str.lastIndexOf(' ') + 1);
+				final Class c1 = Class.forName("de.berlios.imilarity.measures." + name);
+				if (str.contains("Histogram")) {
+					factory = new FastGrayscaleMeasureFactory() {
+						public FastGrayscaleMeasure createMeasure()  {
+							try {
+								return new FuzzyGrayscaleHistogramMeasure((FastFuzzyMeasure) c1.newInstance());
+							} catch (InstantiationException e) {
+								e.printStackTrace();
+							} catch (IllegalAccessException e) {
+								e.printStackTrace();
+							}
+							return null;
 						}
-						return null;
-					}
-				};
+					};
+				} else {
+					factory = new FastGrayscaleMeasureFactory() {
+						public FastGrayscaleMeasure createMeasure()  {
+							try {
+								return new FuzzyGrayscaleMeasure((FastFuzzyMeasure) c1.newInstance());
+							} catch (InstantiationException e) {
+								e.printStackTrace();
+							} catch (IllegalAccessException e) {
+								e.printStackTrace();
+							}
+							return null;
+						}
+					};
+				}
+			} else {
+				Class c1 = Class.forName("de.berlios.imilarity.measures." + str);
+				factory = new ClassGrayscaleMeasureFactory(c1);
 			}
-			FastGrayscaleMeasure gm;
-			if (partitioned.isSelected()) {
-				gm = new PartGrayscaleMeasure(factory);
-			} else
-				gm = factory.createMeasure();
-			if (component.isSelected())
-				return new ComponentsColorMeasure(new ScalingGrayscaleMeasure(gm));
-			else
-				return new GrayscaledColorMeasure(new ScalingGrayscaleMeasure(gm));
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return factory;
+	}
+	
+	public ColorMeasure getMeasure() {
+		final String selected = (String) measure.getSelectedItem();
+		FastGrayscaleMeasureFactory factory = getFactoryFromString(selected);
+		if (homogenity.isEnabled() && homogenity.isSelected()) {
+			final FastGrayscaleMeasureFactory f = factory;
+			factory = new FastGrayscaleMeasureFactory() {
+				public FastGrayscaleMeasure createMeasure() {
+					return new HomGrayscaleMeasure(f.createMeasure());
+				}
+			};
+		}
+		if (combined.isEnabled() && combined.isSelected()) {
+			final FastGrayscaleMeasureFactory f = factory;
+			factory = new FastGrayscaleMeasureFactory() {
+				public FastGrayscaleMeasure createMeasure() {
+					return new ProductGrayscaleMeasure
+					(getFactoryFromString(selected).createMeasure(), f.createMeasure());
+				}
+			};
+		}
+		FastGrayscaleMeasure gm;
+		if (partitioned.isSelected()) {
+			gm = new PartGrayscaleMeasure(factory);
+		} else
+			gm = factory.createMeasure();
+		if (component.isSelected())
+			return new ComponentsColorMeasure(new ScalingGrayscaleMeasure(gm));
+		else
+			return new GrayscaledColorMeasure(new ScalingGrayscaleMeasure(gm));
 	}
 	
 	public Aggregator getAggregator() {
