@@ -44,8 +44,12 @@ public class AggregatedColorImage extends ColorImageBase {
 				values[j][i] = colorValues[j];
 		}
 		int result[] = new int[3];
-		for (int i = 0; i < result.length; i++)
-			result[i] = aggregator.aggregatedValue(values[i]);
+		for (int i = 0; i < result.length; i++) {
+			for (int j = 0; j < values[i].length; j++)
+				aggregator.addValue(values[i][j]);
+			result[i] = (int) aggregator.getAggregatedValue();
+			aggregator.clearValues();
+		}
 		return result;
 	}
 

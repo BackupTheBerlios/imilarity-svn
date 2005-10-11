@@ -9,11 +9,11 @@ import de.berlios.imilarity.image.GrayscaleImage;
  * @author klbostee
  *
  */
-public class FuzzyImage implements FuzzySet {
+public class FuzzyGrayscaleImage implements FuzzySet {
 
 	private GrayscaleImage image;
 	
-	public FuzzyImage(GrayscaleImage image) {
+	public FuzzyGrayscaleImage(GrayscaleImage image) {
 		if (image == null)
 			throw new NullPointerException("image == null");
 		this.image = image;

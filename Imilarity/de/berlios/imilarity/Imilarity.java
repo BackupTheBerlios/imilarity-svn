@@ -20,10 +20,12 @@ import de.berlios.imilarity.image.ImageData;
 import de.berlios.imilarity.measures.ColorMeasure;
 import de.berlios.imilarity.measures.FastGrayscaleMeasure;
 import de.berlios.imilarity.measures.FastGrayscaleMeasureFactory;
+import de.berlios.imilarity.measures.FuzzyGrayscaleMeasure;
 import de.berlios.imilarity.measures.GrayscaledColorMeasure;
 import de.berlios.imilarity.measures.HomGrayscaleMeasure;
 import de.berlios.imilarity.measures.M20;
-import de.berlios.imilarity.measures.OH3;
+import de.berlios.imilarity.measures.FuzzyGrayscaleHistogramMeasure;
+import de.berlios.imilarity.measures.M3;
 import de.berlios.imilarity.measures.PartGrayscaleMeasure;
 import de.berlios.imilarity.measures.ProductGrayscaleMeasure;
 import de.berlios.imilarity.measures.ScalingGrayscaleMeasure;
@@ -46,7 +48,8 @@ public class Imilarity {
 				new PartGrayscaleMeasure(new FastGrayscaleMeasureFactory() {
 					public FastGrayscaleMeasure createMeasure() {
 						return new ProductGrayscaleMeasure(
-							new OH3(), new HomGrayscaleMeasure(new M20()));
+							new FuzzyGrayscaleHistogramMeasure(new M3()), 
+							new HomGrayscaleMeasure(new FuzzyGrayscaleMeasure(new M20())));
 					}
 				})));
 	

@@ -8,7 +8,10 @@ package de.berlios.imilarity.aggregators;
  */
 public interface Aggregator {
 
-	public int aggregatedValue(int[] values);
+	public void addValue(double value);
+	public void clearValues();
+	
+	public double getAggregatedValue();
 	
 	public String getDescription();
 	

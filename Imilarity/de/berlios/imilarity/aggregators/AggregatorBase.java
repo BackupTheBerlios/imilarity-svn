@@ -3,11 +3,12 @@
  */
 package de.berlios.imilarity.aggregators;
 
+
 /**
  * @author Klaas Bosteels
  */
 public abstract class AggregatorBase implements Aggregator {
-
+	
 	public String toString() {
 		return getDescription();
 	}
