@@ -12,17 +12,22 @@ import de.berlios.imilarity.image.ColorImage;
 public interface ColorMeasure {
 	
 	/**
-	 * @param image beeld waarmee vergeleken moet worden
+	 * @param query beeld waarmee vergeleken moet worden
 	 */
-	public void setImage(ColorImage image);
+	public void setQuery(ColorImage query);
+	public ColorImage getQuery();
 	
-	public ColorImage getImage();
+	/**
+	 * @param target het huidige doelbeeld
+	 */
+	public void setTarget(ColorImage target);
+	public ColorImage getTarget();
 	
 	/**
 	 * Geeft een getal in het interval [0,1] terug dat de graad van similariteit
-	 * tussen 'image' en het ingestelde beeld weergeeft.
+	 * tussen het ingestelde query- en target-beeld weergeeft.
 	 */
-	public double similarity(ColorImage image);
+	public double getSimilarity();
 	
 	public String getDescription();
 }

@@ -11,16 +11,26 @@ import de.berlios.imilarity.image.ColorImage;
  */
 public abstract class ColorMeasureBase implements ColorMeasure {
 
-	private ColorImage image;
+	private ColorImage query, target;
 
-	public void setImage(ColorImage image) {
-		if (image == null)
-			throw new NullPointerException("image == null");
-		this.image = image;
+	public void setQuery(ColorImage query) {
+		if (query == null)
+			throw new NullPointerException("query == null");
+		this.query = query;
 	}
 	
-	public ColorImage getImage() {
-		return image;
+	public ColorImage getQuery() {
+		return query;
+	}
+	
+	public void setTarget(ColorImage target) {
+		if (target == null)
+			throw new NullPointerException("target == null");
+		this.target = target;
+	}
+	
+	public ColorImage getTarget() {
+		return target;
 	}
 	
 	public String toString() {

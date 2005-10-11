@@ -12,7 +12,9 @@ public class MD extends FastGrayscaleMeasureBase {
 
 	private double max = 0.0;
 	
-	public void compare(int v1, int v2) {
+	public void compare(int pixelNr) {
+		int v1 = getQuery().getGrayscaleValue(pixelNr);
+		int v2 = getTarget().getGrayscaleValue(pixelNr);
 		int difference = Math.abs(v1 - v2);
 		if (difference > max)
 			max = difference;

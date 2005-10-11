@@ -13,12 +13,14 @@ public class AD extends FastGrayscaleMeasureBase {
 
 	private double sum = 0.0;
 	
-	public void compare(int v1, int v2) {
+	public void compare(int pixelNr) {
+		int v1 = getQuery().getGrayscaleValue(pixelNr);
+		int v2 = getTarget().getGrayscaleValue(pixelNr);
 		sum += Math.abs(v1 - v2);
 	}
 	
 	public double combine() {
-		GrayscaleImage orig = getImage();
+		GrayscaleImage orig = getQuery();
 		int pc = orig.getWidth() * orig.getHeight();
 		return 1 - ((sum / pc) * 1.0 / 255);
 	}

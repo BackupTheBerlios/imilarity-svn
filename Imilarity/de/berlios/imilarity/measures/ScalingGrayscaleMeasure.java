@@ -19,16 +19,21 @@ public class ScalingGrayscaleMeasure extends FastGrayscaleMeasureBase {
 		this.measure = measure;
 	}
 	
-	public void setImage(GrayscaleImage image) {
-		measure.setImage(image);
+	public void setQuery(GrayscaleImage image) {
+		super.setQuery(image);
+		measure.setQuery(image);
 	}
 	
-	public GrayscaleImage getImage() {
-		return measure.getImage();
+	public void setTarget(GrayscaleImage image) {
+		GrayscaleImage query = getQuery();
+		image = image.getScaledInstance(query.getWidth(),query.getHeight());
+		super.setTarget(image);
+		measure.setTarget(image);
 	}
 	
-	public void compare(int v1, int v2) {
-		measure.compare(v1,v2);
+	
+	public void compare(int pixelNr) {
+		measure.compare(pixelNr);
 	}
 	
 	public double combine() {
@@ -39,12 +44,12 @@ public class ScalingGrayscaleMeasure extends FastGrayscaleMeasureBase {
 		measure.reset();
 	}
 	
-	public double similarity(GrayscaleImage image) {
-		GrayscaleImage orig = getImage();
-		if (orig == null || image == null)
+	public double getSimilarity() {
+		GrayscaleImage query = getQuery();
+		GrayscaleImage target = getTarget();
+		if (query == null || target == null)
 			return 0.0;
-		GrayscaleImage si = image.getScaledInstance(orig.getWidth(),orig.getHeight());
-		return measure.similarity(si);
+		return measure.getSimilarity();
 	}
 	
 	public String getDescription() {

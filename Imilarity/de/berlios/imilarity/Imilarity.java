@@ -79,7 +79,7 @@ public class Imilarity {
 			throw new NullPointerException("measure == null");
 		this.measure = measure;
 		if (aggregationCalculated)
-			measure.setImage(aggregation);
+			measure.setQuery(aggregation);
 	}
 	
 	
@@ -222,12 +222,14 @@ public class Imilarity {
 			for (int i = 0; i < scis.length && it.hasNext(); i++)
 				scis[i] = ((ImageData) it.next()).getColorImage();
 			aggregation = new AggregatedColorImage(scis, aggregator);
-			measure.setImage(aggregation);
+			measure.setQuery(aggregation);
 		}
-		for (int i = 0; i < pages[page-1].length; i++)
-			if (pages[page-1][i] != null)
-				pages[page-1][i].setSimilarity
-					(measure.similarity(pages[page-1][i].getColorImage()));
+		for (int i = 0; i < pages[page-1].length; i++) {
+			if (pages[page-1][i] != null) {
+				measure.setTarget(pages[page-1][i].getColorImage());
+				pages[page-1][i].setSimilarity(measure.getSimilarity());
+			}
+		}
 		Arrays.sort(pages[page-1], comparator);
 		
 		totalTime += System.currentTimeMillis() - millis;

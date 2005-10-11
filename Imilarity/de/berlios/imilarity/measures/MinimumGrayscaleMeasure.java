@@ -10,9 +10,9 @@ public abstract class MinimumGrayscaleMeasure extends FastGrayscaleMeasureBase {
 	
 	public abstract double m(double x, double y);
 	
-	public void compare(int v1, int v2) {
-		double nv1 = v1 * 1.0 / 255;
-		double nv2 = v2 * 1.0 / 255;
+	public void compare(int pixelNr) {
+		double nv1 = getQuery().getGrayscaleValue(pixelNr) * 1.0 / 255;
+		double nv2 = getTarget().getGrayscaleValue(pixelNr) * 1.0 / 255;
 		double v = m(nv1,nv2);
 		if (v < min)
 			min = v;

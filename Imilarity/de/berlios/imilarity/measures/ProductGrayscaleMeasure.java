@@ -18,19 +18,22 @@ public class ProductGrayscaleMeasure extends FastGrayscaleMeasureBase {
 		this.measure2 = measure2;
 	}
 	
-	public void setImage(GrayscaleImage image) {
-		measure1.setImage(image);
-		measure2.setImage(image);
+	public void setQuery(GrayscaleImage image) {
+		super.setQuery(image);
+		measure1.setQuery(image);
+		measure2.setQuery(image);
 	}
 	
-	public GrayscaleImage getImage() {
-		return measure1.getImage();
+	public void setTarget(GrayscaleImage image) {
+		super.setTarget(image);
+		measure1.setTarget(image);
+		measure2.setTarget(image);
 	}
 	
 	
-	public void compare(int v1, int v2) {
-		measure1.compare(v1,v2);
-		measure2.compare(v1,v2);
+	public void compare(int pixelNr) {
+		measure1.compare(pixelNr);
+		measure2.compare(pixelNr);
 	}
 	
 	public double combine() {

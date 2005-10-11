@@ -8,18 +8,24 @@ import de.berlios.imilarity.image.GrayscaleImage;
 public interface GrayscaleMeasure {
 	
 	/**
-	 * @param image beeld waarmee vergeleken moet worden
+	 * @param query beeld waarmee de doelbeelden vergeleken moeten worden
 	 */
-	public void setImage(GrayscaleImage image);
+	public void setQuery(GrayscaleImage query);
+	public GrayscaleImage getQuery();
 	
-	public GrayscaleImage getImage();
+	/**
+	 * @param target het huidige doelbeeld
+	 */
+	public void setTarget(GrayscaleImage target);
+	public GrayscaleImage getTarget();
 	
 	
 	/**
 	 * Geeft een getal in het interval [0,1] terug dat de graad van similariteit
-	 * van 'image' met het ingestelde beeld weergeeft.
+	 * tussen het query- en target-beeld weergeeft.
 	 */
-	public double similarity(GrayscaleImage image);
+	public double getSimilarity();
+	
 	
 	public String getDescription();
 	

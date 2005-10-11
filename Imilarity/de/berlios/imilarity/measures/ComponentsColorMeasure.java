@@ -19,17 +19,18 @@ public class ComponentsColorMeasure extends ColorMeasureBase {
 		compImages = new GrayscaleImage[3];
 	}
 	
-	public void setImage(ColorImage image) {
-		super.setImage(image);
+	public void setQuery(ColorImage image) {
+		super.setQuery(image);
 		for (int i = 0; i < 3; i++)
 			compImages[i] = new ComponentGrayscaleImage(image, i);
 	}
 	
-	public double similarity(ColorImage image) {
+	public double getSimilarity() {
 		double sum = 0.0;
 		for (int i = 0; i < 3; i++) {
-			measure.setImage(compImages[i]);
-			sum += measure.similarity(new ComponentGrayscaleImage(image, i));
+			measure.setQuery(compImages[i]);
+			measure.setTarget(new ComponentGrayscaleImage(getTarget(), i));
+			sum += measure.getSimilarity();
 		}
 		return sum / 3;
 	}

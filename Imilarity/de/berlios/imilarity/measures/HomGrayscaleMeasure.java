@@ -16,26 +16,34 @@ public class HomGrayscaleMeasure extends FastGrayscaleMeasureBase {
 		this.measure = measure;
 	}
 	
-	public void setImage(GrayscaleImage image) {
-		measure.setImage(image);
+	public void setQuery(GrayscaleImage image) {
+		measure.setQuery(image);
 	}
 	
-	public GrayscaleImage getImage() {
-		return measure.getImage();
+	public GrayscaleImage getQuery() {
+		return measure.getQuery();
+	}
+	
+	public void setTarget(GrayscaleImage image) {
+		measure.setTarget(image);
+	}
+	
+	public GrayscaleImage getTarget() {
+		return measure.getTarget();
 	}
 	
 	private static double s(double x, double y) {
 		return Math.min(1, Math.max(0, 6/5 - 2 * Math.abs(x - y)));
 	}
 	
-	public void compare(int v1, int v2) {
-		double nv1 = v1 * 1.0 / 255;
-		double nv2 = v2 * 1.0 / 255;
+	public void compare(int pixelNr) {
+		double nv1 = measure.getQuery().getGrayscaleValue(pixelNr) * 1.0 / 255;
+		double nv2 = measure.getTarget().getGrayscaleValue(pixelNr) * 1.0 / 255;
 		if (nv1 > max1) max1 = nv1;
 		if (nv1 < min1) min1 = nv1;
 		if (nv2 > max2) max2 = nv2;
 		if (nv2 < min2) min2 = nv2;
-		measure.compare(v1, v2);
+		measure.compare(pixelNr);
 	}
 	
 	public double combine() {

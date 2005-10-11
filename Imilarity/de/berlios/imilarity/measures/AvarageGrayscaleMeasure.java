@@ -12,14 +12,14 @@ public abstract class AvarageGrayscaleMeasure extends FastGrayscaleMeasureBase {
 	public abstract double m(double x, double y);
 	
 	
-	public void compare(int v1, int v2) {
-		double nv1 = v1 * 1.0 / 255;
-		double nv2 = v2 * 1.0 / 255;
+	public void compare(int pixelNr) {
+		double nv1 = getQuery().getGrayscaleValue(pixelNr) * 1.0 / 255;
+		double nv2 = getTarget().getGrayscaleValue(pixelNr) * 1.0 / 255;
 		sum += m(nv1,nv2);
 	}
 	
 	public double combine() {
-		GrayscaleImage orig = getImage();
+		GrayscaleImage orig = getQuery();
 		int pc = orig.getWidth() * orig.getHeight();
 		return sum / pc;
 	}

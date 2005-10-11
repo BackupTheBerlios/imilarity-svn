@@ -7,16 +7,26 @@ import de.berlios.imilarity.image.GrayscaleImage;
 
 public abstract class GrayscaleMeasureBase implements GrayscaleMeasure {
 	
-	private GrayscaleImage image;
+	private GrayscaleImage query, target;
 	
-	public void setImage(GrayscaleImage image) {
-		if (image == null)
-			throw new NullPointerException("image == null");
-		this.image = image;
+	public void setQuery(GrayscaleImage query) {
+		if (query == null)
+			throw new NullPointerException("query == null");
+		this.query = query;
 	}
 	
-	public GrayscaleImage getImage() {
-		return image;
+	public GrayscaleImage getQuery() {
+		return query;
+	}
+	
+	public void setTarget(GrayscaleImage target) {
+		if (target == null)
+			throw new NullPointerException("target == null");
+		this.target = target;
+	}
+	
+	public GrayscaleImage getTarget() {
+		return target;
 	}
 	
 	

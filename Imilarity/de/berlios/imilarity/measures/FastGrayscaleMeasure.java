@@ -9,7 +9,7 @@ package de.berlios.imilarity.measures;
  */
 public interface FastGrayscaleMeasure extends GrayscaleMeasure {
 	
-	public void compare(int v1, int v2);
+	public void compare(int pixelNr);
 	public double combine();
 	public void reset();
 

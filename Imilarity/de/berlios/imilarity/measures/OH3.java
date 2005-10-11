@@ -20,7 +20,9 @@ public class OH3 extends FastGrayscaleMeasureBase {
 	}
 	
 	
-	public void compare(int v1, int v2) {
+	public void compare(int pixelNr) {
+		int v1 = getQuery().getGrayscaleValue(pixelNr);
+		int v2 = getTarget().getGrayscaleValue(pixelNr);
 		origHistogram[v1]++;
 		histogram[v2]++;
 	}
