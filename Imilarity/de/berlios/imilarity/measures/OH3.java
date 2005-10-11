@@ -8,14 +8,15 @@ import java.util.Arrays;
 
 public class OH3 extends FastGrayscaleMeasureBase {
 
-	private int[] origHistogram, histogram;
+	private int[] queryHistogram, targetHistogram;
+	private int queryMax = 0, targetMax = 0;
 	
 	public OH3() {
-		origHistogram = new int[256];
-		histogram = new int[256];
+		queryHistogram = new int[256];
+		targetHistogram = new int[256];
 		for (int i = 0; i < 256; i++) {
-			origHistogram[i] = 0;
-			histogram[i] = 0;
+			queryHistogram[i] = 0;
+			targetHistogram[i] = 0;
 		}
 	}
 	
@@ -23,17 +24,21 @@ public class OH3 extends FastGrayscaleMeasureBase {
 	public void compare(int pixelNr) {
 		int v1 = getQuery().getGrayscaleValue(pixelNr);
 		int v2 = getTarget().getGrayscaleValue(pixelNr);
-		origHistogram[v1]++;
-		histogram[v2]++;
+		queryHistogram[v1]++;
+		if (queryHistogram[v1] > queryMax) 
+			queryMax = queryHistogram[v1];
+		targetHistogram[v2]++;
+		if (targetHistogram[v2] > targetMax) 
+			targetMax = targetHistogram[v2];
 	}
 	
 	public double combine() {
-		Arrays.sort(origHistogram);
-		Arrays.sort(histogram);
+		Arrays.sort(queryHistogram);
+		Arrays.sort(targetHistogram);
 		double sum1 = 0.0, sum2 = 0.0;
-		for (int i = 0; i < histogram.length; i++) {
-			double v1 = origHistogram[i] * 1.0 / 255;
-			double v2 = histogram[i] * 1.0 / 255;
+		for (int i = 0; i < targetHistogram.length; i++) {
+			double v1 = queryHistogram[i] * 1.0 / queryMax;
+			double v2 = targetHistogram[i] * 1.0 / targetMax;
 			sum1 += Math.abs(v1 - v2);
 			sum2 += v1 + v2;
 		}
@@ -42,9 +47,11 @@ public class OH3 extends FastGrayscaleMeasureBase {
 	
 	public void reset() {
 		for (int i = 0; i < 256; i++) {
-			origHistogram[i] = 0;
-			histogram[i] = 0;
+			queryHistogram[i] = 0;
+			targetHistogram[i] = 0;
 		}
+		queryMax = 0;
+		targetMax = 0;
 	}
 
 	public String getDescription() {
