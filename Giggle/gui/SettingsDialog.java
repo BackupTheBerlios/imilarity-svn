@@ -139,17 +139,17 @@ public class SettingsDialog extends JDialog {
 		pack();
 	}
 	
-	private static FastGrayscaleMeasureFactory getFactoryFromString(String str) {
-		FastGrayscaleMeasureFactory factory = null;
+	private static StagedGrayscaleMeasureFactory getFactoryFromString(String str) {
+		StagedGrayscaleMeasureFactory factory = null;
 		try {
 			if (str.contains("Fuzzy")) {
 				String name = str.substring(str.lastIndexOf(' ') + 1);
 				final Class c1 = Class.forName("de.berlios.imilarity.measures." + name);
 				if (str.contains("Histogram")) {
-					factory = new FastGrayscaleMeasureFactory() {
-						public FastGrayscaleMeasure createMeasure()  {
+					factory = new StagedGrayscaleMeasureFactory() {
+						public StagedGrayscaleMeasure createMeasure()  {
 							try {
-								return new FuzzyGrayscaleHistogramMeasure((FastFuzzyMeasure) c1.newInstance());
+								return new FuzzyGrayscaleHistogramMeasure((StagedFuzzyMeasure) c1.newInstance());
 							} catch (InstantiationException e) {
 								e.printStackTrace();
 							} catch (IllegalAccessException e) {
@@ -159,10 +159,10 @@ public class SettingsDialog extends JDialog {
 						}
 					};
 				} else {
-					factory = new FastGrayscaleMeasureFactory() {
-						public FastGrayscaleMeasure createMeasure()  {
+					factory = new StagedGrayscaleMeasureFactory() {
+						public StagedGrayscaleMeasure createMeasure()  {
 							try {
-								return new FuzzyGrayscaleMeasure((FastFuzzyMeasure) c1.newInstance());
+								return new FuzzyGrayscaleMeasure((StagedFuzzyMeasure) c1.newInstance());
 							} catch (InstantiationException e) {
 								e.printStackTrace();
 							} catch (IllegalAccessException e) {
@@ -184,25 +184,25 @@ public class SettingsDialog extends JDialog {
 	
 	public ColorMeasure getMeasure() {
 		final String selected = (String) measure.getSelectedItem();
-		FastGrayscaleMeasureFactory factory = getFactoryFromString(selected);
+		StagedGrayscaleMeasureFactory factory = getFactoryFromString(selected);
 		if (homogenity.isEnabled() && homogenity.isSelected()) {
-			final FastGrayscaleMeasureFactory f = factory;
-			factory = new FastGrayscaleMeasureFactory() {
-				public FastGrayscaleMeasure createMeasure() {
+			final StagedGrayscaleMeasureFactory f = factory;
+			factory = new StagedGrayscaleMeasureFactory() {
+				public StagedGrayscaleMeasure createMeasure() {
 					return new HomGrayscaleMeasure(f.createMeasure());
 				}
 			};
 		}
 		if (combined.isEnabled() && combined.isSelected()) {
-			final FastGrayscaleMeasureFactory f = factory;
-			factory = new FastGrayscaleMeasureFactory() {
-				public FastGrayscaleMeasure createMeasure() {
+			final StagedGrayscaleMeasureFactory f = factory;
+			factory = new StagedGrayscaleMeasureFactory() {
+				public StagedGrayscaleMeasure createMeasure() {
 					return new ProductGrayscaleMeasure
 					(getFactoryFromString(selected).createMeasure(), f.createMeasure());
 				}
 			};
 		}
-		FastGrayscaleMeasure gm;
+		StagedGrayscaleMeasure gm;
 		if (partitioned.isSelected()) {
 			gm = new PartGrayscaleMeasure(factory);
 		} else
