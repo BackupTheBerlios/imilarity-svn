@@ -3,11 +3,11 @@ package de.berlios.imilarity.measures;
 import de.berlios.imilarity.fuzzy.FuzzyGrayscaleImage;
 import de.berlios.imilarity.image.GrayscaleImage;
 
-public class FuzzyGrayscaleMeasure extends FastGrayscaleMeasureBase {
+public class FuzzyGrayscaleMeasure extends StagedGrayscaleMeasureBase {
 
-	private FastFuzzyMeasure measure;
+	private StagedFuzzyMeasure measure;
 	
-	public FuzzyGrayscaleMeasure(FastFuzzyMeasure measure) {
+	public FuzzyGrayscaleMeasure(StagedFuzzyMeasure measure) {
 		if (measure == null)
 			throw new NullPointerException("measure == null");
 		this.measure = measure;

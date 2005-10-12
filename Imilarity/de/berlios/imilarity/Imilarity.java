@@ -18,8 +18,8 @@ import de.berlios.imilarity.image.AggregatedColorImage;
 import de.berlios.imilarity.image.ColorImage;
 import de.berlios.imilarity.image.ImageData;
 import de.berlios.imilarity.measures.ColorMeasure;
-import de.berlios.imilarity.measures.FastGrayscaleMeasure;
-import de.berlios.imilarity.measures.FastGrayscaleMeasureFactory;
+import de.berlios.imilarity.measures.StagedGrayscaleMeasure;
+import de.berlios.imilarity.measures.StagedGrayscaleMeasureFactory;
 import de.berlios.imilarity.measures.FuzzyGrayscaleMeasure;
 import de.berlios.imilarity.measures.GrayscaledColorMeasure;
 import de.berlios.imilarity.measures.HomGrayscaleMeasure;
@@ -45,8 +45,8 @@ public class Imilarity {
 	private Aggregator aggregator = new ArithmeticMean();
 	private ColorMeasure measure = 
 		new GrayscaledColorMeasure(new ScalingGrayscaleMeasure(
-				new PartGrayscaleMeasure(new FastGrayscaleMeasureFactory() {
-					public FastGrayscaleMeasure createMeasure() {
+				new PartGrayscaleMeasure(new StagedGrayscaleMeasureFactory() {
+					public StagedGrayscaleMeasure createMeasure() {
 						return new ProductGrayscaleMeasure(
 							new FuzzyGrayscaleHistogramMeasure(new M3()), 
 							new HomGrayscaleMeasure(new FuzzyGrayscaleMeasure(new M20())));
@@ -210,13 +210,10 @@ public class Imilarity {
 		}
 	};
 	
-	long totalTime = 0; // profiling
 	
 	public void reorderPage(int page) {
 		if (providor == null)
 			return;
-		
-		long millis = System.currentTimeMillis();
 		
 		if (!aggregationCalculated) {
 			aggregationCalculated = true;
@@ -234,25 +231,17 @@ public class Imilarity {
 			}
 		}
 		Arrays.sort(pages[page-1], comparator);
-		
-		totalTime += System.currentTimeMillis() - millis;
 	}
 	
 	public void mergeReorderedPages() {
 		if (providor == null)
 			return;
 		
-		long millis = System.currentTimeMillis();
-		
 		ImageData[][] arrays = new ImageData[getPageCount()][];
 		for (int i = 0; i < getPageCount(); i++)
 			arrays[i] = pages[i];
 		List l = new ArraysBackedList(arrays, getPageSize());
 		Collections.sort(l, comparator);
-		
-		totalTime += System.currentTimeMillis() - millis; 
-		System.out.println("Reordered in " + totalTime + " ms using '" + measure + "'."); 
-		totalTime = 0;
 	}
 	
 	public void reorderImages() {

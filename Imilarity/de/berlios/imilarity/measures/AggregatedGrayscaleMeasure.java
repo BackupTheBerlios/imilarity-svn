@@ -5,7 +5,7 @@ package de.berlios.imilarity.measures;
 
 import de.berlios.imilarity.aggregators.Aggregator;
 
-public abstract class AggregatedGrayscaleMeasure extends FastFuzzyMeasureBase {
+public abstract class AggregatedGrayscaleMeasure extends StagedFuzzyMeasureBase {
 
 	private Aggregator aggregator;
 	
@@ -18,9 +18,9 @@ public abstract class AggregatedGrayscaleMeasure extends FastFuzzyMeasureBase {
 	public abstract double m(double x, double y);
 	
 	
-	public void compare(int pixelNr) {
-		double v1 = getQuery().getMembership(pixelNr);
-		double v2 = getTarget().getMembership(pixelNr);
+	public void compare(int element) {
+		double v1 = getQuery().getMembership(element);
+		double v2 = getTarget().getMembership(element);
 		aggregator.addValue(m(v1,v2));
 	}
 	

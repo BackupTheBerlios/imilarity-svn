@@ -13,8 +13,6 @@ public class FuzzyGrayscaleHistogram implements FuzzySet {
 		if (image == null)
 			throw new NullPointerException("image == null");
 		int pc = image.getWidth() * image.getHeight();
-		for (int i = 0; i < histogram.length; i++)
-			System.out.println("histogram[i] = " + histogram[i]);
 		for (int i = 0; i < pc; i++) {
 			int value = image.getGrayscaleValue(i);
 			histogram[value]++;

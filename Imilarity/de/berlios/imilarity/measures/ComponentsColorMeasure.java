@@ -36,7 +36,7 @@ public class ComponentsColorMeasure extends ColorMeasureBase {
 	}
 
 	public String getDescription() {
-		return "Combined " + measure.getDescription();
+		return "Components " + measure.getDescription();
 	}
 
 }

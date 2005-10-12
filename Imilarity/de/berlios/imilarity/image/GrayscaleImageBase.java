@@ -7,8 +7,6 @@ public abstract class GrayscaleImageBase implements GrayscaleImage {
 	
 	public int getGrayscaleValue(int pixelNr) {
 		int w = getWidth();
-		if ((pixelNr / w) > w)
-			System.out.println("Error: pixelNr = " + pixelNr);
 		return getGrayscaleValue(pixelNr % w, pixelNr / w);
 	}
 	

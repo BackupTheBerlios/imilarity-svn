@@ -13,7 +13,7 @@ public class AggregatedColorImage extends ColorImageBase {
 	private ColorImage[] images, scaledImages;
 	private Aggregator aggregator;
 	
-	private static final int DEFAULT_WIDTH = 100, DEFAULT_HEIGHT = 100;
+	private final int width, height;
 	
 	public AggregatedColorImage(ColorImage[] images, Aggregator aggregator,
 			int width, int height) {
@@ -23,13 +23,15 @@ public class AggregatedColorImage extends ColorImageBase {
 			throw new NullPointerException("aggregator == null");
 		this.aggregator = aggregator;
 		this.images = images;
+		this.width = width;
+		this.height = height;
 		scaledImages = new ColorImage[images.length];
 		for (int i = 0; i < images.length; i++)
 			scaledImages[i] = images[i].getScaledInstance(width, height);
 	}
 	
 	public AggregatedColorImage(ColorImage[] images, Aggregator aggregator) {
-		this(images, aggregator, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+		this(images, aggregator, images[0].getWidth(), images[0].getHeight());
 	}
 	
 	
@@ -57,14 +59,14 @@ public class AggregatedColorImage extends ColorImageBase {
 	 * @see de.berlios.imilarity.image.Image#getWidth()
 	 */
 	public int getWidth() {
-		return DEFAULT_WIDTH;
+		return width;
 	}
 
 	/**
 	 * @see de.berlios.imilarity.image.Image#getHeight()
 	 */
 	public int getHeight() {
-		return DEFAULT_HEIGHT;
+		return height;
 	}
 
 

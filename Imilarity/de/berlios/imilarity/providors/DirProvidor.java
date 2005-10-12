@@ -77,7 +77,8 @@ public class DirProvidor extends ProvidorBase {
 		for (int i = begin; i < files.length && i < end; i++) {
 			if (!files[i].isDirectory()) {
 				images[i-begin] = 
-					ImageData.loadFile(files[i].getAbsolutePath()).getHScaledInstance(100);
+					//ImageData.loadFile(files[i].getAbsolutePath()).getHScaledInstance(100);
+					ImageData.loadFile(files[i].getAbsolutePath());
 			}
 		}
 		return images;

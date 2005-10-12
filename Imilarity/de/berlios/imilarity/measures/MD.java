@@ -8,7 +8,7 @@ package de.berlios.imilarity.measures;
 /**
  * @author Klaas Bosteels
  */
-public class MD extends FastGrayscaleMeasureBase {
+public class MD extends StagedGrayscaleMeasureBase {
 
 	private double max = 0.0;
 	

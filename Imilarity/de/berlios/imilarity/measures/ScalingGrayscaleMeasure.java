@@ -9,11 +9,11 @@ import de.berlios.imilarity.image.GrayscaleImage;
 /**
  * @author Klaas Bosteels
  */
-public class ScalingGrayscaleMeasure extends FastGrayscaleMeasureBase {
+public class ScalingGrayscaleMeasure extends StagedGrayscaleMeasureBase {
 
-	private FastGrayscaleMeasure measure;
+	private StagedGrayscaleMeasure measure;
 	
-	public ScalingGrayscaleMeasure(FastGrayscaleMeasure measure) {
+	public ScalingGrayscaleMeasure(StagedGrayscaleMeasure measure) {
 		if (measure == null)
 			throw new NullPointerException("measure == null");
 		this.measure = measure;

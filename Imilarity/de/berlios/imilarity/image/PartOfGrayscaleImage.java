@@ -18,19 +18,14 @@ public class PartOfGrayscaleImage extends GrayscaleImageBase {
 		if (oy < 0 || oy > image.getHeight())
 			throw new IllegalArgumentException("oy out of bounds");
 		this.oy = oy;
-		if (ox + w > image.getWidth())
-			throw new IllegalArgumentException("ox + w (" + (ox + w) + ") > max width (" + 
-					image.getWidth() + ")");
 		width = w;
-		if (oy + h > image.getHeight())
-			throw new IllegalArgumentException("oy + h (" + (oy + h) + ") > max height (" +
-					image.getHeight() + ")");
 		height = h;
 	}
 	
 	
 	public int getGrayscaleValue(int x, int y) {
-		//System.out.println("x = " + x + " y = " + y + " w = " + getWidth() + " h = " + getHeight());
+		if (ox+x >= image.getWidth() || oy+y >= image.getHeight())
+			return 0; // zwart teruggeven als we buiten de grenzen gaan
 		return image.getGrayscaleValue(ox+x, oy+y);
 	}
 

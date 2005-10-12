@@ -2,7 +2,7 @@ package de.berlios.imilarity.measures;
 
 import de.berlios.imilarity.fuzzy.FuzzySet;
 
-public abstract class FastFuzzyMeasureBase extends FuzzyMeasureBase implements FastFuzzyMeasure {
+public abstract class StagedFuzzyMeasureBase extends FuzzyMeasureBase implements StagedFuzzyMeasure {
 	
 	public double getSimilarity() {
 		FuzzySet query = getQuery();

@@ -1,7 +1,7 @@
 package de.berlios.imilarity.measures;
 
 
-public class M3 extends FastFuzzyMeasureBase {
+public class M3 extends StagedFuzzyMeasureBase {
 
 	private double sum1 = 0.0, sum2 = 0.0;
 	

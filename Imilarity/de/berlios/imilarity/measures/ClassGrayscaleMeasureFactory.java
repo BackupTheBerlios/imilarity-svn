@@ -4,7 +4,7 @@
 package de.berlios.imilarity.measures;
 
 
-public class ClassGrayscaleMeasureFactory implements FastGrayscaleMeasureFactory {
+public class ClassGrayscaleMeasureFactory implements StagedGrayscaleMeasureFactory {
 
 	private Class c;
 	
@@ -14,9 +14,9 @@ public class ClassGrayscaleMeasureFactory implements FastGrayscaleMeasureFactory
 		this.c = c;
 	}
 	
-	public FastGrayscaleMeasure createMeasure() {
+	public StagedGrayscaleMeasure createMeasure() {
 		try {
-			return (FastGrayscaleMeasure) c.newInstance();
+			return (StagedGrayscaleMeasure) c.newInstance();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 			return null;

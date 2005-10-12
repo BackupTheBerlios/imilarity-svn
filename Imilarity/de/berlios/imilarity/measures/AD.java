@@ -9,7 +9,7 @@ import de.berlios.imilarity.image.GrayscaleImage;
 /**
  * @author Klaas Bosteels
  */
-public class AD extends FastGrayscaleMeasureBase {
+public class AD extends StagedGrayscaleMeasureBase {
 
 	private double sum = 0.0;
 	
