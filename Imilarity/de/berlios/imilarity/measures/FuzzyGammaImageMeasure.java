@@ -2,11 +2,11 @@ package de.berlios.imilarity.measures;
 
 import de.berlios.imilarity.fuzzy.HashedFuzzySet;
 import de.berlios.imilarity.fuzzy.FuzzySet;
-import de.berlios.imilarity.fuzzy.ScalarMembership;
+import de.berlios.imilarity.fuzzy.Membership;
 
-public class FuzzyGammaGrayscaleMeasure extends FuzzyGrayscaleHistogramMeasure {	
+public class FuzzyGammaImageMeasure extends FuzzyHistogramImageMeasure {	
 
-	public FuzzyGammaGrayscaleMeasure(FuzzyMeasure fuzzyMeasure) {
+	public FuzzyGammaImageMeasure(FuzzyMeasure fuzzyMeasure) {
 		super(fuzzyMeasure);
 	}
 
@@ -23,8 +23,8 @@ public class FuzzyGammaGrayscaleMeasure extends FuzzyGrayscaleHistogramMeasure {
 		
 		HashedFuzzySet map1 = new HashedFuzzySet(), map2 = new HashedFuzzySet();
 		for (int i = 0; i < 256; i++) {
-			map1.addMembership(new ScalarMembership(queryMemberships[i]));
-			map2.addMembership(new ScalarMembership(targetMemberships[i]));
+			map1.addMembership(new Membership(queryMemberships[i]));
+			map2.addMembership(new Membership(targetMemberships[i]));
 		}
 		fuzzyMeasure.setQuery(map1);
 		fuzzyMeasure.setTarget(map2);

@@ -3,24 +3,25 @@
  */
 package de.berlios.imilarity.measures;
 
-import de.berlios.imilarity.image.GrayscaleImage;
+import de.berlios.imilarity.image.Image;
 
 
 /**
  * @author Klaas Bosteels
  */
-public class AD extends StagedGrayscaleMeasureBase {
+public class AD extends GrayscaleStagedImageMeasureBase {
 
 	private double sum = 0.0;
 	
+	
 	public void compare(int pixelNr) {
-		int v1 = getQuery().getGrayscaleValue(pixelNr);
-		int v2 = getTarget().getGrayscaleValue(pixelNr);
+		int v1 = (int) (getQuery().getColor(pixelNr).getComponents()[0]*255);
+		int v2 = (int) (getTarget().getColor(pixelNr).getComponents()[0]*255);
 		sum += Math.abs(v1 - v2);
 	}
 	
 	public double combine() {
-		GrayscaleImage orig = getQuery();
+		Image orig = getQuery();
 		int pc = orig.getWidth() * orig.getHeight();
 		return 1 - ((sum / pc) * 1.0 / 255);
 	}

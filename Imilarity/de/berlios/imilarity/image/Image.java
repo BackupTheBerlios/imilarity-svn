@@ -6,12 +6,13 @@ package de.berlios.imilarity.image;
 /**
  * @author Klaas Bosteels
  */
-public interface ColorImage {
+public interface Image {
 	
+	public int getColorComponentsCount();
 	public Color getColor(int x, int y);
 	public Color getColor(int pixelNr);
 	
-	public ColorImage getScaledInstance(int w, int h);
+	public Image getScaledInstance(int w, int h);
 	
 	public int getWidth();
 	public int getHeight();

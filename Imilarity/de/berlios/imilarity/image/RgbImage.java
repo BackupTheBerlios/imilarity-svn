@@ -7,19 +7,23 @@ package de.berlios.imilarity.image;
 /**
  * @author Klaas Bosteels
  */
-public class ColorImageAdapter extends ColorImageBase {
+public class RgbImage extends ImageBase {
 
 	private ImageData imageData;
 	
-	public ColorImageAdapter(ImageData id) {
+	public RgbImage(ImageData id) {
 		if (id == null)
 			throw new NullPointerException("id == null");
 		imageData = id;
 	}
 	
 	
+	public int getColorComponentsCount() {
+		return 3;
+	}
+	
 	/**
-	 * @see de.berlios.imilarity.image.ColorImage#getColor(int, int)
+	 * @see de.berlios.imilarity.image.Image#getColor(int, int)
 	 */
 	public Color getColor(int x, int y) {
 		int[] rgb = imageData.getRgb(x, y);
@@ -30,10 +34,10 @@ public class ColorImageAdapter extends ColorImageBase {
 	}
 
 	/**
-	 * @see de.berlios.imilarity.image.ColorImage#getScaledInstance(int, int)
+	 * @see de.berlios.imilarity.image.Image#getScaledInstance(int, int)
 	 */
-	public ColorImage getScaledInstance(int w, int h) {
-		return new ColorImageAdapter(imageData.getScaledInstance(w,h));
+	public Image getScaledInstance(int w, int h) {
+		return new RgbImage(imageData.getScaledInstance(w,h));
 	}
 
 	/**

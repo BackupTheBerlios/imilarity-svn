@@ -8,15 +8,15 @@ import de.berlios.imilarity.aggregators.Aggregator;
 /**
  * @author Klaas Bosteels
  */
-public class AggregatedColorImage extends ColorImageBase {
+public class AggregatedColorImage extends ImageBase {
 
-	private ColorImage[] images, scaledImages;
+	private Image[] images, scaledImages;
 	private Aggregator aggregator;
 	
-	private final int width, height;
+	private final int width, height, colorComponentsCount;
 	
-	public AggregatedColorImage(ColorImage[] images, Aggregator aggregator,
-			int width, int height) {
+	public AggregatedColorImage(Image[] images, Aggregator aggregator,
+			int width, int height, int colorComponentsCount) {
 		if (images == null)
 			throw new NullPointerException("images == null");
 		if (aggregator == null)
@@ -25,34 +25,40 @@ public class AggregatedColorImage extends ColorImageBase {
 		this.images = images;
 		this.width = width;
 		this.height = height;
-		scaledImages = new ColorImage[images.length];
+		this.colorComponentsCount = colorComponentsCount;
+		scaledImages = new Image[images.length];
 		for (int i = 0; i < images.length; i++)
 			scaledImages[i] = images[i].getScaledInstance(width, height);
 	}
 	
-	public AggregatedColorImage(ColorImage[] images, Aggregator aggregator) {
-		this(images, aggregator, images[0].getWidth(), images[0].getHeight());
+	public AggregatedColorImage(Image[] images, Aggregator aggregator) {
+		this(images, aggregator, images[0].getWidth(), images[0].getHeight(), 3);
 	}
 	
 	
+	public int getColorComponentsCount() {
+		return colorComponentsCount;
+	}
+	
 	/**
-	 * @see de.berlios.imilarity.image.ColorImage#getColorValues(int,int)
+	 * @see de.berlios.imilarity.image.Image#getColor(int,int)
 	 */
 	public Color getColor(int x, int y) {
-		int values[][] = new int[3][scaledImages.length];
+		double values[][] = new double[colorComponentsCount][scaledImages.length];
 		for (int i = 0; i < scaledImages.length; i++) {
 			Color color = scaledImages[i].getColor(x, y);
+			double[] colorValues = color.getComponents();
 			for (int j = 0; j < colorValues.length; j++)
 				values[j][i] = colorValues[j];
 		}
-		int result[] = new int[3];
+		double result[] = new double[colorComponentsCount];
 		for (int i = 0; i < result.length; i++) {
 			for (int j = 0; j < values[i].length; j++)
 				aggregator.addValue(values[i][j]);
-			result[i] = (int) aggregator.getAggregatedValue();
+			result[i] = aggregator.getAggregatedValue();
 			aggregator.clearValues();
 		}
-		return result;
+		return new Color(result);
 	}
 
 	/**
@@ -70,8 +76,8 @@ public class AggregatedColorImage extends ColorImageBase {
 	}
 
 
-	public ColorImage getScaledInstance(int w, int h) {
-		return new AggregatedColorImage(images, aggregator, w, h);
+	public Image getScaledInstance(int w, int h) {
+		return new AggregatedColorImage(images, aggregator, w, h, colorComponentsCount);
 	}
 
 }

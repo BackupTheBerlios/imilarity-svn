@@ -3,7 +3,7 @@
  */
 package de.berlios.imilarity.image;
 
-public abstract class ColorImageBase implements ColorImage {
+public abstract class ImageBase implements Image {
 	
 	public Color getColor(int pixelNr) {
 		int w = getWidth();

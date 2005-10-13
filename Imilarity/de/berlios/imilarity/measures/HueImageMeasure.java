@@ -1,24 +1,24 @@
 package de.berlios.imilarity.measures;
 
-import de.berlios.imilarity.image.ColorImage;
+import de.berlios.imilarity.image.Image;
 import de.berlios.imilarity.image.HueImageAdapter;
 
-public class HueColorMeasure extends ColorMeasureBase {
+public class HueImageMeasure extends ImageMeasureBase {
 
-	private GrayscaleMeasure measure;
+	private ImageMeasure measure;
 	
-	public HueColorMeasure(GrayscaleMeasure measure) {
+	public HueImageMeasure(ImageMeasure measure) {
 		if (measure == null)
 			throw new NullPointerException("measure == null");
 		this.measure = measure;
 	}
 	
-	public void setQuery(ColorImage image) {
+	public void setQuery(Image image) {
 		super.setQuery(image);
 		measure.setQuery(new HueImageAdapter(image));
 	}
 	
-	public void setTarget(ColorImage image) {
+	public void setTarget(Image image) {
 		super.setTarget(image);
 		measure.setTarget(new HueImageAdapter(image));
 	}

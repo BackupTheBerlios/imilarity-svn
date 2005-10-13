@@ -3,7 +3,6 @@
  */
 package de.berlios.imilarity.image;
 
-import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -34,7 +33,7 @@ public class ImageData implements Comparable {
 		this(image, name, url, 0.0);
 	}
 	
-	public Image getImage() { return image; }
+	public java.awt.Image getImage() { return image; }
 	public String getName() { return name; }
 	public double getSimilarity() { return similarity; }
 	public int getWidth() { return image.getWidth(); }
@@ -93,12 +92,12 @@ public class ImageData implements Comparable {
 	}
 
 
-	public ColorImage getColorImage() {
-		return new ColorImageAdapter(this);
+	public RgbImage getRgbImage() {
+		return new RgbImage(this);
 	}
 	
-	public ColorImage getGrayscaleImage() {
-		return new GrayscaleImageAdapter(getColorImage());
+	public GrayscaleImage getGrayscaleImage() {
+		return new GrayscaleImage(getRgbImage());
 	}
 	
 

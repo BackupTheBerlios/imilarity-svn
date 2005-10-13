@@ -10,14 +10,14 @@ import de.berlios.imilarity.fuzzy.FuzzySet;
 import de.berlios.imilarity.image.GrayscaleImage;
 
 
-public class FuzzyGrayscaleHistogramMeasure extends StagedGrayscaleMeasureBase {
+public class FuzzyHistogramImageMeasure extends GrayscaleStagedImageMeasureBase {
 
 	private FuzzyMeasure fuzzyMeasure;
 	
 	private int[] queryHistogram, targetHistogram;
 	private int queryMax = 0, targetMax = 0, targetPc = 0, queryPc = 0; // pc = pixelcount
 	
-	public FuzzyGrayscaleHistogramMeasure(FuzzyMeasure fuzzyMeasure) {
+	public FuzzyHistogramImageMeasure(FuzzyMeasure fuzzyMeasure) {
 		if (fuzzyMeasure == null)
 			throw new NullPointerException("fuzzyMeasure == null");
 		this.fuzzyMeasure = fuzzyMeasure;
@@ -41,13 +41,13 @@ public class FuzzyGrayscaleHistogramMeasure extends StagedGrayscaleMeasureBase {
 	
 	public void compare(int pixelNr) {
 		if (pixelNr < queryPc) {
-			int v1 = getQuery().getGrayscaleValue(pixelNr);
+			int v1 = (int) (getQuery().getColor(pixelNr).getComponents()[0]*255);
 			queryHistogram[v1]++;
 			if (queryHistogram[v1] > queryMax) 
 				queryMax = queryHistogram[v1];
 		}
 		if (pixelNr < targetPc) {
-			int v2 = getTarget().getGrayscaleValue(pixelNr);
+			int v2 = (int) (getTarget().getColor(pixelNr).getComponents()[0]*255);
 			targetHistogram[v2]++;
 			if (targetHistogram[v2] > targetMax) 
 				targetMax = targetHistogram[v2];

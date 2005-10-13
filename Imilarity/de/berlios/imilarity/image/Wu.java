@@ -41,7 +41,7 @@ public class Wu implements ColorQuantizer {
 		K = nK;
 	}
 	
-	public void quantize(ColorImage image) {
+	public void quantize(Image image) {
 		height = image.getHeight();
 		width = image.getWidth();
 		size = width * height;

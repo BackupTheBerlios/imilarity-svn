@@ -12,9 +12,11 @@ public class FuzzyGrayscaleHistogram implements FuzzySet {
 	public FuzzyGrayscaleHistogram(GrayscaleImage image) {
 		if (image == null)
 			throw new NullPointerException("image == null");
+		if (image.getColorComponentsCount() != 1)
+			throw new IllegalArgumentException("image must have 1 color component");
 		int pc = image.getWidth() * image.getHeight();
 		for (int i = 0; i < pc; i++) {
-			int value = image.getGrayscaleValue(i);
+			int value = (int) (image.getColor(i).getComponents()[0]*255);
 			histogram[value]++;
 			if (histogram[value] > max) 
 				max = histogram[value];
@@ -36,7 +38,7 @@ public class FuzzyGrayscaleHistogram implements FuzzySet {
 	}
 
 	public Membership getMembership(int element) {
-		return new ScalarMembership(histogram[element] * 1.0 / max);
+		return new Membership(histogram[element] * 1.0 / max);
 	}
 
 }

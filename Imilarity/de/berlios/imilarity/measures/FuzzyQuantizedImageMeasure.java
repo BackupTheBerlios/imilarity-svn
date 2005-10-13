@@ -6,20 +6,17 @@ import java.util.HashMap;
 
 import de.berlios.imilarity.fuzzy.ArrayFuzzySet;
 import de.berlios.imilarity.fuzzy.FuzzySet;
-import de.berlios.imilarity.fuzzy.HashedFuzzySet;
 import de.berlios.imilarity.fuzzy.Membership;
-import de.berlios.imilarity.fuzzy.VectorMembership;
-import de.berlios.imilarity.image.ColorImage;
+import de.berlios.imilarity.image.Image;
 import de.berlios.imilarity.image.ColorQuantizer;
 import de.berlios.imilarity.image.NeuQuant;
-import de.berlios.imilarity.image.Wu;
 
 
-public class FuzzyQuantizedColorMeasure extends ColorMeasureBase {
+public class FuzzyQuantizedImageMeasure extends ImageMeasureBase {
 
 	private FuzzyMeasure fuzzyMeasure;
 	
-	public FuzzyQuantizedColorMeasure(FuzzyMeasure fuzzyMeasure) {
+	public FuzzyQuantizedImageMeasure(FuzzyMeasure fuzzyMeasure) {
 		if (fuzzyMeasure == null)
 			throw new NullPointerException("fuzzyMeasure == null");
 		this.fuzzyMeasure = fuzzyMeasure;
@@ -33,8 +30,8 @@ public class FuzzyQuantizedColorMeasure extends ColorMeasureBase {
 		return fuzzyMeasure.getSimilarity();
 	}
 	
-	private FuzzySet calculateColors(ColorImage image) {
-		ColorQuantizer cq = new Wu(4);
+	private FuzzySet calculateColors(Image image) {
+		ColorQuantizer cq = new NeuQuant(30,8);
 		cq.quantize(image);
 		ArrayFuzzySet colors = new ArrayFuzzySet();
 		
@@ -76,7 +73,7 @@ public class FuzzyQuantizedColorMeasure extends ColorMeasureBase {
 		return colors;
 	}
 	
-	private class EqVectorMembership extends VectorMembership {
+	private class EqVectorMembership extends Membership {
 		public EqVectorMembership(double[] components) {
 			super(components);
 		}

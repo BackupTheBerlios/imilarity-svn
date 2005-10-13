@@ -3,42 +3,37 @@
  */
 package de.berlios.imilarity.measures;
 
-import de.berlios.imilarity.image.GrayscaleImage;
+import de.berlios.imilarity.image.Image;
 
-public class HomGrayscaleMeasure extends StagedGrayscaleMeasureBase {
+public class HomImageMeasure extends GrayscaleStagedImageMeasureBase {
 
-	private StagedGrayscaleMeasure measure;
+	private StagedImageMeasure measure;
 	private double max1 = 0.0, max2 = 0.0, min1 = 1.0, min2 = 1.0;
 	
-	public HomGrayscaleMeasure(StagedGrayscaleMeasure measure) {
+	public HomImageMeasure(StagedImageMeasure measure) {
 		if (measure == null)
 			throw new NullPointerException("measure == null");
 		this.measure = measure;
 	}
 	
-	public void setQuery(GrayscaleImage image) {
+	public void setQuery(Image image) {
+		super.setQuery(image);
 		measure.setQuery(image);
 	}
 	
-	public GrayscaleImage getQuery() {
-		return measure.getQuery();
-	}
-	
-	public void setTarget(GrayscaleImage image) {
+	public void setTarget(Image image) {
+		super.setTarget(image);
 		measure.setTarget(image);
 	}
-	
-	public GrayscaleImage getTarget() {
-		return measure.getTarget();
-	}
+
 	
 	private static double s(double x, double y) {
 		return Math.min(1, Math.max(0, 6/5 - 2 * Math.abs(x - y)));
 	}
 	
 	public void compare(int pixelNr) {
-		double nv1 = measure.getQuery().getGrayscaleValue(pixelNr) * 1.0 / 255;
-		double nv2 = measure.getTarget().getGrayscaleValue(pixelNr) * 1.0 / 255;
+		double nv1 = measure.getQuery().getColor(pixelNr).getComponents()[0];
+		double nv2 = measure.getTarget().getColor(pixelNr).getComponents()[0];
 		if (nv1 > max1) max1 = nv1;
 		if (nv1 < min1) min1 = nv1;
 		if (nv2 > max2) max2 = nv2;

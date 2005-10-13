@@ -3,29 +3,29 @@
  */
 package de.berlios.imilarity.measures;
 
-import de.berlios.imilarity.image.GrayscaleImage;
+import de.berlios.imilarity.image.Image;
 
 
 /**
  * @author Klaas Bosteels
  */
-public class ScalingGrayscaleMeasure extends StagedGrayscaleMeasureBase {
+public class ScalingImageMeasure extends StagedImageMeasureBase {
 
-	private StagedGrayscaleMeasure measure;
+	private StagedImageMeasure measure;
 	
-	public ScalingGrayscaleMeasure(StagedGrayscaleMeasure measure) {
+	public ScalingImageMeasure(StagedImageMeasure measure) {
 		if (measure == null)
 			throw new NullPointerException("measure == null");
 		this.measure = measure;
 	}
 	
-	public void setQuery(GrayscaleImage image) {
+	public void setQuery(Image image) {
 		super.setQuery(image);
 		measure.setQuery(image);
 	}
 	
-	public void setTarget(GrayscaleImage image) {
-		GrayscaleImage query = getQuery();
+	public void setTarget(Image image) {
+		Image query = getQuery();
 		image = image.getScaledInstance(query.getWidth(),query.getHeight());
 		super.setTarget(image);
 		measure.setTarget(image);
@@ -45,8 +45,8 @@ public class ScalingGrayscaleMeasure extends StagedGrayscaleMeasureBase {
 	}
 	
 	public double getSimilarity() {
-		GrayscaleImage query = getQuery();
-		GrayscaleImage target = getTarget();
+		Image query = getQuery();
+		Image target = getTarget();
 		if (query == null || target == null)
 			return 0.0;
 		return measure.getSimilarity();

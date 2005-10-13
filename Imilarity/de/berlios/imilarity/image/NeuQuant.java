@@ -107,7 +107,7 @@ public class NeuQuant implements ColorQuantizer {
 	}
 	
 	
-	public void quantize(ColorImage im) {
+	public void quantize(Image im) {
 		setPixels(im);
 		setUpArrays();
 		init();
@@ -164,14 +164,14 @@ public class NeuQuant implements ColorQuantizer {
 		}
 	}    	
 	
-	private void setPixels(ColorImage im) {
+	private void setPixels(Image im) {
 		if (im == null) throw new NullPointerException ("Image is null");
 		int w = im.getWidth();
 		int h = im.getHeight();
 		setPixels (im, w, h);
 	}
 	
-	private void setPixels(ColorImage im, int w, int h) {
+	private void setPixels(Image im, int w, int h) {
 		if (w*h < maxprime) throw new IllegalArgumentException ("Image is too small");
 		pixels = new int [w * h];
 		for (int i = 0; i < pixels.length; i++) {

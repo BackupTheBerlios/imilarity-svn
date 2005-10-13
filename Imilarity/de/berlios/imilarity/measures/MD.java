@@ -8,13 +8,13 @@ package de.berlios.imilarity.measures;
 /**
  * @author Klaas Bosteels
  */
-public class MD extends StagedGrayscaleMeasureBase {
+public class MD extends GrayscaleStagedImageMeasureBase {
 
 	private double max = 0.0;
 	
 	public void compare(int pixelNr) {
-		int v1 = getQuery().getGrayscaleValue(pixelNr);
-		int v2 = getTarget().getGrayscaleValue(pixelNr);
+		int v1 = (int) (getQuery().getColor(pixelNr).getComponents()[0]*255);
+		int v2 = (int) (getTarget().getColor(pixelNr).getComponents()[0]*255);
 		int difference = Math.abs(v1 - v2);
 		if (difference > max)
 			max = difference;

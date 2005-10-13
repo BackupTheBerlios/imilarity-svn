@@ -6,11 +6,11 @@ package de.berlios.imilarity.measures;
 import de.berlios.imilarity.aggregators.Aggregator;
 import de.berlios.imilarity.fuzzy.Membership;
 
-public abstract class AggregatedGrayscaleMeasure extends StagedFuzzyMeasureBase {
+public abstract class AggregatedImageMeasure extends StagedFuzzyMeasureBase {
 
 	private Aggregator aggregator;
 	
-	public AggregatedGrayscaleMeasure(Aggregator aggregator) {
+	public AggregatedImageMeasure(Aggregator aggregator) {
 		if (aggregator == null)
 			throw new NullPointerException("aggregator = null");
 		this.aggregator = aggregator;

@@ -2,7 +2,7 @@ package de.berlios.imilarity.image;
 
 public interface ColorQuantizer {
 
-	public void quantize(ColorImage im);
+	public void quantize(Image im);
 	
 	public int getColorCount();
 	

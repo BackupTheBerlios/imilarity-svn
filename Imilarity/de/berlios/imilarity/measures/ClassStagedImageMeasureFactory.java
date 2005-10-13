@@ -4,19 +4,19 @@
 package de.berlios.imilarity.measures;
 
 
-public class ClassGrayscaleMeasureFactory implements StagedGrayscaleMeasureFactory {
+public class ClassStagedImageMeasureFactory implements StagedImageMeasureFactory {
 
 	private Class c;
 	
-	public ClassGrayscaleMeasureFactory(Class c) {
+	public ClassStagedImageMeasureFactory(Class c) {
 		if (c == null)
 			throw new NullPointerException("c == null");
 		this.c = c;
 	}
 	
-	public StagedGrayscaleMeasure createMeasure() {
+	public StagedImageMeasure createMeasure() {
 		try {
-			return (StagedGrayscaleMeasure) c.newInstance();
+			return (StagedImageMeasure) c.newInstance();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 			return null;

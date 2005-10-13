@@ -3,21 +3,21 @@
  */
 package de.berlios.imilarity.measures;
 
-import de.berlios.imilarity.image.GrayscaleImage;
+import de.berlios.imilarity.image.Image;
 
-public interface GrayscaleMeasure {
+public interface ImageMeasure {
 	
 	/**
 	 * @param query beeld waarmee de doelbeelden vergeleken moeten worden
 	 */
-	public void setQuery(GrayscaleImage query);
-	public GrayscaleImage getQuery();
+	public void setQuery(Image query);
+	public Image getQuery();
 	
 	/**
 	 * @param target het huidige doelbeeld
 	 */
-	public void setTarget(GrayscaleImage target);
-	public GrayscaleImage getTarget();
+	public void setTarget(Image target);
+	public Image getTarget();
 	
 	
 	/**

@@ -7,7 +7,7 @@ package de.berlios.imilarity.measures;
 /**
  * @author Klaas Bosteels
  */
-public interface StagedGrayscaleMeasure extends GrayscaleMeasure {
+public interface StagedImageMeasure extends ImageMeasure {
 	
 	void compare(int pixelNr);
 	double combine();

@@ -3,37 +3,37 @@
  */
 package de.berlios.imilarity.measures;
 
-import de.berlios.imilarity.image.GrayscaleImage;
+import de.berlios.imilarity.image.Image;
 import de.berlios.imilarity.image.PartOfGrayscaleImage;
 
-public class PartGrayscaleMeasure extends StagedGrayscaleMeasureBase {
+public class PartImageMeasure extends StagedImageMeasureBase {
 
-	private StagedGrayscaleMeasureFactory factory;
+	private StagedImageMeasureFactory factory;
 	private int width, height; // de grootte van de ingestelde image
 	private int cols = 0, rows = 0; // geven het aantal deel-images aan
-	private StagedGrayscaleMeasure[] measures;
+	private StagedImageMeasure[] measures;
 	
 	private static final int PART_W = 10, PART_H = 10;
 	
-	public PartGrayscaleMeasure(StagedGrayscaleMeasureFactory factory) {
+	public PartImageMeasure(StagedImageMeasureFactory factory) {
 		if (factory == null)
 			throw new NullPointerException("factory == null");
 		this.factory = factory;
 	}
 	
-	public void setQuery(GrayscaleImage query) {
+	public void setQuery(Image query) {
 		super.setQuery(query);
 		// breedte en hoogte worden naar boven afgerond:
 		width = ((query.getWidth() + PART_W - 1) / PART_W) * PART_W;
 		height = ((query.getHeight() + PART_H - 1) / PART_H) * PART_H;
 		cols = width / PART_W;
 		rows = height / PART_H;
-		measures = new StagedGrayscaleMeasure[cols * rows];
+		measures = new StagedImageMeasure[cols * rows];
 		for (int i = 0; i < measures.length; i++)
 			measures[i] = factory.createMeasure();
 	}
 	
-	public void setTarget(GrayscaleImage target) {
+	public void setTarget(Image target) {
 		if (!sameResolution(getQuery(), target))
 			throw new IllegalArgumentException("query and target must have same resolution");
 		super.setTarget(target);

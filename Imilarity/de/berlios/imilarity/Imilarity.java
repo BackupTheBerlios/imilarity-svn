@@ -15,20 +15,20 @@ import java.util.List;
 import de.berlios.imilarity.aggregators.Aggregator;
 import de.berlios.imilarity.aggregators.ArithmeticMean;
 import de.berlios.imilarity.image.AggregatedColorImage;
-import de.berlios.imilarity.image.ColorImage;
+import de.berlios.imilarity.image.Image;
 import de.berlios.imilarity.image.ImageData;
-import de.berlios.imilarity.measures.ColorMeasure;
-import de.berlios.imilarity.measures.StagedGrayscaleMeasure;
-import de.berlios.imilarity.measures.StagedGrayscaleMeasureFactory;
+import de.berlios.imilarity.measures.ImageMeasure;
+import de.berlios.imilarity.measures.StagedImageMeasure;
+import de.berlios.imilarity.measures.StagedImageMeasureFactory;
 import de.berlios.imilarity.measures.FuzzyGrayscaleMeasure;
-import de.berlios.imilarity.measures.GrayscaledColorMeasure;
-import de.berlios.imilarity.measures.HomGrayscaleMeasure;
+import de.berlios.imilarity.measures.GrayscaledImageMeasure;
+import de.berlios.imilarity.measures.HomImageMeasure;
 import de.berlios.imilarity.measures.M20;
-import de.berlios.imilarity.measures.FuzzyGrayscaleHistogramMeasure;
+import de.berlios.imilarity.measures.FuzzyHistogramImageMeasure;
 import de.berlios.imilarity.measures.M3;
-import de.berlios.imilarity.measures.PartGrayscaleMeasure;
-import de.berlios.imilarity.measures.ProductGrayscaleMeasure;
-import de.berlios.imilarity.measures.ScalingGrayscaleMeasure;
+import de.berlios.imilarity.measures.PartImageMeasure;
+import de.berlios.imilarity.measures.ProductImageMeasure;
+import de.berlios.imilarity.measures.ScalingImageMeasure;
 import de.berlios.imilarity.providors.Providor;
 import de.berlios.imilarity.util.ArraysBackedList;
 
@@ -43,13 +43,13 @@ public class Imilarity {
 	// defaults: 
 	private Providor providor = null;
 	private Aggregator aggregator = new ArithmeticMean();
-	private ColorMeasure measure = 
-		new GrayscaledColorMeasure(new ScalingGrayscaleMeasure(
-				new PartGrayscaleMeasure(new StagedGrayscaleMeasureFactory() {
-					public StagedGrayscaleMeasure createMeasure() {
-						return new ProductGrayscaleMeasure(
-							new FuzzyGrayscaleHistogramMeasure(new M3()), 
-							new HomGrayscaleMeasure(new FuzzyGrayscaleMeasure(new M20())));
+	private ImageMeasure measure = 
+		new GrayscaledImageMeasure(new ScalingImageMeasure(
+				new PartImageMeasure(new StagedImageMeasureFactory() {
+					public StagedImageMeasure createMeasure() {
+						return new ProductImageMeasure(
+							new FuzzyHistogramImageMeasure(new M3()), 
+							new HomImageMeasure(new FuzzyGrayscaleMeasure(new M20())));
 					}
 				})));
 	
@@ -58,7 +58,7 @@ public class Imilarity {
 	protected boolean[] pageLoaded;
 	
 	private boolean aggregationCalculated = false;
-	ColorImage aggregation = null;
+	Image aggregation = null;
 	
 	
 	public void setProvidor(Providor providor) {
@@ -77,7 +77,7 @@ public class Imilarity {
 		this.aggregator = aggregator;
 	}
 	
-	public void setMeasure(ColorMeasure measure) {
+	public void setMeasure(ImageMeasure measure) {
 		if (measure == null)
 			throw new NullPointerException("measure == null");
 		this.measure = measure;
@@ -217,16 +217,16 @@ public class Imilarity {
 		
 		if (!aggregationCalculated) {
 			aggregationCalculated = true;
-			ColorImage[] scis = new ColorImage[examples.size()];
+			Image[] scis = new Image[examples.size()];
 			Iterator it = examples.iterator();
 			for (int i = 0; i < scis.length && it.hasNext(); i++)
-				scis[i] = ((ImageData) it.next()).getColorImage();
+				scis[i] = ((ImageData) it.next()).getRgbImage();
 			aggregation = new AggregatedColorImage(scis, aggregator);
 			measure.setQuery(aggregation);
 		}
 		for (int i = 0; i < pages[page-1].length; i++) {
 			if (pages[page-1][i] != null) {
-				measure.setTarget(pages[page-1][i].getColorImage());
+				measure.setTarget(pages[page-1][i].getRgbImage());
 				pages[page-1][i].setSimilarity(measure.getSimilarity());
 			}
 		}

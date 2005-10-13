@@ -7,7 +7,7 @@ import de.berlios.imilarity.aggregators.ArithmeticMean;
 import de.berlios.imilarity.fuzzy.Membership;
 
 
-public class M20 extends AggregatedGrayscaleMeasure {
+public class M20 extends AggregatedImageMeasure {
 
 	public M20() {
 		super(new ArithmeticMean());

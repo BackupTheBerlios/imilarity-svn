@@ -3,24 +3,24 @@
  */
 package de.berlios.imilarity.measures;
 
-import de.berlios.imilarity.image.GrayscaleImage;
+import de.berlios.imilarity.image.Image;
 
 
 /**
  * @author Klaas Bosteels
  */
-public abstract class StagedGrayscaleMeasureBase extends GrayscaleMeasureBase 
-	implements StagedGrayscaleMeasure  {
+public abstract class StagedImageMeasureBase extends ImageMeasureBase 
+	implements StagedImageMeasure  {
 
-	public static boolean sameResolution(GrayscaleImage gi1, GrayscaleImage gi2) {
+	public static boolean sameResolution(Image gi1, Image gi2) {
 		return 
 			gi1.getWidth() == gi2.getWidth() && 
 			gi1.getHeight() == gi2.getHeight();
 	}
 	
 	public double getSimilarity() {
-		GrayscaleImage query = getQuery();
-		GrayscaleImage target = getTarget();
+		Image query = getQuery();
+		Image target = getTarget();
 		if (query == null || target == null)
 			return 0.0;
 		int pc1 = query.getWidth() * query.getHeight();

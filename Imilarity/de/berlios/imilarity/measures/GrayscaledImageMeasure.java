@@ -3,30 +3,30 @@
  */
 package de.berlios.imilarity.measures;
 
-import de.berlios.imilarity.image.ColorImage;
-import de.berlios.imilarity.image.GrayscaleImageAdapter;
+import de.berlios.imilarity.image.Image;
+import de.berlios.imilarity.image.GrayscaleImage;
 
 /**
  * @author Klaas Bosteels
  */
-public class GrayscaledColorMeasure extends ColorMeasureBase {
+public class GrayscaledImageMeasure extends ImageMeasureBase {
 
-	private GrayscaleMeasure measure;
+	private ImageMeasure measure;
 	
-	public GrayscaledColorMeasure(GrayscaleMeasure measure) {
+	public GrayscaledImageMeasure(ImageMeasure measure) {
 		if (measure == null)
 			throw new NullPointerException("measure == null");
 		this.measure = measure;
 	}
 	
-	public void setQuery(ColorImage image) {
+	public void setQuery(Image image) {
 		super.setQuery(image);
-		measure.setQuery(new GrayscaleImageAdapter(image));
+		measure.setQuery(new GrayscaleImage(image));
 	}
 	
-	public void setTarget(ColorImage image) {
+	public void setTarget(Image image) {
 		super.setTarget(image);
-		measure.setTarget(new GrayscaleImageAdapter(image));
+		measure.setTarget(new GrayscaleImage(image));
 	}
 	
 	/**

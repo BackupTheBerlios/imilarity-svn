@@ -1,9 +1,9 @@
 package de.berlios.imilarity.measures;
 
-import de.berlios.imilarity.fuzzy.FuzzyGrayscaleImage;
+import de.berlios.imilarity.fuzzy.FuzzyImage;
 import de.berlios.imilarity.image.GrayscaleImage;
 
-public class FuzzyGrayscaleMeasure extends StagedGrayscaleMeasureBase {
+public class FuzzyGrayscaleMeasure extends StagedImageMeasureBase {
 
 	private StagedFuzzyMeasure measure;
 	
@@ -15,12 +15,12 @@ public class FuzzyGrayscaleMeasure extends StagedGrayscaleMeasureBase {
 	
 	public void setQuery(GrayscaleImage query) {
 		super.setQuery(query);
-		measure.setQuery(new FuzzyGrayscaleImage(query));
+		measure.setQuery(new FuzzyImage(query));
 	}
 	
 	public void setTarget(GrayscaleImage target) {
 		super.setTarget(target);
-		measure.setTarget(new FuzzyGrayscaleImage(target));
+		measure.setTarget(new FuzzyImage(target));
 	}
 	 
 	public void compare(int pixelNr) {

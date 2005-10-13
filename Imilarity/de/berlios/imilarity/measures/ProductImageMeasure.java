@@ -5,11 +5,11 @@ package de.berlios.imilarity.measures;
 
 import de.berlios.imilarity.image.GrayscaleImage;
 
-public class ProductGrayscaleMeasure extends StagedGrayscaleMeasureBase {
+public class ProductImageMeasure extends StagedImageMeasureBase {
 
-	private StagedGrayscaleMeasure measure1, measure2;
+	private StagedImageMeasure measure1, measure2;
 	
-	public ProductGrayscaleMeasure(StagedGrayscaleMeasure measure1, StagedGrayscaleMeasure measure2) {
+	public ProductImageMeasure(StagedImageMeasure measure1, StagedImageMeasure measure2) {
 		if (measure1 == null)
 			throw new NullPointerException("measure1 == null");
 		this.measure1 = measure1;
