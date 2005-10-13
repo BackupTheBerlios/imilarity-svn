@@ -3,7 +3,7 @@
  */
 package de.berlios.imilarity.image;
 
-public class GrayscaleImageAdapter extends GrayscaleImageBase {
+public class GrayscaleImageAdapter extends ColorImageBase {
 
 	private ColorImage image;
 
@@ -13,9 +13,9 @@ public class GrayscaleImageAdapter extends GrayscaleImageBase {
 		this.image = image;
 	}
 
-	public int getGrayscaleValue(int x, int y) {
-		int[] colors = image.getColorValues(x, y);
-		return (int) (0.3 * colors[0] + 0.59 * colors[1] + 0.11 * colors[2]);
+	public Color getColor(int x, int y) {
+		double[] colors = image.getColor(x, y).getComponents();
+		return new Color(0.3 * colors[0] + 0.59 * colors[1] + 0.11 * colors[2]);
 	}
 
 	public int getWidth() {
@@ -26,7 +26,7 @@ public class GrayscaleImageAdapter extends GrayscaleImageBase {
 		return image.getHeight();
 	}
 
-	public GrayscaleImage getScaledInstance(int w, int h) {
+	public ColorImage getScaledInstance(int w, int h) {
 		return new GrayscaleImageAdapter(image.getScaledInstance(w,h));
 	}
 	

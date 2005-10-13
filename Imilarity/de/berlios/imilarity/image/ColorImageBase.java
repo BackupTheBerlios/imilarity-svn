@@ -5,9 +5,9 @@ package de.berlios.imilarity.image;
 
 public abstract class ColorImageBase implements ColorImage {
 	
-	public int[] getColorValues(int pixelNr) {
+	public Color getColor(int pixelNr) {
 		int w = getWidth();
-		return getColorValues(pixelNr % w, pixelNr / w);
+		return getColor(pixelNr % w, pixelNr / w);
 	}
 
 }

@@ -9,8 +9,8 @@ package de.berlios.imilarity.measures;
  */
 public interface StagedGrayscaleMeasure extends GrayscaleMeasure {
 	
-	public void compare(int pixelNr);
-	public double combine();
-	public void reset();
+	void compare(int pixelNr);
+	double combine();
+	void reset();
 
 }

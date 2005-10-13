@@ -1,15 +1,17 @@
 package de.berlios.imilarity.measures;
 
+import de.berlios.imilarity.fuzzy.Membership;
+
 
 public class M3 extends StagedFuzzyMeasureBase {
 
 	private double sum1 = 0.0, sum2 = 0.0;
 	
 	public void compare(int element) {
-		double v1 = getQuery().getMembership(element);
-		double v2 = getTarget().getMembership(element);
-		sum1 += Math.abs(v1 - v2);
-		sum2 += v1 + v2;
+		Membership m1 = getQuery().getMembership(element);
+		Membership m2 = getTarget().getMembership(element);
+		sum1 += m1.minus(m2).abs();
+		sum2 += m1.plus(m2).abs();
 	}
 
 	public double combine() {

@@ -3,12 +3,12 @@
  */
 package de.berlios.imilarity.image;
 
-public class PartOfGrayscaleImage extends GrayscaleImageBase {
+public class PartOfGrayscaleImage extends ColorImageBase {
 
-	private GrayscaleImage image;
+	private ColorImage image;
 	private int ox, oy, width, height;
 	
-	public PartOfGrayscaleImage(GrayscaleImage image, int ox, int oy, int w, int h) {
+	public PartOfGrayscaleImage(ColorImage image, int ox, int oy, int w, int h) {
 		if (image == null)
 			throw new NullPointerException("image == null");
 		this.image = image;
@@ -23,9 +23,9 @@ public class PartOfGrayscaleImage extends GrayscaleImageBase {
 	}
 	
 	
-	public int getGrayscaleValue(int x, int y) {
+	public Color getColor(int x, int y) {
 		if (ox+x >= image.getWidth() || oy+y >= image.getHeight())
-			return 0; // zwart teruggeven als we buiten de grenzen gaan
+			return new Grayscale0; // zwart teruggeven als we buiten de grenzen gaan
 		return image.getGrayscaleValue(ox+x, oy+y);
 	}
 

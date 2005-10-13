@@ -3,6 +3,7 @@
  */
 package de.berlios.imilarity.image;
 
+
 /**
  * @author Klaas Bosteels
  */
@@ -18,10 +19,14 @@ public class ColorImageAdapter extends ColorImageBase {
 	
 	
 	/**
-	 * @see de.berlios.imilarity.image.ColorImage#getColorValues(int, int)
+	 * @see de.berlios.imilarity.image.ColorImage#getColor(int, int)
 	 */
-	public int[] getColorValues(int x, int y) {
-		return imageData.getRgb(x, y);
+	public Color getColor(int x, int y) {
+		int[] rgb = imageData.getRgb(x, y);
+		double r = rgb[0] * 1.0 / 255;
+		double g = rgb[1] * 1.0 / 255;
+		double b = rgb[2] * 1.0 / 255;
+		return new Color(new double[] { r, g, b });
 	}
 
 	/**

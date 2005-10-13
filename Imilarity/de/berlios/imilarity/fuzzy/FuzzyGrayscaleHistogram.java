@@ -35,8 +35,8 @@ public class FuzzyGrayscaleHistogram implements FuzzySet {
 		return 256;
 	}
 
-	public double getMembership(int element) {
-		return histogram[element] * 1.0 / max;
+	public Membership getMembership(int element) {
+		return new ScalarMembership(histogram[element] * 1.0 / max);
 	}
 
 }

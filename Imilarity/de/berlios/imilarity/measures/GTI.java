@@ -1,5 +1,7 @@
 package de.berlios.imilarity.measures;
 
+import de.berlios.imilarity.fuzzy.Membership;
+
 public class GTI extends StagedFuzzyMeasureBase {
 
 	private double a, b, sum1 = 0, sum2 = 0;
@@ -10,10 +12,11 @@ public class GTI extends StagedFuzzyMeasureBase {
 	}
 	
 	public void compare(int element) {
-		double v1 = getQuery().getMembership(element);
-		double v2 = getTarget().getMembership(element);
-		sum1 += Math.min(v1,v2);
-		sum2 += Math.min(v1,v2) + a * Math.min(v1,1-v2) + b * Math.min(1-v1,v2);
+		Membership m1 = getQuery().getMembership(element);
+		Membership m2 = getTarget().getMembership(element);
+		sum1 += m1.or(m2).abs();
+		sum2 += m1.or(m2).abs() + a * Math.min(m1.abs(), 1 - m2.abs()) 
+			+ b * Math.min(1 - m1.abs(), m2.abs());
 	}
 
 	public double combine() {

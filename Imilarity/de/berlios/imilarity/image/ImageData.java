@@ -97,7 +97,7 @@ public class ImageData implements Comparable {
 		return new ColorImageAdapter(this);
 	}
 	
-	public GrayscaleImage getGrayscaleImage() {
+	public ColorImage getGrayscaleImage() {
 		return new GrayscaleImageAdapter(getColorImage());
 	}
 	

@@ -29,8 +29,9 @@ public class FuzzyGrayscaleImage implements FuzzySet {
 	/**
 	 * @see de.berlios.imilarity.fuzzy.FuzzySet#getMembership(int)
 	 */
-	public double getMembership(int element) {
-		return image.getGrayscaleValue(element % image.getWidth(), element / image.getWidth());
+	public Membership getMembership(int element) {
+		return new ScalarMembership(image.getGrayscaleValue
+				(element % image.getWidth(), element / image.getWidth()) * 1.0 / 255);
 	}
 
 }

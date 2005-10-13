@@ -1,7 +1,8 @@
 package de.berlios.imilarity.measures;
 
-import de.berlios.imilarity.fuzzy.FuzzyArray;
+import de.berlios.imilarity.fuzzy.HashedFuzzySet;
 import de.berlios.imilarity.fuzzy.FuzzySet;
+import de.berlios.imilarity.fuzzy.ScalarMembership;
 
 public class FuzzyGammaGrayscaleMeasure extends FuzzyGrayscaleHistogramMeasure {	
 
@@ -14,13 +15,19 @@ public class FuzzyGammaGrayscaleMeasure extends FuzzyGrayscaleHistogramMeasure {
 		FuzzySet targetHist = getTargetHistogram(), queryHist = getQueryHistogram();
 		double c = 1.0 / (getTargetMax() - getTargetMin()); 
 		for (int i = 0; i < targetMemberships.length; i++) {
-			targetMemberships[i] = Math.exp(-c * Math.abs
-					(targetHist.getMembership(i) - queryHist.getMembership(i)));
+			targetMemberships[i] = Math.exp(-c * 
+					(targetHist.getMembership(i).minus(queryHist.getMembership(i))).abs());
 			queryMemberships[i] = 1.0;
 		}
 		FuzzyMeasure fuzzyMeasure = getFuzzyMeasure();
-		fuzzyMeasure.setQuery(new FuzzyArray(queryMemberships));
-		fuzzyMeasure.setTarget(new FuzzyArray(targetMemberships));
+		
+		HashedFuzzySet map1 = new HashedFuzzySet(), map2 = new HashedFuzzySet();
+		for (int i = 0; i < 256; i++) {
+			map1.addMembership(new ScalarMembership(queryMemberships[i]));
+			map2.addMembership(new ScalarMembership(targetMemberships[i]));
+		}
+		fuzzyMeasure.setQuery(map1);
+		fuzzyMeasure.setTarget(map2);
 		return fuzzyMeasure.getSimilarity();
 	}
 

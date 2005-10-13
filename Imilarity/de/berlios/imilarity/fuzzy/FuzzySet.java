@@ -4,6 +4,6 @@ public interface FuzzySet {
 
 	public int getElementsCount();
 	
-	public double getMembership(int element);
+	public Membership getMembership(int element);
 	
 }

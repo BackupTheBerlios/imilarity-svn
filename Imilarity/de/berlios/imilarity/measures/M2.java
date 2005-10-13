@@ -4,6 +4,7 @@
 package de.berlios.imilarity.measures;
 
 import de.berlios.imilarity.aggregators.Minimum;
+import de.berlios.imilarity.fuzzy.Membership;
 
 
 public class M2 extends AggregatedGrayscaleMeasure {
@@ -12,8 +13,8 @@ public class M2 extends AggregatedGrayscaleMeasure {
 		super(new Minimum());
 	}
 	
-	public double m(double x, double y) {
-		return 1 - Math.abs(x - y);
+	public double m(Membership x, Membership y) {
+		return 1 - x.minus(y).abs();
 	}
 	
 	public String getDescription() {
