@@ -2,14 +2,14 @@ package de.berlios.imilarity.fuzzy;
 
 import java.util.Arrays;
 
-import de.berlios.imilarity.image.GrayscaleImage;
+import de.berlios.imilarity.image.Image;
 
 public class FuzzyGrayscaleHistogram implements FuzzySet {
 
 	private int[] histogram = new int[256];
 	private int max = 0;
 	
-	public FuzzyGrayscaleHistogram(GrayscaleImage image) {
+	public FuzzyGrayscaleHistogram(Image image) {
 		if (image == null)
 			throw new NullPointerException("image == null");
 		if (image.getColorComponentsCount() != 1)

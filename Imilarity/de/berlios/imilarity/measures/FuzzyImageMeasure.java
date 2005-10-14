@@ -1,24 +1,24 @@
 package de.berlios.imilarity.measures;
 
 import de.berlios.imilarity.fuzzy.FuzzyImage;
-import de.berlios.imilarity.image.GrayscaleImage;
+import de.berlios.imilarity.image.Image;
 
-public class FuzzyGrayscaleMeasure extends StagedImageMeasureBase {
+public class FuzzyImageMeasure extends StagedImageMeasureBase {
 
 	private StagedFuzzyMeasure measure;
 	
-	public FuzzyGrayscaleMeasure(StagedFuzzyMeasure measure) {
+	public FuzzyImageMeasure(StagedFuzzyMeasure measure) {
 		if (measure == null)
 			throw new NullPointerException("measure == null");
 		this.measure = measure;
 	}
 	
-	public void setQuery(GrayscaleImage query) {
+	public void setQuery(Image query) {
 		super.setQuery(query);
 		measure.setQuery(new FuzzyImage(query));
 	}
 	
-	public void setTarget(GrayscaleImage target) {
+	public void setTarget(Image target) {
 		super.setTarget(target);
 		measure.setTarget(new FuzzyImage(target));
 	}
@@ -36,7 +36,7 @@ public class FuzzyGrayscaleMeasure extends StagedImageMeasureBase {
 	}
 
 	public String getDescription() {
-		return "Fuzzy Grayscale using " + measure.getDescription();
+		return "Fuzzy using " + measure.getDescription();
 	}
 
 }

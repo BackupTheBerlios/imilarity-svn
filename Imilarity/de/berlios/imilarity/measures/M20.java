@@ -7,16 +7,18 @@ import de.berlios.imilarity.aggregators.ArithmeticMean;
 import de.berlios.imilarity.fuzzy.Membership;
 
 
-public class M20 extends AggregatedImageMeasure {
+public class M20 extends AggregatedFuzzyMeasure {
 
 	public M20() {
 		super(new ArithmeticMean());
 	}
 	
 	public double m(Membership x, Membership y) {
-		if (x.equals(y)) return 1;
-		else if (x.abs() < y.abs()) return x.abs() / y.abs();
-		else return y.abs() / x.abs();
+		double v1 = x.abs(), v2 = y.abs();
+		//System.out.println("v1 = " + v1 + " v2 = " + v2);
+		if (v1 == v2) return 1;
+		else if (v1 < v2) return v1 / v2;
+		else return v2 / v1;
 	}
 
 	public String getDescription() {

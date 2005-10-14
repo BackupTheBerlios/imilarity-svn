@@ -7,7 +7,7 @@ import de.berlios.imilarity.aggregators.Minimum;
 import de.berlios.imilarity.fuzzy.Membership;
 
 
-public class M2 extends AggregatedImageMeasure {
+public class M2 extends AggregatedFuzzyMeasure {
 
 	public M2() {
 		super(new Minimum());

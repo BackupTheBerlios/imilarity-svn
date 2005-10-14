@@ -3,7 +3,7 @@
  */
 package de.berlios.imilarity.fuzzy;
 
-import de.berlios.imilarity.image.GrayscaleImage;
+import de.berlios.imilarity.image.Image;
 
 /**
  * @author klbostee
@@ -11,9 +11,9 @@ import de.berlios.imilarity.image.GrayscaleImage;
  */
 public class FuzzyImage implements FuzzySet {
 
-	private GrayscaleImage image;
+	private Image image;
 	
-	public FuzzyImage(GrayscaleImage image) {
+	public FuzzyImage(Image image) {
 		if (image == null)
 			throw new NullPointerException("image == null");
 		this.image = image;

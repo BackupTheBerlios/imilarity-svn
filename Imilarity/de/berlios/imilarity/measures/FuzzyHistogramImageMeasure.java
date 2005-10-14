@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 import de.berlios.imilarity.fuzzy.FuzzyGrayscaleHistogram;
 import de.berlios.imilarity.fuzzy.FuzzySet;
-import de.berlios.imilarity.image.GrayscaleImage;
+import de.berlios.imilarity.image.Image;
 
 
 public class FuzzyHistogramImageMeasure extends GrayscaleStagedImageMeasureBase {
@@ -29,12 +29,12 @@ public class FuzzyHistogramImageMeasure extends GrayscaleStagedImageMeasureBase 
 		}
 	}
 	
-	public void setQuery(GrayscaleImage query) {
+	public void setQuery(Image query) {
 		super.setQuery(query);
 		queryPc = query.getWidth() * query.getHeight();
 	}
 	
-	public void setTarget(GrayscaleImage target) {
+	public void setTarget(Image target) {
 		super.setTarget(target);
 		targetPc = target.getWidth() * target.getHeight();
 	}

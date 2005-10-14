@@ -20,7 +20,7 @@ import de.berlios.imilarity.image.ImageData;
 import de.berlios.imilarity.measures.ImageMeasure;
 import de.berlios.imilarity.measures.StagedImageMeasure;
 import de.berlios.imilarity.measures.StagedImageMeasureFactory;
-import de.berlios.imilarity.measures.FuzzyGrayscaleMeasure;
+import de.berlios.imilarity.measures.FuzzyImageMeasure;
 import de.berlios.imilarity.measures.GrayscaledImageMeasure;
 import de.berlios.imilarity.measures.HomImageMeasure;
 import de.berlios.imilarity.measures.M20;
@@ -49,7 +49,7 @@ public class Imilarity {
 					public StagedImageMeasure createMeasure() {
 						return new ProductImageMeasure(
 							new FuzzyHistogramImageMeasure(new M3()), 
-							new HomImageMeasure(new FuzzyGrayscaleMeasure(new M20())));
+							new HomImageMeasure(new FuzzyImageMeasure(new M20())));
 					}
 				})));
 	
