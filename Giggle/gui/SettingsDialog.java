@@ -139,17 +139,17 @@ public class SettingsDialog extends JDialog {
 		pack();
 	}
 	
-	private static StagedGrayscaleMeasureFactory getFactoryFromString(String str) {
-		StagedGrayscaleMeasureFactory factory = null;
+	private static StagedImageMeasureFactory getFactoryFromString(String str) {
+		StagedImageMeasureFactory factory = null;
 		try {
 			if (str.contains("Fuzzy")) {
 				String name = str.substring(str.lastIndexOf(' ') + 1);
 				final Class c1 = Class.forName("de.berlios.imilarity.measures." + name);
 				if (str.contains("Histogram")) {
-					factory = new StagedGrayscaleMeasureFactory() {
-						public StagedGrayscaleMeasure createMeasure()  {
+					factory = new StagedImageMeasureFactory() {
+						public StagedImageMeasure createMeasure()  {
 							try {
-								return new FuzzyGrayscaleHistogramMeasure((StagedFuzzyMeasure) c1.newInstance());
+								return new FuzzyHistogramImageMeasure((StagedFuzzyMeasure) c1.newInstance());
 							} catch (InstantiationException e) {
 								e.printStackTrace();
 							} catch (IllegalAccessException e) {
@@ -159,10 +159,10 @@ public class SettingsDialog extends JDialog {
 						}
 					};
 				} else {
-					factory = new StagedGrayscaleMeasureFactory() {
-						public StagedGrayscaleMeasure createMeasure()  {
+					factory = new StagedImageMeasureFactory() {
+						public StagedImageMeasure createMeasure()  {
 							try {
-								return new FuzzyGrayscaleMeasure((StagedFuzzyMeasure) c1.newInstance());
+								return new FuzzyImageMeasure((StagedFuzzyMeasure) c1.newInstance());
 							} catch (InstantiationException e) {
 								e.printStackTrace();
 							} catch (IllegalAccessException e) {
@@ -174,7 +174,7 @@ public class SettingsDialog extends JDialog {
 				}
 			} else {
 				Class c1 = Class.forName("de.berlios.imilarity.measures." + str);
-				factory = new ClassGrayscaleMeasureFactory(c1);
+				factory = new ClassStagedImageMeasureFactory(c1);
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -182,35 +182,35 @@ public class SettingsDialog extends JDialog {
 		return factory;
 	}
 	
-	public ColorMeasure getMeasure() {
+	public ImageMeasure getMeasure() {
 		final String selected = (String) measure.getSelectedItem();
-		StagedGrayscaleMeasureFactory factory = getFactoryFromString(selected);
+		StagedImageMeasureFactory factory = getFactoryFromString(selected);
 		if (homogenity.isEnabled() && homogenity.isSelected()) {
-			final StagedGrayscaleMeasureFactory f = factory;
-			factory = new StagedGrayscaleMeasureFactory() {
-				public StagedGrayscaleMeasure createMeasure() {
-					return new HomGrayscaleMeasure(f.createMeasure());
+			final StagedImageMeasureFactory f = factory;
+			factory = new StagedImageMeasureFactory() {
+				public StagedImageMeasure createMeasure() {
+					return new HomImageMeasure(f.createMeasure());
 				}
 			};
 		}
 		if (combined.isEnabled() && combined.isSelected()) {
-			final StagedGrayscaleMeasureFactory f = factory;
-			factory = new StagedGrayscaleMeasureFactory() {
-				public StagedGrayscaleMeasure createMeasure() {
-					return new ProductGrayscaleMeasure
+			final StagedImageMeasureFactory f = factory;
+			factory = new StagedImageMeasureFactory() {
+				public StagedImageMeasure createMeasure() {
+					return new ProductImageMeasure
 					(getFactoryFromString(selected).createMeasure(), f.createMeasure());
 				}
 			};
 		}
-		StagedGrayscaleMeasure gm;
+		StagedImageMeasure gm;
 		if (partitioned.isSelected()) {
-			gm = new PartGrayscaleMeasure(factory);
+			gm = new PartImageMeasure(factory);
 		} else
 			gm = factory.createMeasure();
 		if (component.isSelected())
-			return new ComponentsColorMeasure(new ScalingGrayscaleMeasure(gm));
+			return new ComponentsImageMeasure(new ScalingImageMeasure(gm));
 		else
-			return new GrayscaledColorMeasure(new ScalingGrayscaleMeasure(gm));
+			return new GrayscaledImageMeasure(new ScalingImageMeasure(gm));
 	}
 	
 	public Aggregator getAggregator() {

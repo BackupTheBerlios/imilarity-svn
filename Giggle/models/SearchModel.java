@@ -9,7 +9,7 @@ import java.util.Observable;
 
 import de.berlios.imilarity.Imilarity;
 import de.berlios.imilarity.image.ImageData;
-import de.berlios.imilarity.measures.ColorMeasure;
+import de.berlios.imilarity.measures.ImageMeasure;
 import de.berlios.imilarity.providors.Providor;
 
 
@@ -35,7 +35,7 @@ public class SearchModel extends Observable {
 		notifyObservers();
 	}
 	
-	public void setMeasure(ColorMeasure measure) {
+	public void setMeasure(ImageMeasure measure) {
 		imilarity.setMeasure(measure);
 	}
 	
