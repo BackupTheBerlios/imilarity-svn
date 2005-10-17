@@ -75,6 +75,7 @@ $$
 \end{definitie}
 
 \section{Bewerkingen op vaagverzamelingen}
+\label{sectie:bew_op_vaagverz}
 
 We beginnen met het defini\"eren van de begrippen \emph{negator}, \emph{conjunctor} en 
 \emph{disjunctor}. Deze operatoren zijn uitbreidingen van de klassieke logische operatoren
@@ -85,25 +86,30 @@ aan de randvoorwaarden $\mathcal{N}(0)=1$ en $\mathcal{N}(1)=0$.
 \end{definitie}
 \begin{definitie}
 Een conjunctor $\mathcal{C}$ op $[0,1]$ is een stijgende $[0,1]^2 - [0,1]$ afbeelding die voldoet aan de
-randvoorwaarden $\mathcal{C}(0,0)=\mathcal{C}(0,1)=\mathcal{C}(1,0)=0$ en $\mathcal{C}(1,1)=1$.
+randvoorwaarden $\mathcal{C}(0,0)=\mathcal{C}(0,1)=\mathcal{C}(1,0)=0$ en $\mathcal{C}(1,1)=1$. 
+Als een conjunctor voldoet aan 
+$(\forall a \in [0,1])(\mathcal{C}(1,a)=\mathcal{C}(a,1)=a)$ dan spreekt men van een semi-norm.
+Een driehoeksnorm (t-norm) is een commutatieve en associatieve semi-norm.
 \end{definitie}
 \begin{definitie}
 Een disjunctor $\mathcal{D}$ op $[0,1]$ is een stijgende $[0,1]^2 - [0,1]$ afbeelding die voldoet
 aan de randvoorwaarden $\mathcal{D}(1,0)=\mathcal{D}(0,1)=\mathcal{D}(1,1)=1$ en 
-$\mathcal{D}(0,0)=0$.
+$\mathcal{D}(0,0)=0$. Als een disjunctor voldoet aan 
+$(\forall a \in [0,1])(\mathcal{D}(0,a)=\mathcal{D}(a,0)=a)$ dan spreekt met van een semi-conorm.
+Een driehoeksconorm (t-conorm) is een commutatieve en associatieve semi-conorm.
 \end{definitie}
 
-De meest gebruikte negator is de standaardnegator $N_S$. Het minimum $C_M$ en het algebra\"isch 
-product $C_P$ zijn veelgebruikte conjunctors. Bij de disjunctors zijn het maximum $D_M$ en de
-probabilistische som $D_P$ dan weer populaire mogelijkheden. Deze operatoren worden als 
+De meest gebruikte negator is de standaardnegator $N_s$. Het minimum $T_M$ en het algebra\"isch 
+product $T_P$ zijn veelgebruikte t-normen. Bij de t-conormen zijn het maximum $S_M$ en de
+probabilistische som $S_P$ dan weer populaire mogelijkheden. Deze operatoren worden als 
 volgt gedefinieerd:
 $$
 \begin{array}{r@{\quad=\quad}l}
-N_S(x) & 1 - x \\
-C_M(x,y) & min(x,y) \\
-C_P(x,y) & x \cdot y \\
-D_M(x,y) & max(x,y) \\
-D_P(x,y) & x +y - x \cdot y,
+N_s(x) & 1 - x \\
+T_M(x,y) & min(x,y) \\
+T_P(x,y) & x \cdot y \\
+S_M(x,y) & max(x,y) \\
+S_P(x,y) & x +y - x \cdot y,
 \end{array}
 $$
 voor alle $(x,y)$ in $[0,1]^2$.
@@ -137,18 +143,117 @@ voor alle $x$ in $X$, met $\mathcal{D}$ een disjunctor.
 \end{definitie}
 
 In het vervolg van deze scriptie zullen we doorgaands 
-$(\mathcal{N},\mathcal{C},\mathcal{D})=(N_S,C_M,D_M)$ kiezen. We voeren daarom de volgende
+$(\mathcal{N},\mathcal{C},\mathcal{D})=(N_s,T_M,S_M)$ kiezen. We voeren daarom de volgende
 verkorte notaties in:
 $$
 \begin{array}{r@{\quad=\quad}l}
-A^c 		& co_{N_S} A \\
-A \cap B 	& A \cap_{C_M} B \\
-A \cup B	& A \cup_{D_M} B,
+A^c 		& co_{N_s} A \\
+A \cap B 	& A \cap_{T_M} B \\
+A \cup B	& A \cup_{S_M} B,
 \end{array}
 $$
 waarbij $A$ en $B$ vaagverzamelingen zijn.
 
 
 \section{L-vaagverzamelingen}
+
+Het begrip vaagverzameling kan op zijn beurt nog eens uitgebreid worden tot 
+\emph{L-vaagverzameling}. Deze uitbreiding is gebaseerd op het concept \emph{tralie}. We geven
+hieronder eerst de definitie van dit concept, samen met de definities van de aanverwante
+begrippen \emph{poset}, \emph{supremum} en \emph{infimum}. Daarna kunnen geven we dan, gebruik
+maken van dit voorbereid werk, de definitie van een L-vaagverzameling. 
+\begin{definitie}
+Een partieel geordende verzameling (poset) is een koppel $(P,\le)$ bestaande uit een niet-ledige
+verzameling $P$ en een binaire relatie $\le$ over $P$ die reflexief, antisymmetrisch en 
+transitief is:
+\begin{itemize}
+  \item[(P.1)] $(\forall x \in P)(x \le x)$
+  \item[(P.2)] $(\forall (x,y) \in P^2)(x \le y \land y \le x \Rightarrow x = y)$
+  \item[(P.3)] $(\forall (x,y,z) \in P^3)(x \le y \land y \le z \Rightarrow x \le z)$
+\end{itemize}
+De relatie $\le$ noemt men een (parti\"ele) orderelatie over $P$.
+\end{definitie} 
+\begin{definitie}
+Zij $(P,\le)$ een poset en $A \subseteq P$. Een element $b$ van $P$ is een bovengrens voor $A$
+als en slechts als $(\forall a \in A)(a \le b)$. Als bovendien geldt $b \in A$, dan noemen
+we $b$ het grootste element van $A$. De kleinste bovengrens voor $A$ is het
+supremum voor $A$.
+\end{definitie}
+\begin{definitie}
+Zij $(P,\le)$ een poset en $A \subseteq P$. Een element $b$ van $P$ is een ondergrens voor $A$
+als en slechts als $(\forall a \in A)(b \le a)$. Als bovendien geldt $b \in A$, dan noemen
+we $b$ het kleinste element van $A$. De grootste ondergrens voor $A$ is het
+infimum voor $A$.
+\end{definitie}
+\begin{definitie}
+Een poset $(L,\le)$ waarin elk doubleton een supremum en een infimum bezit, noemt men een tralie 
+(lattice). Als elke niet-ledige deelverzameling van $L$
+een supremum en een infimum bezit, dan spreekt men van een complete tralie.
+\end{definitie}
+% ALTERNATIEVE DEFINITIE VAN TRALIE
+%% enkele nieuwe commando's die we verder in deze sectie nodig zullen hebben
+%\newcommand{\dotand}{\ensuremath{\mathaccent\ldotp\land}}
+%\newcommand{\dotor}{\ensuremath{\mathaccent\cdotp\lor}}
+%\begin{definitie}
+%Een algebra\"ische structuur $(L,\dotor,\dotand)$ bestaande uit een niet-ledige
+%verzameling $L$ en twee binaire bewerkingen op $L$ wordt een tralie genoemd als en slechts als
+%voor elke $a$, $b$ en $c$ uit $L$ geldt:
+%\begin{itemize}
+%  \item[(L.1)] $a \dotand a = a$ en $a \dotor a = a$
+%  \item[(L.2)] $a \dotand b = b \dotand a$ en $a \dotor b = b \dotor a$
+%  \item[(L.3)] $a \dotand (b \dotand c) = (a \dotand b) \dotand c$ en $a \dotor (b \dotor c) = (a \dotor b) \dotor c$
+%  \item[(L.4)] $a \dotand (a \dotor b) = a$ en $a \dotor (a \dotand b) = a$
+%\end{itemize}
+%\end{definitie}
+
+\begin{definitie}
+Zij $X$ een universum en $(L,\le)$ een complete tralie. Een L-vaagverzameling $A$ in $X$ wordt
+gekarakteriseerd door een $X - L$ afbeelding $\mu_A$:
+$$
+\begin{array}{lllll}
+\mu_A: 	& X & \to 		& L	& \\
+		& x & \mapsto 	& \mu_A(x),		& \forall x \in A
+\end{array}
+$$
+\end{definitie}
+\noindent
+De klasse van scherpe verzamelingen in een universum $X$ stellen we voor door 
+$\mathcal{L}(X)$. Merk op dat deze klasse zich herleidt tot $\mathcal{F}(X)$ voor $L = [0,1]$.
+
+In deze scriptie zullen we enkel gebruik maken van L-vaagverzamelingen waarbij
+$L = [0,1]^n$ met $n > 0$. Voor deze speciale gevallen kunnen we het begrip sigma count als volgt 
+uitbreiden:
+$$
+|A|=\frac{1}{\sqrt{n}}\sum_{x \in X}\sqrt{(A_1(x))^2+(A_2(x))^2+\ldots+(A_n(x))^2},
+$$
+met $A(x)=(A_1(x),A_2(x),\ldots,A_n(x))$, $\forall x \in X$.  
+
+\section{Bewerkingen op L-vaagverzamelingen}
+
+In deze sectie gaan we de begrippen \emph{negator}, \emph{conjunctor} en 
+\emph{disjunctor} uitbreiden naar L-vaag\-ver\-za\-me\-ling\-en. Deze uitbreiding heeft als gevolg dat de
+de veralgemeende verzameltechnische bewerkingen $co$, $\cap$ en 
+$\cup$ uit \ref{sectie:bew_op_vaagverz} eveneens toepasbaar zijn op L-vaagverzamelingen.
+
+Zij $(L,\le)$ een complete tralie die $l$ als kleinste en $u$ als grootste element heeft. We
+defini\"eren:
+\begin{definitie}
+Een negator $\mathcal{N}$ op $L$ is een dalende $L - L$ afbeelding die voldoet
+aan de randvoorwaarden $\mathcal{N}(l)=u$ en $\mathcal{N}(u)=l$. 
+\end{definitie}
+\begin{definitie}
+Een conjunctor $\mathcal{C}$ op $L$ is een stijgende $L^2 - L$ afbeelding die voldoet aan de
+randvoorwaarden $\mathcal{C}(l,l)=\mathcal{C}(l,u)=\mathcal{C}(u,l)=l$ en $\mathcal{C}(u,u)=u$. 
+Als een conjunctor voldoet aan 
+$(\forall a \in L)(\mathcal{C}(u,a)=\mathcal{C}(a,u)=a)$ dan spreekt men van een semi-norm.
+Een driehoeksnorm (t-norm) is een commutatieve en associatieve semi-norm.
+\end{definitie}
+\begin{definitie}
+Een disjunctor $\mathcal{D}$ op $L$ is een stijgende $L^2 - L$ afbeelding die voldoet
+aan de randvoorwaarden $\mathcal{D}(u,l)=\mathcal{D}(l,u)=\mathcal{D}(u,u)=u$ en 
+$\mathcal{D}(l,l)=l$. Als een disjunctor voldoet aan 
+$(\forall a \in L)(\mathcal{D}(l,a)=\mathcal{D}(a,l)=a)$ dan spreekt met van een semi-conorm.
+Een driehoeksconorm (t-conorm) is een commutatieve en associatieve semi-conorm.
+\end{definitie}
 
 \section{Aggregatieoperatoren} 
