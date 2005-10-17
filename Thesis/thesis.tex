@@ -1,0 +1,84 @@
+%template voor een afstudeerwerk in LaTeX
+\documentclass[dutch,11pt,cite,titlepage]{report}
+%''dutch'' voor splitsing en (in emacs) spellingscontrole
+\usepackage{babel}   %voor het geval we ook engels nodig hebben
+\usepackage{graphicx} %pakket voor includeren figuren
+\usepackage{epsfig}
+\usepackage[small]{caption}
+\usepackage{url}
+
+\usepackage{phd}
+
+
+% lijst met woorden die LaTeX verkeerd splitst
+\hyphenation{Ha-da-mard-trans-for-ma-tie Fourier-transformatie post-script} 
+
+\def\listfigurename{Lijst van figuren}
+
+
+\begin{document}
+
+\selectlanguage{dutch}
+
+
+\newcommand{\auteur}{Klaas Bosteels}
+\newcommand{\jaar}{2005--2006}
+\newcommand{\titel}{Similariteitsgebaseerd rangschikken van afbeeldingen in zoekmachines}
+\newcommand{\begeleider}{lic.\ M.\ de Leider  en ir.\  M.\ de Lijder}
+\newcommand{\richting}{licentiaat in de informatica, optie: software-ontwikkeling}
+
+%de volgende lijn kiest de juiste naam van de vakgroepvoorzitter en de promotor
+\newcommand{\vakgroep}{Toegepaste Wiskunde en Informatica}
+\newcommand{\voorzitter}{Prof.\ dr.\ Guido\ Vanden\ Berghe}
+\newcommand{\promotor}{prof.\ dr.\ \ E.\ E.\ Kerre}
+
+
+\input{titel} % de titelpagina
+\pagenumbering{roman}
+\setcounter{page}{1}
+\input{dankwrd}               %het dankwoord.
+\input{abstract}              %samenvatting  van de thesis
+\renewcommand{\baselinestretch}{1}
+
+\tableofcontents %genereert de inhoudstafel
+%\listoffigures
+%\listoftables
+%\clearpage
+
+\renewcommand{\baselinestretch}{1}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+
+
+
+\input{inleiding}
+
+\input{fundamenten}
+
+
+\chapter{Similariteit}
+
+\section{Pixel-gebaseerd}
+\section{Kleur-gebaseerd}
+
+\chapter{Aggregatie}
+
+\section{Aggregatie van similariteiten}
+\section{Aggregatie van afbeeldingen}
+
+
+\chapter{Implementatie}
+
+\section{Imilarity}
+\section{Giggle}
+
+
+\nocite{*}
+%\selectlanguage{english} % vermits de meeste referenties in het engels zijn.
+\bibliographystyle{alpha} 
+
+\bibliography{thesis}           % dit bestand bevat informatie die
+                                %door bibtex wordt gelezen
+
+\end{document}

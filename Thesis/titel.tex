@@ -1,0 +1,58 @@
+%het titelblad vergt hier en daar enkele manuele ingrepen i.v.m.
+%spatiering en dergelijke
+\begin{titlepage}
+\renewcommand{\baselinestretch}{1.1}
+\Large
+\begin{center}
+\mbox{}\\[0cm]%de volgende lijnen genereren het tempeltje
+\unitlength 1mm
+
+\epsfysize 4cm \epsfclipon\epsffile{ruglogo.eps}\\
+%\begin{picture}(0,20)
+%\centering
+%\put(0,11){\makebox(0,0)[b]{\font\aula=aula34 {\aula a}}}
+%\put(0,6){\makebox(0,0)[b]{\font\futura=futura scaled 1100
+%                 {\futura UNIVERSITEIT}}}
+%\put(0,2){\makebox(0,0)[b]{\font\futura=futura scaled 1100
+%                 {\futura GENT}}}
+%\put(0,0){\makebox(0,0)[b]{\rule{21mm}{1pt}}}
+%\end{picture}\\
+{\Large  
+Faculteit Wetenschappen\\
+Vakgroep \vakgroep\\
+Voorzitter: \voorzitter
+}\\\vfill
+\parbox{14 cm}{
+{\huge\bfseries
+\begin{center}
+\sf\titel
+\end{center}
+}
+}\\\vfill
+door \auteur\\[3.3cm]
+%we schrijven ``.\"  i.p.v. ``.'' zodat LaTeX weet dat dit een
+%afkorting is (gevolgd door kleine spatie) en niet het einde van een
+%zin (gevolgd door lange spatie)
+%opmerking: ofwel: prof.\ dr.\ I.\ Lemahieu 
+%opmerking: ofwel: prof.\ dr.\ ir.\ W.\ Philips
+Promotor: \promotor \\
+%Co-promotor: \copromotor \\
+Thesisbegeleider: \begeleider 
+\\\vfill
+%        In samenwerking met BARCO GRAPHICS\\
+Afstudeerwerk ingediend tot het behalen van de graad van
+%dit moet uiteraard worden aangepast!
+\richting\\[1cm]
+Academiejaar \jaar
+\end{center}
+\renewcommand{\baselinestretch}{1}
+\end{titlepage}
+
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "total"
+%%% End: 

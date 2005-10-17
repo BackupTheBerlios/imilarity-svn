@@ -1,0 +1,154 @@
+\chapter{Wiskundige fundamenten}
+
+In dit hoofdstuk introduceren we eerst enkele basisbegrippen uit de vaagverzamelingenleer. 
+Daarna geven we een overzicht van de similariteitsmaten en aggregatieoperatoren waarvan
+we in het vervolg van deze scriptie gebruik zullen maken.
+
+\section{Vaagverzamelingen}
+
+De collectie van alle mogelijke elementen noemen we het \emph{universum} (bijvoorbeeld de
+natuurlijke getallen). Een verzameling bevat bepaalde elementen uit dit universum (bijvoorbeeld de 
+verzameling van de priemgetallen). 
+
+In het geval van een \emph{scherpe verzameling}, behoort elk 
+element uit het universum wel of niet tot de verzameling. Andere mogelijkheden zijn er
+niet. Een dergelijke verzameling kan bijgevolg 
+gerepresenteerd worden door een \emph{karakteristieke afbeelding}, die elk element uit het 
+universum afbeeldt op 0 of 1. Dit getal noemen we de \emph{lidmaatschapsgraad} van het element 
+in kwestie. De klasse van scherpe verzamelingen in een universum $X$ stellen we voor door 
+$\mathcal{P}(X)$.
+\begin{definitie}
+Zij $X$ een universum. De karakteristieke afbeelding $\mu_A$ van een scherpe verzameling $A$ in $X$
+wordt gedefinieerd als de $X - \{0,1\}$ afbeelding:
+$$
+\begin{array}{lllll}
+\mu_A: 	& X & \to 		& \{0,1\}	& \\
+		& x & \mapsto 	& 1,		& \textrm{ als } x \in A \\
+		& x & \mapsto 	& 0,		& \textrm{ als } x \notin A
+\end{array}
+$$
+\end{definitie}
+
+Bij een \emph{vaagverzameling} kunnen alle waarden tussen 0 en 1 als lidmaatschapsgraad 
+voorkomen. De karakteristiek afbeelding is in dit geval dus een $X - [0,1]$ afbeelding:
+\begin{definitie}
+Zij $X$ een universum. Een vaagverzameling $A$ in $X$ wordt gekarakteriseerd door een $X - [0,1]$
+afbeelding  $\mu_A$:
+$$
+\begin{array}{lllll}
+\mu_A: 	& X & \to 		& [0,1]	& \\
+		& x & \mapsto 	& \mu_A(x),		& \forall x \in A
+\end{array}
+$$
+\end{definitie}
+\noindent
+Een element $x \in X$ behoort dus tot de vaagverzameling $A$ met lidmaatschapsgraad $\mu_A(x)$.
+Voor de eenvoud zullen we in het vervolg $\mu_A(x)$ steeds noteren als $A(x)$. We zullen dus 
+met andere woorden geen onderscheid meer maken tussen de vaagverzameling en de 
+lidmaatschapsfunctie. Voor de klasse van vaagverzamelingen in een universum $X$ gebruiken we
+de notatie $\mathcal{F}(X)$.
+
+De \emph{drager} en de \emph{kern} van een vaagverzameling zijn twee belangrijke begrippen: 
+\begin{definitie}
+De drager van een vaagverzameling $A$ in $X$ wordt gedefinieerd als:
+$$
+supp\ A = \{x \in X \mid A(x) > 0\} 
+$$
+\end{definitie}
+\begin{definitie}
+De kern van een vaagverzameling $A$ in $X$ defini\"eren we als volgt:
+$$
+ker\ A = \{x \in X \mid A(x) = 1\}
+$$
+\end{definitie}
+\noindent
+Ook het begrip \emph{cardinaliteit} speelt vaak een belangrijke rol. De cardinaliteit van een 
+een eindige scherpe verzameling wordt gegeven door het aantal elementen in die verzameling. 
+Dit concept kan uitgebreid worden naar vaagverzamelingen door gebruik te maken van het begrip 
+\emph{sigma count}:
+\begin{definitie}
+De sigma count van een vaagverzameling $A$ met eindige drager in een universum $X$ wordt
+gedefinieerd door:
+$$
+|A|=\sum_{x \in X} A(x)
+$$
+\end{definitie}
+
+\section{Bewerkingen op vaagverzamelingen}
+
+We beginnen met het defini\"eren van de begrippen \emph{negator}, \emph{conjunctor} en 
+\emph{disjunctor}. Deze operatoren zijn uitbreidingen van de klassieke logische operatoren
+$\lnot$ (negatie), $\land$ (conjunctie) en $\lor$ (disjunctie).
+\begin{definitie}
+Een negator $\mathcal{N}$ op $[0,1]$ is een dalende $[0,1] - [0,1]$ afbeelding die voldoet
+aan de randvoorwaarden $\mathcal{N}(0)=1$ en $\mathcal{N}(1)=0$. 
+\end{definitie}
+\begin{definitie}
+Een conjunctor $\mathcal{C}$ op $[0,1]$ is een stijgende $[0,1]^2 - [0,1]$ afbeelding die voldoet aan de
+randvoorwaarden $\mathcal{C}(0,0)=\mathcal{C}(0,1)=\mathcal{C}(1,0)=0$ en $\mathcal{C}(1,1)=1$.
+\end{definitie}
+\begin{definitie}
+Een disjunctor $\mathcal{D}$ op $[0,1]$ is een stijgende $[0,1]^2 - [0,1]$ afbeelding die voldoet
+aan de randvoorwaarden $\mathcal{D}(1,0)=\mathcal{D}(0,1)=\mathcal{D}(1,1)=1$ en 
+$\mathcal{D}(0,0)=0$.
+\end{definitie}
+
+De meest gebruikte negator is de standaardnegator $N_S$. Het minimum $C_M$ en het algebra\"isch 
+product $C_P$ zijn veelgebruikte conjunctors. Bij de disjunctors zijn het maximum $D_M$ en de
+probabilistische som $D_P$ dan weer populaire mogelijkheden. Deze operatoren worden als 
+volgt gedefinieerd:
+$$
+\begin{array}{r@{\quad=\quad}l}
+N_S(x) & 1 - x \\
+C_M(x,y) & min(x,y) \\
+C_P(x,y) & x \cdot y \\
+D_M(x,y) & max(x,y) \\
+D_P(x,y) & x +y - x \cdot y,
+\end{array}
+$$
+voor alle $(x,y)$ in $[0,1]^2$.
+
+We kunnen de bovenstaande operatoren nu gebruiken om de klassieke verzameltechnische bewerkingen 
+$co$ (complement), $\cap$ (doorsnede) en $\cup$ (unie) te
+veralgemenen tot bewerkingen op vaagverzamelingen.
+\begin{definitie}
+Het $\mathcal{N}$-complement $co_\mathcal{N} A$ van een vaagverzameling $A$ in $X$ wordt gedefinieerd
+door de volgende vaagverzameling in X:
+$$
+(co_\mathcal{N} A)(x) = \mathcal{N}(A(x)),
+$$
+voor alle $x$ in $X$, met $\mathcal{N}$ een negator.
+\end{definitie}
+\begin{definitie}
+De $\mathcal{C}$-doorsnede $A \cap_\mathcal{C} B$ van twee vaagverzamelingen $A$ en $B$ in $X$
+wordt gedefinieerd door de volgende vaagverzameling in $X$:
+$$
+(A \cap_\mathcal{C} B)(x) = \mathcal{C}(A(x),B(x)),
+$$
+voor alle $x$ in $X$, met $\mathcal{C}$ een conjunctor.
+\end{definitie}
+\begin{definitie}
+De $\mathcal{D}$-unie $A \cup_\mathcal{D} B$ van twee vaagverzamelingen $A$ en $B$ in $X$ wordt gedefinieerd door de
+volgende vaagverzameling in $X$:
+$$
+(A \cup_\mathcal{D} B)(x) = \mathcal{D}(A(x),B(x)),
+$$
+voor alle $x$ in $X$, met $\mathcal{D}$ een disjunctor.
+\end{definitie}
+
+In het vervolg van deze scriptie zullen we doorgaands 
+$(\mathcal{N},\mathcal{C},\mathcal{D})=(N_S,C_M,D_M)$ kiezen. We voeren daarom de volgende
+verkorte notaties in:
+$$
+\begin{array}{r@{\quad=\quad}l}
+A^c 		& co_{N_S} A \\
+A \cap B 	& A \cap_{C_M} B \\
+A \cup B	& A \cup_{D_M} B,
+\end{array}
+$$
+waarbij $A$ en $B$ vaagverzamelingen zijn.
+
+
+\section{L-vaagverzamelingen}
+
+\section{Aggregatieoperatoren} 
