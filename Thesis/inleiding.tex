@@ -5,8 +5,7 @@ Deze computerprogramma's, die soms ook \emph{robots} of \emph{wanderers} worden 
 het internet rond om bepaalde documenten -- in het bijzonder afbeeldingen -- te localiseren. Deze 
 documenten worden ge\"indexeerd in een databank, die dan doorzocht kan worden door een zoekmachine. 
 
-Zoekmachines zoals \emph{Google}\footnote{\url{http://www.google.com}} en 
-\emph{Yahoo}\footnote{\url{http://www.yahoo.com}} hebben op die manier reeds databanken
+Zoekmachines zoals \emph{Google} en \emph{Yahoo} hebben op die manier reeds databanken
 opgebouwd die meer dan een miljard afbeeldingen bevatten. Het wordt bijgevolg steeds belangrijker
 om manieren te zoeken om deze gigantische collecties van afbeeldingen op een effeci\"ente wijze
 te doorzoeken.
@@ -14,23 +13,63 @@ te doorzoeken.
 
 \section{Text-based image retrieval}
 
-Nagenoeg alle bestaande zoekmachines bieden \emph{text-based image retrieval} (TBIR) aan. Hierbij
-wordt elke afbeelding voorzien van tekstuele annotaties, zoals bijvoorbeeld de 
-bestandsnaam of woorden uit de webpagina waarin de afbeelding gebruikt wordt. Deze annotaties
-kunnen dan gebruikt worden voor het indexeren van de afbeeldingen in de databank.
+Alle belangrijke bestaande zoekmachines bieden \emph{text-based image retrieval} (TBIR) aan. 
+Hierbij wordt elke afbeelding voorzien van tekstuele annotaties, zoals bijvoorbeeld de 
+bestandsnaam of woorden uit de webpagina waarvan de afbeelding deel uitmaakt. Deze annotaties
+worden gebruikt voor het indexeren van de afbeeldingen in de databank.
 
+De gebruiker van een TBIR-systeem start een zoekactie \'e\'en of meerdere trefwoorden door te geven
+aan het systeem. Het systeem vergelijkt deze trefwoorden vervolgens met de annotaties uit
+de databank. De afbeeldingen waarvan er annotaties overeenkomen met een trefwoord, maken
+deel uit van het resultaat van de query. Men hoeft hievoor uiteraard niet alle afbeeldingen
+uit de databank te overlopen, vermits de databank ge\"indexeerd is op de annotaties. 
 
 \section{Content-based image retrieval}
 
 Omdat de tekst-gebaseerde aanpak in de praktijk dikwijls tekort schiet, is men op zoek gegaan 
-naar manier om het zoeken te baseren op de visuele inhoud van de afbeeldingen. Bij 
+naar manieren om het zoeken te baseren op de visuele inhoud van de afbeeldingen. Bij 
 \emph{content-based image retrieval} (CBIR) maakt men gebruik van een proces dat 
 \emph{(visual) feature extraction} genoemd wordt. Dit proces zet een afbeelding om in een 
 \emph{feature vector}. Met behulp van multidimensionale indexering kan men deze kenmerkenvector
 dan gebruiken als alternatief voor de tekstuele annotaties bij TBIR.
 
+De meeste CBIR-systemen werken volgens het \emph{query-by-example} principe. Dit houdt in dat de
+gebruiker een voorbeeld-afbeelding opgeeft, waarna het systeem op zoek gaat naar afbeeldingen
+die visuele gelijkenissen vertonen met dit voorbeeld. Hiervoor wordt eerst de feature vector van
+de opgegeven afbeelding bepaald, om deze vervolgens te vergelijken met de kenmerkenvectoren in
+de databank. Het uiteindelijke resultaat bestaat uit de afbeeldingen uit de databank 
+waarvan de overeenkomstige vectoren grote similariteit vertonen met de vector van de 
+voorbeeld-afbeelding. Doordat de databank ge\"indexeerd is op de kenmerkenvectoren, kan men 
+vermijden dat men hiervoor de volledige databank moet overlopen.
 
-\section{Similariteitsgebaseerd rangschikken}
+\begin{figure}[tb]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=10cm]{images/tbir.eps}
+\label{fig:tbir}
+}
+\subfigure[]{
+\includegraphics[width=10cm]{images/cbir.eps}
+\label{fig:cbir}
+}
+\caption{\label{fig:cbir_en_tbir}Algemene architectuur van (a) een TBIR- en 
+(b) een CBIR-systeem.}
+\end{center}
+\end{figure}
 
-Door hun grote complexiteit is het vrijwel onmogelijk om \emph{content-based image retrial systems} 
-(CBIRSs) te gebruiken voor het doorzoeken van zeer omvangrijke databanken. 
+\section{Similariteitsgebaseerd rangschikken van de resultaten}
+
+Door hun grote complexiteit is het vrijwel onmogelijk om CBIR-systemen te gebruiken voor het 
+doorzoeken van zeer omvangrijke databanken. Bovendien beschikt de gebruiker niet altijd over
+een geschikte voorbeeld-afbeelding. Dit probleem kan eventueel nog opgelost worden door gebruik
+te maken van een voorbeeld-schets, maar ook dat is in de praktijk niet altijd even handig.
+
+Het is dus zinvol om te zoeken naar manieren om inhoud-gebaseerde aspecten toe te voegen aan
+TBIR-systemen. De manier die we in deze scriptie bespreken is het 
+similariteitsgebaseerd rangschikken van de resultaten van een TBIR-systeem. Hierbij verwachten we
+nog steeds dat de gebruiker een tekstuele query opgeeft, waarop het systeem antwoord met een 
+lijst van afbeeldingen die overeenkomen met die query. Daarna heeft de gebruiker echter ook nog 
+de mogelijkheid om een verzameling van voorbeeld-afbeeldingen te kiezen uit deze lijst. Het 
+systeem zal er vervolgens voor zorgen dat de zoekresultaten gerangschikt worden in 
+volgorde van similariteit met de voorbeeld-afbeeldingen.
+

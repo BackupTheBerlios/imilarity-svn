@@ -2,9 +2,9 @@
 \thispagestyle{plain}
 
 \begin{center}
-{\bf \titel }\\[3mm]
+{\sf\huge \titel }\\[3mm]
 door\\
-\auteur{} \\
+{\Large\auteur{}} \\
 \end{center}
 \noindent Afstudeerwerk ingediend tot het behalen van de graad van
 \richting
@@ -15,44 +15,45 @@ Academiejaar \jaar
 Faculteit Wetenschappen\\
 \vspace{3mm}\\
 \noindent Promotor: \promotor\\
+\noindent Scriptiebegeleiders: \begeleider\\
 %\noindent Co-promotor: \copromotor\\
 \vfill
 
-\noindent {\bf Samenvatting}\\[1mm]
-De volgende tekst is een voorbeeld: In ziekenhuizen wordt tegenwoordig
-zeer veel digitale data 
-gegenereerd. Een groot deel daarvan is afkomstig van medische
-beeldvormende modaliteiten zoals Magnetic Resonance Imaging,
-Computerized Tomography, Positron Emission Tomography en Single Photon
-Emission Computed Tomography. In het Universitair Ziekenhuis van Gent
-staan ze in voor meerdere honderden Gbytes aan gegevens per jaar. In
-deze thesis wordt nagegaan hoe de data actueel behandeld wordt en wat
-de rol van beeldcompressie kan zijn om de opslag- en
-transmissieproblemen te verlichten. Wegens de hoge kwaliteitseisen in
-de medische sector ligt hierbij de nadruk op verliesloze
-compressietechnieken.
+%\noindent {\bf\Large Samenvatting}\\[1mm]
+\section*{Samenvatting}
+De exponenti\"ele groei van het internet geeft aanleiding tot een paradoxale
+situatie: hoe meer informatie er beschikbaar komt, hoe moeilijker het wordt
+om binnen een redelijke tijd accurate informatie te vinden. Zoekmachines zijn momenteel
+de meest gebruikte online service, met miljoenen zoekopdrachten per dag. Naast het zoeken
+in teksten, groeit de aandacht voor zogenaamde multimedia zoeksystemen. 
 
-Er wordt een vergelijking gemaakt van de performantie van
-verschillende algoritmen, waarbij compressieverhouding en
-verwerkingssnelheid de belangrijkste parameters zijn. Naast de
-state-of-the-art verliesloze beeldcompressietechnieken worden ook
-algemene data\-compressietechnieken in de vergelijking betrokken.
-Voor MR- en CT-beelden levert de beeldcompressietechniek CALIC de
-grootste compressie op, terwijl voor PET- en SPECT-beelden de
-datacompressietechnieken STAT en BZIP de beste zijn. Wanneer de
-verwer\-kingssnelheid belangrijker is dan de compressieverhouding,
-wordt er het best geopteerd voor de datacompressietechnieken GZIP of
-COMPRESS.
+In het bijzonder maken de internetgebruikers steeds meer gebruik van zoekmachines die toelaten om 
+gigantische collecties van afbeeldingen te doorzoeken. Deze zoekmachines zijn echter nagenoeg 
+allemaal tekst-gebaseerd. Dit houdt in dat het zoeken enkel steunt op het vergelijken van opgegeven 
+trefwoorden met tekstuele annotaties die toegekend worden aan elke afbeelding. Het hoeft geen
+betoog dat het voor de gebruiker niet altijd gemakkelijk is om op deze manier een aanvaarbaar 
+resultaat te vinden. Bovendien worden deze annotaties grotendeels automatisch gegenereerd, 
+waardoor ze vaak weinig relevant zijn.
 
-Verder wordt ook onderzocht hoe driedimensionale predictieve
-technieken de redundantie in medische volumebeelden kunnen
-uitbuiten. Er wordt aangetoond dat lineaire predictie daar niet in
-slaagt. Door middel van context-modellering wordt echter wel een
-toename van de compressie bekomen.
+De hierboven genoemde problemen kunnen opgelost worden door het zoeken te baseren op de inhoud 
+van de afbeeldingen. De bestaande inhoud-gebaseerde systemen kunnen echter nog altijd niet 
+toegepast worden op afbeeldingencollecties van dergelijke grote omvang. In deze scriptie geven 
+we daarom een alternatief voor deze meer geavanceerde zoeksystemen, waarbij de grootte van 
+te doorzoeken collectie geen probleem vormt. 
 
+Dit alternatief kan gezien worden als een uitbreiding van de tekst-gebaseerde zoeksystemen.
+De zoekactie begint nog steeds met het specifi\"eren van \'e\'en of meerdere trefwoorden, waarop
+het systeem antwoord met een lijst van relevante afbeeldingen. We zorgen er nu echter voor
+dat de gebruiker een aantal voorbeeld-afbeeldingen kan kiezen uit deze lijst, waarna het
+systeem de zoekresultaten rangschikt op een manier die de gelijkenis met de voorbeelden uitbuit.
 
-\vspace{5mm}
+Voor het modelleren van de graduele gelijkenis tussen afbeeldingen, maken we gebruik van 
+vaagsimilariteitsmaten. Daarnaast zullen we ook nog beroep doen op aggregatieoperatoren,
+zowel voor het combineren van verschillende similariteitsmaten als voor het samenvoegen
+van de voorbeeld-afbeeldingen. 
+%\vspace{5mm}
 
-\noindent {\bf Trefwoorden}\\[1mm]
-verliesloze beeldcompressie, medische beeldensets
+%\noindent {\bf\Large Trefwoorden}\\[1mm]
+\section*{Trefwoorden}
+content-based image retrieval, vaagverzamelingen, similariteitsmaten, aggregatieoperatoren
 
