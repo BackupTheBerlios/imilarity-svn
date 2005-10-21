@@ -1,8 +1,11 @@
 \chapter{Wiskundige fundamenten}
 
 In dit hoofdstuk introduceren we eerst enkele basisbegrippen uit de vaagverzamelingenleer. 
-Daarna geven ook nog een overzicht van de similariteitsmaten en aggregatieoperatoren waarvan
-we verder in deze scriptie gebruik zullen maken.
+Daarna volgt een overzicht van de similariteitsmaten en aggregatieoperatoren waarvan
+we later gebruik zullen maken. We hebben dit deel van deze scriptie bewust zo 
+bondig mogelijk gehouden. Voor meer informatie verwijzen
+we naar \cite{kerre:vaagmodellen}, \cite{vanderweken:similariteitsmaten} en 
+\cite{victor:aggregatieoperatoren}.
 
 
 \section{Basisbegrippen uit de vaagverzamelingenleer}
@@ -150,9 +153,11 @@ $(\mathcal{N},\mathcal{C},\mathcal{D})=(N_s,T_M,S_M)$ kiezen. We voeren daarom d
 verkorte notaties in:
 $$
 \begin{array}{r@{\quad=\quad}l}
-A^c 		& co_{N_s} A \\
-A \cap B 	& A \cap_{T_M} B \\
-A \cup B	& A \cup_{S_M} B,
+A^c 			& co_{N_s} A \\
+A \cap B 		& A \cap_{T_M} B \\
+A \cup B		& A \cup_{S_M} B \\
+A \setminus B  	& A \cap B^c \\
+A \triangle B 	& (A \setminus B) \cup (B \setminus A),
 \end{array}
 $$
 waarbij $A$ en $B$ vaagverzamelingen zijn.
@@ -163,8 +168,8 @@ waarbij $A$ en $B$ vaagverzamelingen zijn.
 Het begrip vaagverzameling kan op zijn beurt nog eens uitgebreid worden tot 
 \emph{L-vaagverzameling}. Deze uitbreiding is gebaseerd op het concept \emph{tralie}. We geven
 hieronder eerst de definitie van dit concept, samen met de definities van de aanverwante
-begrippen \emph{poset}, \emph{supremum} en \emph{infimum}. Daarna kunnen geven we dan, gebruik
-maken van dit voorbereid werk, de definitie van een L-vaagverzameling. 
+begrippen \emph{poset}, \emph{supremum} en \emph{infimum}. Daarna kunnen we dan, gebruik
+makend van dit voorbereid werk, overgaan tot de definitie van een L-vaagverzameling. 
 \begin{definitie}
 Een partieel geordende verzameling (poset) is een koppel $(P,\le)$ bestaande uit een niet-ledige
 verzameling $P$ en een binaire relatie $\le$ over $P$ die reflexief, antisymmetrisch en 
@@ -220,8 +225,8 @@ $$
 $$
 \end{definitie}
 \noindent
-De klasse van scherpe verzamelingen in een universum $X$ stellen we voor door 
-$\mathcal{L}(X)$. Merk op dat deze klasse zich herleidt tot $\mathcal{F}(X)$ voor $L = [0,1]$.
+De klasse van L-vaagverzamelingen in een universum $X$ stellen we voor door 
+$\mathcal{F}_L(X)$. Merk op dat deze klasse zich herleidt tot $\mathcal{F}(X)$ voor $L = [0,1]$.
 
 In deze scriptie zullen we enkel gebruik maken van L-vaagverzamelingen waarbij
 $L = [0,1]^n$ met $n > 0$. Voor deze speciale gevallen kunnen we het begrip sigma count als volgt 
