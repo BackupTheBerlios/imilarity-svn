@@ -8,18 +8,26 @@ import de.berlios.imilarity.fuzzy.ArrayFuzzySet;
 import de.berlios.imilarity.fuzzy.FuzzySet;
 import de.berlios.imilarity.fuzzy.Membership;
 import de.berlios.imilarity.image.Image;
-import de.berlios.imilarity.image.ColorQuantizer;
-import de.berlios.imilarity.image.NeuQuant;
+import de.berlios.imilarity.image.quantizers.ColorQuantizer;
+import de.berlios.imilarity.image.quantizers.NeuQuant;
 
 
 public class FuzzyQuantizedImageMeasure extends ImageMeasureBase {
 
 	private FuzzyMeasure fuzzyMeasure;
+	private ColorQuantizer quantizer;
 	
-	public FuzzyQuantizedImageMeasure(FuzzyMeasure fuzzyMeasure) {
+	public FuzzyQuantizedImageMeasure(FuzzyMeasure fuzzyMeasure, ColorQuantizer quantizer) {
 		if (fuzzyMeasure == null)
 			throw new NullPointerException("fuzzyMeasure == null");
+		if (quantizer == null)
+			throw new NullPointerException("quantizer == null");
 		this.fuzzyMeasure = fuzzyMeasure;
+		this.quantizer = quantizer;
+	}
+	
+	public FuzzyQuantizedImageMeasure(FuzzyMeasure fuzzyMeasure) {
+		this(fuzzyMeasure, new NeuQuant(30,8));
 	}
 	
 	public double getSimilarity() {
@@ -31,34 +39,32 @@ public class FuzzyQuantizedImageMeasure extends ImageMeasureBase {
 	}
 	
 	private FuzzySet calculateColors(Image image) {
-		ColorQuantizer cq = new NeuQuant(30,8);
-		cq.quantize(image);
+		quantizer.quantize(image);
 		ArrayFuzzySet colors = new ArrayFuzzySet();
 		
 		final HashMap freqs = new HashMap();
-		for (int i = 0; i < cq.getColorCount(); i++) {
-			int[] intColor = cq.getColor(i);
+		for (int i = 0; i < quantizer.getColorCount(); i++) {
+			int[] intColor = quantizer.getColor(i);
 			double[] color = new double[intColor.length];
 			// normaliseren:
 			for (int j = 0; j < intColor.length; j++)
 				color[j] = intColor[j] * 1.0 / 255;
-			//System.out.println("color " + i + ": " + color[0] + "," + color[1] + "," + color[2]);
 			// toevoegen:
-			Membership m = new EqVectorMembership(color);
+			Membership m = new EqMembership(color);
 			colors.addMembership(m);
 			freqs.put(m, new Frequency());
  		}
 		
 		int pc = image.getWidth() * image.getHeight();
 		for (int i = 0; i < pc; i++) {
-			int[] intColor = cq.getPixelColor(i);
+			int[] intColor = quantizer.getPixelColor(i);
 			double[] color = new double[intColor.length]; 
 			// normaliseren:
 			for (int j = 0; j < intColor.length; j++)
 				color[j] = intColor[j] * 1.0 / 255;
 			//System.out.println("pixelcolor: " + color[0] + "," + color[1] + "," + color[2]);
 			// incrementeren:
-			((Frequency)freqs.get(new EqVectorMembership(color))).value++;
+			((Frequency)freqs.get(new EqMembership(color))).value++;
 		}
 		colors.sort(new Comparator() {
 			public int compare(Object arg0, Object arg1) {
@@ -73,8 +79,8 @@ public class FuzzyQuantizedImageMeasure extends ImageMeasureBase {
 		return colors;
 	}
 	
-	private class EqVectorMembership extends Membership {
-		public EqVectorMembership(double[] components) {
+	private class EqMembership extends Membership {
+		public EqMembership(double[] components) {
 			super(components);
 		}
 		public boolean equals(Object o) {

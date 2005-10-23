@@ -33,4 +33,11 @@ public abstract class ImageMeasureBase implements ImageMeasure {
 	public String toString() {
 		return getDescription();
 	}
+	
+	
+	public static boolean sameResolution(Image gi1, Image gi2) {
+		return 
+			gi1.getWidth() == gi2.getWidth() && 
+			gi1.getHeight() == gi2.getHeight();
+	}
 }

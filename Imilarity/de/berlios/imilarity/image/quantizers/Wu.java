@@ -12,29 +12,40 @@
  * @author Hak Kywn Roh, Klaas Bosteels
  */
 
-package de.berlios.imilarity.image;
+package de.berlios.imilarity.image.quantizers;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import de.berlios.imilarity.image.Image;
+import de.berlios.imilarity.image.ImageData;
 
 
 public class Wu implements ColorQuantizer {
-	static final int MAXCOLOR = 256;
-	static final int RED = 2;
-	static final int GREEN = 1;
-	static final int BLUE = 0;
+	private static final int MAXCOLOR = 256;
+	private static final int RED = 2;
+	private static final int GREEN = 1;
+	private static final int BLUE = 0;
 	
-	int size, K;
-	int qs = 33; //quant size
-	float m2[][][] = new float[qs][qs][qs];
-	int wt[][][] = new int[qs][qs][qs];
-	int mr[][][] = new int[qs][qs][qs];
-	int mg[][][] = new int[qs][qs][qs];
-	int mb[][][] = new int[qs][qs][qs];
-	int qadd[][];
-	short ir[][],ig[][],ib[][];
-	int height,width;
+	private int size, K;
+	private int qs = 33; //quant size
+	private float m2[][][] = new float[qs][qs][qs];
+	private int wt[][][];
+	private int mr[][][];
+	private int mg[][][];
+	private int mb[][][];
+	private int qadd[][];
+	private short ir[][],ig[][],ib[][];
+	private int height,width;
 	
-	short lutr[] = new short[MAXCOLOR];
-	short lutg[] = new short[MAXCOLOR];
-	short lutb[] = new short[MAXCOLOR];
+	private short lutr[];
+	private short lutg[];
+	private short lutb[];
+	
+	private int tag[][][];
 	
 	
 	public Wu(int nK) {
@@ -45,6 +56,16 @@ public class Wu implements ColorQuantizer {
 		height = image.getHeight();
 		width = image.getWidth();
 		size = width * height;
+		
+		m2 = new float[qs][qs][qs];
+		wt = new int[qs][qs][qs];
+		mr = new int[qs][qs][qs];
+		mg = new int[qs][qs][qs];
+		mb = new int[qs][qs][qs];
+		
+		lutr = new short[MAXCOLOR];
+		lutg = new short[MAXCOLOR];
+		lutb = new short[MAXCOLOR];
 		
 		ir = new short[width][height];
 		ig = new short[width][height];
@@ -59,9 +80,9 @@ public class Wu implements ColorQuantizer {
 			ib[x][y] = (short) (rgb[2]*255);
 		}
 		
-		int next, i, k,x,y,z;
+		int next, i, k, z;
 		Box[] cube = new Box[MAXCOLOR];
-		int tag[][][] = new int[qs][qs][qs];
+		tag = new int[qs][qs][qs];
 		float vv[] = new float[MAXCOLOR];
 		float temp;
 		long weight;
@@ -131,21 +152,21 @@ public class Wu implements ColorQuantizer {
 				lutg[k] = (short) (vol(cube[k], mg) / weight);
 				lutb[k] = (short) (vol(cube[k], mb) / weight);
 			} else {
-				System.out.println("Bogus box " + k);
+				//System.out.println("Bogus box " + k);
 				lutr[k] = lutg[k] = lutb[k] = 0;
 			}
 		}
 		
 		
-		for (y = 0; y < height; y++)
-			for (x = 0; x < width; x++) {
-				int pr = qadd[x][y] / 1089;
-				int pt = qadd[x][y] % 1089;
-				int pg = pt / 33;
-				int pb = pt % 33;
-				
-				qadd[x][y] = tag[pr][pg][pb];
-			}
+//		for (int y = 0; y < height; y++)
+//			for (int x = 0; x < width; x++) {
+//				int pr = qadd[x][y] / 1089;
+//				int pt = qadd[x][y] % 1089;
+//				int pg = pt / 33;
+//				int pb = pt % 33;
+//				
+//				qadd[x][y] = tag[pr][pg][pb];
+//			}
 	}
 	
 	public int getColorCount() {
@@ -157,10 +178,17 @@ public class Wu implements ColorQuantizer {
 		return new int[] { lutr[i], lutg[i], lutb[i] };
 	}
 	
+	
+	
 	public int[] getPixelColor(int i) {
 		int x = i % width;
 		int y = i / width;
-		int index = qadd[x][y];
+		int pr = qadd[x][y] / 1089;
+		int pt = qadd[x][y] % 1089;
+		int pg = pt / 33;
+		int pb = pt % 33;
+		int index = tag[pr][pg][pb];
+		//int index = qadd[x][y];
 		return new int[] { lutr[index], lutg[index], lutb[index] };
 	} 
 	
@@ -450,5 +478,33 @@ public class Wu implements ColorQuantizer {
 		public int b0;
 		public int b1;
 		public int vol;
+	}
+	
+	
+	
+	
+	public static void main(String[] args) {
+		if (args.length != 2)
+			System.out.println("usage: java NeuQuant <input image> <output image>");
+		try {
+			Image image = ImageData.loadFile(args[0]).getRgbImage();
+			ColorQuantizer quantizer = new Wu(8);
+			BufferedImage outImage = new BufferedImage(image.getWidth(), image.getHeight(), 
+					BufferedImage.TYPE_INT_RGB);
+			for (int x = 0; x < image.getWidth(); x++) {
+				for (int y = 0; y < image.getHeight(); y++) {
+					int[] rgb = quantizer.getPixelColor(y*image.getWidth()+x);
+					int pixel = 0;
+					pixel |= rgb[0] << 16;
+					pixel |= rgb[1] << 8;
+					pixel |= rgb[2];
+					outImage.setRGB(x,y,pixel);
+				}
+			}
+			ImageIO.write(outImage,"jpg",new File(args[1]));
+		} catch (IOException e) {
+			System.err.println("IO Error: " + e.getMessage());
+			e.printStackTrace();
+		}
 	}
 }

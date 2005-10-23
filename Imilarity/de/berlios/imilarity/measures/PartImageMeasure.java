@@ -6,16 +6,16 @@ package de.berlios.imilarity.measures;
 import de.berlios.imilarity.image.Image;
 import de.berlios.imilarity.image.PartOfGrayscaleImage;
 
-public class PartImageMeasure extends StagedImageMeasureBase {
+public class PartImageMeasure extends ImageMeasureBase {
 
-	private StagedImageMeasureFactory factory;
+	private ImageMeasureFactory factory;
 	private int width, height; // de grootte van de ingestelde image
 	private int cols = 0, rows = 0; // geven het aantal deel-images aan
-	private StagedImageMeasure[] measures;
+	private ImageMeasure[] measures;
 	
 	private static final int PART_W = 10, PART_H = 10;
 	
-	public PartImageMeasure(StagedImageMeasureFactory factory) {
+	public PartImageMeasure(ImageMeasureFactory factory) {
 		if (factory == null)
 			throw new NullPointerException("factory == null");
 		this.factory = factory;
@@ -28,7 +28,7 @@ public class PartImageMeasure extends StagedImageMeasureBase {
 		height = ((query.getHeight() + PART_H - 1) / PART_H) * PART_H;
 		cols = width / PART_W;
 		rows = height / PART_H;
-		measures = new StagedImageMeasure[cols * rows];
+		measures = new ImageMeasure[cols * rows];
 		for (int i = 0; i < measures.length; i++)
 			measures[i] = factory.createMeasure();
 	}
@@ -39,34 +39,26 @@ public class PartImageMeasure extends StagedImageMeasureBase {
 		super.setTarget(target);
 	}
 	
-	public void compare(int pixelNr) {
-		int partX = (pixelNr % width) % PART_W; // = x % PART_W
-		int partY = (pixelNr / width) % PART_H; // = y % PART_H
-		int c = (pixelNr % width) / PART_W; // = x / PART_W
-		int r = (pixelNr / width) / PART_H; // = y / PART_H
-		int index = ((width/PART_W)*r)+c;
-		if (partX == 0 && partY == 0) {
-			measures[index].setQuery
-				(new PartOfGrayscaleImage(getQuery(),c*PART_W,r*PART_H,PART_W,PART_H));
-			measures[index].setTarget
-				(new PartOfGrayscaleImage(getTarget(),c*PART_W,r*PART_H,PART_W,PART_H));
-		}
-		measures[index].compare(partY * PART_W + partX);
-	}
-	
-	public double combine() {
+	public double getSimilarity() {
+		int pc = width * height;
 		double sum = 0.0;
-		for (int i = 0; i < measures.length; i++)
-			sum += measures[i].combine();
+		for (int i = 0; i < pc; i++) {
+			int partX = (i % width) % PART_W; // = x % PART_W
+			int partY = (i / width) % PART_H; // = y % PART_H
+			int c = (i % width) / PART_W; // = x / PART_W
+			int r = (i / width) / PART_H; // = y / PART_H
+			int index = ((width/PART_W)*r)+c;
+			if (partX == 0 && partY == 0) {
+				measures[index].setQuery
+					(new PartOfGrayscaleImage(getQuery(),c*PART_W,r*PART_H,PART_W,PART_H));
+				measures[index].setTarget
+					(new PartOfGrayscaleImage(getTarget(),c*PART_W,r*PART_H,PART_W,PART_H));
+				sum += measures[index].getSimilarity();
+			}
+		}
 		return sum / measures.length;
 	}
-	
-	public void reset() {
-		for (int i = 0; i < measures.length; i++)
-			measures[i].reset();
-	}
 
-	
 	public String getDescription() {
 		return "Partitioning " + factory.createMeasure().getDescription();
 	}

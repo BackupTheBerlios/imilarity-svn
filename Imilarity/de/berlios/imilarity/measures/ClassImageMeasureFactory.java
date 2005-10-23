@@ -4,19 +4,19 @@
 package de.berlios.imilarity.measures;
 
 
-public class ClassStagedImageMeasureFactory implements StagedImageMeasureFactory {
+public class ClassImageMeasureFactory implements ImageMeasureFactory {
 
 	private Class c;
 	
-	public ClassStagedImageMeasureFactory(Class c) {
+	public ClassImageMeasureFactory(Class c) {
 		if (c == null)
 			throw new NullPointerException("c == null");
 		this.c = c;
 	}
 	
-	public StagedImageMeasure createMeasure() {
+	public ImageMeasure createMeasure() {
 		try {
-			return (StagedImageMeasure) c.newInstance();
+			return (ImageMeasure) c.newInstance();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 			return null;

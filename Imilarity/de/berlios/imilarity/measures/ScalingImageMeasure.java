@@ -9,11 +9,11 @@ import de.berlios.imilarity.image.Image;
 /**
  * @author Klaas Bosteels
  */
-public class ScalingImageMeasure extends StagedImageMeasureBase {
+public class ScalingImageMeasure extends ImageMeasureBase {
 
-	private StagedImageMeasure measure;
+	private ImageMeasure measure;
 	
-	public ScalingImageMeasure(StagedImageMeasure measure) {
+	public ScalingImageMeasure(ImageMeasure measure) {
 		if (measure == null)
 			throw new NullPointerException("measure == null");
 		this.measure = measure;
@@ -31,27 +31,10 @@ public class ScalingImageMeasure extends StagedImageMeasureBase {
 		measure.setTarget(image);
 	}
 	
-	
-	public void compare(int pixelNr) {
-		measure.compare(pixelNr);
-	}
-	
-	public double combine() {
-		return measure.combine();
-	}
-	
-	public void reset() {
-		measure.reset();
-	}
-	
 	public double getSimilarity() {
-		Image query = getQuery();
-		Image target = getTarget();
-		if (query == null || target == null)
-			return 0.0;
 		return measure.getSimilarity();
 	}
-	
+
 	public String getDescription() {
 		return "Scaling " + measure.getDescription();
 	}

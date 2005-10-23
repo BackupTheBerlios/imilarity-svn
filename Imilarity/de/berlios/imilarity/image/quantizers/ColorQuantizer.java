@@ -1,4 +1,6 @@
-package de.berlios.imilarity.image;
+package de.berlios.imilarity.image.quantizers;
+
+import de.berlios.imilarity.image.Image;
 
 public interface ColorQuantizer {
 

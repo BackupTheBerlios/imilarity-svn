@@ -3,11 +3,11 @@ package de.berlios.imilarity.measures;
 import de.berlios.imilarity.fuzzy.FuzzyImage;
 import de.berlios.imilarity.image.Image;
 
-public class FuzzyImageMeasure extends StagedImageMeasureBase {
+public class FuzzyImageMeasure extends ImageMeasureBase {
 
-	private StagedFuzzyMeasure measure;
+	private FuzzyMeasure measure;
 	
-	public FuzzyImageMeasure(StagedFuzzyMeasure measure) {
+	public FuzzyImageMeasure(FuzzyMeasure measure) {
 		if (measure == null)
 			throw new NullPointerException("measure == null");
 		this.measure = measure;
@@ -22,19 +22,13 @@ public class FuzzyImageMeasure extends StagedImageMeasureBase {
 		super.setTarget(target);
 		measure.setTarget(new FuzzyImage(target));
 	}
-	 
-	public void compare(int pixelNr) {
-		measure.compare(pixelNr);
-	}
 
-	public double combine() {
-		return measure.combine();
+	
+	public double getSimilarity() {
+		return measure.getSimilarity();
 	}
-
-	public void reset() {
-		measure.reset();
-	}
-
+	
+	
 	public String getDescription() {
 		return "Fuzzy using " + measure.getDescription();
 	}

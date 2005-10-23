@@ -1,7 +1,7 @@
 package de.berlios.imilarity.fuzzy;
 
 
-public class Membership {
+public class Membership implements Comparable {
 
 	private double[] components;
 
@@ -78,5 +78,19 @@ public class Membership {
 			if (components[i] != ((Membership)m).components[i])
 				return false;
 		return true;
+	}
+
+	
+	public int compareTo(Object obj) {
+		if (!(obj instanceof Membership))
+			throw new IllegalArgumentException("obj not an instance of Membership");
+		int comp = 0;
+		for (int i = 0; i < components.length; i++) {
+			comp = (new Double(components[i])).compareTo
+				(new Double(((Membership)obj).components[i]));
+			if (comp != 0)
+				return comp;
+		}
+		return comp;
 	}
 }

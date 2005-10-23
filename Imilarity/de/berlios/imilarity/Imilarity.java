@@ -14,21 +14,8 @@ import java.util.List;
 
 import de.berlios.imilarity.aggregators.Aggregator;
 import de.berlios.imilarity.aggregators.ArithmeticMean;
-import de.berlios.imilarity.image.AggregatedColorImage;
-import de.berlios.imilarity.image.Image;
 import de.berlios.imilarity.image.ImageData;
 import de.berlios.imilarity.measures.ImageMeasure;
-import de.berlios.imilarity.measures.StagedImageMeasure;
-import de.berlios.imilarity.measures.StagedImageMeasureFactory;
-import de.berlios.imilarity.measures.FuzzyImageMeasure;
-import de.berlios.imilarity.measures.GrayscaledImageMeasure;
-import de.berlios.imilarity.measures.HomImageMeasure;
-import de.berlios.imilarity.measures.M20;
-import de.berlios.imilarity.measures.FuzzyHistogramImageMeasure;
-import de.berlios.imilarity.measures.M3;
-import de.berlios.imilarity.measures.PartImageMeasure;
-import de.berlios.imilarity.measures.ProductImageMeasure;
-import de.berlios.imilarity.measures.ScalingImageMeasure;
 import de.berlios.imilarity.providors.Providor;
 import de.berlios.imilarity.util.ArraysBackedList;
 
@@ -43,22 +30,22 @@ public class Imilarity {
 	// defaults: 
 	private Providor providor = null;
 	private Aggregator aggregator = new ArithmeticMean();
-	private ImageMeasure measure = 
-		new GrayscaledImageMeasure(new ScalingImageMeasure(
-				new PartImageMeasure(new StagedImageMeasureFactory() {
-					public StagedImageMeasure createMeasure() {
-						return new ProductImageMeasure(
-							new FuzzyHistogramImageMeasure(new M3()), 
-							new HomImageMeasure(new FuzzyImageMeasure(new M20())));
-					}
-				})));
+	private ImageMeasure measure = null;
+//		new GrayscaledImageMeasure(new ScalingImageMeasure(
+//				new PartImageMeasure(new StagedImageMeasureFactory() {
+//					public StagedImageMeasure createMeasure() {
+//						return new ProductImageMeasure(
+//							new FuzzyHistogramImageMeasure(new M3()), 
+//							new HomImageMeasure(new FuzzyImageMeasure(new M20())));
+//					}
+//				})));
 	
 	private Collection examples = new HashSet(); 
 	protected ImageData[][] pages;
 	protected boolean[] pageLoaded;
 	
-	private boolean aggregationCalculated = false;
-	Image aggregation = null;
+	//private boolean aggregationCalculated = false;
+	//Image aggregation = null;
 	
 	
 	public void setProvidor(Providor providor) {
@@ -81,8 +68,6 @@ public class Imilarity {
 		if (measure == null)
 			throw new NullPointerException("measure == null");
 		this.measure = measure;
-		if (aggregationCalculated)
-			measure.setQuery(aggregation);
 	}
 	
 	
@@ -166,14 +151,12 @@ public class Imilarity {
 	public void addExample(ImageData image) {
 		if (image != null) {
 			examples.add(image);
-			aggregationCalculated = false;
 		}
 	}
 	
 	public void removeExample(ImageData image) {
 		if (image != null) {
 			examples.remove(image);
-			aggregationCalculated = false;
 		}
 	}
 	
@@ -187,7 +170,6 @@ public class Imilarity {
 	
 	public void clearExamples() {
 		examples.clear();
-		aggregationCalculated = false;
 	}
 	
 	public ImageData[] getExamples() {
@@ -215,19 +197,25 @@ public class Imilarity {
 		if (providor == null)
 			return;
 		
-		if (!aggregationCalculated) {
-			aggregationCalculated = true;
-			Image[] scis = new Image[examples.size()];
-			Iterator it = examples.iterator();
-			for (int i = 0; i < scis.length && it.hasNext(); i++)
-				scis[i] = ((ImageData) it.next()).getRgbImage();
-			aggregation = new AggregatedColorImage(scis, aggregator);
-			measure.setQuery(aggregation);
-		}
+//		if (!aggregationCalculated) {
+//			aggregationCalculated = true;
+//			Image[] scis = new Image[examples.size()];
+//			Iterator it = examples.iterator();
+//			for (int i = 0; i < scis.length && it.hasNext(); i++)
+//				scis[i] = ((ImageData) it.next()).getRgbImage();
+//			aggregation = new AggregatedColorImage(scis, aggregator);
+//			measure.setQuery(aggregation);
+//		}
 		for (int i = 0; i < pages[page-1].length; i++) {
 			if (pages[page-1][i] != null) {
-				measure.setTarget(pages[page-1][i].getRgbImage());
-				pages[page-1][i].setSimilarity(measure.getSimilarity());
+				aggregator.clearValues();
+				Iterator it = examples.iterator();
+				while (it.hasNext()) {
+					measure.setQuery(((ImageData)it.next()).getRgbImage());
+					measure.setTarget(pages[page-1][i].getRgbImage());
+					aggregator.addValue(measure.getSimilarity());
+				}
+				pages[page-1][i].setSimilarity(aggregator.getAggregatedValue());
 			}
 		}
 		Arrays.sort(pages[page-1], comparator);

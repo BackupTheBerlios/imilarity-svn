@@ -2,7 +2,7 @@ package de.berlios.imilarity.measures;
 
 import de.berlios.imilarity.image.Image;
 
-public abstract class GrayscaleStagedImageMeasureBase extends StagedImageMeasureBase {
+public abstract class GrayscaleImageMeasureBase extends ImageMeasureBase {
 
 	public void setQuery(Image query) {
 		if (query.getColorComponentsCount() != 1)

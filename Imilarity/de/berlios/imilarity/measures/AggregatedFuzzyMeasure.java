@@ -7,7 +7,7 @@ import de.berlios.imilarity.aggregators.Aggregator;
 import de.berlios.imilarity.fuzzy.Membership;
 
 
-public abstract class AggregatedFuzzyMeasure extends StagedFuzzyMeasureBase {
+public abstract class AggregatedFuzzyMeasure extends FuzzyMeasureBase {
 
 	private Aggregator aggregator;
 	
@@ -19,17 +19,14 @@ public abstract class AggregatedFuzzyMeasure extends StagedFuzzyMeasureBase {
 	
 	public abstract double m(Membership x, Membership y);
 	
-	public void compare(int element) {
-		Membership m1 = getQuery().getMembership(element);
-		Membership m2 = getTarget().getMembership(element);
-		aggregator.addValue(m(m1,m2));
-	}
-	
-	public double combine() {
-		return aggregator.getAggregatedValue();
-	}
-
-	public void reset() {
+	public double getSimilarity() {
 		aggregator.clearValues();
+		int count = getQuery().getElementsCount();
+		for (int i = 0; i < count; i++) {
+			Membership m1 = getQuery().getMembership(i);
+			Membership m2 = getTarget().getMembership(i);
+			aggregator.addValue(m(m1,m2));
+		}
+		return aggregator.getAggregatedValue();
 	}
 }

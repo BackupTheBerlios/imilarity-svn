@@ -1,24 +1,13 @@
-package de.berlios.imilarity.image;
+package de.berlios.imilarity.image.quantizers;
 
-//Constructors:
-// public NeuQuant (Image im) -- default sample = 1
-// public NeuQuant (int sample, Image im)
-// public NeuQuant (Image im, int w, int h) -- default sample = 1
-// public NeuQuant (int sample, Image im, int w, int h)
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
-//Initialisation method: call this first
-// public void init ()
+import javax.imageio.ImageIO;
 
-//Methods to look up pixels (use in a loop)
-// public int convert (int pixel)
-// public int lookup (int pixel)
-// public int lookup (Color c)
-// public int lookup (boolean rgb, int x, int g, int y)
-
-//Other methods to interrogate colour map
-// public int getColorCount ()
-// public Color getColor (int i)
-
+import de.berlios.imilarity.image.Image;
+import de.berlios.imilarity.image.ImageData;
 
 
 /* NeuQuant Neural-Net Quantization Algorithm
@@ -69,13 +58,13 @@ public class NeuQuant implements ColorQuantizer {
 	public static final double beta = 1.0/1024.0;
 	public static final double betagamma = beta * gamma;
 	
-	private double [] [] network = new double [netsize] [3]; // the network itself
-	protected int [] [] colormap = new int [netsize] [4]; // the network itself
+	private double [] [] network; // the network itself
+	protected int [] [] colormap; // the network itself
 	
 	private int [] netindex = new int [256]; // for network lookup - really 256
 	
-	private double [] bias = new double [netsize];  // bias and freq arrays for learning
-	private double [] freq = new double [netsize];
+	private double [] bias;  // bias and freq arrays for learnin
+	private double [] freq;
 	
 	// four primes near 500 - assume no image has a length so large
 	// that it is divisible by all four primes
@@ -95,6 +84,10 @@ public class NeuQuant implements ColorQuantizer {
 		if (sample > 30) throw new IllegalArgumentException ("Sample must be 1..30");
 		samplefac = sample;
 		netsize = numberOfColors;
+		network = new double [netsize] [3]; // the network itself
+		colormap = new int [netsize] [4]; // the network itself
+		bias = new double [netsize];  // bias and freq arrays for learning
+		freq = new double [netsize];
 		cutnetsize  = netsize - specials;
 		maxnetpos  = netsize-1;
 		initrad	 = netsize/8;   // for 256 cols, radius starts at 32
@@ -470,6 +463,33 @@ public class NeuQuant implements ColorQuantizer {
 		}
 		
 		return best;
+	}
+	
+	
+	
+	public static void main(String[] args) {
+		if (args.length != 2)
+			System.out.println("usage: java NeuQuant <input image> <output image>");
+		try {
+			Image image = ImageData.loadFile(args[0]).getRgbImage();
+			ColorQuantizer quantizer = new NeuQuant(30, 8);
+			BufferedImage outImage = new BufferedImage(image.getWidth(), image.getHeight(), 
+					BufferedImage.TYPE_INT_RGB);
+			for (int x = 0; x < image.getWidth(); x++) {
+				for (int y = 0; y < image.getHeight(); y++) {
+					int[] rgb = quantizer.getPixelColor(y*image.getWidth()+x);
+					int pixel = 0;
+					pixel |= rgb[0] << 16;
+					pixel |= rgb[1] << 8;
+					pixel |= rgb[2];
+					outImage.setRGB(x,y,pixel);
+				}
+			}
+			ImageIO.write(outImage,"jpg",new File(args[1]));
+		} catch (IOException e) {
+			System.err.println("IO Error: " + e.getMessage());
+			e.printStackTrace();
+		}
 	}
 	
 }
