@@ -43,7 +43,8 @@ public class ColorMembership extends SimpleMembership {
 			throw new IllegalArgumentException("must be an instance of Membership");
 		Membership m = (Membership) obj;
 		if (getComponents().length != m.getComponents().length)
-			throw new IllegalArgumentException("must have same component count");
+			throw new IllegalArgumentException("must have same component count (" 
+					+ getComponents().length + " != " + m.getComponents().length + ")");
 		Membership black = new SimpleMembership(0,getComponents().length);
 		Membership white = new SimpleMembership(1,getComponents().length);
 		

@@ -38,7 +38,7 @@ public class ArrayFuzzySet extends FuzzySetBase {
 		Iterator it = memberships.iterator();
 		for (int i = 0; it.hasNext(); i++) {
 			Membership m = (Membership) it.next();
-			result.addMembership(new SimpleMembership(m.and(set.getMembership(i)).abs()));
+			result.addMembership(new SimpleMembership(m.and(set.getMembership(i)).getComponents()));
 		}
 		return result;
 	}
@@ -50,7 +50,7 @@ public class ArrayFuzzySet extends FuzzySetBase {
 		Iterator it = memberships.iterator();
 		for (int i = 0; it.hasNext(); i++) {
 			Membership m = (Membership) it.next();
-			result.addMembership(new SimpleMembership(m.or(set.getMembership(i)).abs()));
+			result.addMembership(new SimpleMembership(m.or(set.getMembership(i)).getComponents()));
 		}
 		return result;
 	}
@@ -60,7 +60,7 @@ public class ArrayFuzzySet extends FuzzySetBase {
 		Iterator it = memberships.iterator();
 		for (int i = 0; it.hasNext(); i++) {
 			Membership m = (Membership) it.next();
-			result.addMembership(new SimpleMembership(m.complement().abs()));
+			result.addMembership(new SimpleMembership(m.complement().getComponents()));
 		}
 		return result;
 	}

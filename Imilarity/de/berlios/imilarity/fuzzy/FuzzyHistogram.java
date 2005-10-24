@@ -59,7 +59,7 @@ public class FuzzyHistogram extends FuzzySetBase {
 		HashedFuzzySet result = new HashedFuzzySet();
 		for (int i = 0; i < elementsCount; i++)
 			result.addMembership(i, 
-					new SimpleMembership(getMembership(i).and(set.getMembership(i)).abs()));
+					new SimpleMembership(getMembership(i).and(set.getMembership(i)).getComponents()));
 		return result;
 	}
 
@@ -69,7 +69,7 @@ public class FuzzyHistogram extends FuzzySetBase {
 		HashedFuzzySet result = new HashedFuzzySet();
 		for (int i = 0; i < elementsCount; i++)
 			result.addMembership(i, 
-					new SimpleMembership(getMembership(i).or(set.getMembership(i)).abs()));
+					new SimpleMembership(getMembership(i).or(set.getMembership(i)).getComponents()));
 		return result;
 	}
 
@@ -77,7 +77,7 @@ public class FuzzyHistogram extends FuzzySetBase {
 		HashedFuzzySet result = new HashedFuzzySet();
 		for (int i = 0; i < elementsCount; i++)
 			result.addMembership(i, 
-					new SimpleMembership(getMembership(i).complement().abs()));
+					new SimpleMembership(getMembership(i).complement().getComponents()));
 		return result;
 	}
 
