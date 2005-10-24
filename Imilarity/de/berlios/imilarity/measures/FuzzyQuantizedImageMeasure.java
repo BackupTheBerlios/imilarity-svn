@@ -7,6 +7,7 @@ import java.util.HashMap;
 import de.berlios.imilarity.fuzzy.ArrayFuzzySet;
 import de.berlios.imilarity.fuzzy.FuzzySet;
 import de.berlios.imilarity.fuzzy.Membership;
+import de.berlios.imilarity.fuzzy.SimpleMembership;
 import de.berlios.imilarity.image.Image;
 import de.berlios.imilarity.image.quantizers.ColorQuantizer;
 import de.berlios.imilarity.image.quantizers.NeuQuant;
@@ -79,7 +80,7 @@ public class FuzzyQuantizedImageMeasure extends ImageMeasureBase {
 		return colors;
 	}
 	
-	private class EqMembership extends Membership {
+	private class EqMembership extends SimpleMembership {
 		public EqMembership(double[] components) {
 			super(components);
 		}

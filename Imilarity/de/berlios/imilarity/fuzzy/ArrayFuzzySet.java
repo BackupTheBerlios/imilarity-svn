@@ -3,9 +3,10 @@ package de.berlios.imilarity.fuzzy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
-public class ArrayFuzzySet implements FuzzySet {
+public class ArrayFuzzySet extends FuzzySetBase {
 
 	private List memberships = new ArrayList();
 	
@@ -27,6 +28,41 @@ public class ArrayFuzzySet implements FuzzySet {
 	
 	public void sort(Comparator comparator) {
 		Collections.sort(memberships, comparator);
+	}
+
+	
+	public FuzzySet intersection(FuzzySet set) {
+		if (set.getElementsCount() != memberships.size())
+			throw new IllegalArgumentException("not the same elements count");
+		ArrayFuzzySet result = new ArrayFuzzySet();
+		Iterator it = memberships.iterator();
+		for (int i = 0; it.hasNext(); i++) {
+			Membership m = (Membership) it.next();
+			result.addMembership(new SimpleMembership(m.and(set.getMembership(i)).abs()));
+		}
+		return result;
+	}
+
+	public FuzzySet union(FuzzySet set) {
+		if (set.getElementsCount() != memberships.size())
+			throw new IllegalArgumentException("not the same elements count");
+		ArrayFuzzySet result = new ArrayFuzzySet();
+		Iterator it = memberships.iterator();
+		for (int i = 0; it.hasNext(); i++) {
+			Membership m = (Membership) it.next();
+			result.addMembership(new SimpleMembership(m.or(set.getMembership(i)).abs()));
+		}
+		return result;
+	}
+
+	public FuzzySet complement() {
+		ArrayFuzzySet result = new ArrayFuzzySet();
+		Iterator it = memberships.iterator();
+		for (int i = 0; it.hasNext(); i++) {
+			Membership m = (Membership) it.next();
+			result.addMembership(new SimpleMembership(m.complement().abs()));
+		}
+		return result;
 	}
 
 }

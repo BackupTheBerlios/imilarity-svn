@@ -5,7 +5,7 @@ import java.util.Map;
 
 import de.berlios.imilarity.image.Image;
 
-public class FuzzyHistogram implements FuzzySet {
+public class FuzzyHistogram extends FuzzySetBase {
 
 	private Map histogram;
 	private int elementsCount = 0, max = 0;
@@ -50,7 +50,35 @@ public class FuzzyHistogram implements FuzzySet {
 		Integer value = (Integer) histogram.get(new Integer(element));
 		if (value == null)
 			value = new Integer(0);
-		return new Membership(value.intValue() * 1.0 / max);
+		return new SimpleMembership(value.intValue() * 1.0 / max);
+	}
+
+	public FuzzySet intersection(FuzzySet set) {
+		if (set.getElementsCount() != elementsCount)
+			throw new IllegalArgumentException("not the same elements count");
+		HashedFuzzySet result = new HashedFuzzySet();
+		for (int i = 0; i < elementsCount; i++)
+			result.addMembership(i, 
+					new SimpleMembership(getMembership(i).and(set.getMembership(i)).abs()));
+		return result;
+	}
+
+	public FuzzySet union(FuzzySet set) {
+		if (set.getElementsCount() != elementsCount)
+			throw new IllegalArgumentException("not the same elements count");
+		HashedFuzzySet result = new HashedFuzzySet();
+		for (int i = 0; i < elementsCount; i++)
+			result.addMembership(i, 
+					new SimpleMembership(getMembership(i).or(set.getMembership(i)).abs()));
+		return result;
+	}
+
+	public FuzzySet complement() {
+		HashedFuzzySet result = new HashedFuzzySet();
+		for (int i = 0; i < elementsCount; i++)
+			result.addMembership(i, 
+					new SimpleMembership(getMembership(i).complement().abs()));
+		return result;
 	}
 
 }

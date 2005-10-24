@@ -1,20 +1,25 @@
 package de.berlios.imilarity.image;
 
-import de.berlios.imilarity.fuzzy.Membership;
 
+public class Color {
 
-public class Color extends Membership {
-
+	private final double[] components;
+	
 	public Color(double[] components) {
-		super(components);
+		if (components == null)
+			throw new NullPointerException("components == null");
+		this.components = components;
 	}
 	
 	public Color(double c1, double c2, double c3) {
-		super(new double[] { c1, c2, c3 });
+		this(new double[] { c1, c2, c3 });
 	}
 	
 	public Color(double component) {
-		super(component);
+		this(new double[] { component });
 	}
 	
+	public double[] getComponents() {
+		return components;
+	}
 }
