@@ -7,7 +7,7 @@ import de.berlios.imilarity.aggregators.ArithmeticMean;
 import de.berlios.imilarity.fuzzy.Membership;
 
 
-public class M1a extends AggregatedFuzzyMeasure {
+public class M1a extends SimplifiedFuzzyMeasure {
 
 	public M1a() {
 		super(new ArithmeticMean());

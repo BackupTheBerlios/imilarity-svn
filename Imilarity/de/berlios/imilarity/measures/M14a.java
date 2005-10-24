@@ -3,7 +3,7 @@ package de.berlios.imilarity.measures;
 import de.berlios.imilarity.aggregators.Maximum;
 import de.berlios.imilarity.fuzzy.Membership;
 
-public class M14a extends AggregatedFuzzyMeasure {
+public class M14a extends SimplifiedFuzzyMeasure {
 
 	public M14a() {
 		super(new Maximum());

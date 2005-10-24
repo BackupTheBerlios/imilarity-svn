@@ -4,7 +4,7 @@ import de.berlios.imilarity.aggregators.Maximum;
 import de.berlios.imilarity.fuzzy.Membership;
 import de.berlios.imilarity.fuzzy.SimpleMembership;
 
-public class M14c extends AggregatedFuzzyMeasure {
+public class M14c extends SimplifiedFuzzyMeasure {
 
 	public M14c() {
 		super(new Maximum());

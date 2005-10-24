@@ -7,11 +7,11 @@ import de.berlios.imilarity.aggregators.Aggregator;
 import de.berlios.imilarity.fuzzy.Membership;
 
 
-public abstract class AggregatedFuzzyMeasure extends FuzzyMeasureBase {
+public abstract class SimplifiedFuzzyMeasure extends FuzzyMeasureBase {
 
 	private Aggregator aggregator;
 	
-	public AggregatedFuzzyMeasure(Aggregator aggregator) {
+	public SimplifiedFuzzyMeasure(Aggregator aggregator) {
 		if (aggregator == null)
 			throw new NullPointerException("aggregator = null");
 		this.aggregator = aggregator;
