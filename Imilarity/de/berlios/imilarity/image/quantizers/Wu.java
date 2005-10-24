@@ -193,6 +193,9 @@ public class Wu implements ColorQuantizer {
 	} 
 	
 	
+	public String getDescription() {
+		return "Wu(" + K + ")";
+	}
 	
 	//// private methoden 
 	

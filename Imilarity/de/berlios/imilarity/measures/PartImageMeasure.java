@@ -8,17 +8,16 @@ import de.berlios.imilarity.image.PartOfGrayscaleImage;
 
 public class PartImageMeasure extends ImageMeasureBase {
 
-	private ImageMeasureFactory factory;
 	private int width, height; // de grootte van de ingestelde image
 	private int cols = 0, rows = 0; // geven het aantal deel-images aan
-	private ImageMeasure[] measures;
+	private ImageMeasure measure;
 	
 	private static final int PART_W = 10, PART_H = 10;
 	
-	public PartImageMeasure(ImageMeasureFactory factory) {
-		if (factory == null)
-			throw new NullPointerException("factory == null");
-		this.factory = factory;
+	public PartImageMeasure(ImageMeasure measure) {
+		if (measure == null)
+			throw new NullPointerException("measure == null");
+		this.measure = measure;
 	}
 	
 	public void setQuery(Image query) {
@@ -28,9 +27,6 @@ public class PartImageMeasure extends ImageMeasureBase {
 		height = ((query.getHeight() + PART_H - 1) / PART_H) * PART_H;
 		cols = width / PART_W;
 		rows = height / PART_H;
-		measures = new ImageMeasure[cols * rows];
-		for (int i = 0; i < measures.length; i++)
-			measures[i] = factory.createMeasure();
 	}
 	
 	public void setTarget(Image target) {
@@ -47,20 +43,19 @@ public class PartImageMeasure extends ImageMeasureBase {
 			int partY = (i / width) % PART_H; // = y % PART_H
 			int c = (i % width) / PART_W; // = x / PART_W
 			int r = (i / width) / PART_H; // = y / PART_H
-			int index = ((width/PART_W)*r)+c;
 			if (partX == 0 && partY == 0) {
-				measures[index].setQuery
+				measure.setQuery
 					(new PartOfGrayscaleImage(getQuery(),c*PART_W,r*PART_H,PART_W,PART_H));
-				measures[index].setTarget
+				measure.setTarget
 					(new PartOfGrayscaleImage(getTarget(),c*PART_W,r*PART_H,PART_W,PART_H));
-				sum += measures[index].getSimilarity();
+				sum += measure.getSimilarity();
 			}
 		}
-		return sum / measures.length;
+		return sum / (cols*rows);
 	}
 
 	public String getDescription() {
-		return "Partitioning " + factory.createMeasure().getDescription();
+		return "Partitioning " + measure.getDescription();
 	}
 	
 }

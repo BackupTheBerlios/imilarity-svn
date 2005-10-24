@@ -12,4 +12,5 @@ public interface ColorQuantizer {
 	
 	public int[] getPixelColor(int i);
 	
+	public String getDescription();
 }

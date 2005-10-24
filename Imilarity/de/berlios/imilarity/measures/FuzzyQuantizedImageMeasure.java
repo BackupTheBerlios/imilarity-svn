@@ -97,6 +97,7 @@ public class FuzzyQuantizedImageMeasure extends ImageMeasureBase {
 
 	
 	public String getDescription() {
-		return "Fuzzy Quantized using " + fuzzyMeasure.getDescription();
+		return "Fuzzy Quantized using " + fuzzyMeasure.getDescription() + " and "
+			+ quantizer.getDescription();
 	}
 }

@@ -126,6 +126,9 @@ public class NeuQuant implements ColorQuantizer {
 		return getColor(index);
 	}
 	
+	public String getDescription() {
+		return "NeuQuant(" + samplefac + ", " + netsize + ")";
+	}	
 	
 	
 	//// private methods:
