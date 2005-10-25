@@ -92,7 +92,7 @@ public class FuzzyHistogramImageMeasure extends ImageMeasureBase {
 
 	
 	public String getDescription() {
-		return "Fuzzy Grayscale Histogram using " + fuzzyMeasure.getDescription();
+		return "Fuzzy Histogram using " + fuzzyMeasure.getDescription();
 	}
 
 }

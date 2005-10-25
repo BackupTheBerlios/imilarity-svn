@@ -5,7 +5,11 @@ package de.berlios.imilarity.measures;
 
 import de.berlios.imilarity.image.Image;
 
-public class HomImageMeasure extends GrayscaleImageMeasureBase {
+/**
+ * @author Klaas Bosteels
+ * @since 25-okt-2005
+ */
+public class HomImageMeasure extends ImageMeasureBase {
 
 	private ImageMeasure measure;
 	
@@ -31,7 +35,8 @@ public class HomImageMeasure extends GrayscaleImageMeasureBase {
 	}
 	
 	
-	public double getSimilarity() {
+	public double getSimilarity() { 
+		// TODO: kijkt enkel naar eerste component
 		int pc = measure.getQuery().getWidth() * measure.getQuery().getHeight();
 		double max1 = 0.0, max2 = 0.0, min1 = 1.0, min2 = 1.0;
 		for (int i = 0; i < pc; i++) {
