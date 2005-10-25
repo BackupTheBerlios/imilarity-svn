@@ -1,6 +1,8 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +12,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import models.EvaluationsModel;
 import models.TableSorter;
@@ -36,7 +40,8 @@ public class Imperforate extends JFrame {
 		getContentPane().add(new JScrollPane(table));
 		
 		JPanel buttonsPanel = new JPanel(new FlowLayout());
-		JButton calculateButton = new JButton("Calculate selected");
+		
+		final JButton calculateButton = new JButton("Calculate");
 		calculateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				for (int i = 0; i < sorter.getRowCount(); i++) {
@@ -46,12 +51,56 @@ public class Imperforate extends JFrame {
 				}
 			}
 		});
+		calculateButton.setEnabled(false);
 		buttonsPanel.add(calculateButton);
-		buttonsPanel.add(new JButton("Save results"));
+		
+		final JButton resultsButton = new JButton("Show results");
+		resultsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for (int i = 0; i < sorter.getRowCount(); i++) {
+					if (table.getSelectionModel().isSelectedIndex(i)) {
+						final int index = sorter.modelIndex(i);
+						new Thread(new Runnable() {
+							public void run() {
+								final HtmlDialog dialog = 
+									new HtmlDialog(Imperforate.this, "Results",
+											"<h3>Please wait...</h3>");
+								EventQueue.invokeLater(new Runnable() {
+									public void run() {
+										dialog.setVisible(true);
+									}
+								});
+								final String html = evalsModel.getHtml(index);
+								EventQueue.invokeLater(new Runnable() {
+									public void run() {
+										dialog.setHtml(html);
+									}
+								});
+							}
+						}).start();
+					}
+				}
+			}
+		});
+		resultsButton.setEnabled(false);
+		buttonsPanel.add(resultsButton);
+		
+		final JButton saveButton = new JButton("Save results");
+		saveButton.setEnabled(false);
+		buttonsPanel.add(saveButton);
+		
 		getContentPane().add(buttonsPanel, BorderLayout.SOUTH);
 		
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				boolean value = !table.getSelectionModel().isSelectionEmpty();
+				calculateButton.setEnabled(value);
+				resultsButton.setEnabled(value);
+			}
+		});
+		
 		pack();
-		//setSize(new Dimension(800, 600));
+		setSize(new Dimension(800, 600));
 		setVisible(true);
 	}
 	
