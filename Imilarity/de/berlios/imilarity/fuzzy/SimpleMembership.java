@@ -73,8 +73,6 @@ public class SimpleMembership implements Membership {
 		double[] newComponents = new double[components.length];
 		for (int i = 0; i < components.length; i++)
 			newComponents[i] = 1 - components[i];
-		if (newComponents.length != 3)
-			System.out.println("newcomps.length: " + newComponents.length);
 		return new SimpleMembership(newComponents);
 	}
 
