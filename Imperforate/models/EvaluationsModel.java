@@ -38,7 +38,7 @@ public class EvaluationsModel extends AbstractTableModel {
 			new FuzzyImageMeasure(new M13()),
 			new FuzzyImageMeasure(new M14a()),
 			new FuzzyImageMeasure(new MI3()),
-			new FuzzyImageMeasure(new ComplementFuzzyMeasure(new MI3())),
+			new FuzzyImageMeasure(new MI3c()),
 			
 			new ComponentsImageMeasure(new FuzzyImageMeasure(new M1a())),
 			new FuzzyQuantizedImageMeasure(new PM1a(), new NeuQuant(30,6)),
