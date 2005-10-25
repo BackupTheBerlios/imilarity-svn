@@ -36,7 +36,6 @@ public class EvaluationsModel extends AbstractTableModel {
 			new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M11())),
 			new FuzzyImageMeasure(new M12()),
 			new FuzzyImageMeasure(new M13()),
-			new FuzzyImageMeasure(new M14a()),
 			new FuzzyImageMeasure(new MI3()),
 			new FuzzyImageMeasure(new MI3c()),
 			
@@ -54,7 +53,6 @@ public class EvaluationsModel extends AbstractTableModel {
 			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M11())),
 			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M12())),
 			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M13())),
-			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M14a())),
 			new HueImageMeasure(new FuzzyHistogramImageMeasure(new MI3())),
 			new HueImageMeasure(new FuzzyHistogramImageMeasure(new MI3c())),
 			
