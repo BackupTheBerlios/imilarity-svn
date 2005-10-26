@@ -16,7 +16,11 @@ public class M3 extends FuzzyMeasureBase {
 			Membership m2 = b.getMembership(i);
 			sum += m1.minus(m2).abs();
 		}
-		return 1 - (sum / (a.abs() + b.abs()));
+		double d = (a.abs() + b.abs());
+		if (d == 0)
+			return 1;
+		else
+			return 1 - (sum / d);
 	}
 
 

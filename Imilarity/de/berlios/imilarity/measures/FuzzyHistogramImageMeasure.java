@@ -16,30 +16,38 @@ public class FuzzyHistogramImageMeasure extends ImageMeasureBase {
 	private int targetPc = 0, queryPc = 0; // pc = pixelcount
 	private HashMap queryHistogram, targetHistogram;
 	private int queryHistLength, targetHistLength;
+	private int binsCount = 256;
 	
 	
-	public FuzzyHistogramImageMeasure(FuzzyMeasure fuzzyMeasure) {
+	public FuzzyHistogramImageMeasure(FuzzyMeasure fuzzyMeasure, int binsCount) {
 		if (fuzzyMeasure == null)
 			throw new NullPointerException("fuzzyMeasure == null");
 		this.fuzzyMeasure = fuzzyMeasure;
 		queryHistogram = new HashMap();
 		targetHistogram = new HashMap();
+		this.binsCount = binsCount;
 	}
+	
+	public FuzzyHistogramImageMeasure(FuzzyMeasure fuzzyMeasure) {
+		this(fuzzyMeasure, 256);
+	}
+	
+	
 	
 	public void setQuery(Image query) {
 		super.setQuery(query);
 		queryPc = query.getWidth() * query.getHeight();
-		queryHistLength = 256;
+		queryHistLength = binsCount;
 		for (int i = 1; i < query.getColorComponentsCount(); i++)
-			queryHistLength *= 256;
+			queryHistLength *= binsCount;
 	}
 	
 	public void setTarget(Image target) {
 		super.setTarget(target);
 		targetPc = target.getWidth() * target.getHeight();
-		targetHistLength = 256;
+		targetHistLength = binsCount;
 		for (int i = 1; i < target.getColorComponentsCount(); i++)
-			targetHistLength *= 256;
+			targetHistLength *= binsCount;
 	}
 
 	
@@ -49,11 +57,11 @@ public class FuzzyHistogramImageMeasure extends ImageMeasureBase {
 		int queryMax = 0, targetMax = 0;
 		for (int i = 0; i < queryPc; i++) {
 			double[] comps = getQuery().getColor(i).getComponents();
-			int v1 = (int) (comps[0]*255);
+			int v1 = (int) (comps[0]*(binsCount-1));
 			int factor = 1;
 			for (int j = 1; j < comps.length; j++) {
-				factor *= 256;
-				v1 += factor * (int)(comps[j]*255);
+				factor *= binsCount;
+				v1 += factor * (int)(comps[j]*(binsCount-1));
 			}
 			
 			Integer index = new Integer(v1);
@@ -66,11 +74,11 @@ public class FuzzyHistogramImageMeasure extends ImageMeasureBase {
 		}
 		for (int i = 0; i < targetPc; i++) {
 			double[] comps = getTarget().getColor(i).getComponents(); 
-			int v2 = (int) (comps[0]*255);
+			int v2 = (int) (comps[0]*(binsCount-1));
 			int factor = 1;
 			for (int j = 1; j < comps.length; j++) {
-				factor *= 256;
-				v2 += factor * (int)(comps[j]*255);
+				factor *= binsCount;
+				v2 += factor * (int)(comps[j]*(binsCount-1));
 			}
 			
 			Integer index = new Integer(v2);
@@ -92,7 +100,8 @@ public class FuzzyHistogramImageMeasure extends ImageMeasureBase {
 
 	
 	public String getDescription() {
-		return "Fuzzy Histogram using " + fuzzyMeasure.getDescription();
+		return "Fuzzy Histogram with " + binsCount + " bins using " 
+			+ fuzzyMeasure.getDescription();
 	}
 
 }

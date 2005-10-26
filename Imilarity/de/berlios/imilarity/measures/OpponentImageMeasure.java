@@ -1,13 +1,13 @@
 package de.berlios.imilarity.measures;
 
 import de.berlios.imilarity.image.Image;
-import de.berlios.imilarity.image.HueImage;
+import de.berlios.imilarity.image.OpponentImage;
 
-public class HueImageMeasure extends ImageMeasureBase {
+public class OpponentImageMeasure extends ImageMeasureBase {
 
 	private ImageMeasure measure;
 	
-	public HueImageMeasure(ImageMeasure measure) {
+	public OpponentImageMeasure(ImageMeasure measure) {
 		if (measure == null)
 			throw new NullPointerException("measure == null");
 		this.measure = measure;
@@ -15,12 +15,12 @@ public class HueImageMeasure extends ImageMeasureBase {
 	
 	public void setQuery(Image image) {
 		super.setQuery(image);
-		measure.setQuery(new HueImage(image));
+		measure.setQuery(new OpponentImage(image));
 	}
 	
 	public void setTarget(Image image) {
 		super.setTarget(image);
-		measure.setTarget(new HueImage(image));
+		measure.setTarget(new OpponentImage(image));
 	}
 	
 	public double getSimilarity() {
@@ -28,7 +28,7 @@ public class HueImageMeasure extends ImageMeasureBase {
 	}
 
 	public String getDescription() {
-		return "Hue using " + measure.getDescription();
+		return "Opponent using " + measure.getDescription();
 	}
 
 }

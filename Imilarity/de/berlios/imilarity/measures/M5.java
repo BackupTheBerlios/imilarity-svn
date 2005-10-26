@@ -5,7 +5,11 @@ public class M5 extends FuzzyMeasureBase {
 	public double getSimilarity() {
 		double queryAbs = getQuery().abs();
 		double targetAbs = getTarget().abs();
-		return Math.min(queryAbs,targetAbs) / Math.max(queryAbs,targetAbs);
+		double d = Math.max(queryAbs,targetAbs);
+		if (d == 0)
+			return 0;
+		else	
+			return Math.min(queryAbs,targetAbs) / d; 
 	}
 
 	public String getDescription() {

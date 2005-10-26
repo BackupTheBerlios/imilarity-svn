@@ -7,7 +7,11 @@ public class M7 extends FuzzyMeasureBase {
 	public double getSimilarity() {
 		FuzzySet a = getQuery();
 		FuzzySet b = getTarget();
-		return a.intersection(b).abs() / Math.max(a.abs(),b.abs());
+		double d = Math.max(a.abs(),b.abs());
+		if (d == 0)
+			return 0;
+		else
+			return a.intersection(b).abs() / d;
 	}
 
 	public String getDescription() {

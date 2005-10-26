@@ -1,6 +1,7 @@
 package de.berlios.imilarity.fuzzy;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -8,7 +9,18 @@ import java.util.List;
 
 public class ArrayFuzzySet extends FuzzySetBase {
 
-	private List memberships = new ArrayList();
+	private List memberships;
+	
+	public ArrayFuzzySet() {
+		super();
+		memberships = new ArrayList();
+	}
+	
+	public ArrayFuzzySet(Collection c) {
+		this();
+		memberships.addAll(c);
+	}
+	
 	
 	public int getElementsCount() {
 		return memberships.size();
@@ -30,6 +42,10 @@ public class ArrayFuzzySet extends FuzzySetBase {
 		Collections.sort(memberships, comparator);
 	}
 
+	public ArrayFuzzySet head(int elementCount) {
+		return new ArrayFuzzySet(memberships.subList(0,elementCount));
+	}
+	
 	
 	public FuzzySet intersection(FuzzySet set) {
 		if (set.getElementsCount() != memberships.size())

@@ -7,8 +7,11 @@ public class MI3c extends FuzzyMeasureBase {
 	public double getSimilarity() {
 		FuzzySet a = getQuery();
 		FuzzySet b = getTarget();
-		return a.intersection(b).union(a.complement().intersection(b.complement())).abs() 
-			/ a.union(b).union(a.complement().union(b.complement())).abs();
+		double d = a.union(b).union(a.complement().union(b.complement())).abs();
+		if (d == 0)
+			return 0;
+		else
+			return a.intersection(b).union(a.complement().intersection(b.complement())).abs() / d; 
 	}
 
 	public String getDescription() {

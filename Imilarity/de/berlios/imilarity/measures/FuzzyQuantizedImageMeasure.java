@@ -17,19 +17,27 @@ public class FuzzyQuantizedImageMeasure extends ImageMeasureBase {
 
 	private FuzzyMeasure fuzzyMeasure;
 	private ColorQuantizer quantizer;
+	private int colorCount; 
 	
-	public FuzzyQuantizedImageMeasure(FuzzyMeasure fuzzyMeasure, ColorQuantizer quantizer) {
+	public FuzzyQuantizedImageMeasure(FuzzyMeasure fuzzyMeasure, ColorQuantizer quantizer,
+			int colorCount) {
 		if (fuzzyMeasure == null)
 			throw new NullPointerException("fuzzyMeasure == null");
 		if (quantizer == null)
 			throw new NullPointerException("quantizer == null");
 		this.fuzzyMeasure = fuzzyMeasure;
 		this.quantizer = quantizer;
+		this.colorCount = colorCount;
+	}
+	
+	public FuzzyQuantizedImageMeasure(FuzzyMeasure fuzzyMeasure, ColorQuantizer quantizer) {
+		this(fuzzyMeasure, quantizer, quantizer.getColorCount());
 	}
 	
 	public FuzzyQuantizedImageMeasure(FuzzyMeasure fuzzyMeasure) {
 		this(fuzzyMeasure, new NeuQuant(30,8));
 	}
+	
 	
 	public double getSimilarity() {
 		FuzzySet queryColors = calculateColors(getQuery());
@@ -42,6 +50,7 @@ public class FuzzyQuantizedImageMeasure extends ImageMeasureBase {
 	private FuzzySet calculateColors(Image image) {
 		quantizer.quantize(image);
 		ArrayFuzzySet colors = new ArrayFuzzySet();
+		//List colors = new ArrayList();
 		
 		final HashMap freqs = new HashMap();
 		for (int i = 0; i < quantizer.getColorCount(); i++) {
@@ -53,6 +62,7 @@ public class FuzzyQuantizedImageMeasure extends ImageMeasureBase {
 			// toevoegen:
 			Membership m = new EqMembership(color);
 			colors.addMembership(m);
+			//colors.add(m);
 			freqs.put(m, new Frequency());
  		}
 		
@@ -63,21 +73,17 @@ public class FuzzyQuantizedImageMeasure extends ImageMeasureBase {
 			// normaliseren:
 			for (int j = 0; j < intColor.length; j++)
 				color[j] = intColor[j] * 1.0 / 255;
-			//System.out.println("pixelcolor: " + color[0] + "," + color[1] + "," + color[2]);
 			// incrementeren:
 			((Frequency)freqs.get(new EqMembership(color))).value++;
 		}
 		colors.sort(new Comparator() {
 			public int compare(Object arg0, Object arg1) {
-				//Membership m1 = (Membership) arg0;
-				//Membership m2 = (Membership) arg1;
-				//return (new Double(m1.abs())).compareTo(new Double(m2.abs()));
 				Frequency f1 = (Frequency) freqs.get(arg0);
 				Frequency f2 = (Frequency) freqs.get(arg1);
-				return (new Double(f1.value)).compareTo(new Double(f2.value));
+				return (new Double(f2.value)).compareTo(new Double(f1.value));
 			}
 		});
-		return colors;
+		return colors.head(colorCount);
 	}
 	
 	private class EqMembership extends SimpleMembership {

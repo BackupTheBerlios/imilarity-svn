@@ -1,13 +1,15 @@
 package de.berlios.imilarity.image;
 
-public class HueImageAdapter extends ImageBase {
+public class HueImage extends ImageBase {
 
 	private Image image;
 
-	public HueImageAdapter(Image image) {
+	public HueImage(Image image) {
 		if (image == null)
 			throw new NullPointerException("image == null");
 		this.image = image;
+		if (image.getColorComponentsCount() != 3)
+			throw new IllegalArgumentException("image must have 3 color components");
 	}
 	
 	public int getColorComponentsCount() {
@@ -30,7 +32,7 @@ public class HueImageAdapter extends ImageBase {
 	}
 
 	public Image getScaledInstance(int w, int h) {
-		return new HueImageAdapter(image.getScaledInstance(w,h));
+		return new HueImage(image.getScaledInstance(w,h));
 	}
 
 	public int getWidth() {
