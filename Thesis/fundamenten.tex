@@ -270,4 +270,74 @@ $(\mathcal{N},\mathcal{C},\mathcal{D})=(N_s,T_M,S_M)$ kunnen kiezen.
 
 \section{Similariteitsmaten}
 
+Om de gelijkenis tussen twee vaagverzamelingen -- of tussen twee objecten die identificeerbaar 
+zijn met vaagverzamelingen -- na te gaan, kan men gebruik maken van \emph{vaagsimilariteitsmaten}. 
+Een dergelijke similariteitsmaat, voor het vergelijken van twee vaagverzamelingen in een 
+universum $X$, is niets meer dan een vaagverzameling in $X \times X$. De lidmaatschapsgraad van 
+een koppel $(A,B) \in X^2$ nadert hierbij naar 1 naarmate de similariteit tussen de 
+vaagverzamelingen $A$ en $B$ groter is.
+
+In \cite{vanderweken:similariteitsmaten} worden er 32 similariteitsmaten voorgesteld: $M_1$, $M_2$,
+$M_3$, $M_4$, $M_5$, $M_{5c}$, $M_6$, $M_{6c}$, $M_7$, $M_{7c}$, $M_8$, $M_{8c}$, $M_9$, $M_{9c}$,
+$M_{10}$, $M_{10c}$, $M_{11}$, $M_{11c}$, $M_{12}$, $M_{13}$, $M_{14a}$, $M_{14b}$, $M_{14c}$, 
+$M_{16e}$, $M_{16h}$, $M_{17a}$, $M_{17b}$, $M_{I_3}$, $M_{I_{3c}}$, $M_{18c}$, $M_{20}$ en $M_{20c}$.
+We gaan deze echter niet allemaal gebruiken. Vooreerst beperken we ons voor
+$$
+M_1(A,B) = 1 - \left(\frac{1}{M N} \sum_{x \in X} | A(x) - B(x)|^r\right)^\frac{1}{r} \textrm{ met } 
+r \in \{1,2,3,\ldots\}
+$$ tot de keuzes
+$r=1,2,4$. De overeenkomstige similariteitsmaten noemen we $M_{1a}$, $M_{1b}$ en $M_{1c}$. Vermits
+$M_{1a}=M_{18c}$ hoeven we $M_{18c}$ dan niet meer te beschouwen. Bovendien zullen we ons enkel
+toespitsen op de maten die rechtstreeks uitbreidbaar zijn naar L-vaagverzamelingen. We komen zo tot
+de similariteitsmaten die worden weergegeven in tabel~\ref{tab:similatiteitsmaten}. 
+
+\begin{table}[tp]
+$$
+\begin{array}{rcl}
+\displaystyle M_{1a}(A,B) & = & \displaystyle 1-\frac{1}{M N}\sum_{x \in X} | A(x) - B(x) | \\
+\displaystyle M_{1b}(A,B) & = & \displaystyle 1-\left(\frac{1}{M N}\sum_{x \in X} | A(x) - B(x) |^2\right)^\frac{1}{2} \\
+\displaystyle M_{1c}(A,B) & = & \displaystyle 1-\left(\frac{1}{M N}\sum_{x \in X} | A(x) - B(x) |^4\right)^\frac{1}{4} \\
+\end{array}
+\begin{array}{rcl}
+\displaystyle M_2(A,B) & = & \displaystyle 1 - \max_{x \in X} | A(x) - B(x) | \\[10pt]
+\displaystyle M_3(A,B) & = & \displaystyle 1 - \frac{\displaystyle \sum_{x \in X} | A(x) - B(x) |}{\displaystyle |A| + |B|} \\
+\end{array}
+$$
+$$
+\begin{array}{rcl}
+\displaystyle M_5(A,B) & = & \displaystyle \frac{\min (|A|,|B|)}{\max (|A|,|B|)} \\[10pt]
+\displaystyle M_{5c}(A,B) & = & \displaystyle \frac{\min (|A^c|,|B^c|)}{\max (|A^c|,|B^c|)} \\[10pt]
+\displaystyle M_6(A,B) & = & \displaystyle \frac{|A \cap B|}{|A \cup B|} \\[10pt]
+\displaystyle M_{6c}(A,B) & = & \displaystyle \frac{|A^c \cap B^c|}{|A^c \cup B^c|} \\[10pt]
+\displaystyle M_7(A,B) & = & \displaystyle \frac{|A \cap B|}{\max (|A|,|B|)} \\[10pt]
+\displaystyle M_{7c}(A,B) & = & \displaystyle \frac{|A^c \cap B^c|}{\max (|A^c|,|B^c|)} \\[10pt]
+\displaystyle M_8(A,B) & = & \displaystyle \frac{|A \cap B|}{\min (|A|,|B|)} \\[10pt]
+\displaystyle M_{8c}(A,B) & = & \displaystyle \frac{|A^c \cap B^c|}{\min (|A^c|,|B^c|)} \\[10pt]
+\end{array}
+\begin{array}{rcl}
+\displaystyle M_9(A,B) & = & \displaystyle \frac{\min (|A|,|B|)}{|A \cup B|} \\[10pt]
+\displaystyle M_{9c}(A,B) & = & \displaystyle \frac{\min (|A^c|,|B^c|)}{|A^c \cup B^c|} \\[10pt]
+\displaystyle M_{10}(A,B) & = & \displaystyle \frac{\max (|A|,|B|)}{|A \cup B|} \\[10pt]
+\displaystyle M_{10c}(A,B) & = & \displaystyle \frac{\max (|A^c|,|B^c|)}{|A^c \cup B^c|} \\[10pt]
+\displaystyle M_{11}(A,B) & = & \displaystyle \frac{\min (|A \setminus B|,|B \setminus A|)}{\max (|A \setminus B|,|B \setminus A|)} \\[10pt]
+\displaystyle M_{11c}(A,B) & = & \displaystyle \frac{\min (|(A \setminus B)^c|,|(B \setminus A)^c|)}{\max (|(A \setminus B)^c|,|(B \setminus A)^c|)} \\[10pt]
+\displaystyle M_{12}(A,B) & = & \displaystyle \frac{|(A \triangle B)^c|}{\max (|(A \setminus B)^c|,|(B \setminus A)^c|)} \\[10pt]
+\displaystyle M_{13}(A,B) & = & \displaystyle \frac{|(A \triangle B)^c|}{\min (|(A \setminus B)^c|,|(B \setminus A)^c|)}
+\end{array}
+$$
+$$
+\begin{array}{rcl}
+\displaystyle M_{I_3}(A,B) & = & \displaystyle \frac{|(A \cap B) \cap (A^c \cap B^c)|)}{|(A \cup B) \cap (A^c \cup B^c)|)}
+\end{array}
+\begin{array}{rcl}
+\displaystyle M_{I_{3c}}(A,B) & = & \displaystyle \frac{|(A^c \cap B^c) \cup (A \cap B)|)}{|(A^c \cup B^c) \cup (A \cup B)|)}
+\end{array}
+$$
+\caption{De similariteitsmaten die we gaan gebruiken.}
+\label{tab:similatiteitsmaten}
+\end{table}
+
+Alle similariteitsmaten uit deze tabel zijn reflexief. Dit wil zeggen dat 
+voor elke similariteitsmaat $S$ geldt: $S(A,A)=1$. 
+
 \section{Aggregatieoperatoren} 
