@@ -1,11 +1,19 @@
 \chapter{Similariteit}
 
-Een similariteitsmaat voor afbeeldingen is in staat om de gelijkenis tussen twee gegeven
-afbeelding uit te drukken als een getal uit het interval $[0,1]$. Dit getal nadert naar 1
+Een similariteitsmaat voor afbeeldingen is een maat die de gelijkenis tussen twee gegeven
+afbeelding uitdrukt als een getal uit het interval $[0,1]$. Dit getal nadert naar 1
 naarmate de gelijkenis groter is. Bijgevolg kunnen we een dergelijke maat gebruiken om
 een lijst van zoekresultaten te herordenen volgens similariteit met een bepaalde 
-voorbeeld-afbeelding uit die lijst. In dit onderdeel van deze scriptie gaan we op zoek naar 
-similariteitsmaten die geschikt zijn voor deze taak.
+voorbeeld-afbeelding uit die lijst. 
+
+We construeren een similariteitsmaat voor afbeeldingen in twee stappen. Eerst identificeren we
+een afbeelding, al dan niet rechtstreeks, met een (L-)vaagverzameling. Daarna maken we gebruik van
+de vaagsimilariteitsmaten uit \ref{sectie:vaagsimilariteitsmaten} om deze (L-)vaagverzamelingen te
+vergelijken. 
+
+In het vervolg van deze scriptie bedoelen we met de term ``similariteitsmaat'' steeds
+een similariteitsmaat voor afbeeldingen. Dit omvat dus zowel een manier van identificeren als een 
+vaagsimilariteitsmaat.
 
 \section{Evaluatie van performantie}
 
@@ -15,7 +23,6 @@ Dit zullen we doen door elke
 maat, voor een bepaalde voorbeeld-afbeelding, toe te passen op een eenzelfde collectie 
 van afbeeldingen. Vervolgens zullen we de rangschikking die we zo bekomen
 beoordelen met behulp van een performantiemaat.
-
 
 
 \begin{figure}[p]

@@ -1,7 +1,7 @@
 \chapter{Wiskundige fundamenten}
 
 In dit hoofdstuk introduceren we eerst enkele basisbegrippen uit de vaagverzamelingenleer. 
-Daarna volgt een overzicht van de similariteitsmaten en aggregatieoperatoren waarvan
+Daarna volgt een overzicht van de vaagsimilariteitsmaten en aggregatieoperatoren waarvan
 we later gebruik zullen maken. We hebben dit deel van deze scriptie bewust zo 
 bondig mogelijk gehouden. Voor meer informatie verwijzen
 we naar \cite{kerre:vaagmodellen}, \cite{vanderweken:similariteitsmaten} en 
@@ -268,16 +268,17 @@ Merk op dat we in de bijzondere gevallen waarbij $L=[0,1]^n$ met $n > 0$,
 $(\mathcal{N},\mathcal{C},\mathcal{D})=(N_s,T_M,S_M)$ kunnen kiezen.
 
 
-\section{Similariteitsmaten}
+\section{Vaagsimilariteitsmaten}
+\label{sectie:vaagsimilariteitsmaten}
 
 Om de gelijkenis tussen twee vaagverzamelingen -- of tussen twee objecten die identificeerbaar 
 zijn met vaagverzamelingen -- na te gaan, kan men gebruik maken van \emph{vaagsimilariteitsmaten}. 
 Een dergelijke similariteitsmaat, voor het vergelijken van twee vaagverzamelingen in een 
-universum $X$, is niets meer dan een vaagverzameling in $X \times X$. De lidmaatschapsgraad van 
-een koppel $(A,B) \in X^2$ nadert hierbij naar 1 naarmate de similariteit tussen de 
-vaagverzamelingen $A$ en $B$ groter is.
+universum $X$, is niets meer dan een vaagverzameling in $\mathcal{F}(X) \times \mathcal{F}(X)$. De 
+lidmaatschapsgraad van een koppel $(A,B) \in (\mathcal{F}(X))^2$ nadert hierbij naar 1 naarmate 
+de similariteit tussen de vaagverzamelingen $A$ en $B$ groter is.
 
-In \cite{vanderweken:similariteitsmaten} worden er 32 similariteitsmaten voorgesteld: $M_1$, $M_2$,
+In \cite{vanderweken:similariteitsmaten} worden er 32 vaagsimilariteitsmaten voorgesteld: $M_1$, $M_2$,
 $M_3$, $M_4$, $M_5$, $M_{5c}$, $M_6$, $M_{6c}$, $M_7$, $M_{7c}$, $M_8$, $M_{8c}$, $M_9$, $M_{9c}$,
 $M_{10}$, $M_{10c}$, $M_{11}$, $M_{11c}$, $M_{12}$, $M_{13}$, $M_{14a}$, $M_{14b}$, $M_{14c}$, 
 $M_{16e}$, $M_{16h}$, $M_{17a}$, $M_{17b}$, $M_{I_3}$, $M_{I_{3c}}$, $M_{18c}$, $M_{20}$ en $M_{20c}$.
@@ -288,7 +289,9 @@ r \in \{1,2,3,\ldots\}
 $$ tot de keuzes
 $r=1,2,4$. De overeenkomstige similariteitsmaten noemen we $M_{1a}$, $M_{1b}$ en $M_{1c}$. Vermits
 $M_{1a}=M_{18c}$ hoeven we $M_{18c}$ dan niet meer te beschouwen. Bovendien zullen we ons enkel
-toespitsen op de maten die rechtstreeks uitbreidbaar zijn naar L-vaagverzamelingen. We komen zo tot
+toespitsen op de maten die rechtstreeks uitbreidbaar zijn naar L-vaagverzamelingen. Dit houdt in
+dat we enkel de maten beschouwen die op evidente wijze kunnen veralgemeend worden naar 
+vaagverzamelingen in $\mathcal{F}_L(X) \times \mathcal{F}_L(X)$. We komen zo tot
 de similariteitsmaten die worden weergegeven in tabel~\ref{tab:similatiteitsmaten}. 
 
 \begin{table}[tp]
