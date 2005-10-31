@@ -11,20 +11,23 @@ public class FuzzyHistogram extends FuzzySetBase {
 	private int elementsCount = 0, max = 0;
 
 	
-	public FuzzyHistogram(Image image, int binsCount) {
+	public FuzzyHistogram(Image image, int[] binsCounts) {
 		if (image == null)
 			throw new NullPointerException("image == null");
-		if (image.getColorComponentsCount() != 1)
-			throw new IllegalArgumentException("image must have 1 color component");
+		if (binsCounts == null)
+			throw new NullPointerException("binsCounts == null");
+		if (image.getColorComponentsCount() != binsCounts.length)
+			throw new IllegalArgumentException("binsCounts must have " 
+					+ image.getColorComponentsCount() + " components");
 		
 		histogram = new HashMap();
-		elementsCount = binsCount;
+		elementsCount = binsCounts[0];
 		for (int i = 1; i < image.getColorComponentsCount(); i++)
-			elementsCount *= binsCount;
+			elementsCount *= binsCounts[i];
 		
 		int pc = image.getWidth() * image.getHeight();
 		for (int i = 0; i < pc; i++) {
-			int value = (int) (image.getColor(i).getComponents()[0]*(binsCount-1));
+			int value = (int) (image.getColor(i).getComponents()[0]*(binsCounts[i]-1));
 			Integer index = new Integer(value);
 			Integer prev = (Integer)histogram.get(index);
 			if (prev == null) prev = new Integer(0);
@@ -33,10 +36,6 @@ public class FuzzyHistogram extends FuzzySetBase {
 			histogram.put(index, new Integer(newValue));
 			if (newValue > max) max = newValue;
 		}
-	}
-	
-	public FuzzyHistogram(Image image) {
-		this(image, 256);
 	}
 	
 	public FuzzyHistogram(Map histogram, int max, int elementsCount) {

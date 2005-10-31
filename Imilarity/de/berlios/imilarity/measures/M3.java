@@ -18,7 +18,7 @@ public class M3 extends FuzzyMeasureBase {
 		}
 		double d = (a.abs() + b.abs());
 		if (d == 0)
-			return 1;
+			return 0;
 		else
 			return 1 - (sum / d);
 	}

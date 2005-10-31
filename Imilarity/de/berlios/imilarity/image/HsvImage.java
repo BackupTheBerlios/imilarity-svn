@@ -1,10 +1,9 @@
 package de.berlios.imilarity.image;
 
-public class OpponentImage extends ImageBase {
-
+public class HsvImage extends ImageBase {
 	private Image image;
 
-	public OpponentImage(Image image) {
+	public HsvImage(Image image) {
 		if (image == null)
 			throw new NullPointerException("image == null");
 		this.image = image;
@@ -19,12 +18,26 @@ public class OpponentImage extends ImageBase {
 	public Color getColor(int x, int y) {
 		double[] rgb = image.getColor(x,y).getComponents();
 		double r = rgb[0], g = rgb[1], b = rgb[2];
-		return new Color(new double[] { (1 - (r-g))/2, (1 - (((r+g)/2)-b))/2,
-				0.299*r+0.587*g+0.114*b});
+		double max = Math.max(r,Math.max(g,b));
+		double min = Math.min(r,Math.min(g,b));
+		
+		double h = 0.0;
+		if (max == min) 	h = 0;
+		else if (max == r)	h = 60 * (g - b) / (max - min);
+		else if (max == g)	h = (60 * (b - g) / (max - min)) + 120;
+		else 				h = (60 * (r - g) / (max - min)) + 240;
+		while (h < 0) 	h = 360 - h;
+		while (h > 360)	h = h - 360; 
+		
+		double s = 0.0;
+		if (max > 0)
+			s = (max - min) / max;
+		
+		return new Color(h / 360, s, max);
 	}
 
 	public Image getScaledInstance(int w, int h) {
-		return new OpponentImage(image.getScaledInstance(w,h));
+		return new HueImage(image.getScaledInstance(w,h));
 	}
 
 	public int getWidth() {
@@ -34,4 +47,5 @@ public class OpponentImage extends ImageBase {
 	public int getHeight() {
 		return image.getHeight();
 	}
+
 }
