@@ -162,5 +162,100 @@ zoek gaan naar similariteitsmaten waarvan de GGGR zo klein mogelijk is.
 
 \section{Pixel-gebaseerd}
 
+\subsection{Grijswaardebeelden}
+
+\subsubsection{Representatie}
+
+Een \emph{binair beeld} is een beeld dat enkel witte en zwarte beeldpunten bevat. We kunnen een 
+$n$-dimentionaal binair beeld dus modelleren als een scherpe verzameling $A$ in $\mathbb{R}^n$, met:
+$$
+\begin{array}{rcl}
+x \in A & \iff & x \textrm{ is een wit punt in het beeld} \\
+x \notin A & \iff & x \textrm{ is een zwart punt in het beeld}
+\end{array}
+$$ 
+In de praktijk wordt een binair beeld echter voorgesteld als een rooster bestaande uit een
+eindig aantal beeldpunten. Men kiest dus eerder $\mathbb{N}^2$ als universum.
+
+Behalve wit en zwart, kan een \emph{grijswaardebeeld} ook grijstinten bevatten. Deze grijstinten
+kunnen voorgesteld worden aan de hand van waarden uit het open eenheidsinterval $]0,1[$, waarbij
+geldt: hoe groter de grijswaarde, hoe lichter de grijstint. Een $n$-dimensionaal grijswaardebeeld
+kan dus gemodelleerd worden als een vaagverzameling $A$ in $\mathbb{R}^n$ bepaald door:
+$$
+\begin{array}{rcl}
+A(x) = 1 & \iff & x \textrm{ is een wit punt in het beeld} \\
+A(x) = 0 & \iff & x \textrm{ is een zwart punt in het beeld} \\
+A(x) \in\ ]0,1[ & \iff & x \textrm{ is een beeldpunt met een grijstint}
+\end{array}
+$$
+Ook bij grijswaardebeelden is het universum in de praktijk eerder $\mathbb{N}^2$.
+
+\subsubsection{Similariteitsmaten}
+
+Door de bovenstaande representatie te combineren met de vaagsimilariteitsmaten uit 
+\ref{sectie:vaagsimilariteitsmaten}, bekomen we 23 similariteitsmaten. Deze maten
+vergelijken beide afbeeldingen door elk van hun beeldpunten met elkaar te vergelijken.
+Deze beeldpunten worden ook \emph{picture elements} of kortweg \emph{pixels} genoemd. Vandaar
+dat we zeggen dat deze similariteitsmaten \emph{pixel-gebaseerd} zijn.
+
+Men noemt het aantal pixels in een afbeelding de \emph{resolutie} van die afbeelding. Het is
+duidelijk dat deze pixel-gebaseerde maten vereisen dat beide afbeeldingen dezelfde resolutie 
+hebben. Bovendien kunnen ze enkel gebruikt worden om grijswaardebeelden te vergelijken.
+
+
+\subsection{Kleurbeelden}
+
+\subsubsection{Kleurruimten}
+
+Een \emph{kleurmodel} is een abstract mathematisch model dat beschrijft hoe kleuren gerepresenteerd 
+kunnen worden als $n$-tallen. RGB is het meest gebruikte kleurmodel. In dit model is elke kleur
+een gewogen som van drie hoofdkleuren: rood, groen en blauw. De gewichten van deze som
+worden gebruikt als componenten van het drietal dat deze kleur voorstelt. Naast RGB zijn ook
+HSV en L*a*b* populaire kleurmodellen.
+
+De kleuren die men op basis van een bepaald model kan voorstellen vormen een \emph{kleurruimte}. 
+In het geval van RGB is dit een driedimentionale ruimte. De kleuren in deze ruimte zijn afhankelijk
+van de manier waarop men ``rood'', ``groen'' en ``geel'' definieert. Veelgebruikte kleurenruimtes 
+op basis van het RGB model zijn sRGB en Adobe RGB.
+
+Hoewel het strikt gezien niet correct is, gebruikt men de term ``kleurruimte'' vaak ook voor het
+kleurmodel. Men heeft het dus vaak over \emph{de} RGB kleurruimte, terwijl er eigenlijk meerdere
+kleurruimtes bestaan die gebaseerd zijn op RGB. 
+
+\subsubsection{Representatie}
+
+Bij een \emph{kleurbeeld} heeft elke pixel een bepaalde kleur. Deze kleur wordt beschreven met
+behulp van een kleurmodel. Ze wordt bijgevolg voorgesteld als een $n$-tal uit
+$\mathbb{R}^n$. Dergelijke $n$-tallen kunnen we normaliseren tot $n$-tallen uit $[0,1]^n$. 
+Dit laat ons toe om een $m$-dimensionaal kleurbeeld te modelleren als een L-vaagverzameling in 
+$\mathbb{R}^m$, waarbij $L=[0,1]^n$.
+
+We hebben reeds vermeld dat de similariteitsmaten uit \ref{sectie:vaagsimilariteitsmaten}
+uitbreidbaar zijn naar L-vaag\-ver\-za\-me\-ling\-en. Zoals in \ldots beperken we ons tot het 
+RGB model en veralgemenen we de be\-wer\-king\-en waarvan de similariteitsmaten gebruik maken 
+als volgt naar kleuren in dit model:
+$$
+\begin{array}{rcl}
+|c| & = & \frac{1}{\sqrt{3}} \cdot \sqrt{r^2 + g^2 + b^2} \\[5pt]
+c - c' & = & (r-r',g-g',b-b') \\[5pt]
+1 - c & = & (1,1,1) - c \\[5pt]
+\min (c,c') & = & c \quad\textrm{als } c \leq_{RGB} c' \\
+		  & = & c' \quad\textrm{anders} \\[5pt]
+\max (c,c') & = & c' \quad\textrm{als } c \leq_{RGB} c' \\
+		  & = & c \quad\textrm{anders}
+\end{array}
+$$
+met $c(r,g,b)$ en $c'(r',g',b')$ kleuren uit $[0,1]^3$ en $\leq_{RGB}$ de ordening voor
+kleuren in het RGB model uit \ldots. Deze ordening wordt als volgt gedefinieerd:
+$$
+\begin{array}{rcl}
+c <_{RGB} c' & \iff & d(c,Bl) < d(c',Bl)\ \lor \\
+			   &	  & \quad(d(c,Bl) = d(c',Bl) \land d(c,Wh) > d(c',Wh)) \\[5pt]
+c >_{RGB} c' & \iff & d(c,Wh) < d(c',Wh)\ \lor \\
+			   &	  & \quad(d(c,Wh) = d(c',Wh) \land d(c,Bl) > d(c',Bl)) \\[5pt]
+c =_{RGB} c'   & \iff & (d(c,Bl) = d(c',Bl) \land d(c,Wh) = d(c',Wh))
+\end{array}
+$$
+waarbij $Bl=(0,0,0)$, $Wh=(1,1,1)$ en $d$ de Euclidische afstand.
 
 \section{Kleur-gebaseerd}
