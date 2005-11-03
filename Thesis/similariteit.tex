@@ -125,7 +125,7 @@ de \emph{Columbia object image library} \cite{coil-100}. Deze bibliotheek van af
 werd gegenereerd 
 door een aantal roterende objecten op bepaalde vaste momenten te fotograferen. 
 Onze testcollectie bestaat uit foto's van elf objecten. Van elke object zijn
-er zes momentopnames, wat een totaal van $11 \times 6 = 66$ afbeeldingen geeft.
+er zes momentopnames, wat een totaal van $11 \cdot 6 = 66$ afbeeldingen geeft.
 
 Voor het beoordelen van een rangschikking, gebruiken we de \emph{genormaliseerde gemiddelde rang} 
 (GGR) \cite{muller:perf_eval}. Deze performantiemaat wordt toegepast op een collectie
@@ -139,10 +139,10 @@ wordt dan als volgt gedefinieerd:
 \begin{definitie}
 De genormaliseerde gemiddelde rang wordt gegeven door de volgende afbeelding:
 $$
-\begin{array}{llll}
+\begin{array}{lrcl}
 \textrm{GGR}: 	& \{1,2,\ldots,N\}^{N_R} & \to 	& [0,1] \\
 		& (r_1,r_2,\ldots,r_{N_R}) & \mapsto &
-	{\displaystyle\frac{1}{N N_R}\left(\left(\sum_{i=1}^{N_R}r_i\right) - \frac{N_R (N_R + 1)}{2}\right)},\\ 
+	{\displaystyle\frac{1}{N \cdot N_R}\left[ \left(\sum_{i=1}^{N_R}r_i\right) - \frac{N_R \cdot (N_R + 1)}{2} \right]},\\
 	& & & \qquad \forall (r_1, r_2, ..., r_{N_R}) \in \{1,2,\ldots,N\}^{N_R}
 \end{array}
 $$
@@ -194,13 +194,13 @@ Ook bij grijswaardebeelden is het universum in de praktijk eerder $\mathbb{N}^2$
 
 Door de bovenstaande representatie te combineren met de vaagsimilariteitsmaten uit 
 \ref{sectie:vaagsimilariteitsmaten}, bekomen we 23 similariteitsmaten. Deze maten
-vergelijken beide afbeeldingen door elk van hun beeldpunten met elkaar te vergelijken.
+meten de gelijkenis tussen twee afbeeldingen door hun beeldpunten met elkaar te vergelijken.
 Deze beeldpunten worden ook \emph{picture elements} of kortweg \emph{pixels} genoemd. Vandaar
-dat we zeggen dat deze similariteitsmaten \emph{pixel-gebaseerd} zijn.
+dat we zeggen dat deze maten \emph{pixel-gebaseerd} zijn.
 
 Men noemt het aantal pixels in een afbeelding de \emph{resolutie} van die afbeelding. Het is
 duidelijk dat deze pixel-gebaseerde maten vereisen dat beide afbeeldingen dezelfde resolutie 
-hebben. Bovendien kunnen ze enkel gebruikt worden om grijswaardebeelden te vergelijken.
+hebben.
 
 
 \subsection{Kleurbeelden}
@@ -210,12 +210,12 @@ hebben. Bovendien kunnen ze enkel gebruikt worden om grijswaardebeelden te verge
 Een \emph{kleurmodel} is een abstract mathematisch model dat beschrijft hoe kleuren gerepresenteerd 
 kunnen worden als $n$-tallen. RGB is het meest gebruikte kleurmodel. In dit model is elke kleur
 een gewogen som van drie hoofdkleuren: rood, groen en blauw. De gewichten van deze som
-worden gebruikt als componenten van het drietal dat deze kleur voorstelt. Naast RGB zijn ook
-HSV en L*a*b* populaire kleurmodellen.
+worden gebruikt als componenten van het drietal dat de kleur voorstelt. Naast RGB zijn ook
+HSV en L*a*b* populaire kleurmodellen \cite{phillips:beeldverwerking}.
 
 De kleuren die men op basis van een bepaald model kan voorstellen vormen een \emph{kleurruimte}. 
-In het geval van RGB is dit een driedimentionale ruimte. De kleuren in deze ruimte zijn afhankelijk
-van de manier waarop men ``rood'', ``groen'' en ``geel'' definieert. Veelgebruikte kleurenruimtes 
+In het geval van RGB is dit een driedimensionale ruimte. De kleuren in deze ruimte zijn afhankelijk
+van de manier waarop men ``rood'', ``groen'' en ``blauw'' definieert. Veelgebruikte kleurruimtes 
 op basis van het RGB model zijn sRGB en Adobe RGB.
 
 Hoewel het strikt gezien niet correct is, gebruikt men de term ``kleurruimte'' vaak ook voor het
@@ -224,29 +224,35 @@ kleurruimtes bestaan die gebaseerd zijn op RGB.
 
 \subsubsection{Representatie}
 
-Bij een \emph{kleurbeeld} heeft elke pixel een bepaalde kleur. Deze kleur wordt beschreven met
+In een \emph{kleurbeeld} heeft elke pixel een bepaalde kleur. Deze kleur wordt beschreven met
 behulp van een kleurmodel. Ze wordt bijgevolg voorgesteld als een $n$-tal uit
 $\mathbb{R}^n$. Dergelijke $n$-tallen kunnen we normaliseren tot $n$-tallen uit $[0,1]^n$. 
 Dit laat ons toe om een $m$-dimensionaal kleurbeeld te modelleren als een L-vaagverzameling in 
 $\mathbb{R}^m$, waarbij $L=[0,1]^n$.
 
-We hebben reeds vermeld dat de similariteitsmaten uit \ref{sectie:vaagsimilariteitsmaten}
-uitbreidbaar zijn naar L-vaag\-ver\-za\-me\-ling\-en. Zoals in \ldots beperken we ons tot het 
-RGB model en veralgemenen we de be\-wer\-king\-en waarvan de similariteitsmaten gebruik maken 
+We hebben reeds vermeld dat de vaagsimilariteitsmaten uit \ref{sectie:vaagsimilariteitsmaten}
+uitbreidbaar zijn naar L-vaag\-ver\-za\-me\-ling\-en. Zoals in 
+\cite{anoniem:similariteitsmaten_voor_kleurbeelden} beperken we ons tot het 
+RGB model en veralgemenen we de be\-wer\-king\-en waarvan de vaagsimilariteitsmaten gebruik maken 
 als volgt naar kleuren in dit model:
 $$
+\begin{array}{r@{\qquad}l}
 \begin{array}{rcl}
 |c| & = & \frac{1}{\sqrt{3}} \cdot \sqrt{r^2 + g^2 + b^2} \\[5pt]
 c - c' & = & (r-r',g-g',b-b') \\[5pt]
 1 - c & = & (1,1,1) - c \\[5pt]
-\min (c,c') & = & c \quad\textrm{als } c \leq_{RGB} c' \\
-		  & = & c' \quad\textrm{anders} \\[5pt]
-\max (c,c') & = & c' \quad\textrm{als } c \leq_{RGB} c' \\
-		  & = & c \quad\textrm{anders}
+\end{array}
+&
+\begin{array}{rcll}
+\min (c,c') & = & c & \textrm{als } c \leq_{RGB} c' \\
+		  & = & c' & \textrm{anders} \\[5pt]
+\max (c,c') & = & c' & \textrm{als } c \leq_{RGB} c' \\
+		  & = & c & \textrm{anders}
+\end{array}
 \end{array}
 $$
-met $c(r,g,b)$ en $c'(r',g',b')$ kleuren uit $[0,1]^3$ en $\leq_{RGB}$ de ordening voor
-kleuren in het RGB model uit \ldots. Deze ordening wordt als volgt gedefinieerd:
+Hierbij geldt $c(r,g,b), c'(r',g',b') \in [0,1]^3$ en is $\leq_{RGB}$ de ordening voor
+kleuren in het RGB model uit \cite{dewitte:vect_morph_ops}. Deze ordening wordt als volgt gedefinieerd:
 $$
 \begin{array}{rcl}
 c <_{RGB} c' & \iff & d(c,Bl) < d(c',Bl)\ \lor \\
@@ -258,4 +264,177 @@ c =_{RGB} c'   & \iff & (d(c,Bl) = d(c',Bl) \land d(c,Wh) = d(c',Wh))
 $$
 waarbij $Bl=(0,0,0)$, $Wh=(1,1,1)$ en $d$ de Euclidische afstand.
 
-\section{Kleur-gebaseerd}
+\subsubsection{Similariteitsmaten}
+
+De klassieke manier om kleurbeelden te vergelijken gaat als volgt. Men past een similariteitsmaat 
+voor grijswaardebeelden toe op elk van de kleurcomponenten en voegt daarna de resultaten van de
+verschillende componenten samen. In het geval van het RGB model beschouwt men een
+kleurbeeld dan dus als een combinatie van drie grijswaardebeelden. 
+
+Een andere mogelijkheid is dat men het beeld eerst omzet naar een grijswaardebeeld, om er 
+vervolgens een similariteitsmaat voor grijswaardebeelden op toe te passen. Deze omzetting kan 
+bijvoorbeeld aan de hand van de formule $y = 0.3 \cdot r + 0.59 \cdot g + 0.11 \cdot b$ gebeuren.
+
+De tralie-gebaseerde aanpak lijkt ons echter interessanter. Hierbij combineren we
+de bovenstaande representatie met \'e\'en van de vaagsimilariteitsmaten uit 
+\ref{sectie:vaagsimilariteitsmaten}. 
+
+\subsection{Resolutie-onafhankelijk}
+
+Een belangrijke beperking van de bovenstaande pixel-gebaseerde similariteitsmaten is dat we
+ze enkel kunnen toepassen op beelden die dezelfde resolutie hebben. We kunnen dit oplossen
+door similariteitsmaten te construeren op een manier die ge\"inspireerd is op de constructie
+van de zogenaamde omgeving-gebaseerde similariteitsmaten in \cite{vanderweken:similariteitsmaten}. 
+Dit gaat als volgt:
+\begin{enumerate}
+\item Verdeel de te vergelijken afbeeldingen $A$ en $B$
+in partities. Elk beeldonderdeel van een partitie kan dan opgevat worden als een klein beeld
+waarop we de reeds geziene pixel-gebaseerde similariteitsmaten kunnen toepassen.
+\item Bepaal de gemiddelde kleur van elk beeldonderdeel. Gebruik deze kleur vervolgens
+om de beide collecties van beeldonderdelen te ordenen met behulp van de ordening $\leq_{RGB}$.
+\item Overloop de beeldonderdelen van $B$ en bepaal telkens de similariteit met het eerste 
+beeldonderdeel van $A$. Voeg de vorige similariteit toe aan de lijst van similariteiten $S$
+indien ze groter is dan de huidige. 
+
+Herhaal deze stap voor de resterende
+beeldonderdelen van $A$ en $B$ zodra er een similariteit werd toegevoegd aan $S$. Het 
+beeldonderdeel van $B$ dat aanleiding gaf tot de huidige similariteit deel maakt deel uit van
+deze resterende beeldonderdelen.
+
+Als het laatste beeldonderdeel van $B$ bereikt wordt, dan wordt de similariteit tussen dit
+beeldonderdeel en het huidige beeldonderdeel van $A$ toegevoegd aan $S$. De overblijvende
+beeldonderdelen van $A$ worden dan buiten beschouwing gelaten. 
+\item Bepaal het gemiddelde van de similariteiten uit $S$. Deze waarde is de similariteit tussen
+$A$ en $B$.
+\end{enumerate}
+Figuur~\ref{fig:multires} illustreert deze constructie. In deze figuur is de kleur van een
+beeldonderdeel gelijk aan de gemiddelde kleur van dat onderdeel. De verbindingen tussen de
+geordende beeldonderdelen stellen de similariteiten in $S$ voor.
+
+\begin{figure}[tbp]
+\begin{center}
+\includegraphics[width=\textwidth]{images/multires.eps}
+\caption{\label{fig:multires}Constructie van een resolutie-onafhankelijke similariteitsmaat op basis van een pixel-gebaseerde maat.}
+\end{center}
+\end{figure}
+
+\subsection{Experimentele observaties}
+
+In figuur~\ref{fig:pixelgeb_gggrs} vergelijken we enkele pixel-gebaseerde similariteitsmaten.
+Hoewel de afbeeldingen in onze testcollectie allemaal dezelfde resolutie hebben, beperken we
+ons toch tot de resolutie-onafhankelijke maten. Bij de beelden die we in de praktijk gaan 
+vergelijken zullen de resoluties immers vrijwel altijd verschillend zijn.
+
+\begin{figure}[tbp]
+\begin{center}
+\includegraphics[width=\textwidth]{plots/pixelgeb_gggrs_filled.eps}
+\caption{\label{fig:pixelgeb_gggrs}GGGR-waarden voor de resolutie-onafhankelijke pixel-gebaseerde similariteitsmaten.}
+\end{center}
+\end{figure}
+
+We beschouwen de drie bovenstaande manieren om de vaagsimilariteitsmaten toe te passen op een 
+onderdeel van een kleurbeeld:
+eerst omzetten naar een grijswaardebeeld, 
+toepassen op de afzonderlijke kleurcomponenten en 
+de tralie-gebaseerde aanpak.
+De laatste manier in combinatie met $M_{1c}$ levert de beste similariteitsmaat op. We vinden
+voor deze similariteitsmaat de GGGR-waarde 0.15454545454545454. Dit is echter nog steeds een
+vrij hoge waarde. Blijkbaar is de pixel-gebaseerde benadering niet de meest geschikte
+voor image retrieval. 
+
+
+\section{Histogram-gebaseerd}
+
+Kleur is \'e\'en van de meest gebruikte kenmerken bij CBIR. Het kleurhistogram is de meest 
+populaire representatie van dit kenmerk \cite{rui:image_retr}. We mogen dus verwachten
+dat deze histogrammen kunnen gebruikt worden om effici\"ente similariteitsmaten te construeren.
+In deze sectie onderzoeken we of die effectief het geval is. 
+
+Een histogram van een kleurbeeld is een voorstelling van de frequentieverdeling van de
+verschillende kleuren. De waarde van het histogram voor een kleurbeeld $A$ in de kleur $c$ is
+dus gelijk aan het totaal aantal pixels in het beeld met kleur $c$. We noteren dit met $h_A(c)$:
+$$
+h_A(c) = \sum_{x \in X} \delta (c - A(x))
+$$
+waarbij $\delta$ de Diracfuntie is en $X$ het universum der beelpunten voorstelt. 
+
+Door de waarden van een histogram te normaliseren, kunnen we het omzetten naar een 
+vaagverzameling in $C$, waarbij $C$ het universum der kleuren is. Dit houdt in dat we elke
+waarde van het histogram delen door het maximaal aantal pixels met dezelfde kleur. 
+We hebben dus de volgende uitdrukking voor de lidmaatschapsgraad van de kleur $c$ in de 
+vaagverzameling $Fh_A$ geassocieerd met het histogram van beeld $A$:
+$$
+Fh_A(c) = \frac{\displaystyle h_A(c)}{\displaystyle \max_{c \in C}(c)}
+$$
+
+Voor een RGB-beeld gebruikt met typisch 8 bits per kleurcomponent. Dit geeft een totaal van
+24 bits per kleur, zodat men dus $2^{24}=2^4 \cdot 2^{20}=16 \cdot 2^{20} \approx 16 \cdot 10^6$
+kleuren kan voorstellen. Een genormaliseerd histogram bestaat dan dus uit 16 miljoen waarden.
+Similariteitsmaten op basis van dergelijke histogrammen zouden dus veel te veel rekentijd vragen.
+
+We kunnen de rekentijd echter reduceren door de histogrammen te comprimeren. Dit kan door gebruik te 
+maken van zogenaamde \emph{bins}. Elk van deze bins omvat meerdere kleuren. We beschouwen dus 
+geen aparte kleuren meer, maar wel verzamelingen van kleuren. Per verzameling bepalen we dan 
+hoeveel keer de kleuren in die verzameling voorkomen 
+in de afbeelding in kwestie. De karakteristieke afbeelding van de vaagverzameling $Bh_A$, die
+correspondeert met het in $N$ bins onderverdeelde histogram van beeld $A$, wordt dan als volgt
+gedefinieerd:  
+$$
+\begin{array}{lrcl}
+Bh_A: 	& \{1,2,\ldots,N\} 	& \to 		& [0,1] \\[5pt]
+		& n						& \mapsto	& \displaystyle\sum_{c \in C} \delta (n -  bin(c)),
+\quad\forall n \in \{1,2,\ldots,N\}
+\end{array}
+$$
+Hierbij is $bin$ een $C - \{1,2,\ldots,N\}$ afbeelding die met elke kleur het nummer van de 
+corresponderende bin associeert. We zouden bijvoorbeeld 
+$bin(c) = \lfloor Fh_A(c) \cdot (N-1) \rfloor + 1$ kunnen kiezen. Doorgaands willen we echter
+meer belang hechten aan bepaalde kleurcomponenten. We gebruiken daarom de volgende definitie:
+$$
+bin(c) = bin(c_1,c_2,\ldots,c_m) = \left[ \sum_{i=1}^m \left( \prod_{j=2}^{i} N_j \right) \lfloor c_i \cdot (N_i - 1)\rfloor \right] + 1
+$$
+met $N=N_1 \cdot N_2 \cdot \ldots \cdot N_m$.
+
+\subsection{HSV-histogram}
+
+In het HSV kleurmodel wordt elke kleur voorgesteld door een drietal. Men noemt de componenten van 
+zo'n drietal respectievelijk ``hue'', ``saturation'' en ``value''. De eerste van deze componenten
+correspondeert met de kleurtint, terwijl de overige componenten de verzadiging en de helderheid
+aangeven. Men kan een kleur $c(r,g,b) \in [0,1]^3$ uit het RGB model als volgt omzetten naar een 
+kleur $c'(h,s,v) \in [0,1]^3$ in het HSV model:
+$$
+\begin{array}{rcll}
+h' & = & 60 \cdot \frac{g - b}{\max (r,g,b) - \min (r,g,b)}\quad & \textrm{ als } \max (r,g,b) = r \\
+  & = & 60 \cdot \frac{b - r}{\max (r,g,b) - \min (r,g,b)} + 120\quad & \textrm{ als } \max (r,g,b) = g \\
+  & = & 60 \cdot \frac{r - g}{\max (r,g,b) - \min (r,g,b)} + 240\quad & \textrm{ als } \max (r,g,b) = b \\[5pt]
+h & = & \frac{h' \bmod 360}{360} & \textrm{ als } h' \bmod 360 \geq 0 \\
+  & = & \frac{360 - (h' \bmod 360)}{360} & \textrm{ als } h' \bmod 360 < 0 \\[5pt]
+s & = & \frac{\max (r,g,b) - \min (r,g,b)}{\max (r,g,b)} & \\[5pt]
+v & = & \max (r,g,b)
+\end{array}
+$$
+Als $s=0$ dan is $h$ niet gedefinieerd. Dit is logisch vermits we dan te maken hebben met een 
+grijswaarde. Indien $v=0$ dan is $s$ niet gedefinieerd. We hebben het in dat geval dan ook over 
+puur zwart, waarvoor er geen kleurtint of saturatie kan gespecifieerd worden. In de praktische
+implementatie geven we niet gedefinieerde componenten de waarde 0.
+
+Bij image retrieval is doorgaands vooral de kleurtint op zich belangrijk. We kunnen de grootte van
+een histogram dus beperken door het HSV model te gebruiken en meer belang te hechten aan de
+eerste kleurcomponent. Dit doen we door $N_1=16$, $N_2=4$ en $N_3=4$ te kiezen. We bekomen zo dus
+een histogram dat slechts $16 \cdot 4 \cdot 4 = 256$ waarden bevat. Bovendien is het discriminerend
+vermogen van dit histogram waarschijnlijk ook beter dan dat van een ongecomprimeerd kleurhistogram.
+
+Merk op dat onze keuzes voor $N_1$, $N_2$ en $N_3$ overeenstemmen met de keuzes die men gemaakt
+heeft voor de \emph{scalable color descriptor} (SCD), die gedefinieerd wordt in de MPEG-7
+standaard \cite{manjunath:color_and_texture_descriptors}.
+
+\subsection{HMMD-histogram}
+
+\subsection{Yxy-histogram}
+
+\subsection{OCS-histogram}
+
+\subsection{Experimentele observaties}
+
+
+\section{Gebaseerd op dominante kleuren}
