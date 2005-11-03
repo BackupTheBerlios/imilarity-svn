@@ -1,0 +1,214 @@
+%
+% (C) 2002-2003 by Tom De Medts -- tdemedts@java.UGent.be
+% Feel free to modify this file to suit your own needs.
+%
+
+%\ifx\pdfoutput\undefined
+%	\usepackage[dvips]{graphicx}
+%\else
+\usepackage{graphicx}
+%\fi
+\usepackage{babel}
+\usepackage{ifthen}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{simplemargins}
+\usepackage{fancyhdr}
+\usepackage{color}
+%\usepackage{makeidx}
+\usepackage{hyphenat}
+%\usepackage{mathpple}		% Math Palatino
+\usepackage{charter}		% Text Charter
+\renewcommand{\sfdefault}{pag}	% Use a nicer font for the headers
+\usepackage{pstricks}
+\usepackage{pst-grad}
+\usepackage{pst-node}
+
+\newcommand{\defin}[2][]{%
+        \ifthenelse{\equal{#1}{}}
+                {{\em{#2}\index{#2}}}%
+                {{\em{#2}\index{#1}}}%
+}
+\newcommand{\notat}[2][]{%
+        \ifthenelse{\equal{#1}{}}
+                {{#2}\glossary{$#2$}}%
+                {{#2}\glossary{$#1$}}%
+}
+\newcommand{\glossaryentry}[2]{\item {#1}, {#2}}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{maintheorem}[theorem]{Main Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{stelling}[theorem]{Stelling}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{definitie}[theorem]{Definitie}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{impremark}[theorem]{Important Remark}
+\newtheorem{opmerking}[theorem]{Opmerking}
+
+\def\bysame{\leavevmode\hbox to3em{\hrulefill}\thinspace}
+
+
+
+% Marges
+
+\setlength{\smpagewidth}{21cm}         % breedte blad
+\setlength{\headwidth}{16cm}		   % breedte hoofding
+\setlength{\smpageheight}{29.7cm}      % hoogte blad
+%\setlength{\headheight}{3cm}		   % hoogte hoofding
+\setleftmargin{4cm}                    % marge links
+\setrightmargin{1cm}                   % marge rechts
+\settopmargin{2.5cm}                   % marge bovenaan
+\setbottommargin{2cm}                  % marge onderaan
+
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[el,ol]{\sf\leftmark}
+\fancyhead[er,or]{\sf\thepage}
+
+\fancypagestyle{plain}{%			% This is for the chapter pages.
+	\fancyhf{}				% No headers or footers ...
+	\renewcommand{\headrulewidth}{0pt}	% ... and get rid of the line.
+}
+
+%
+% A cool "fading out" line on each chapter page and in the Index
+% By TDM
+%
+\newcommand{\gradline}{%
+	\psset{linecolor=white, linewidth=0pt, fillstyle=gradient, %
+		gradbegin=white, gradend=darkgray, gradmidpoint=0}
+	\pspicture(0,0)(14,.1)
+	\psframe[gradangle=90](0,0)(14,.05)
+	\endpspicture
+}
+\newcommand{\gradindexline}[1]{%
+	\psset{linecolor=white, linewidth=0pt, fillstyle=gradient, %
+		gradbegin=white, gradend=darkgray, gradmidpoint=0}
+	\begin{pspicture}(0,-.3)(6,.4)
+		\rput[l](0,0){#1}
+		\psframe[gradangle=90](.8,-.1)(6,-.05)
+	\end{pspicture}
+}
+
+
+\makeatletter
+% This command usually means that something freaky is going to happen...
+
+
+%
+% Smaller separation between items
+% Inspired by "tweaklist.sty"
+%
+\renewcommand{\itemize}{%
+  \ifnum \@itemdepth >\thr@@\@toodeep\else
+    \advance\@itemdepth\@ne
+    \edef\@itemitem{labelitem\romannumeral\the\@itemdepth}%
+    \expandafter
+    \list
+      \csname\@itemitem\endcsname
+      {\def\makelabel##1{\hss\llap{##1}}%
+        \topsep=.8ex\itemsep=-.2ex}%
+  \fi}
+
+
+%
+% Lines under and above Chapters in the TOC
+% By TDM
+%
+\newcommand*\l@chapterlike[2]{%
+  \ifnum \c@tocdepth >\m@ne
+    \addpenalty{-\@highpenalty}%
+    \vskip 1.6em \@plus\p@
+    \setlength\@tempdima{1.5em}%
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode \boldmath\bfseries
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      \ #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
+      \penalty\@highpenalty
+    \endgroup
+  \fi}
+\renewcommand*\l@chapter[2]{%
+  \ifnum \c@tocdepth >\m@ne
+    \addpenalty{-\@highpenalty}%
+    \vskip 1.4em \@plus\p@
+    \setlength\@tempdima{1.5em}%
+    \hrule
+    \vskip 0.5em \@plus\p@
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode \boldmath\bfseries
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      \ #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss \rule[-0.5ex]{0pt}{2ex} #2}\par
+		% Note the strut on the previous line!
+      \penalty\@highpenalty
+    \endgroup
+    \vskip 0.4em \@plus\p@
+    \hrule
+    \vskip 0.5em \@plus\p@
+  \fi}
+\renewcommand\@pnumwidth{1.75em}  % Better right alignment in the TOC (>100 pages).
+
+
+%
+% Nicer Chapter headings
+% By TDM
+%
+\definecolor{gray}{rgb}{.5, .5, .5}
+\font\veryhuge=pbkd8r at 100pt
+\def\@makechapterhead#1{%
+  \vspace*{10\p@}%
+  {\parindent \z@ \raggedright \normalfont
+    \ifnum \c@secnumdepth >\m@ne
+      %\if@mainmatter
+        \begin{minipage}[b]{3cm}
+           {\veryhuge\textcolor{gray}{\thechapter}}
+        \end{minipage}
+      %\fi
+    \fi
+    \begin{minipage}[b]{9cm}
+        \Huge\bfseries \boldmath \nohyphens{#1}\par\nobreak
+        \vspace{0\p@}
+    \end{minipage}
+    \vskip 30\p@
+    \gradline
+    \vskip 50\p@
+}}
+
+%
+% Make sure that mathematics are in bold in all title headings
+% By TDM
+%
+\renewcommand\section{\@startsection {section}{1}{\z@}%
+                                   {-3.5ex \@plus -1ex \@minus -.2ex}%
+                                   {2.3ex \@plus.2ex}%
+                                   {\boldmath\normalfont\Large\bfseries}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                     {1.5ex \@plus .2ex}%
+                                     {\boldmath\normalfont\large\bfseries}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                     {1.5ex \@plus .2ex}%
+                                     {\boldmath\normalfont\normalsize\bfseries}}
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+                                    {3.25ex \@plus1ex \@minus.2ex}%
+                                    {-1em}%
+                                    {\boldmath\normalfont\normalsize\bfseries}}
+\renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
+                                       {3.25ex \@plus1ex \@minus .2ex}%
+                                       {-1em}%
+                                      {\boldmath\normalfont\normalsize\bfseries}}
+
+\makeatother
