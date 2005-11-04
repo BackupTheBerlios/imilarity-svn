@@ -6,6 +6,8 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -32,10 +34,9 @@ public class Imperforate extends JFrame {
 		final TableSorter sorter = new TableSorter(evalsModel); 
 		final JTable table = new JTable(sorter);    
 		sorter.setTableHeader(table.getTableHeader());
-		table.getColumnModel().getColumn(0).setPreferredWidth(300);
-		table.getColumnModel().getColumn(1).setPreferredWidth(200);
-		table.getColumnModel().getColumn(2).setPreferredWidth(100);
-		table.getColumnModel().getColumn(3).setPreferredWidth(140);
+		table.getColumnModel().getColumn(0).setPreferredWidth(400);
+		table.getColumnModel().getColumn(1).setPreferredWidth(150);
+		table.getColumnModel().getColumn(2).setPreferredWidth(200);
 		
 		getContentPane().add(new JScrollPane(table));
 		
@@ -85,9 +86,93 @@ public class Imperforate extends JFrame {
 		resultsButton.setEnabled(false);
 		buttonsPanel.add(resultsButton);
 		
-		final JButton saveButton = new JButton("Save results");
-		saveButton.setEnabled(false);
-		buttonsPanel.add(saveButton);
+		
+		
+		//////////////////////
+		//// CUSTOM HACKS ////
+		//////////////////////
+		
+		
+		final JButton printGnuplotButton = new JButton("Print gnuplot data");
+		printGnuplotButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int counter = 0;
+				for (int i = 0; i < sorter.getRowCount(); i++) {
+					if (table.getSelectionModel().isSelectedIndex(i)) {
+						System.out.println("" + counter++ + "\t" 
+								+ evalsModel.getValueAt(i,1) + "\t"
+								+ evalsModel.getValueAt(i,2));
+					}
+				}
+				System.out.println("e");
+			}
+		});
+		printGnuplotButton.setEnabled(false);
+		buttonsPanel.add(printGnuplotButton);
+		
+		
+		final Map imgMapper = new HashMap();
+		imgMapper.put("obj12", new Integer(0));
+		imgMapper.put("obj3", new Integer(12));
+		imgMapper.put("obj38", new Integer(18));
+		imgMapper.put("obj42", new Integer(24));
+		imgMapper.put("obj78", new Integer(54));
+		imgMapper.put("obj43", new Integer(30));
+		imgMapper.put("obj45", new Integer(36));
+		imgMapper.put("obj16", new Integer(6));
+		imgMapper.put("obj59", new Integer(48));
+		imgMapper.put("obj81", new Integer(60));
+		imgMapper.put("obj51", new Integer(42));
+		
+		final Map degreesMapper = new HashMap();
+		degreesMapper.put("0", new Integer(0));
+		degreesMapper.put("45", new Integer(1));
+		degreesMapper.put("90", new Integer(2));
+		degreesMapper.put("180", new Integer(3));
+		degreesMapper.put("270", new Integer(4));
+		degreesMapper.put("315", new Integer(0));
+		
+		final JButton printLatexButton = new JButton("Print latex tabular");
+		printLatexButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for (int i = 0; i < sorter.getRowCount(); i++) {
+					if (table.getSelectionModel().isSelectedIndex(i)) {
+						System.out.println();
+						System.out.println("\\begin{tabular}{m{11cm} | m{3cm} |}");
+						System.out.println("\\textbf{Eerste tien resultaten:} & \\textbf{GGR:} \\\\");
+						System.out.println("\\vspace{4pt}");
+						String[][] allUrls = evalsModel.getSortedFirstUrls(i);
+						double[] allNars = evalsModel.getSortedNars(i);
+						if (allUrls != null) {
+							for (int k = 0; k < allUrls.length; k++) {
+								for (int l = 0; l < allUrls[k].length; l++) {
+									String key1 = allUrls[k][l].substring
+										(allUrls[k][l].lastIndexOf('/')+1,allUrls[k][l].indexOf('_'));
+									int nr = ((Integer) imgMapper.get(key1)).intValue();
+									String key2 = allUrls[k][l].substring
+										(allUrls[k][l].lastIndexOf('_')+1,allUrls[k][l].indexOf('.'));
+									int offset = ((Integer) degreesMapper.get(key2)).intValue();
+									System.out.println("\\includegraphics[width=1cm]{coil/beeld-" 
+											+ (nr+offset) + ".eps}");
+								}
+								System.out.println("& {\\scriptsize " + allNars[k] + "}");
+								System.out.println("\\\\");
+							}
+						}
+						System.out.println("\\end{tabular}");
+					}
+				}
+			}
+		});
+		printLatexButton.setEnabled(false);
+		buttonsPanel.add(printLatexButton);
+		
+		
+		//////////////////////
+		//// END OF HACKS ////
+		//////////////////////
+		
+		
 		
 		getContentPane().add(buttonsPanel, BorderLayout.SOUTH);
 		
@@ -96,6 +181,8 @@ public class Imperforate extends JFrame {
 				boolean value = !table.getSelectionModel().isSelectionEmpty();
 				calculateButton.setEnabled(value);
 				resultsButton.setEnabled(value);
+				printGnuplotButton.setEnabled(value);
+				printLatexButton.setEnabled(value);
 			}
 		});
 		

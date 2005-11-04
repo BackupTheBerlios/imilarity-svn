@@ -2,6 +2,8 @@ package models;
 
 import java.awt.EventQueue;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Comparator;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -15,77 +17,255 @@ public class EvaluationsModel extends AbstractTableModel {
 	private static final long serialVersionUID = 2285465758067991988L;
 
 	private static final ImageMeasure[] MEASURES = new ImageMeasure[] {
-			new FuzzyImageMeasure(new M1a()),
-			new FuzzyImageMeasure(new M1b()),
-			new FuzzyImageMeasure(new M1c()),
-			new FuzzyImageMeasure(new M2()),
-			new FuzzyImageMeasure(new M3()),
-			new FuzzyImageMeasure(new M5()),
-			new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M5())),
-			new FuzzyImageMeasure(new M6()),
-			new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M6())),
-			new FuzzyImageMeasure(new M7()),
-			new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M7())),
-			new FuzzyImageMeasure(new M8()),
-			new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M8())),
-			new FuzzyImageMeasure(new M9()),
-			new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M9())),
-			new FuzzyImageMeasure(new M10()),
-			new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M10())),
-			new FuzzyImageMeasure(new M11()),
-			new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M11())),
-			new FuzzyImageMeasure(new M12()),
-			new FuzzyImageMeasure(new M13()),
-			new FuzzyImageMeasure(new MI3()),
-			new FuzzyImageMeasure(new MI3c()),
+		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M1a()))),
+		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M1b()))),
+		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M1c()))),
+		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M2()))),
+		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M3()))),
+		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M5()))),
+		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M5())))),
+		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M6()))),
+		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M6())))),
+		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M7()))),
+		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M7())))),
+		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M8()))),
+		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M8())))),
+		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M9()))),
+		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M9())))),
+		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M10()))),
+		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M10())))),
+		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M11()))),
+		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M11())))),
+		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M12()))),
+		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M13()))),
+		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new MI3()))),
+		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new MI3c()))),
+		
+		new MultiresImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M1a()))),
+		new MultiresImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M1b()))),
+		new MultiresImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M1c()))),
+		new MultiresImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M2()))),
+		new MultiresImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M3()))),
+		new MultiresImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M5()))),
+		new MultiresImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M5())))),
+		new MultiresImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M6()))),
+		new MultiresImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M6())))),
+		new MultiresImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M7()))),
+		new MultiresImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M7())))),
+		new MultiresImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M8()))),
+		new MultiresImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M8())))),
+		new MultiresImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M9()))),
+		new MultiresImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M9())))),
+		new MultiresImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M10()))),
+		new MultiresImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M10())))),
+		new MultiresImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M11()))),
+		new MultiresImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M11())))),
+		new MultiresImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M12()))),
+		new MultiresImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M13()))),
+		new MultiresImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new MI3()))),
+		new MultiresImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new MI3c()))),
+		
+		new MultiresImageMeasure(new FuzzyImageMeasure(new M1a())),
+		new MultiresImageMeasure(new FuzzyImageMeasure(new M1b())),
+		new MultiresImageMeasure(new FuzzyImageMeasure(new M1c())),
+		new MultiresImageMeasure(new FuzzyImageMeasure(new M2())),
+		new MultiresImageMeasure(new FuzzyImageMeasure(new M3())),
+		new MultiresImageMeasure(new FuzzyImageMeasure(new M5())),
+		new MultiresImageMeasure(new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M5()))),
+		new MultiresImageMeasure(new FuzzyImageMeasure(new M6())),
+		new MultiresImageMeasure(new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M6()))),
+		new MultiresImageMeasure(new FuzzyImageMeasure(new M7())),
+		new MultiresImageMeasure(new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M7()))),
+		new MultiresImageMeasure(new FuzzyImageMeasure(new M8())),
+		new MultiresImageMeasure(new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M8()))),
+		new MultiresImageMeasure(new FuzzyImageMeasure(new M9())),
+		new MultiresImageMeasure(new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M9()))),
+		new MultiresImageMeasure(new FuzzyImageMeasure(new M10())),
+		new MultiresImageMeasure(new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M10()))),
+		new MultiresImageMeasure(new FuzzyImageMeasure(new M11())),
+		new MultiresImageMeasure(new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M11()))),
+		new MultiresImageMeasure(new FuzzyImageMeasure(new M12())),
+		new MultiresImageMeasure(new FuzzyImageMeasure(new M13())),
+		new MultiresImageMeasure(new FuzzyImageMeasure(new MI3())),
+		new MultiresImageMeasure(new FuzzyImageMeasure(new MI3c())),
 			
-			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M1a())),
-			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M1b())),
-			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M1c())),
-			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M2())),
-			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M3())),
-			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M5())),
-			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M6())),
-			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M7())),
-			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M8())),
-			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M9())),
-			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M10())),
-			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M11())),
-			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M12())),
-			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M13())),
-			new HueImageMeasure(new FuzzyHistogramImageMeasure(new MI3())),
-			new HueImageMeasure(new FuzzyHistogramImageMeasure(new MI3c())),
+			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M1a(), 130)),
+			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M1b(), 130)),
+			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M1c(), 130)),
+			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M2(), 130)),
+			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M3(), 130)),
+			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M5(), 130)),
+			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M6(), 130)),
+			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M7(), 130)),
+			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M8(), 130)),
+			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M9(), 130)),
+			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M10(), 130)),
+			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M11(), 130)),
+			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M12(), 130)),
+			new HueImageMeasure(new FuzzyHistogramImageMeasure(new M13(), 130)),
+			new HueImageMeasure(new FuzzyHistogramImageMeasure(new MI3(), 130)),
+			new HueImageMeasure(new FuzzyHistogramImageMeasure(new MI3c(), 130)),
+			
+			new HsvImageMeasure(new FuzzyHistogramImageMeasure(new M1a(), new int[] {16, 4, 4})),
+			new HsvImageMeasure(new FuzzyHistogramImageMeasure(new M1b(), new int[] {16, 4, 4})),
+			new HsvImageMeasure(new FuzzyHistogramImageMeasure(new M1c(), new int[] {16, 4, 4})),
+			new HsvImageMeasure(new FuzzyHistogramImageMeasure(new M2(), new int[] {16, 4, 4})),
+			new HsvImageMeasure(new FuzzyHistogramImageMeasure(new M3(), new int[] {16, 4, 4})),
+			new HsvImageMeasure(new FuzzyHistogramImageMeasure(new M5(), new int[] {16, 4, 4})),
+			new HsvImageMeasure(new FuzzyHistogramImageMeasure(new M6(), new int[] {16, 4, 4})),
+			new HsvImageMeasure(new FuzzyHistogramImageMeasure(new M7(), new int[] {16, 4, 4})),
+			new HsvImageMeasure(new FuzzyHistogramImageMeasure(new M8(), new int[] {16, 4, 4})),
+			new HsvImageMeasure(new FuzzyHistogramImageMeasure(new M9(), new int[] {16, 4, 4})),
+			new HsvImageMeasure(new FuzzyHistogramImageMeasure(new M10(), new int[] {16, 4, 4})),
+			new HsvImageMeasure(new FuzzyHistogramImageMeasure(new M11(), new int[] {16, 4, 4})),
+			new HsvImageMeasure(new FuzzyHistogramImageMeasure(new M12(), new int[] {16, 4, 4})),
+			new HsvImageMeasure(new FuzzyHistogramImageMeasure(new M13(), new int[] {16, 4, 4})),
+			new HsvImageMeasure(new FuzzyHistogramImageMeasure(new MI3(), new int[] {16, 4, 4})),
+			new HsvImageMeasure(new FuzzyHistogramImageMeasure(new MI3c(), new int[] {16, 4, 4})),
+			
+			new ParameterizedImageMeasure(new FuzzyHistogramImageMeasure(new M1a(), 500)),
+			new ParameterizedImageMeasure(new FuzzyHistogramImageMeasure(new M1b(), 500)),
+			new ParameterizedImageMeasure(new FuzzyHistogramImageMeasure(new M1c(), 128)),
+			new ParameterizedImageMeasure(new FuzzyHistogramImageMeasure(new M1c(),128)),
+			new ParameterizedImageMeasure(new FuzzyHistogramImageMeasure(new M2(), 500)),
+			new ParameterizedImageMeasure(new FuzzyHistogramImageMeasure(new M3(), 500)),
+			new ParameterizedImageMeasure(new FuzzyHistogramImageMeasure(new M5(), 500)),
+			new ParameterizedImageMeasure(new FuzzyHistogramImageMeasure(new M6(), 500)),
+			new ParameterizedImageMeasure(new FuzzyHistogramImageMeasure(new M7(), 500)),
+			new ParameterizedImageMeasure(new FuzzyHistogramImageMeasure(new M8(), 500)),
+			new ParameterizedImageMeasure(new FuzzyHistogramImageMeasure(new M9(), 500)),
+			new ParameterizedImageMeasure(new FuzzyHistogramImageMeasure(new M10(), 500)),
+			new ParameterizedImageMeasure(new FuzzyHistogramImageMeasure(new M11(), 500)),
+			new ParameterizedImageMeasure(new FuzzyHistogramImageMeasure(new M12(), 500)),
+			new ParameterizedImageMeasure(new FuzzyHistogramImageMeasure(new M13(), 500)),
+			new ParameterizedImageMeasure(new FuzzyHistogramImageMeasure(new MI3(), 128)),
+			new ParameterizedImageMeasure(new FuzzyHistogramImageMeasure(new MI3c(), 500)),
+			
+			new OpponentImageMeasure(new FuzzyHistogramImageMeasure(new M1a(), new int[] {8, 8, 4})),
+			new OpponentImageMeasure(new FuzzyHistogramImageMeasure(new M1b(), new int[] {8, 8, 4})),
+			new OpponentImageMeasure(new FuzzyHistogramImageMeasure(new M1c(), new int[] {8, 8, 4})),
+			new OpponentImageMeasure(new FuzzyHistogramImageMeasure(new M2(), new int[] {8, 8, 4})),
+			new OpponentImageMeasure(new FuzzyHistogramImageMeasure(new M3(), new int[] {8, 8, 4})),
+			new OpponentImageMeasure(new FuzzyHistogramImageMeasure(new M5(), new int[] {8, 8, 4})),
+			new OpponentImageMeasure(new FuzzyHistogramImageMeasure(new M6(), new int[] {8, 8, 4})),
+			new OpponentImageMeasure(new FuzzyHistogramImageMeasure(new M7(), new int[] {8, 8, 4})),
+			new OpponentImageMeasure(new FuzzyHistogramImageMeasure(new M8(), new int[] {8, 8, 4})),
+			new OpponentImageMeasure(new FuzzyHistogramImageMeasure(new M9(), new int[] {8, 8, 4})),
+			new OpponentImageMeasure(new FuzzyHistogramImageMeasure(new M10(), new int[] {8, 8, 4})),
+			new OpponentImageMeasure(new FuzzyHistogramImageMeasure(new M11(), new int[] {8, 8, 4})),
+			new OpponentImageMeasure(new FuzzyHistogramImageMeasure(new M12(), new int[] {8, 8, 4})),
+			new OpponentImageMeasure(new FuzzyHistogramImageMeasure(new M13(), new int[] {8, 8, 4})),
+			new OpponentImageMeasure(new FuzzyHistogramImageMeasure(new MI3(), new int[] {8, 8, 4})),
+			new OpponentImageMeasure(new FuzzyHistogramImageMeasure(new MI3c(), new int[] {8, 8, 4})),
+			
+			new QuantizedImageMeasure(
+					new OpponentImageMeasure(new FuzzyHistogramImageMeasure(new MI3(), new int[] {8, 8, 4})),
+					new Wu(256)
+				),
+			
+			new XyzImageMeasure(new FuzzyHistogramImageMeasure(new M1a(), new int[] {8, 4, 8})),
+			new XyzImageMeasure(new FuzzyHistogramImageMeasure(new M1b(), new int[] {8, 4, 8})),
+			new XyzImageMeasure(new FuzzyHistogramImageMeasure(new M1c(), new int[] {8, 4, 8})),
+			new XyzImageMeasure(new FuzzyHistogramImageMeasure(new M2(), new int[] {8, 4, 8})),
+			new XyzImageMeasure(new FuzzyHistogramImageMeasure(new M3(), new int[] {8, 4, 8})),
+			new XyzImageMeasure(new FuzzyHistogramImageMeasure(new M5(), new int[] {8, 4, 8})),
+			new XyzImageMeasure(new FuzzyHistogramImageMeasure(new M6(), new int[] {8, 4, 8})),
+			new XyzImageMeasure(new FuzzyHistogramImageMeasure(new M7(), new int[] {8, 4, 8})),
+			new XyzImageMeasure(new FuzzyHistogramImageMeasure(new M8(), new int[] {8, 4, 8})),
+			new XyzImageMeasure(new FuzzyHistogramImageMeasure(new M9(), new int[] {8, 4, 8})),
+			new XyzImageMeasure(new FuzzyHistogramImageMeasure(new M10(), new int[] {8, 4, 8})),
+			new XyzImageMeasure(new FuzzyHistogramImageMeasure(new M11(), new int[] {8, 4, 8})),
+			new XyzImageMeasure(new FuzzyHistogramImageMeasure(new M12(), new int[] {8, 4, 8})),
+			new XyzImageMeasure(new FuzzyHistogramImageMeasure(new M13(), new int[] {8, 4, 8})),
+			new XyzImageMeasure(new FuzzyHistogramImageMeasure(new MI3(), new int[] {8, 4, 8})),
+			new XyzImageMeasure(new FuzzyHistogramImageMeasure(new MI3c(), new int[] {8, 4, 8})),
+			
+			new YxyImageMeasure(new FuzzyHistogramImageMeasure(new M1a(), new int[] {16, 4, 4})),
+			new YxyImageMeasure(new FuzzyHistogramImageMeasure(new M1b(), new int[] {16, 4, 4})),
+			new YxyImageMeasure(new FuzzyHistogramImageMeasure(new M1c(), new int[] {16, 4, 4})),
+			new YxyImageMeasure(new FuzzyHistogramImageMeasure(new M2(), new int[] {16, 4, 4})),
+			new YxyImageMeasure(new FuzzyHistogramImageMeasure(new M3(), new int[] {16, 4, 4})),
+			new YxyImageMeasure(new FuzzyHistogramImageMeasure(new M5(), new int[] {16, 4, 4})),
+			new YxyImageMeasure(new FuzzyHistogramImageMeasure(new M6(), new int[] {16, 4, 4})),
+			new YxyImageMeasure(new FuzzyHistogramImageMeasure(new M7(), new int[] {16, 4, 4})),
+			new YxyImageMeasure(new FuzzyHistogramImageMeasure(new M8(), new int[] {16, 4, 4})),
+			new YxyImageMeasure(new FuzzyHistogramImageMeasure(new M9(), new int[] {16, 4, 4})),
+			new YxyImageMeasure(new FuzzyHistogramImageMeasure(new M10(), new int[] {16, 4, 4})),
+			new YxyImageMeasure(new FuzzyHistogramImageMeasure(new M11(), new int[] {16, 4, 4})),
+			new YxyImageMeasure(new FuzzyHistogramImageMeasure(new M12(), new int[] {16, 4, 4})),
+			new YxyImageMeasure(new FuzzyHistogramImageMeasure(new M13(), new int[] {16, 4, 4})),
+			new YxyImageMeasure(new FuzzyHistogramImageMeasure(new MI3(), new int[] {16, 4, 4})),
+			new YxyImageMeasure(new FuzzyHistogramImageMeasure(new MI3c(), new int[] {16, 4, 4})),
+			
+			new HmmdImageMeasure(new FuzzyHistogramImageMeasure(new M1a(), new int[] {16, 4, 4})),
+			new HmmdImageMeasure(new FuzzyHistogramImageMeasure(new M1b(), new int[] {16, 4, 4})),
+			new HmmdImageMeasure(new FuzzyHistogramImageMeasure(new M1c(), new int[] {16, 4, 4})),
+			new HmmdImageMeasure(new FuzzyHistogramImageMeasure(new M2(), new int[] {16, 4, 4})),
+			new HmmdImageMeasure(new FuzzyHistogramImageMeasure(new M3(), new int[] {16, 4, 4})),
+			new HmmdImageMeasure(new FuzzyHistogramImageMeasure(new M5(), new int[] {16, 4, 4})),
+			new HmmdImageMeasure(new FuzzyHistogramImageMeasure(new M6(), new int[] {16, 4, 4})),
+			new HmmdImageMeasure(new FuzzyHistogramImageMeasure(new M7(), new int[] {16, 4, 4})),
+			new HmmdImageMeasure(new FuzzyHistogramImageMeasure(new M8(), new int[] {16, 4, 4})),
+			new HmmdImageMeasure(new FuzzyHistogramImageMeasure(new M9(), new int[] {16, 4, 4})),
+			new HmmdImageMeasure(new FuzzyHistogramImageMeasure(new M10(), new int[] {16, 4, 4})),
+			new HmmdImageMeasure(new FuzzyHistogramImageMeasure(new M11(), new int[] {16, 4, 4})),
+			new HmmdImageMeasure(new FuzzyHistogramImageMeasure(new M12(), new int[] {16, 4, 4})),
+			new HmmdImageMeasure(new FuzzyHistogramImageMeasure(new M13(), new int[] {16, 4, 4})),
+			new HmmdImageMeasure(new FuzzyHistogramImageMeasure(new MI3(), new int[] {16, 4, 4})),
+			new HmmdImageMeasure(new FuzzyHistogramImageMeasure(new MI3c(), new int[] {16, 4, 4})),
+			
+			new FuzzyQuantizedImageMeasure(new PM1a(), new NeuQuant(30,16), 4),
+			new FuzzyQuantizedImageMeasure(new M1a(), new NeuQuant(30,16), 4),
+			new FuzzyQuantizedImageMeasure(new M1b(), new NeuQuant(30,16), 4),
+			new FuzzyQuantizedImageMeasure(new M1c(), new NeuQuant(30,16), 4),
+			new FuzzyQuantizedImageMeasure(new M2(), new NeuQuant(30,16), 4),
+			new FuzzyQuantizedImageMeasure(new M3(), new NeuQuant(30,16), 4),
+			new FuzzyQuantizedImageMeasure(new M5(), new NeuQuant(30,16), 4),
+			new FuzzyQuantizedImageMeasure(new M6(), new NeuQuant(30,16), 4),
+			new FuzzyQuantizedImageMeasure(new M7(), new NeuQuant(30,16), 4),
+			new FuzzyQuantizedImageMeasure(new M8(), new NeuQuant(30,16), 4),
+			new FuzzyQuantizedImageMeasure(new M9(), new NeuQuant(30,16), 4),
+			new FuzzyQuantizedImageMeasure(new M10(), new NeuQuant(30,16), 4),
+			new FuzzyQuantizedImageMeasure(new M11(), new NeuQuant(30,16), 4),
+			new FuzzyQuantizedImageMeasure(new M12(), new NeuQuant(30,16), 4),
+			new FuzzyQuantizedImageMeasure(new M13(), new NeuQuant(30,16), 4),
+			new FuzzyQuantizedImageMeasure(new MI3(), new NeuQuant(30,16), 4),
+			new FuzzyQuantizedImageMeasure(new MI3c(), new NeuQuant(30,16), 4),
+			
+			new FuzzyQuantizedImageMeasure(new PM1a(), new Wu(8), 4),
+			new FuzzyQuantizedImageMeasure(new M1a(), new Wu(8), 4),
+			new FuzzyQuantizedImageMeasure(new M1b(), new Wu(8), 4),
+			new FuzzyQuantizedImageMeasure(new M1c(), new Wu(8), 4),
+			new FuzzyQuantizedImageMeasure(new M2(), new Wu(8), 4),
+			new FuzzyQuantizedImageMeasure(new M3(), new Wu(128)),
+			new FuzzyQuantizedImageMeasure(new M3(), new Wu(128), 32),
+			new FuzzyQuantizedImageMeasure(new M5(), new Wu(8), 4),
+			new FuzzyQuantizedImageMeasure(new M6(), new Wu(8), 4),
+			new FuzzyQuantizedImageMeasure(new M7(), new Wu(8), 4),
+			new FuzzyQuantizedImageMeasure(new M8(), new Wu(8), 4),
+			new FuzzyQuantizedImageMeasure(new M9(), new Wu(8), 4),
+			new FuzzyQuantizedImageMeasure(new M10(), new Wu(8), 4),
+			new FuzzyQuantizedImageMeasure(new M11(), new Wu(8), 4),
+			new FuzzyQuantizedImageMeasure(new M12(), new Wu(8), 4),
+			new FuzzyQuantizedImageMeasure(new M13(), new Wu(8), 4),
+			new FuzzyQuantizedImageMeasure(new MI3c(), new Wu(8), 4),
 			
 			new ComponentsImageMeasure(new FuzzyImageMeasure(new M1a())),
 			new FuzzyQuantizedImageMeasure(new PM1a(), new NeuQuant(30,6)),
 			new FuzzyQuantizedImageMeasure(new PM1a(), new Wu(10)),
+			
 			new ProductImageMeasure(new FuzzyImageMeasure(new M1c()), 
-					new FuzzyQuantizedImageMeasure(new PM1a(), new Wu(8)))
-	};
-	
-	private static final Aggregator[] AGGREGATORS = new Aggregator[] {
-			new ArithmeticMean()
-	};
-	
-	private static ImageData[] EXAMPLES;
-	static {
-		try {
-			EXAMPLES = new ImageData[] { 
-					ImageData.loadFile("/home/klbostee/Images/coil3/obj3__0.png"),
-					ImageData.loadFile("/home/klbostee/Images/coil3/obj12__0.png"),
-					ImageData.loadFile("/home/klbostee/Images/coil3/obj16__0.png"),
-					ImageData.loadFile("/home/klbostee/Images/coil3/obj38__0.png"),
-					ImageData.loadFile("/home/klbostee/Images/coil3/obj42__0.png"),
-					ImageData.loadFile("/home/klbostee/Images/coil3/obj43__0.png"),
-					ImageData.loadFile("/home/klbostee/Images/coil3/obj45__0.png"),
-					ImageData.loadFile("/home/klbostee/Images/coil3/obj51__0.png"),
-					ImageData.loadFile("/home/klbostee/Images/coil3/obj59__0.png"),
-					ImageData.loadFile("/home/klbostee/Images/coil3/obj78__0.png"),
-					ImageData.loadFile("/home/klbostee/Images/coil3/obj81__0.png")
-			};
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+					new OpponentImageMeasure(new FuzzyHistogramImageMeasure(new MI3(), 15))),
+			new ProductImageMeasure(
+					new HueImageMeasure(new FuzzyHistogramImageMeasure(new M1c(), 130)),
+					new OpponentImageMeasure(new FuzzyHistogramImageMeasure(new MI3(), 15))),
+			new ProductImageMeasure(
+					new ParameterizedImageMeasure(new FuzzyHistogramImageMeasure(new MI3(), 500)),
+					new OpponentImageMeasure(new FuzzyHistogramImageMeasure(new MI3(), 15))),
+			new ProductImageMeasure(
+					new GrayscaledImageMeasure(new FuzzyHistogramImageMeasure(new MI3(), 256)),
+					new OpponentImageMeasure(new FuzzyHistogramImageMeasure(new MI3(), 15))),
+			
 	};
 	
 	private ImageCollection collection = new CoilImageCollection();
@@ -93,23 +273,20 @@ public class EvaluationsModel extends AbstractTableModel {
 	
 	public EvaluationsModel() {
 		super();
-		evaluations = new Evaluation[MEASURES.length*AGGREGATORS.length];
+		evaluations = new Evaluation[MEASURES.length];
+		ImageData[] examples = collection.getExamples();
 		for (int i = 0; i < MEASURES.length; i++) {
-			for (int j = 0; j < AGGREGATORS.length; j++) {
-				int index = j*AGGREGATORS.length+i;
-				evaluations[index] = new Evaluation();
-				evaluations[index].imilarities = new EvalImilarity[EXAMPLES.length]; 
-				for (int k = 0; k < EXAMPLES.length; k++) {
-					evaluations[index].imilarities[k] = new EvalImilarity(collection);
-					evaluations[index].imilarities[k].setMeasure(MEASURES[i]);
-					evaluations[index].imilarities[k].setAggregator(AGGREGATORS[j]);
-					evaluations[index].imilarities[k].addExample(EXAMPLES[k]);
-				}
-				evaluations[index].measureDescription = MEASURES[i].toString();
-				evaluations[index].aggregatorDescription = AGGREGATORS[j].toString();
-				evaluations[index].cpuTime = 0;
-				evaluations[index].gnar = 1.0;
+			evaluations[i] = new Evaluation();
+			evaluations[i].imilarities = new EvalImilarity[examples.length];
+			for (int j = 0; j < examples.length; j++) {
+				evaluations[i].imilarities[j] = new EvalImilarity(collection);
+				evaluations[i].imilarities[j].setMeasure(MEASURES[i]);
+				evaluations[i].imilarities[j].setAggregator(new ArithmeticMean());
+				evaluations[i].imilarities[j].addExample(examples[j]);
 			}
+			evaluations[i].description = MEASURES[i].toString();
+			evaluations[i].cpuTime = 0;
+			evaluations[i].gnar = 1.0;
 		}
 	}
 	
@@ -118,11 +295,11 @@ public class EvaluationsModel extends AbstractTableModel {
 	}
 
 	public int getColumnCount() {
-		return 4;
+		return 3;
 	}
 	
 	private static final String[] COLUMN_NAMES = {
-		"Measure", "Aggregator", "CPU Time", "GNAR"
+		"Measure", "CPU Time", "GNAR"
 	};
 	
 	public String getColumnName(int columnIndex) {
@@ -131,10 +308,8 @@ public class EvaluationsModel extends AbstractTableModel {
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		if (columnIndex == 0)
-			return evaluations[rowIndex].measureDescription;
+			return evaluations[rowIndex].description;
 		else if (columnIndex == 1)
-			return evaluations[rowIndex].aggregatorDescription;
-		else if (columnIndex == 2)
 			return new Long(evaluations[rowIndex].cpuTime);
 		else
 			return new Double(evaluations[rowIndex].gnar);
@@ -156,21 +331,20 @@ public class EvaluationsModel extends AbstractTableModel {
 		buf.append("</head>");
 		buf.append("<body>");
 		
-		buf.append("<h2>Measure: " + evaluations[rowIndex].measureDescription 
-				+", Aggregator: " + evaluations[rowIndex].aggregatorDescription + "</h2>");
+		buf.append("<h2>" + evaluations[rowIndex].description + "</h2>");
 		
 		EvalImilarity[] imilarities = evaluations[rowIndex].imilarities;
 		for (int i = 0; i < imilarities.length; i++) {
 			buf.append("<br/> <br/> ");
 			
-			buf.append("<h3>Example image</h3>");
-			buf.append("<table align=\"center\">");
-			buf.append("<tr>");
-			buf.append("<td><img src=\"" + EXAMPLES[i].getUrl() + "\"</td>");
-			buf.append("</tr>");
-			buf.append("</table>");
+			//buf.append("<h3>Example image</h3>");
+			//buf.append("<table align=\"center\">");
+			//buf.append("<tr>");
+			//buf.append("<td><img src=\"" + EXAMPLES[i].getUrl() + "\"</td>");
+			//buf.append("</tr>");
+			//buf.append("</table>");
 			
-			buf.append("<h3>Results (NAR = " + imilarities[i].getNar() + ")</h3>");
+			buf.append("<h3>Query " + (i+1) + " (NAR = " + imilarities[i].getNar() + ")</h3>");
 			
 			buf.append("<table align=\"center\">");
 			buf.append("<tr>");
@@ -198,10 +372,29 @@ public class EvaluationsModel extends AbstractTableModel {
 		return buf.toString();
 	}
 	
+	public String[][] getSortedFirstUrls(int rowIndex) {
+		if (!evaluations[rowIndex].calculated)
+			return null;
+		EvalImilarity[] imilarities = createSortedImilaritiesArray(rowIndex);
+		String[][] result = new String[imilarities.length][];
+		for (int i = 0; i < imilarities.length; i++)
+			result[i] = imilarities[i].getFirstUrls();
+		return result;
+	}
+	
+	public double[] getSortedNars(int rowIndex) {
+		if (!evaluations[rowIndex].calculated)
+			return null;
+		EvalImilarity[] imilarities = createSortedImilaritiesArray(rowIndex);
+		double[] result = new double[imilarities.length];
+		for (int i = 0; i < imilarities.length; i++)
+			result[i] = imilarities[i].getNar();
+		return result;
+	}
+	
+	
 	public void calculate(final int rowIndex) {
-		System.out.println("calculating: '" 
-				+ evaluations[rowIndex].measureDescription + "' with '" 
-				+ evaluations[rowIndex].aggregatorDescription + "'");
+		System.out.println("calculating: '" + evaluations[rowIndex].description + "'");
 		new Thread(new Runnable() {
 			public void run() {
 				try {
@@ -238,15 +431,28 @@ public class EvaluationsModel extends AbstractTableModel {
 				}
 			});
 		}
-		evaluation.gnar = sum / EXAMPLES.length;
+		evaluation.gnar = sum / collection.getExamples().length;
 		evaluation.calculated = true;
 	}
 	
 	
+	private EvalImilarity[] createSortedImilaritiesArray(int rowIndex) {
+		EvalImilarity[] result = new EvalImilarity[evaluations[rowIndex].imilarities.length];
+		for (int i = 0; i < result.length; i++)
+			result[i] = evaluations[rowIndex].imilarities[i];
+		Arrays.sort(result, new Comparator() {
+			public int compare(Object arg0, Object arg1) {
+				EvalImilarity im1 = (EvalImilarity) arg0;
+				EvalImilarity im2 = (EvalImilarity) arg1;
+				return (new Double(im1.getNar())).compareTo(new Double(im2.getNar()));
+			}
+		});
+		return result;
+	}
+	
 	private static class Evaluation {
 		public EvalImilarity[] imilarities;
-		public String measureDescription;
-		public String aggregatorDescription;
+		public String description;
 		public long cpuTime = 0;
 		public double gnar = 1.0;
 		public boolean calculated = false;

@@ -9,8 +9,32 @@ import de.berlios.imilarity.providors.Providor;
 public class CoilImageCollection implements ImageCollection {
 
 	// TODO: dir verhuizen
-	private Providor providor = new DirProvidor("/home/klbostee/Images/coil3"); 
+	private static final String DIR = "/home/klbostee/Images/coil5";
 
+	private static ImageData[] EXAMPLES;
+	static {
+		try {
+			EXAMPLES = new ImageData[] { 
+					ImageData.loadFile(DIR + "/obj3__0.png"),
+					ImageData.loadFile(DIR + "/obj12__0.png"),
+					ImageData.loadFile(DIR + "/obj16__0.png"),
+					ImageData.loadFile(DIR + "/obj38__0.png"),
+					ImageData.loadFile(DIR + "/obj42__0.png"),
+					ImageData.loadFile(DIR + "/obj43__0.png"),
+					ImageData.loadFile(DIR + "/obj45__0.png"),
+					ImageData.loadFile(DIR + "/obj51__0.png"),
+					ImageData.loadFile(DIR + "/obj59__0.png"),
+					ImageData.loadFile(DIR + "/obj78__0.png"),
+					ImageData.loadFile(DIR + "/obj81__0.png")
+			};
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	};
+	
+	
+	private Providor providor = new DirProvidor(DIR); 
+	
 	protected ImageData[][] pages;
 	protected boolean[] pageLoaded;
 	
@@ -21,13 +45,18 @@ public class CoilImageCollection implements ImageCollection {
 		pageLoaded = new boolean[getPageCount()];
 	}
 	
+	
+	public ImageData[] getExamples() {
+		return EXAMPLES;
+	}
+	
 	public boolean areRelevant(ImageData im1, ImageData im2) {
 		if (im1 == null || im2 == null) 
 			throw new IllegalArgumentException("arguments must be != null");
 		String url1 = im1.getUrl().toString();
 		String url2 = im2.getUrl().toString();
-		String str1 = url1.substring(url1.lastIndexOf('/'),url1.lastIndexOf('_'));
-		String str2 = url2.substring(url2.lastIndexOf('/'),url2.lastIndexOf('_'));
+		String str1 = url1.substring(url1.lastIndexOf('/'),url1.indexOf('_'));
+		String str2 = url2.substring(url2.lastIndexOf('/'),url2.indexOf('_'));
 		return str1.equals(str2);
 	}
 
@@ -48,7 +77,7 @@ public class CoilImageCollection implements ImageCollection {
 		// Als deze methode in twee aparte draden uitgevoerd wordt dan kan het 
 		// voorkomen dat 'pages[x]' nog gelijk is aan 'null', terwijl de inhoud
 		// van 'pages[x]' wel al berekend wordt. In dat geval moet er gewacht worden...
-		else while (pages[page-1] == null);
+		else while (pages[page-1] == null) Thread.yield();
 		return pages[page-1];
 	}
 
