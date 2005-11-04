@@ -3,9 +3,14 @@ set data style boxes
 set size 1.0,0.7
 set grid
 
-set yrange [0:3]
-set logscale y2 2
+set yrange [0.14:1]
+set y2range [8192:2000000]
+set log y2 2
+set format y2 "2^{%L}"
 set y2tics
+
+set ylabel "GGGR" 1,0
+set y2label "rekentijd in ms" -2,0
 
 set xrange [0:23]
 set noxtics

@@ -17,6 +17,8 @@ vaagsimilariteitsmaat.
 
 \section{Evaluatie van performantie}
 
+\subsection{Globale genormaliseerde gemiddelde rang (GGGR)}
+
 Om uit meerdere similariteitsmaten de meest geschikte te kiezen, 
 moeten we een manier vinden om een dergelijke maat objectief te beoordelen. 
 Dit zullen we doen door elke
@@ -24,17 +26,9 @@ maat, voor een bepaalde voorbeeld-afbeelding, toe te passen op een eenzelfde col
 van afbeeldingen. Vervolgens zullen we de rangschikking die we zo bekomen
 beoordelen met behulp van een performantiemaat.
 
-
 \begin{figure}[p]
 \begin{center}
-%\subfigure[]{
-%\includegraphics[width=10cm]{images/tbir.eps}
-%\label{fig:tbir}
-%}
-%\subfigure[]{
-%\includegraphics[width=10cm]{images/cbir.eps}
-%\label{fig:cbir}
-%}
+
 \begin{tabular}{cccccc}
 
 \includegraphics[width=2cm]{coil/beeld-0.eps} &
@@ -158,6 +152,16 @@ figuur~\ref{fig:testcollectie} als voorbeeld-afbeeldingen. De waarde die we zo b
 \emph{globale genormaliseerde gemiddelde rang} (GGGR). Het is deze waarde die we zullen gebruiken
 om de performantie van een similariteitsmaat te evalueren. We zullen dus met andere woorden op
 zoek gaan naar similariteitsmaten waarvan de GGGR zo klein mogelijk is.
+
+\subsection{Rekentijd}
+
+We zullen voor elke similariteitsmaat die we construeren ook meten hoelang het duurt om
+de rangschikkingen, die nodig zijn om de GGGR te bepalen, te berekenen. Aan deze 
+rekentijd hechten we echter niet zoveel belang als aan de GGGR, vermits het in onze
+praktische implementatie niet absoluut noodzakelijk is dat de similariteitsmaten zo weinig
+mogelijk rekentijd vereisen. De collecties van afbeeldingen waarop ze daar toegepast worden
+zijn immers beperkt in grootte. Bovendien worden de berekeningen aan de kant van de client
+uitgevoerd, waardoor er geen gevaar is voor overbelasting van de server.
 
 
 \section{Pixel-gebaseerd}
@@ -320,17 +324,17 @@ geordende beeldonderdelen stellen de similariteiten in $S$ voor.
 
 \subsection{Experimentele observaties}
 
-In figuur~\ref{fig:pixelgeb_gggrs} vergelijken we enkele pixel-gebaseerde similariteitsmaten.
+\begin{figure}[tbp]
+\begin{center}
+\includegraphics[width=\textwidth]{plots/pixelgeb_gggrs_en_cputimes_filled.eps}
+\caption{\label{fig:pixelgeb_gggrs_en_cputimes}De GGGR-waarde en de gebruikte rekentijd in ms voor elk van de resolutie-onafhankelijke pixel-gebaseerde similariteitsmaten.}
+\end{center}
+\end{figure}
+
+In figuur~\ref{fig:pixelgeb_gggrs_en_cputimes} vergelijken we enkele pixel-gebaseerde similariteitsmaten.
 Hoewel de afbeeldingen in onze testcollectie allemaal dezelfde resolutie hebben, beperken we
 ons toch tot de resolutie-onafhankelijke maten. Bij de beelden die we in de praktijk gaan 
 vergelijken zullen de resoluties immers vrijwel altijd verschillend zijn.
-
-\begin{figure}[tbp]
-\begin{center}
-\includegraphics[width=\textwidth]{plots/pixelgeb_gggrs_filled.eps}
-\caption{\label{fig:pixelgeb_gggrs}GGGR-waarden voor de resolutie-onafhankelijke pixel-gebaseerde similariteitsmaten.}
-\end{center}
-\end{figure}
 
 We beschouwen de drie bovenstaande manieren om de vaagsimilariteitsmaten toe te passen op een 
 onderdeel van een kleurbeeld:
@@ -339,8 +343,155 @@ toepassen op de afzonderlijke kleurcomponenten en
 de tralie-gebaseerde aanpak.
 De laatste manier in combinatie met $M_{1c}$ levert de beste similariteitsmaat op. We vinden
 voor deze similariteitsmaat de GGGR-waarde 0.15454545454545454. Dit is echter nog steeds een
-vrij hoge waarde. Blijkbaar is de pixel-gebaseerde benadering niet de meest geschikte
-voor image retrieval. 
+vrij hoge waarde. In figuur~\ref{fig:results_beste_pixelgeb}
+zien we dan ook dat de resultaten van deze maat niet zo overtuigend zijn. Blijkbaar 
+is de pixel-gebaseerde benadering niet de meest geschikte voor image retrieval. 
+
+\begin{figure}[tbp]
+\begin{center}
+\begin{tabular}{m{11cm} | m{3cm} |}
+\textbf{Eerste tien resultaten:} & \textbf{GGR:} \\
+\vspace{4pt}
+\includegraphics[width=1cm]{coil/beeld-18.eps}
+\includegraphics[width=1cm]{coil/beeld-20.eps}
+\includegraphics[width=1cm]{coil/beeld-22.eps}
+\includegraphics[width=1cm]{coil/beeld-19.eps}
+\includegraphics[width=1cm]{coil/beeld-18.eps}
+\includegraphics[width=1cm]{coil/beeld-21.eps}
+\includegraphics[width=1cm]{coil/beeld-1.eps}
+\includegraphics[width=1cm]{coil/beeld-3.eps}
+\includegraphics[width=1cm]{coil/beeld-36.eps}
+\includegraphics[width=1cm]{coil/beeld-43.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-54.eps}
+\includegraphics[width=1cm]{coil/beeld-58.eps}
+\includegraphics[width=1cm]{coil/beeld-55.eps}
+\includegraphics[width=1cm]{coil/beeld-57.eps}
+\includegraphics[width=1cm]{coil/beeld-56.eps}
+\includegraphics[width=1cm]{coil/beeld-63.eps}
+\includegraphics[width=1cm]{coil/beeld-54.eps}
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-33.eps}
+& {\scriptsize 0.002380952380952381}
+\\
+\includegraphics[width=1cm]{coil/beeld-24.eps}
+\includegraphics[width=1cm]{coil/beeld-26.eps}
+\includegraphics[width=1cm]{coil/beeld-28.eps}
+\includegraphics[width=1cm]{coil/beeld-27.eps}
+\includegraphics[width=1cm]{coil/beeld-48.eps}
+\includegraphics[width=1cm]{coil/beeld-25.eps}
+\includegraphics[width=1cm]{coil/beeld-49.eps}
+\includegraphics[width=1cm]{coil/beeld-24.eps}
+\includegraphics[width=1cm]{coil/beeld-51.eps}
+\includegraphics[width=1cm]{coil/beeld-52.eps}
+& {\scriptsize 0.007142857142857143}
+\\
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-63.eps}
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+\includegraphics[width=1cm]{coil/beeld-57.eps}
+\includegraphics[width=1cm]{coil/beeld-54.eps}
+\includegraphics[width=1cm]{coil/beeld-33.eps}
+\includegraphics[width=1cm]{coil/beeld-61.eps}
+\includegraphics[width=1cm]{coil/beeld-64.eps}
+\includegraphics[width=1cm]{coil/beeld-55.eps}
+& {\scriptsize 0.04285714285714286}
+\\
+\includegraphics[width=1cm]{coil/beeld-12.eps}
+\includegraphics[width=1cm]{coil/beeld-12.eps}
+\includegraphics[width=1cm]{coil/beeld-14.eps}
+\includegraphics[width=1cm]{coil/beeld-57.eps}
+\includegraphics[width=1cm]{coil/beeld-16.eps}
+\includegraphics[width=1cm]{coil/beeld-21.eps}
+\includegraphics[width=1cm]{coil/beeld-54.eps}
+\includegraphics[width=1cm]{coil/beeld-18.eps}
+\includegraphics[width=1cm]{coil/beeld-3.eps}
+\includegraphics[width=1cm]{coil/beeld-0.eps}
+& {\scriptsize 0.05238095238095238}
+\\
+\includegraphics[width=1cm]{coil/beeld-48.eps}
+\includegraphics[width=1cm]{coil/beeld-28.eps}
+\includegraphics[width=1cm]{coil/beeld-27.eps}
+\includegraphics[width=1cm]{coil/beeld-24.eps}
+\includegraphics[width=1cm]{coil/beeld-24.eps}
+\includegraphics[width=1cm]{coil/beeld-26.eps}
+\includegraphics[width=1cm]{coil/beeld-25.eps}
+\includegraphics[width=1cm]{coil/beeld-51.eps}
+\includegraphics[width=1cm]{coil/beeld-49.eps}
+\includegraphics[width=1cm]{coil/beeld-48.eps}
+& {\scriptsize 0.07142857142857142}
+\\
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-63.eps}
+\includegraphics[width=1cm]{coil/beeld-57.eps}
+\includegraphics[width=1cm]{coil/beeld-54.eps}
+\includegraphics[width=1cm]{coil/beeld-33.eps}
+\includegraphics[width=1cm]{coil/beeld-64.eps}
+\includegraphics[width=1cm]{coil/beeld-61.eps}
+\includegraphics[width=1cm]{coil/beeld-31.eps}
+& {\scriptsize 0.10238095238095238}
+\\
+\includegraphics[width=1cm]{coil/beeld-6.eps}
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-63.eps}
+\includegraphics[width=1cm]{coil/beeld-57.eps}
+\includegraphics[width=1cm]{coil/beeld-64.eps}
+\includegraphics[width=1cm]{coil/beeld-61.eps}
+\includegraphics[width=1cm]{coil/beeld-54.eps}
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+\includegraphics[width=1cm]{coil/beeld-33.eps}
+& {\scriptsize 0.29285714285714287}
+\\
+\includegraphics[width=1cm]{coil/beeld-42.eps}
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-63.eps}
+\includegraphics[width=1cm]{coil/beeld-45.eps}
+\includegraphics[width=1cm]{coil/beeld-54.eps}
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-64.eps}
+\includegraphics[width=1cm]{coil/beeld-61.eps}
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+\includegraphics[width=1cm]{coil/beeld-57.eps}
+& {\scriptsize 0.31666666666666665}
+\\
+\includegraphics[width=1cm]{coil/beeld-0.eps}
+\includegraphics[width=1cm]{coil/beeld-63.eps}
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-57.eps}
+\includegraphics[width=1cm]{coil/beeld-54.eps}
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-61.eps}
+\includegraphics[width=1cm]{coil/beeld-64.eps}
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+\includegraphics[width=1cm]{coil/beeld-33.eps}
+& {\scriptsize 0.3261904761904762}
+\\
+\includegraphics[width=1cm]{coil/beeld-36.eps}
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-57.eps}
+\includegraphics[width=1cm]{coil/beeld-63.eps}
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-54.eps}
+\includegraphics[width=1cm]{coil/beeld-61.eps}
+\includegraphics[width=1cm]{coil/beeld-64.eps}
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+\includegraphics[width=1cm]{coil/beeld-33.eps}
+& {\scriptsize 0.4857142857142857}
+\end{tabular}
+\caption{\label{fig:results_beste_pixelgeb}De GGR-waarde en de eerste tien resultaten voor elke voorbeeld-afbeelding bij de beste resolutie-onafhankelijke pixel-gebaseerde similariteitsmaat.}
+\end{center}
+\end{figure}
+
+Op het vlak van rekentijd zijn de similariteitsmaten op basis van de eerste en de laatste manier
+aan elkaar gewaagd. Bij het toepassen van een similariteitsmaat voor grijswaardebeelden op de 
+afzonderlijke kleurcomponenten, hebben we echter aanzienlijk meer rekentijd nodig. Dit is niet
+verwonderlijk, vermits er dan ook driemaal zoveel werk moet verricht worden.
 
 
 \section{Histogram-gebaseerd}
@@ -391,7 +542,7 @@ corresponderende bin associeert. We zouden bijvoorbeeld
 $bin(c) = \lfloor Fh_A(c) \cdot (N-1) \rfloor + 1$ kunnen kiezen. Doorgaands willen we echter
 meer belang hechten aan bepaalde kleurcomponenten. We gebruiken daarom de volgende definitie:
 $$
-bin(c) = bin(c_1,c_2,\ldots,c_m) = \left[ \sum_{i=1}^m \left( \prod_{j=2}^{i} N_j \right) \lfloor c_i \cdot (N_i - 1)\rfloor \right] + 1
+bin(c) = bin(c_1,c_2,\ldots,c_m) = \left[ \sum_{i=1}^m \left( \prod_{j=1}^{i-1} N_j \right) \left\lfloor c_i \cdot (N_i - 1) \right\rfloor \right] + 1
 $$
 met $N=N_1 \cdot N_2 \cdot \ldots \cdot N_m$.
 
