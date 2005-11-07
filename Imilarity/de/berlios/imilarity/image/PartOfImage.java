@@ -3,12 +3,12 @@
  */
 package de.berlios.imilarity.image;
 
-public class PartOfGrayscaleImage extends ImageBase {
+public class PartOfImage extends ImageBase {
 
 	private Image image;
 	private int ox, oy, width, height;
 	
-	public PartOfGrayscaleImage(Image image, int ox, int oy, int w, int h) {
+	public PartOfImage(Image image, int ox, int oy, int w, int h) {
 		if (image == null)
 			throw new NullPointerException("image == null");
 		this.image = image;
@@ -38,7 +38,7 @@ public class PartOfGrayscaleImage extends ImageBase {
 	}
 
 	public Image getScaledInstance(int w, int h) {
-		return new PartOfGrayscaleImage(image, ox, oy, w, h);
+		return new PartOfImage(image, ox, oy, w, h);
 	}
 
 	public int getWidth() {

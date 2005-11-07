@@ -19,8 +19,14 @@ public class OpponentImage extends ImageBase {
 	public Color getColor(int x, int y) {
 		double[] rgb = image.getColor(x,y).getComponents();
 		double r = rgb[0], g = rgb[1], b = rgb[2];
-		return new Color(new double[] { (1 - (r-g))/2, (1 - (((r+g)/2)-b))/2,
-				0.299*r+0.587*g+0.114*b});
+		
+		//r = Math.pow(r, 1.0/3);
+		//g = Math.pow(g, 1.0/3);
+		//b = Math.pow(b, 1.0/3);
+		
+		//return new Color(new double[] { (1 - (r-g))/2, (1 - (((r+g)/2) - b))/2,
+	//			(r+g+b)/3});
+		return new Color((r + 2*(1-g) + b)/4, (r + (1-b))/2, (r+g+b)/3);
 	}
 
 	public Image getScaledInstance(int w, int h) {

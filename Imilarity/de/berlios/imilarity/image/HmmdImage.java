@@ -33,7 +33,7 @@ public class HmmdImage extends ImageBase {
 	}
 
 	public Image getScaledInstance(int w, int h) {
-		return new HueImage(image.getScaledInstance(w,h));
+		return new HmmdImage(image.getScaledInstance(w,h));
 	}
 
 	public int getWidth() {

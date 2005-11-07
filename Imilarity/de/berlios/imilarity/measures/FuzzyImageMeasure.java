@@ -19,6 +19,8 @@ public class FuzzyImageMeasure extends ImageMeasureBase {
 	}
 	
 	public void setTarget(Image target) {
+		if (!sameResolution(getQuery(), target))
+			throw new IllegalArgumentException("query and target must have same resolution");
 		super.setTarget(target);
 		measure.setTarget(new FuzzyImage(target));
 	}

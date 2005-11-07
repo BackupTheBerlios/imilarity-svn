@@ -9,17 +9,17 @@ import de.berlios.imilarity.fuzzy.FuzzySet;
 import de.berlios.imilarity.fuzzy.Membership;
 import de.berlios.imilarity.fuzzy.SimpleMembership;
 import de.berlios.imilarity.image.Image;
-import de.berlios.imilarity.image.quantizers.ColorQuantizer;
+import de.berlios.imilarity.image.quantizers.Quantizer;
 import de.berlios.imilarity.image.quantizers.NeuQuant;
 
 
 public class FuzzyQuantizedImageMeasure extends ImageMeasureBase {
 
 	private FuzzyMeasure fuzzyMeasure;
-	private ColorQuantizer quantizer;
+	private Quantizer quantizer;
 	private int colorCount; 
 	
-	public FuzzyQuantizedImageMeasure(FuzzyMeasure fuzzyMeasure, ColorQuantizer quantizer,
+	public FuzzyQuantizedImageMeasure(FuzzyMeasure fuzzyMeasure, Quantizer quantizer,
 			int colorCount) {
 		if (fuzzyMeasure == null)
 			throw new NullPointerException("fuzzyMeasure == null");
@@ -30,7 +30,7 @@ public class FuzzyQuantizedImageMeasure extends ImageMeasureBase {
 		this.colorCount = colorCount;
 	}
 	
-	public FuzzyQuantizedImageMeasure(FuzzyMeasure fuzzyMeasure, ColorQuantizer quantizer) {
+	public FuzzyQuantizedImageMeasure(FuzzyMeasure fuzzyMeasure, Quantizer quantizer) {
 		this(fuzzyMeasure, quantizer, quantizer.getColorCount());
 	}
 	

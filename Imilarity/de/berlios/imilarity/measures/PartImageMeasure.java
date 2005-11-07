@@ -4,7 +4,7 @@
 package de.berlios.imilarity.measures;
 
 import de.berlios.imilarity.image.Image;
-import de.berlios.imilarity.image.PartOfGrayscaleImage;
+import de.berlios.imilarity.image.PartOfImage;
 
 public class PartImageMeasure extends ImageMeasureBase {
 
@@ -45,9 +45,9 @@ public class PartImageMeasure extends ImageMeasureBase {
 			int r = (i / width) / PART_H; // = y / PART_H
 			if (partX == 0 && partY == 0) {
 				measure.setQuery
-					(new PartOfGrayscaleImage(getQuery(),c*PART_W,r*PART_H,PART_W,PART_H));
+					(new PartOfImage(getQuery(),c*PART_W,r*PART_H,PART_W,PART_H));
 				measure.setTarget
-					(new PartOfGrayscaleImage(getTarget(),c*PART_W,r*PART_H,PART_W,PART_H));
+					(new PartOfImage(getTarget(),c*PART_W,r*PART_H,PART_W,PART_H));
 				sum += measure.getSimilarity();
 			}
 		}

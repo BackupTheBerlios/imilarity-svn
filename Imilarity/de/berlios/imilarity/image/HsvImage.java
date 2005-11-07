@@ -37,7 +37,7 @@ public class HsvImage extends ImageBase {
 	}
 
 	public Image getScaledInstance(int w, int h) {
-		return new HueImage(image.getScaledInstance(w,h));
+		return new HsvImage(image.getScaledInstance(w,h));
 	}
 
 	public int getWidth() {

@@ -5,10 +5,11 @@ public class M1c extends FuzzyMeasureBase {
 	public double getSimilarity() {
 		int count = getQuery().getElementsCount();
 		double sum = 0.0;
-		for (int i = 0; i < count; i++)
-			sum += Math.pow(getQuery().getMembership(i).minus(getTarget().getMembership(i)).abs(),
-					1.0/4.0);
-		return 1 - (sum / count);
+		for (int i = 0; i < count; i++) {
+			double v = getQuery().getMembership(i).minus(getTarget().getMembership(i)).abs();
+			sum += v*v*v*v;
+		}
+		return 1 - Math.pow(sum / count, 1.0/4.0);
 	}
 
 	public String getDescription() {

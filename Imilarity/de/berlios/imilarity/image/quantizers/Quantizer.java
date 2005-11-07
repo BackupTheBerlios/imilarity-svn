@@ -2,7 +2,7 @@ package de.berlios.imilarity.image.quantizers;
 
 import de.berlios.imilarity.image.Image;
 
-public interface ColorQuantizer {
+public interface Quantizer {
 
 	public void quantize(Image im);
 	

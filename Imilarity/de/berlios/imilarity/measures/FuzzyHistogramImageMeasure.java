@@ -68,7 +68,7 @@ public class FuzzyHistogramImageMeasure extends ImageMeasureBase {
 			int v1 = (int) (comps[0]*(binsCounts[0]-1));
 			int factor = 1;
 			for (int j = 1; j < comps.length; j++) {
-				factor *= binsCounts[j];
+				factor *= binsCounts[j-1];
 				v1 += factor * (int)(comps[j]*(binsCounts[j]-1));
 			}
 			
@@ -85,7 +85,7 @@ public class FuzzyHistogramImageMeasure extends ImageMeasureBase {
 			int v2 = (int) (comps[0]*(binsCounts[0]-1));
 			int factor = 1;
 			for (int j = 1; j < comps.length; j++) {
-				factor *= binsCounts[j];
+				factor *= binsCounts[j-1];
 				v2 += factor * (int)(comps[j]*(binsCounts[j]-1));
 			}
 			

@@ -31,7 +31,7 @@ import de.berlios.imilarity.image.ImageData;
  * that this copyright notice remain intact.
  */
 
-public class NeuQuant implements ColorQuantizer {
+public class NeuQuant implements Quantizer {
 	
 	public static final int ncycles	=	100;			// no. of learning cycles
 	
@@ -475,7 +475,7 @@ public class NeuQuant implements ColorQuantizer {
 			System.out.println("usage: java NeuQuant <input image> <output image>");
 		try {
 			Image image = ImageData.loadFile(args[0]).getRgbImage();
-			ColorQuantizer quantizer = new NeuQuant(30, 8);
+			Quantizer quantizer = new NeuQuant(30, 8);
 			BufferedImage outImage = new BufferedImage(image.getWidth(), image.getHeight(), 
 					BufferedImage.TYPE_INT_RGB);
 			for (int x = 0; x < image.getWidth(); x++) {
