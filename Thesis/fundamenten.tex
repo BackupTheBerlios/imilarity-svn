@@ -10,6 +10,67 @@ we naar \cite{kerre:vaagmodellen}, \cite{vanderweken:similariteitsmaten} en
 
 \section{Basisbegrippen uit de vaagverzamelingenleer}
 
+\subsection{Posets en tralies}
+\label{sectie:posets_en_tralies}
+
+In tegenstelling tot de meeste andere gebieden van de wiskunde, exploreert de theorie der 
+vaagverzamelingen het begrip ``orde'' ten volle \cite{kerre:vaagmodellen}. Daarom beginnen we deze 
+sectie met het defini\"eren van twee ordestructuren: \emph{partieel geordende verzameling} 
+(poset) en \emph{tralie}. We maken bovendien van de gelegenheid gebruik om enkele 
+belangrijke begrippen in verband met posets te introduceren. 
+
+\begin{definitie}
+Een partieel geordende verzameling (poset) is een koppel $(P,\le)$ bestaande uit een niet-ledige
+verzameling $P$ en een binaire relatie $\le$ over $P$ die reflexief, antisymmetrisch en 
+transitief is:
+\begin{itemize}
+  \item[(P.1)] $(\forall x \in P)(x \le x)$
+  \item[(P.2)] $(\forall (x,y) \in P^2)(x \le y \land y \le x \Rightarrow x = y)$
+  \item[(P.3)] $(\forall (x,y,z) \in P^3)(x \le y \land y \le z \Rightarrow x \le z)$
+\end{itemize}
+De relatie $\le$ noemt men een (parti\"ele) orderelatie over $P$.
+\end{definitie} 
+\begin{definitie}
+Zij $(P,\le)$ een poset en $A \subseteq P$. Een element $b$ van $P$ is een maximaal element
+van $A$ als en slechts als $b \in A$ en $(\forall x \in A)(b \le x \Rightarrow x = b)$. 
+\end{definitie}
+\begin{definitie}
+Zij $(P,\le)$ een poset en $A \subseteq P$. Een element $b$ van $P$ is een minimaal element
+van $A$ als en slechts als $b \in A$ en $(\forall x \in A)(x \le b \Rightarrow x = b)$. 
+\end{definitie}
+\begin{definitie}
+Zij $(P,\le)$ een poset en $A \subseteq P$. Een element $b$ van $P$ is een bovengrens voor $A$
+als en slechts als $(\forall a \in A)(a \le b)$. Als bovendien geldt $b \in A$, dan noemen
+we $b$ het grootste element van $A$. De kleinste bovengrens voor $A$ is het
+supremum voor $A$.
+\end{definitie}
+\begin{definitie}
+Zij $(P,\le)$ een poset en $A \subseteq P$. Een element $b$ van $P$ is een ondergrens voor $A$
+als en slechts als $(\forall a \in A)(b \le a)$. Als bovendien geldt $b \in A$, dan noemen
+we $b$ het kleinste element van $A$. De grootste ondergrens voor $A$ is het
+infimum voor $A$.
+\end{definitie}
+\begin{definitie}
+Een poset $(L,\le)$ waarin elk doubleton een supremum en een infimum bezit, noemt men een tralie 
+(lattice). Als elke niet-ledige deelverzameling van $L$
+een supremum en een infimum bezit, dan spreekt men van een complete tralie.
+\end{definitie}
+% ALTERNATIEVE DEFINITIE VAN TRALIE
+%% enkele nieuwe commando's die we verder in deze sectie nodig zullen hebben
+%\newcommand{\dotand}{\ensuremath{\mathaccent\ldotp\land}}
+%\newcommand{\dotor}{\ensuremath{\mathaccent\cdotp\lor}}
+%\begin{definitie}
+%Een algebra\"ische structuur $(L,\dotor,\dotand)$ bestaande uit een niet-ledige
+%verzameling $L$ en twee binaire bewerkingen op $L$ wordt een tralie genoemd als en slechts als
+%voor elke $a$, $b$ en $c$ uit $L$ geldt:
+%\begin{itemize}
+%  \item[(L.1)] $a \dotand a = a$ en $a \dotor a = a$
+%  \item[(L.2)] $a \dotand b = b \dotand a$ en $a \dotor b = b \dotor a$
+%  \item[(L.3)] $a \dotand (b \dotand c) = (a \dotand b) \dotand c$ en $a \dotor (b \dotor c) = (a \dotor b) \dotor c$
+%  \item[(L.4)] $a \dotand (a \dotor b) = a$ en $a \dotor (a \dotand b) = a$
+%\end{itemize}
+%\end{definitie}
+
 \subsection{Vaagverzamelingen}
 
 De collectie van alle mogelijke elementen noemen we het \emph{universum} (bijvoorbeeld de
@@ -112,9 +173,9 @@ volgt gedefinieerd:
 $$
 \begin{array}{r@{\quad=\quad}l}
 N_s(x) & 1 - x \\
-T_M(x,y) & min(x,y) \\
+T_M(x,y) & \min \{x,y\} \\
 T_P(x,y) & x \cdot y \\
-S_M(x,y) & max(x,y) \\
+S_M(x,y) & \max \{x,y\} \\
 S_P(x,y) & x +y - x \cdot y,
 \end{array}
 $$
@@ -166,54 +227,8 @@ waarbij $A$ en $B$ vaagverzamelingen zijn.
 \subsection{L-vaagverzamelingen}
 
 Het begrip vaagverzameling kan op zijn beurt nog eens uitgebreid worden tot 
-\emph{L-vaagverzameling}. Deze uitbreiding is gebaseerd op het concept \emph{tralie}. We geven
-hieronder eerst de definitie van dit concept, samen met de definities van de aanverwante
-begrippen \emph{poset}, \emph{supremum} en \emph{infimum}. Daarna kunnen we dan, gebruik
-makend van dit voorbereidend werk, overgaan tot de definitie van een L-vaagverzameling. 
-\begin{definitie}
-Een partieel geordende verzameling (poset) is een koppel $(P,\le)$ bestaande uit een niet-ledige
-verzameling $P$ en een binaire relatie $\le$ over $P$ die reflexief, antisymmetrisch en 
-transitief is:
-\begin{itemize}
-  \item[(P.1)] $(\forall x \in P)(x \le x)$
-  \item[(P.2)] $(\forall (x,y) \in P^2)(x \le y \land y \le x \Rightarrow x = y)$
-  \item[(P.3)] $(\forall (x,y,z) \in P^3)(x \le y \land y \le z \Rightarrow x \le z)$
-\end{itemize}
-De relatie $\le$ noemt men een (parti\"ele) orderelatie over $P$.
-\end{definitie} 
-\begin{definitie}
-Zij $(P,\le)$ een poset en $A \subseteq P$. Een element $b$ van $P$ is een bovengrens voor $A$
-als en slechts als $(\forall a \in A)(a \le b)$. Als bovendien geldt $b \in A$, dan noemen
-we $b$ het grootste element van $A$. De kleinste bovengrens voor $A$ is het
-supremum voor $A$.
-\end{definitie}
-\begin{definitie}
-Zij $(P,\le)$ een poset en $A \subseteq P$. Een element $b$ van $P$ is een ondergrens voor $A$
-als en slechts als $(\forall a \in A)(b \le a)$. Als bovendien geldt $b \in A$, dan noemen
-we $b$ het kleinste element van $A$. De grootste ondergrens voor $A$ is het
-infimum voor $A$.
-\end{definitie}
-\begin{definitie}
-Een poset $(L,\le)$ waarin elk doubleton een supremum en een infimum bezit, noemt men een tralie 
-(lattice). Als elke niet-ledige deelverzameling van $L$
-een supremum en een infimum bezit, dan spreekt men van een complete tralie.
-\end{definitie}
-% ALTERNATIEVE DEFINITIE VAN TRALIE
-%% enkele nieuwe commando's die we verder in deze sectie nodig zullen hebben
-%\newcommand{\dotand}{\ensuremath{\mathaccent\ldotp\land}}
-%\newcommand{\dotor}{\ensuremath{\mathaccent\cdotp\lor}}
-%\begin{definitie}
-%Een algebra\"ische structuur $(L,\dotor,\dotand)$ bestaande uit een niet-ledige
-%verzameling $L$ en twee binaire bewerkingen op $L$ wordt een tralie genoemd als en slechts als
-%voor elke $a$, $b$ en $c$ uit $L$ geldt:
-%\begin{itemize}
-%  \item[(L.1)] $a \dotand a = a$ en $a \dotor a = a$
-%  \item[(L.2)] $a \dotand b = b \dotand a$ en $a \dotor b = b \dotor a$
-%  \item[(L.3)] $a \dotand (b \dotand c) = (a \dotand b) \dotand c$ en $a \dotor (b \dotor c) = (a \dotor b) \dotor c$
-%  \item[(L.4)] $a \dotand (a \dotor b) = a$ en $a \dotor (a \dotand b) = a$
-%\end{itemize}
-%\end{definitie}
-
+\emph{L-vaagverzameling}. Deze uitbreiding is gebaseerd op het concept \emph{tralie}
+uit sectie~\ref{sectie:posets_en_tralies}.
 \begin{definitie}
 Zij $X$ een universum en $(L,\le)$ een complete tralie. Een L-vaagverzameling $A$ in $X$ wordt
 gekarakteriseerd door een $X - L$ afbeelding $\mu_A$:
@@ -228,19 +243,11 @@ $$
 De klasse van L-vaagverzamelingen in een universum $X$ stellen we voor door 
 $\mathcal{F}_L(X)$. Merk op dat deze klasse zich herleidt tot $\mathcal{F}(X)$ voor $L = [0,1]$.
 
-In deze scriptie zullen we enkel gebruik maken van L-vaagverzamelingen waarbij
-$L = [0,1]^n$ met $n > 0$. Voor deze speciale gevallen kunnen we het begrip sigma count als volgt 
-uitbreiden:
-$$
-|A|=\frac{1}{\sqrt{n}}\sum_{x \in X}\sqrt{(A_1(x))^2+(A_2(x))^2+\ldots+(A_n(x))^2},
-$$
-met $A(x)=(A_1(x),A_2(x),\ldots,A_n(x))$, $\forall x \in X$.  
-
 \subsection{Bewerkingen op L-vaagverzamelingen}
 
-In deze sectie gaan we de begrippen \emph{negator}, \emph{conjunctor} en 
-\emph{disjunctor} uitbreiden naar L-vaag\-ver\-za\-me\-ling\-en. Deze uitbreiding heeft als gevolg dat
-de veralgemeende verzameltechnische bewerkingen $co$, $\cap$ en 
+We kunnen de begrippen \emph{negator}, \emph{conjunctor} en 
+\emph{disjunctor} uitbreiden naar L-vaag\-ver\-za\-me\-ling\-en. Deze uitbreiding heeft als gevolg 
+dat de veralgemeende verzameltechnische bewerkingen $co$, $\cap$ en 
 $\cup$ uit \ref{sectie:bew_op_vaagverz} eveneens toepasbaar zijn op L-vaagverzamelingen.
 
 Zij $(L,\le)$ een complete tralie die $l$ als kleinste en $u$ als grootste element heeft. We
@@ -264,10 +271,6 @@ $(\forall a \in L)(\mathcal{D}(l,a)=\mathcal{D}(a,l)=a)$ dan spreekt met van een
 Een driehoeksconorm (t-conorm) is een commutatieve en associatieve semi-conorm.
 \end{definitie}
 
-Merk op dat we in de bijzondere gevallen waarbij $L=[0,1]^n$ met $n > 0$, 
-$(\mathcal{N},\mathcal{C},\mathcal{D})=(N_s,T_M,S_M)$ kunnen kiezen.
-
-
 \section{Vaagsimilariteitsmaten}
 \label{sectie:vaagsimilariteitsmaten}
 
@@ -289,13 +292,22 @@ r \in \{1,2,3,\ldots\}
 $$ tot de keuzes
 $r=1,2,4$. De overeenkomstige similariteitsmaten noemen we $M_{1a}$, $M_{1b}$ en $M_{1c}$. Vermits
 $M_{1a}=M_{18c}$ hoeven we $M_{18c}$ dan niet meer te beschouwen. Bovendien zullen we ons enkel
-toespitsen op de maten die rechtstreeks uitbreidbaar zijn naar L-vaagverzamelingen. Dit houdt in
-dat we enkel de maten beschouwen die op evidente wijze kunnen veralgemeend worden naar 
-vaagverzamelingen in $\mathcal{F}_L(X) \times \mathcal{F}_L(X)$. We komen zo tot
-de similariteitsmaten die worden weergegeven in tabel~\ref{tab:similatiteitsmaten}. 
+toespitsen op de maten die rechtstreeks uitbreidbaar zijn naar L-vaagverzamelingen met $L=[0,1]^3$. 
+Dit houdt in dat we enkel de maten beschouwen die op evidente wijze kunnen veralgemeend worden naar
+vaagverzamelingen in $\mathcal{F}_L(X) \times \mathcal{F}_L(X)$. De details van deze
+uitbreiding behandelen we in \ref{sectie:pixelgeb_kleurbeelden}. 
 
-\begin{table}[tp]
-$$
+We komen zo uiteindelijk tot
+de similariteitsmaten die worden weergegeven in tabel~\ref{tab:similatiteitsmaten}. 
+Alle vaagsimilariteitsmaten uit deze tabel zijn reflexief. Dit wil zeggen dat 
+voor elke maat $M$ geldt: $M(A,A)=1$. 
+
+\begin{table}[tbp]
+\begin{center}
+\begin{tabular}{|c|}
+\hline
+\\[1pt]
+$
 \begin{array}{rcl}
 \displaystyle M_{1a}(A,B) & = & \displaystyle 1-\frac{1}{M N}\sum_{x \in X} | A(x) - B(x) | \\
 \displaystyle M_{1b}(A,B) & = & \displaystyle 1-\left(\frac{1}{M N}\sum_{x \in X} | A(x) - B(x) |^2\right)^\frac{1}{2} \\
@@ -305,8 +317,12 @@ $$
 \displaystyle M_2(A,B) & = & \displaystyle 1 - \max_{x \in X} | A(x) - B(x) | \\[10pt]
 \displaystyle M_3(A,B) & = & \displaystyle 1 - \frac{\displaystyle \sum_{x \in X} | A(x) - B(x) |}{\displaystyle |A| + |B|} \\
 \end{array}
-$$
-$$
+$
+\\
+\\[1pt]
+\hline
+\\[1pt]
+$
 \begin{array}{rcl}
 \displaystyle M_5(A,B) & = & \displaystyle \frac{\min (|A|,|B|)}{\max (|A|,|B|)} \\[10pt]
 \displaystyle M_{5c}(A,B) & = & \displaystyle \frac{\min (|A^c|,|B^c|)}{\max (|A^c|,|B^c|)} \\[10pt]
@@ -327,20 +343,27 @@ $$
 \displaystyle M_{12}(A,B) & = & \displaystyle \frac{|(A \triangle B)^c|}{\max (|(A \setminus B)^c|,|(B \setminus A)^c|)} \\[10pt]
 \displaystyle M_{13}(A,B) & = & \displaystyle \frac{|(A \triangle B)^c|}{\min (|(A \setminus B)^c|,|(B \setminus A)^c|)}
 \end{array}
-$$
-$$
+$
+\\
+\\[1pt]
+\hline
+\\[1pt]
+$
 \begin{array}{rcl}
 \displaystyle M_{I_3}(A,B) & = & \displaystyle \frac{|(A \cap B) \cap (A^c \cap B^c)|)}{|(A \cup B) \cap (A^c \cup B^c)|)}
 \end{array}
 \begin{array}{rcl}
 \displaystyle M_{I_{3c}}(A,B) & = & \displaystyle \frac{|(A^c \cap B^c) \cup (A \cap B)|)}{|(A^c \cup B^c) \cup (A \cup B)|)}
 \end{array}
-$$
-\caption{De vaagsimilariteitsmaten die we gaan gebruiken.}
-\label{tab:similatiteitsmaten}
+$
+\\
+\\[1pt]
+\hline
+\end{tabular}
+\caption{\label{tab:similatiteitsmaten}De vaagsimilariteitsmaten die we gaan gebruiken.}
+\end{center}
 \end{table}
 
-Alle vaagsimilariteitsmaten uit deze tabel zijn reflexief. Dit wil zeggen dat 
-voor elke similariteitsmaat $S$ geldt: $S(A,A)=1$. 
+
 
 \section{Aggregatieoperatoren} 

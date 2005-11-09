@@ -208,6 +208,7 @@ hebben.
 
 
 \subsection{Kleurbeelden}
+\label{sectie:pixelgeb_kleurbeelden}
 
 \subsubsection{Kleurruimten}
 
@@ -231,42 +232,39 @@ kleurruimtes bestaan die gebaseerd zijn op RGB.
 In een \emph{kleurbeeld} heeft elke pixel een bepaalde kleur. Deze kleur wordt beschreven met
 behulp van een kleurmodel. Ze wordt bijgevolg voorgesteld als een $n$-tal uit
 $\mathbb{R}^n$. Dergelijke $n$-tallen kunnen we normaliseren tot $n$-tallen uit $[0,1]^n$. 
-Dit laat ons toe om een $m$-dimensionaal kleurbeeld te modelleren als een L-vaagverzameling in 
-$\mathbb{R}^m$, waarbij $L=[0,1]^n$.
 
-We hebben reeds vermeld dat de vaagsimilariteitsmaten uit \ref{sectie:vaagsimilariteitsmaten}
-uitbreidbaar zijn naar L-vaag\-ver\-za\-me\-ling\-en. Zoals in 
-\cite{anoniem:similariteitsmaten_voor_kleurbeelden} beperken we ons tot het 
-RGB model en veralgemenen we de be\-wer\-king\-en waarvan de vaagsimilariteitsmaten gebruik maken 
-als volgt naar kleuren in dit model:
-$$
-\begin{array}{r@{\qquad}l}
-\begin{array}{rcl}
-|c| & = & \frac{1}{\sqrt{3}} \cdot \sqrt{r^2 + g^2 + b^2} \\[5pt]
-c - c' & = & (r-r',g-g',b-b') \\[5pt]
-1 - c & = & (1,1,1) - c \\[5pt]
-\end{array}
-&
-\begin{array}{rcll}
-\min (c,c') & = & c & \textrm{als } c \leq_{RGB} c' \\
-		  & = & c' & \textrm{anders} \\[5pt]
-\max (c,c') & = & c' & \textrm{als } c \leq_{RGB} c' \\
-		  & = & c & \textrm{anders}
-\end{array}
-\end{array}
-$$
-Hierbij geldt $c(r,g,b), c'(r',g',b') \in [0,1]^3$ en is $\leq_{RGB}$ de ordening voor
-kleuren in het RGB model uit \cite{dewitte:vect_morph_ops}. Deze ordening wordt als volgt gedefinieerd:
+We beperken ons tot het RGB model en we beschouwen de ordening $\leq_{RGB,lex}$, die
+gebaseerd is op de lexicografische ordening $\leq_{lex}$ en op de ordening voor kleuren in het 
+RGB model uit \cite{dewitte:vect_morph_ops}:
 $$
 \begin{array}{rcl}
 c <_{RGB} c' & \iff & d(c,Bl) < d(c',Bl)\ \lor \\
 			   &	  & \quad(d(c,Bl) = d(c',Bl) \land d(c,Wh) > d(c',Wh)) \\[5pt]
 c >_{RGB} c' & \iff & d(c,Wh) < d(c',Wh)\ \lor \\
 			   &	  & \quad(d(c,Wh) = d(c',Wh) \land d(c,Bl) > d(c',Bl)) \\[5pt]
-c =_{RGB} c'   & \iff & (d(c,Bl) = d(c',Bl) \land d(c,Wh) = d(c',Wh))
+c =_{RGB} c'   & \iff & (d(c,Bl) = d(c',Bl) \land d(c,Wh) = d(c',Wh)) \\[10pt]
+c \leq_{lex} c' & \iff & r < r' \lor (r = r' \land g < g') \lor (r = r' \land g = g' \land b < b') \\[10pt]
+c \leq_{RGB,lex} c' & \iff & c <_{RGB} c' \lor (c =_{RGB} c' \land c \leq_{lex} c')
 \end{array}
 $$
-waarbij $Bl=(0,0,0)$, $Wh=(1,1,1)$ en $d$ de Euclidische afstand.
+Men kan gemakkelijk verifi\"eren dat $([0,1]^3,\leq_{RGB,lex})$ een complete tralie is, met:
+$$
+\begin{array}{@{}c@{}}
+\begin{array}{rcrcll}
+\inf \{c,c'\} & = & \min \{c,c'\} & = & c & \textrm{als } c <_{RGB} c' \\
+		  	& & & = & c' & \textrm{als } c >_{RGB} c' \\
+		  	& & & = & c & \textrm{als } c =_{RGB} c' \textrm{ en } c \leq_{lex} c' \\
+		  	& & & = & c' & \textrm{anders} \\[10pt]
+\sup \{c,c'\} & = & \max \{c,c'\} & = & c' & \textrm{als } c <_{RGB} c' \\
+		  	& & & = & c & \textrm{als } c >_{RGB} c' \\
+		  	& & & = & c' & \textrm{als } c =_{RGB} c' \textrm{ en } c \leq_{lex} c' \\
+		  	& & & = & c & \textrm{anders}
+\end{array}
+\end{array}
+$$
+We kunnen een $m$-dimensionaal RGB-kleurbeeld dus modelleren als een L-vaagverzameling in 
+$\mathbb{R}^m$, waarbij $L=[0,1]^3$. Net zoals bij grijswaardebeelden, is 
+het universum in de praktijk echter eerder $\mathbb{N}^2$.
 
 \subsubsection{Similariteitsmaten}
 
@@ -279,9 +277,36 @@ Een andere mogelijkheid is dat men het beeld eerst omzet naar een grijswaardebee
 vervolgens een similariteitsmaat voor grijswaardebeelden op toe te passen. Deze omzetting kan 
 bijvoorbeeld aan de hand van de formule $y = 0.3 \cdot r + 0.59 \cdot g + 0.11 \cdot b$ gebeuren.
 
-De tralie-gebaseerde aanpak lijkt ons echter interessanter. Hierbij combineren we
-de bovenstaande representatie met \'e\'en van de vaagsimilariteitsmaten uit 
-\ref{sectie:vaagsimilariteitsmaten}. 
+In \ref{sectie:vaagsimilariteitsmaten} hebben echter vermeld dat de beschouwde 
+vaagsimilariteitsmaten uitbreidbaar zijn naar L-vaag\-ver\-za\-me\-ling\-en met
+$L=[0,1]^3$. Daarvoor moeten we de bewerkingen waarvan deze maten gebruik maken veralgemenen van 
+$[0,1]$ naar $[0,1]^3$. 
+
+Voor de vaagsimilariteitsmaten $M_1$ tot $M_3$ betekent dit concreet dat we een zinvolle betekenis 
+moeten geven aan $c - c'$ en $|c|$, voor alle $c(r,g,b),c'(r',g',b') \in [0,1]^3$. We gebruiken
+hiervoor 
+$$
+c - c' = (r-r',g-g',b-b') \quad \textrm{ en } \quad |c| = \frac{1}{\sqrt{3}} \cdot \sqrt{r^2 + g^2 + b^2}.
+$$
+
+Om de overige vaagsimilariteitsmaten te veralgemenen, hebben we een uitbreiding van het
+begrip sigma count nodig. Hiervoor gebruiken we
+$$
+|A|=\frac{1}{\sqrt{n}}\sum_{x \in X}\sqrt{(A_1(x))^2+(A_2(x))^2+\ldots+(A_n(x))^2}
+$$
+met $n=3$. Deze overige maten maken bovendien ook gebruik van de bewerkingen $co$ (complement), 
+$\cap$ (doorsnede) en $\cup$ (unie). Doordat we 
+$(\mathcal{N},\mathcal{C},\mathcal{D})=(N_s,T_M,S_M)$ gekozen hebben, moeten we
+dus $1 - c$, $\max \{c,c'\}$ en $\min \{c,c'\}$ kunnen bepalen voor alle 
+$c(r,g,b),c'(r',g',b') \in [0,1]^3$. Hiervoor kunnen we $1 - c = (1,1,1) - (r,g,b)$ en de
+bovenstaande definities gebruiken.
+
+We kunnen kleurbeelden dus ook vergelijken door de bovenstaande representatie 
+te combineren met (een veralgemeende versie van) \'e\'en van de 
+vaagsimilariteitsmaten uit \ref{sectie:vaagsimilariteitsmaten}. 
+Deze tralie-gebaseerde aanpak lijkt ons de meest interessante van de drie, omdat
+de kleur-informatie hierbij het best behouden blijft.
+
 
 \subsection{Resolutie-onafhankelijk}
 
@@ -292,8 +317,9 @@ van de zogenaamde omgeving-gebaseerde similariteitsmaten in \cite{vanderweken:si
 Dit gaat als volgt:
 \begin{enumerate}
 \item Verdeel de te vergelijken afbeeldingen $A$ en $B$
-in partities. Elk beeldonderdeel van een partitie kan dan opgevat worden als een klein beeld
-waarop we de reeds geziene pixel-gebaseerde similariteitsmaten kunnen toepassen.
+in partities. Deze partities kunnen een verschillend aantal beeldonderdelen bevatten, maar alle 
+onderdelen moeten wel dezelfde resolutie hebben. Elk beeldonderdeel kan dan opgevat worden als een 
+klein beeld waarop we de reeds geziene pixel-gebaseerde similariteitsmaten kunnen toepassen.
 \item Bepaal de gemiddelde kleur van elk beeldonderdeel. Gebruik deze kleur vervolgens
 om de beide collecties van beeldonderdelen te ordenen met behulp van de ordening $\leq_{RGB}$.
 \item Overloop de beeldonderdelen van $B$ en bepaal telkens de similariteit met het eerste 
@@ -302,7 +328,7 @@ indien ze groter is dan de huidige.
 
 Herhaal deze stap voor de resterende
 beeldonderdelen van $A$ en $B$ zodra er een similariteit werd toegevoegd aan $S$. Het 
-beeldonderdeel van $B$ dat aanleiding gaf tot de huidige similariteit deel maakt deel uit van
+beeldonderdeel van $B$ dat aanleiding gaf tot de huidige similariteit maakt deel uit van
 deze resterende beeldonderdelen.
 
 Als het laatste beeldonderdeel van $B$ bereikt wordt, dan wordt de similariteit tussen dit
@@ -312,8 +338,24 @@ beeldonderdelen van $A$ worden dan buiten beschouwing gelaten.
 $A$ en $B$.
 \end{enumerate}
 Figuur~\ref{fig:multires} illustreert deze constructie. In deze figuur is de kleur van een
-beeldonderdeel gelijk aan de gemiddelde kleur van dat onderdeel. De verbindingen tussen de
-geordende beeldonderdelen stellen de similariteiten in $S$ voor.
+beeldonderdeel gelijk aan de gemiddelde kleur van dat onderdeel. De similariteiten
+die berekend worden in de derde stap zijn in dit geval de volgende: 
+\begin{center}
+\begin{tabular}{c|cccccccccc}
+		& $B_1$ & $B_2$ & $B_3$ & $B_4$ & $B_5$ & $B_6$ & $B_7$ & $B_8$ & $B_9$  \\
+\hline
+$A_1$ 	& $\mathbf{0.5198}$ & $0.4496$ \\
+$A_2$ 	& & $\mathbf{0.4691}$ & $0.3859$ \\
+$A_3$ 	& & & $0.4133$ & $\mathbf{0.4404}$ & $0.3298$ \\
+$A_4$ 	& & & & & $0.3277$ & $\mathbf{0.4330}$ & $0.3648$ \\
+$A_5$ 	& & & & & & & $\mathbf{0.3849}$ & $0.3134$ \\
+$A_6$ 	& & & & & & & & $\mathbf{0.3438}$ & $0.3427$ \\
+$A_7$ 	& & & & & & & & & $\mathbf{0.5066}$ \\
+\end{tabular}
+\end{center}
+In deze tabel staan de similariteiten die worden toegevoegd aan $S$ in het vet. Deze similariteiten 
+worden in figuur~\ref{fig:multires} grafisch weergeven als verbindingen tussen de
+geordende beeldonderdelen.
 
 \begin{figure}[tbp]
 \begin{center}
@@ -499,7 +541,7 @@ verwonderlijk, vermits er dan ook driemaal zoveel werk moet verricht worden.
 Kleur is \'e\'en van de meest gebruikte kenmerken bij CBIR. Het kleurhistogram is de meest 
 populaire representatie van dit kenmerk \cite{rui:image_retr}. We mogen dus verwachten
 dat deze histogrammen kunnen gebruikt worden om effici\"ente similariteitsmaten te construeren.
-In deze sectie onderzoeken we of die effectief het geval is. 
+In deze sectie onderzoeken we of dit effectief het geval is. 
 
 Een histogram van een kleurbeeld is een voorstelling van de frequentieverdeling van de
 verschillende kleuren. De waarde van het histogram voor een kleurbeeld $A$ in de kleur $c$ is
@@ -555,12 +597,12 @@ aangeven. Men kan een kleur $c(r,g,b) \in [0,1]^3$ uit het RGB model als volgt o
 kleur $c'(h,s,v) \in [0,1]^3$ in het HSV model:
 $$
 \begin{array}{rcll}
-h' & = & 60 \cdot \frac{g - b}{\max (r,g,b) - \min (r,g,b)}\quad & \textrm{ als } \max (r,g,b) = r \\
-  & = & 60 \cdot \frac{b - r}{\max (r,g,b) - \min (r,g,b)} + 120\quad & \textrm{ als } \max (r,g,b) = g \\
-  & = & 60 \cdot \frac{r - g}{\max (r,g,b) - \min (r,g,b)} + 240\quad & \textrm{ als } \max (r,g,b) = b \\[5pt]
-h & = & \frac{h' \bmod 360}{360} & \textrm{ als } h' \bmod 360 \geq 0 \\
-  & = & \frac{360 - (h' \bmod 360)}{360} & \textrm{ als } h' \bmod 360 < 0 \\[5pt]
-s & = & \frac{\max (r,g,b) - \min (r,g,b)}{\max (r,g,b)} & \\[5pt]
+h' & = & 60 \cdot \frac{g - b}{\max (r,g,b) - \min (r,g,b)}\quad & \textrm{ als } \max (r,g,b) = r \\[2pt]
+  & = & 60 \cdot \frac{b - r}{\max (r,g,b) - \min (r,g,b)} + 120\quad & \textrm{ als } \max (r,g,b) = g \\[2pt]
+  & = & 60 \cdot \frac{r - g}{\max (r,g,b) - \min (r,g,b)} + 240\quad & \textrm{ als } \max (r,g,b) = b \\[6pt]
+h & = & \frac{h' \bmod 360}{360} & \textrm{ als } h' \bmod 360 \geq 0 \\[2pt]
+  & = & \frac{360 - (h' \bmod 360)}{360} & \textrm{ als } h' \bmod 360 < 0 \\[6pt]
+s & = & \frac{\max (r,g,b) - \min (r,g,b)}{\max (r,g,b)} & \\[6pt]
 v & = & \max (r,g,b)
 \end{array}
 $$
