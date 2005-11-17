@@ -14,7 +14,8 @@ te doorzoeken.
 \section{Text-based image retrieval}
 
 Alle belangrijke bestaande zoekmachines bieden \emph{text-based image retrieval} (TBIR) aan. 
-Hierbij wordt elke afbeelding voorzien van tekstuele annotaties, zoals bijvoorbeeld de 
+Figuur~\ref{fig:tbir} toont de algemene architectuur van deze machines. Elke afbeelding 
+wordt voorzien van tekstuele annotaties, zoals bijvoorbeeld de 
 bestandsnaam of woorden uit de webpagina waarvan de afbeelding deel uitmaakt. Deze annotaties
 worden gebruikt voor het indexeren van de afbeeldingen in de databank.
 
@@ -28,7 +29,9 @@ uit de databank te overlopen, vermits de databank ge\"indexeerd is op de annotat
 
 Omdat de tekst-gebaseerde aanpak in de praktijk dikwijls tekortschiet, is men op zoek gegaan 
 naar manieren om het zoeken te baseren op de visuele inhoud van de afbeeldingen 
-\cite{veltcamp:cbirs}. Bij \emph{content-based image retrieval} (CBIR) maakt men gebruik van een proces dat 
+\cite{veltcamp:cbirs}. Zo zijn de \emph{content-based image retrieval} (CBIR) systemen ontstaan. 
+De algemene architectuur van een dergelijk systeem wordt ge\"illustreerd door
+figuur~\ref{fig:cbir}. Men maakt gebruik van een proces dat 
 \emph{(visual) feature extraction} genoemd wordt \cite{rui:image_retr}. Dit proces zet een afbeelding om in een 
 \emph{feature vector}. Met behulp van multidimensionale indexering kan men deze kenmerkenvector
 dan gebruiken als alternatief voor de tekstuele annotaties bij TBIR.

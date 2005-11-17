@@ -247,6 +247,7 @@ c \leq_{lex} c' & \iff & r < r' \lor (r = r' \land g < g') \lor (r = r' \land g 
 c \leq_{RGB,lex} c' & \iff & c <_{RGB} c' \lor (c =_{RGB} c' \land c \leq_{lex} c')
 \end{array}
 $$
+waarbij $Bl = (0,0,0)$, $Wh = (1,1,1)$ en $d$ de Euclidische afstand.
 Men kan gemakkelijk verifi\"eren dat $([0,1]^3,\leq_{RGB,lex})$ een complete tralie is, met:
 $$
 \begin{array}{@{}c@{}}
@@ -271,7 +272,7 @@ het universum in de praktijk echter eerder $\mathbb{N}^2$.
 De klassieke manier om kleurbeelden te vergelijken gaat als volgt. Men past een similariteitsmaat 
 voor grijswaardebeelden toe op elk van de kleurcomponenten en voegt daarna de resultaten van de
 verschillende componenten samen. In het geval van het RGB model beschouwt men een
-kleurbeeld dan dus als een combinatie van drie grijswaardebeelden. 
+kleurbeeld dus als een combinatie van drie grijswaardebeelden. 
 
 Een andere mogelijkheid is dat men het beeld eerst omzet naar een grijswaardebeeld, om er 
 vervolgens een similariteitsmaat voor grijswaardebeelden op toe te passen. Deze omzetting kan 
@@ -309,60 +310,97 @@ de kleur-informatie hierbij het best behouden blijft.
 
 
 \subsection{Resolutie-onafhankelijk}
+\label{sectie:res-onafh}
 
 Een belangrijke beperking van de bovenstaande pixel-gebaseerde similariteitsmaten is dat we
 ze enkel kunnen toepassen op beelden die dezelfde resolutie hebben. We kunnen dit oplossen
 door similariteitsmaten te construeren op een manier die ge\"inspireerd is op de constructie
 van de zogenaamde omgeving-gebaseerde similariteitsmaten in \cite{vanderweken:similariteitsmaten}. 
-Dit gaat als volgt:
-\begin{enumerate}
-\item Verdeel de te vergelijken afbeeldingen $A$ en $B$
-in partities. Deze partities kunnen een verschillend aantal beeldonderdelen bevatten, maar alle 
-onderdelen moeten wel dezelfde resolutie hebben. Elk beeldonderdeel kan dan opgevat worden als een 
-klein beeld waarop we de reeds geziene pixel-gebaseerde similariteitsmaten kunnen toepassen.
-\item Bepaal de gemiddelde kleur van elk beeldonderdeel. Gebruik deze kleur vervolgens
-om de beide collecties van beeldonderdelen te ordenen met behulp van de ordening $\leq_{RGB}$.
-\item Overloop de beeldonderdelen van $B$ en bepaal telkens de similariteit met het eerste 
-beeldonderdeel van $A$. Voeg de vorige similariteit toe aan de lijst van similariteiten $S$
-indien ze groter is dan de huidige. 
 
-Herhaal deze stap voor de resterende
-beeldonderdelen van $A$ en $B$ zodra er een similariteit werd toegevoegd aan $S$. Het 
-beeldonderdeel van $B$ dat aanleiding gaf tot de huidige similariteit maakt deel uit van
-deze resterende beeldonderdelen.
+Deze constructie gaat als volgt. Stel dat we twee afbeeldingen $A$ en $B$ willen
+vergelijken. We verdelen
+de te vergelijken afbeeldingen eerst in twee partities, die respectievelijk bestaan uit
+$n$ en $m$ beeldonderdelen. Hierbij zorgen we ervoor dat de onderdelen
+van deze beide partities allemaal dezelfde resolutie hebben. We kunnen deze onderdelen bijgevolg 
+opvatten als kleine afbeeldingen, die men onderling kan vergelijken met behulp van de reeds 
+geziene pixel-gebaseerde similariteitsmaten.
 
-Als het laatste beeldonderdeel van $B$ bereikt wordt, dan wordt de similariteit tussen dit
-beeldonderdeel en het huidige beeldonderdeel van $A$ toegevoegd aan $S$. De overblijvende
-beeldonderdelen van $A$ worden dan buiten beschouwing gelaten. 
-\item Bepaal het gemiddelde van de similariteiten uit $S$. Deze waarde is de similariteit tussen
-$A$ en $B$.
-\end{enumerate}
-Figuur~\ref{fig:multires} illustreert deze constructie. In deze figuur is de kleur van een
-beeldonderdeel gelijk aan de gemiddelde kleur van dat onderdeel. De similariteiten
-die berekend worden in de derde stap zijn in dit geval de volgende: 
-\begin{center}
-\begin{tabular}{c|cccccccccc}
-		& $B_1$ & $B_2$ & $B_3$ & $B_4$ & $B_5$ & $B_6$ & $B_7$ & $B_8$ & $B_9$  \\
-\hline
-$A_1$ 	& $\mathbf{0.5198}$ & $0.4496$ \\
-$A_2$ 	& & $\mathbf{0.4691}$ & $0.3859$ \\
-$A_3$ 	& & & $0.4133$ & $\mathbf{0.4404}$ & $0.3298$ \\
-$A_4$ 	& & & & & $0.3277$ & $\mathbf{0.4330}$ & $0.3648$ \\
-$A_5$ 	& & & & & & & $\mathbf{0.3849}$ & $0.3134$ \\
-$A_6$ 	& & & & & & & & $\mathbf{0.3438}$ & $0.3427$ \\
-$A_7$ 	& & & & & & & & & $\mathbf{0.5066}$ \\
-\end{tabular}
-\end{center}
-In deze tabel staan de similariteiten die worden toegevoegd aan $S$ in het vet. Deze similariteiten 
-worden in figuur~\ref{fig:multires} grafisch weergeven als verbindingen tussen de
-geordende beeldonderdelen.
+Vervolgens bepalen we de gemiddelde kleur van elk beeldonderdeel. Deze kleur gebruiken we om
+de collecties van beeldonderdelen voor te stellen als twee geordende lijsten, op basis
+van de ordening $\leq_{RGB,lex}$. De elementen van de lijst die correspondeert met $A$ noemen 
+we $A_i$, $i \in \{1,2,\ldots,n\}$, en die van de andere lijst $B_j$, $j \in \{1,2,\ldots,m\}$.
 
+Figuur~\ref{fig:multires} illustreert de constructie van deze lijsten voor twee concrete
+kleurbeelden. In deze figuur is de kleur van een beeldonderdeel gelijk aan de gemiddelde 
+kleur van dat onderdeel.
 \begin{figure}[tbp]
 \begin{center}
 \includegraphics[width=\textwidth]{images/multires.eps}
 \caption{\label{fig:multires}Constructie van een resolutie-onafhankelijke similariteitsmaat op basis van een pixel-gebaseerde maat.}
 \end{center}
 \end{figure}
+
+Zodra we beschikken over de twee geordende lijsten, overlopen we de elementen van de 
+lijst die correspondeert met $B$. Voor
+elk element dat we tegenkomen, bepalen we de similariteit met $A_1$. Dit blijven we doen
+tot we een similariteit vinden die kleiner is dan de vorige. We stoppen dus na $i$ iteraties 
+indien $A_1$ en $B_i$ minder gelijkenis vertonen dan $A_1$ en $B_{i-1}$. Op dat moment voegen
+we de similariteit tussen $A_1$ en $B_{i-1}$ toe aan de lijst van similariteiten $S$. Daarna
+beginnen we bij $B_i$ en herhalen we deze procedure voor $A_2$. We voegen dus opnieuw de vorige
+similariteit toe aan $S$ als deze groter is dan de huidige. Zo gaan we verder tot we bij
+$B_m$ komen. Als we deze procedure $j$ keer kunnen herhalen, dan
+is de similariteit tussen $A_j$ en $B_m$ dus de laatste die we berekenen. Deze similariteit
+voegen we ook nog toe aan $S$. Tenslotte bepalen we de globale similarteit tussen $A$ en $B$ 
+door het gemiddelde van de waarden uit $S$ te berekenen.
+
+Tabel~\ref{tab:multires} geeft een overzicht van de 
+verschillende similariteiten die berekend worden indien we de bovenstaande constructie
+toepassen op de kleurbeelden uit figuur~\ref{fig:multires}. We hebben hierbij gebruik gemaakt 
+van de vaagsimilariteitsmaat $M_3$ en de tralie-gebaseerde aanpak uit \ref{sectie:pixelgeb_kleurbeelden}.
+De similariteiten die  
+toegevoegd worden aan $S$ staan in het vet. Deze similariteiten 
+worden in figuur~\ref{fig:multires} grafisch weergeven als verbindingen tussen de
+geordende beeldonderdelen.
+\begin{table}
+\begin{center}
+\begin{tabular}{|c|ccccccccc|}
+\hline
+$\scriptstyle M_3(A_i,B_j)$	& $B_1$ & $B_2$ & $B_3$ & $B_4$ & $B_5$ & $B_6$ & $B_7$ & $B_8$ & $B_9$  \\
+\hline
+$A_1$ 	& $\mathbf{\scriptstyle 0.5198}$ & $\scriptstyle 0.4496$ & & & & & & & \\
+$A_2$ 	& & $\mathbf{\scriptstyle 0.4691}$ & $\scriptstyle 0.3859$ & & & & & & \\
+$A_3$ 	& & & $\scriptstyle 0.4133$ & $\mathbf{\scriptstyle 0.4404}$ & $\scriptstyle 0.3298$ & & & & \\
+$A_4$ 	& & & & & $\scriptstyle 0.3277$ & $\mathbf{\scriptstyle 0.4330}$ & $\scriptstyle 0.3648$ & & \\
+$A_5$ 	& & & & & & & $\mathbf{\scriptstyle 0.3849}$ & $\scriptstyle 0.3134$ & \\
+$A_6$ 	& & & & & & & & $\mathbf{\scriptstyle 0.3438}$ & $\scriptstyle 0.3427$ \\
+$A_7$ 	& & & & & & & & & $\mathbf{\scriptstyle 0.5066}$ \\
+\hline
+\end{tabular}
+\caption{\label{tab:multires}De similariteiten die berekend worden in de constructie die ge\"illustreerd wordt door figuur~\ref{fig:multires}.}
+\end{center}
+\end{table}
+
+De constructie van een resolutie-onafhankelijke similariteitsmaat, 
+op basis van een pixel-gebaseerde maat, bestaat dus uit vier stappen:
+\begin{enumerate}
+\item Verdeel de te vergelijken afbeeldingen $A$ en $B$
+in partities, zodanig dat alle beeldonderdelen dezelfde resolutie hebben.
+\item Bepaal de gemiddelde kleur van elk beeldonderdeel. Gebruik deze kleur vervolgens
+om de beide collecties van beeldonderdelen te ordenen met behulp van de ordening $\leq_{RGB,lex}$.
+\item Overloop de beeldonderdelen van $B$ en bepaal telkens de similariteit met het eerste 
+beeldonderdeel van $A$. Voeg de vorige similariteit toe aan de lijst van similariteiten $S$
+indien ze groter is dan de huidige. Herhaal deze stap op dat moment voor de resterende
+beeldonderdelen van $A$ en $B$. Het 
+beeldonderdeel van $B$ dat aanleiding gaf tot de huidige similariteit maakt deel uit van
+deze resterende beeldonderdelen.
+
+Als het laatste beeldonderdeel van $B$ bereikt wordt, dan wordt de similariteit tussen dit
+beeldonderdeel en het huidige beeldonderdeel van $A$ toegevoegd aan $S$. De overblijvende
+beeldonderdelen van $A$ worden dan buiten beschouwing gelaten. 
+\item Bepaal het gemiddelde van de similariteiten uit $S$. Deze waarde is de globale similariteit tussen
+$A$ en $B$.
+\end{enumerate}
+
 
 \subsection{Experimentele observaties}
 
@@ -374,9 +412,10 @@ geordende beeldonderdelen.
 \end{figure}
 
 In figuur~\ref{fig:pixelgeb_gggrs_en_cputimes} vergelijken we enkele pixel-gebaseerde similariteitsmaten.
-Hoewel de afbeeldingen in onze testcollectie allemaal dezelfde resolutie hebben, beperken we
-ons toch tot de resolutie-onafhankelijke maten. Bij de beelden die we in de praktijk gaan 
-vergelijken zullen de resoluties immers vrijwel altijd verschillend zijn.
+Hoewel de afbeeldingen in onze testcollectie allemaal dezelfde resolutie hebben, zullen de
+resoluties van de beelden die we in de praktijk gaan vergelijken vrijwel altijd verschillend zijn.
+We beperken ons daarom tot resolutie-onafhankelijke similariteitsmaten. Deze maten construeren
+we op basis van een pixel-gebaseerde maat, zoals besproken in \ref{sectie:res-onafh}.
 
 We beschouwen de drie bovenstaande manieren om de vaagsimilariteitsmaten toe te passen op een 
 onderdeel van een kleurbeeld:
@@ -384,7 +423,7 @@ eerst omzetten naar een grijswaardebeeld,
 toepassen op de afzonderlijke kleurcomponenten en 
 de tralie-gebaseerde aanpak.
 De laatste manier in combinatie met $M_{3}$ levert de beste similariteitsmaat op. We vinden
-voor deze similariteitsmaat de GGGR-waarde 0.16255411255411253. Dit is echter nog steeds een
+voor deze similariteitsmaat de GGGR-waarde $0.16255411255411253$. Dit is echter nog steeds een
 vrij hoge waarde. In figuur~\ref{fig:results_beste_pixelgeb}
 zien we dan ook dat de resultaten van deze maat niet zo overtuigend zijn. Blijkbaar 
 is de pixel-gebaseerde benadering niet de meest geschikte voor image retrieval. 
@@ -551,44 +590,48 @@ h_A(c) = \sum_{x \in X} \delta (c - A(x))
 $$
 waarbij $\delta$ de Diracfuntie is en $X$ het universum der beelpunten voorstelt. 
 
+
+\subsection{Pseudo-vage histogrammen}
+
 Door de waarden van een histogram te normaliseren, kunnen we het omzetten naar een 
 vaagverzameling in $C$, waarbij $C$ het universum der kleuren is. Dit houdt in dat we elke
 waarde van het histogram delen door het maximaal aantal pixels met dezelfde kleur. 
 We hebben dus de volgende uitdrukking voor de lidmaatschapsgraad van de kleur $c$ in de 
-vaagverzameling $Fh_A$ geassocieerd met het histogram van beeld $A$:
+vaagverzameling $PFh_A$ geassocieerd met het histogram van beeld $A$:
 $$
-Fh_A(c) = \frac{\displaystyle h_A(c)}{\displaystyle \max_{c \in C}(c)}
+PFh_A(c) = \frac{\displaystyle h_A(c)}{\displaystyle \max_{c \in C}(c)}
 $$
 
-Voor een RGB-beeld gebruikt met typisch 8 bits per kleurcomponent. Dit geeft een totaal van
+Voor een RGB-beeld gebruikt men typisch 8 bits per kleurcomponent. Dit geeft een totaal van
 24 bits per kleur, zodat men dus $2^{24}=2^4 \cdot 2^{20}=16 \cdot 2^{20} \approx 16 \cdot 10^6$
 kleuren kan voorstellen. Een genormaliseerd histogram bestaat dan dus uit 16 miljoen waarden.
 Similariteitsmaten op basis van dergelijke histogrammen zouden dus veel te veel rekentijd vragen.
 
-We kunnen de rekentijd echter reduceren door de histogrammen te comprimeren. Dit kan door gebruik te 
+We kunnen de rekentijd echter reduceren door de histogrammen te comprimeren. Dit kan 
+gerealiseerd worden door gebruik te 
 maken van zogenaamde \emph{bins}. Elk van deze bins omvat meerdere kleuren. We beschouwen dus 
 geen aparte kleuren meer, maar wel verzamelingen van kleuren. Per verzameling bepalen we dan 
 hoeveel keer de kleuren in die verzameling voorkomen 
-in de afbeelding in kwestie. De karakteristieke afbeelding van de vaagverzameling $Bh_A$, die
+in de afbeelding in kwestie. De karakteristieke afbeelding van de vaagverzameling $BPFh_A$, die
 correspondeert met het in $N$ bins onderverdeelde histogram van beeld $A$, wordt dan als volgt
 gedefinieerd:  
 $$
 \begin{array}{lrcl}
-Bh_A: 	& \{1,2,\ldots,N\} 	& \to 		& [0,1] \\[5pt]
+BPFh_A: 	& \{1,2,\ldots,N\} 	& \to 		& [0,1] \\[5pt]
 		& n						& \mapsto	& \displaystyle\sum_{c \in C} \delta (n -  bin(c)),
 \quad\forall n \in \{1,2,\ldots,N\}
 \end{array}
 $$
 Hierbij is $bin$ een $C - \{1,2,\ldots,N\}$ afbeelding die met elke kleur het nummer van de 
 corresponderende bin associeert. We zouden bijvoorbeeld 
-$bin(c) = \lfloor Fh_A(c) \cdot (N-1) \rfloor + 1$ kunnen kiezen. Doorgaands willen we echter
+$bin(c) = \lfloor PFh_A(c) \cdot (N-1) \rfloor + 1$ kunnen kiezen. Doorgaands willen we echter
 meer belang hechten aan bepaalde kleurcomponenten. We gebruiken daarom de volgende definitie:
 $$
 bin(c) = bin(c_1,c_2,\ldots,c_m) = \left[ \sum_{i=1}^m \left( \prod_{j=1}^{i-1} N_j \right) \left\lfloor c_i \cdot (N_i - 1) \right\rfloor \right] + 1
 $$
 met $N=N_1 \cdot N_2 \cdot \ldots \cdot N_m$.
 
-\subsection{HSV-histogram}
+\subsubsection{HSV-histogram}
 
 In het HSV kleurmodel wordt elke kleur voorgesteld door een drietal. Men noemt de componenten van 
 zo'n drietal respectievelijk ``hue'', ``saturation'' en ``value''. De eerste van deze componenten
@@ -597,13 +640,13 @@ aangeven. Men kan een kleur $c(r,g,b) \in [0,1]^3$ uit het RGB model als volgt o
 kleur $c'(h,s,v) \in [0,1]^3$ in het HSV model:
 $$
 \begin{array}{rcll}
-h' & = & 60 \cdot \frac{g - b}{\max (r,g,b) - \min (r,g,b)}\quad & \textrm{ als } \max (r,g,b) = r \\[2pt]
-  & = & 60 \cdot \frac{b - r}{\max (r,g,b) - \min (r,g,b)} + 120\quad & \textrm{ als } \max (r,g,b) = g \\[2pt]
-  & = & 60 \cdot \frac{r - g}{\max (r,g,b) - \min (r,g,b)} + 240\quad & \textrm{ als } \max (r,g,b) = b \\[6pt]
+h' & = & 60 \cdot \frac{g - b}{\max \{r,g,b\} - \min \{r,g,b)}\quad & \textrm{ als } \max \{r,g,b\} = r \\[2pt]
+  & = & 60 \cdot \frac{b - r}{\max \{r,g,b\} - \min \{r,g,b)} + 120\quad & \textrm{ als } \max \{r,g,b\} = g \\[2pt]
+  & = & 60 \cdot \frac{r - g}{\max \{r,g,b\} - \min \{r,g,b)} + 240\quad & \textrm{ als } \max \{r,g,b\} = b \\[6pt]
 h & = & \frac{h' \bmod 360}{360} & \textrm{ als } h' \bmod 360 \geq 0 \\[2pt]
   & = & \frac{360 - (h' \bmod 360)}{360} & \textrm{ als } h' \bmod 360 < 0 \\[6pt]
-s & = & \frac{\max (r,g,b) - \min (r,g,b)}{\max (r,g,b)} & \\[6pt]
-v & = & \max (r,g,b)
+s & = & \frac{\max \{r,g,b\} - \min \{r,g,b\}}{\max \{r,g,b\}} & \\[6pt]
+v & = & \max \{r,g,b\}
 \end{array}
 $$
 Als $s=0$ dan is $h$ niet gedefinieerd. Dit is logisch vermits we dan te maken hebben met een 
@@ -621,13 +664,47 @@ Merk op dat onze keuzes voor $N_1$, $N_2$ en $N_3$ overeenstemmen met de keuzes 
 heeft voor de \emph{scalable color descriptor} (SCD), die gedefinieerd wordt in de MPEG-7
 standaard \cite{manjunath:color_and_texture_descriptors}.
 
-\subsection{HMMD-histogram}
+\subsubsection{HMMD-histogram}
 
-\subsection{Yxy-histogram}
+\subsubsection{Yxy-histogram}
 
-\subsection{OCS-histogram}
+\subsubsection{OCS-histogram}
 
-\subsection{Experimentele observaties}
+\subsubsection{Experimentele observaties}
+
+
+\subsection{Vaaghistogram}
+
+Naast de bovenstaande vage interpretatie van het klassieke kleurhistogram, beschouwen we
+ook nog een kleurbeschrijving die we op een ``volledig vage'' manier opbouwen. Bij dit
+\emph{vaaghistogram} maken we gebruik van het L*a*b* kleurmodel en beschouwen we een 
+vaagverzameling voor elke kleur. 
+De lidmaatschapsgraad van een kleur $c'$ in de vaagverzameling 
+$FC_c$, die correspondeert met kleur $c$, defini\"eren we als volgt \cite{vertan:fuzzy_histograms}: 
+$$
+\begin{array}{rcll}
+FC_c(c') & = & 1 & \textrm{als } d(c,c') \leq 2.3 \\
+		 & = & \exp \left( - \frac{\left((d(c,c') / 2.3) - 1\right)^2}{2 \cdot \lambda^2} \right) & \textrm{anders}
+\end{array}
+$$  
+met $d$ de Euclidische afstand en $\lambda$ een vrij te kiezen parameter, die we in deze scriptie
+voor de eenvoud steeds gelijk aan $1$ zullen kiezen. In het geval van L*a*b* 
+komt de afstand $2.3$ namelijk overeen met de zogenaamde \emph{just noticeable difference} (JND). 
+Kleuren waarvan de onderlinge afstand kleiner dan of gelijk aan deze JND is, kunnen door de mens 
+niet onderscheiden worden.
+
+Het eigenlijk vaaghistogram $Fh_A$, voor een kleurbeeld $A$, defini\"eren we dan als de unie van 
+alle kleuren die voorkomen in $A$:
+$$
+\begin{array}{lrcl}
+Fh_A: 	& C_A 	& \to 		& [0,1] \\[5pt]
+		& c					& \mapsto	& \displaystyle\bigcup_{c \in C_A} FC_c,
+\quad\forall c \in C_A
+\end{array}
+$$ 
+waarbij de verzameling $C_A$ bestaat uit de in $A$ voorkomende kleuren.
+
+\subsubsection{Experimentele observaties}
 
 
 \section{Gebaseerd op dominante kleuren}
