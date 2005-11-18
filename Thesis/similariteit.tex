@@ -15,6 +15,24 @@ In het vervolg van deze scriptie bedoelen we met de term ``similariteitsmaat'' s
 een similariteitsmaat voor afbeeldingen. Dit omvat dus zowel een manier van identificeren als een 
 vaagsimilariteitsmaat.
 
+\section{Eigenschappen}
+
+In dit hoofdstuk constueren we een aantal similariteitsmaten voor afbeeldingen. Hierbij eisen we  
+dat al onze similariteitsmaten \emph{reflexief} en \emph{symmetrisch} zijn.
+
+\subsection{Reflexiviteit}
+
+Voor twee identieke beelden verwachten we dat een similariteitsmaat $M$ als output $1$
+teruggeeft. Met andere woorden, voor een beeld $A$ moet gelden: $M(A,A)=1$.
+Deze eigenschap heeft als gevolg dat de voorbeeld-afbeelding zich steeds vooraan in
+de geordende lijst van zoekresultaten moet bevinden.
+
+\subsection{Symmetrisch}
+
+De output van een similariteitsmaat $M$ wordt verwacht onafhankelijk te zijn van de 
+volgorde waarin de beelden aangeboden worden. Voor beelden $A$ en $B$ moet dus gelden:
+$M(A,B)=M(B,A)$.
+
 \section{Evaluatie van performantie}
 
 \subsection{Globale genormaliseerde gemiddelde rang (GGGR)}
@@ -25,6 +43,14 @@ Dit zullen we doen door elke
 maat, voor een bepaalde voorbeeld-afbeelding, toe te passen op een eenzelfde collectie 
 van afbeeldingen. Vervolgens zullen we de rangschikking die we zo bekomen
 beoordelen met behulp van een performantiemaat.
+
+Figuur~\ref{fig:testcollectie} bevat de collectie van afbeeldingen die we gaan 
+gebruiken. Deze collectie bestaat uit een selectie van beelden uit
+de \emph{Columbia object image library} \cite{coil-100}. Deze bibliotheek van afbeeldingen 
+werd gegenereerd 
+door een aantal roterende objecten op bepaalde vaste momenten te fotograferen. 
+Onze testcollectie bestaat uit foto's van elf objecten. Van elke object zijn
+er zes momentopnames, wat een totaal van $11 \cdot 6 = 66$ afbeeldingen geeft.
 
 \begin{figure}[p]
 \begin{center}
@@ -113,14 +139,6 @@ beoordelen met behulp van een performantiemaat.
 \end{center}
 \end{figure}
 
-Figuur~\ref{fig:testcollectie} bevat de collectie van afbeeldingen die we gaan 
-gebruiken. Deze collectie bestaat uit een selectie van beelden uit
-de \emph{Columbia object image library} \cite{coil-100}. Deze bibliotheek van afbeeldingen 
-werd gegenereerd 
-door een aantal roterende objecten op bepaalde vaste momenten te fotograferen. 
-Onze testcollectie bestaat uit foto's van elf objecten. Van elke object zijn
-er zes momentopnames, wat een totaal van $11 \cdot 6 = 66$ afbeeldingen geeft.
-
 Voor het beoordelen van een rangschikking, gebruiken we de \emph{genormaliseerde gemiddelde rang} 
 (GGR) \cite{muller:perf_eval}. Deze performantiemaat wordt toegepast op een collectie
 van $N$ afbeeldingen. Voor elk van deze afbeeldingen bevat de collectie
@@ -136,8 +154,8 @@ $$
 \begin{array}{lrcl}
 \textrm{GGR}: 	& \{1,2,\ldots,N\}^{N_R} & \to 	& [0,1] \\
 		& (r_1,r_2,\ldots,r_{N_R}) & \mapsto &
-	{\displaystyle\frac{1}{N \cdot N_R}\left[ \left(\sum_{i=1}^{N_R}r_i\right) - \frac{N_R \cdot (N_R + 1)}{2} \right]},\\
-	& & & \qquad \forall (r_1, r_2, ..., r_{N_R}) \in \{1,2,\ldots,N\}^{N_R}
+	{\displaystyle\frac{1}{N \cdot N_R}\left[ \left(\sum_{i=1}^{N_R}r_i\right) - \frac{N_R \cdot (N_R + 1)}{2} \right]},\\[15pt]
+	& & & \qquad \quad \forall (r_1, r_2, ..., r_{N_R}) \in \{1,2,\ldots,N\}^{N_R}
 \end{array}
 $$
 \end{definitie}
@@ -339,6 +357,24 @@ kleur van dat onderdeel.
 \caption{\label{fig:multires}Constructie van een resolutie-onafhankelijke similariteitsmaat op basis van een pixel-gebaseerde maat.}
 \end{center}
 \end{figure}
+\begin{table}
+\begin{center}
+\begin{tabular}{|c|ccccccccc|}
+\hline
+$\scriptstyle M_3(A_i,B_j)$	& $B_1$ & $B_2$ & $B_3$ & $B_4$ & $B_5$ & $B_6$ & $B_7$ & $B_8$ & $B_9$  \\
+\hline
+$A_1$ 	& $\mathbf{\scriptstyle 0.5198}$ & $\scriptstyle 0.4496$ & & & & & & & \\
+$A_2$ 	& & $\mathbf{\scriptstyle 0.4691}$ & $\scriptstyle 0.3859$ & & & & & & \\
+$A_3$ 	& & & $\scriptstyle 0.4133$ & $\mathbf{\scriptstyle 0.4404}$ & $\scriptstyle 0.3298$ & & & & \\
+$A_4$ 	& & & & & $\scriptstyle 0.3277$ & $\mathbf{\scriptstyle 0.4330}$ & $\scriptstyle 0.3648$ & & \\
+$A_5$ 	& & & & & & & $\mathbf{\scriptstyle 0.3849}$ & $\scriptstyle 0.3134$ & \\
+$A_6$ 	& & & & & & & & $\mathbf{\scriptstyle 0.3438}$ & $\scriptstyle 0.3427$ \\
+$A_7$ 	& & & & & & & & & $\mathbf{\scriptstyle 0.5066}$ \\
+\hline
+\end{tabular}
+\caption{\label{tab:multires}De similariteiten die berekend worden in de constructie die ge\"illustreerd wordt door figuur~\ref{fig:multires}.}
+\end{center}
+\end{table}
 
 Zodra we beschikken over de twee geordende lijsten, overlopen we de elementen van de 
 lijst die correspondeert met $B$. Voor
@@ -361,24 +397,6 @@ De similariteiten die
 toegevoegd worden aan $S$ staan in het vet. Deze similariteiten 
 worden in figuur~\ref{fig:multires} grafisch weergeven als verbindingen tussen de
 geordende beeldonderdelen.
-\begin{table}
-\begin{center}
-\begin{tabular}{|c|ccccccccc|}
-\hline
-$\scriptstyle M_3(A_i,B_j)$	& $B_1$ & $B_2$ & $B_3$ & $B_4$ & $B_5$ & $B_6$ & $B_7$ & $B_8$ & $B_9$  \\
-\hline
-$A_1$ 	& $\mathbf{\scriptstyle 0.5198}$ & $\scriptstyle 0.4496$ & & & & & & & \\
-$A_2$ 	& & $\mathbf{\scriptstyle 0.4691}$ & $\scriptstyle 0.3859$ & & & & & & \\
-$A_3$ 	& & & $\scriptstyle 0.4133$ & $\mathbf{\scriptstyle 0.4404}$ & $\scriptstyle 0.3298$ & & & & \\
-$A_4$ 	& & & & & $\scriptstyle 0.3277$ & $\mathbf{\scriptstyle 0.4330}$ & $\scriptstyle 0.3648$ & & \\
-$A_5$ 	& & & & & & & $\mathbf{\scriptstyle 0.3849}$ & $\scriptstyle 0.3134$ & \\
-$A_6$ 	& & & & & & & & $\mathbf{\scriptstyle 0.3438}$ & $\scriptstyle 0.3427$ \\
-$A_7$ 	& & & & & & & & & $\mathbf{\scriptstyle 0.5066}$ \\
-\hline
-\end{tabular}
-\caption{\label{tab:multires}De similariteiten die berekend worden in de constructie die ge\"illustreerd wordt door figuur~\ref{fig:multires}.}
-\end{center}
-\end{table}
 
 De constructie van een resolutie-onafhankelijke similariteitsmaat, 
 op basis van een pixel-gebaseerde maat, bestaat dus uit vier stappen:
@@ -401,6 +419,10 @@ beeldonderdelen van $A$ worden dan buiten beschouwing gelaten.
 $A$ en $B$.
 \end{enumerate}
 
+Het resultaat $M$ van deze constructie, voor twee beelden $A$ en $B$, is echter niet noodzakelijk 
+een symmetrische similariteitsmaat. Om dit probleem op te lossen, bepalen we zowel $M(A,B)$ als
+$M(B,A)$ en gebruiken we het gemiddelde van deze waarden.
+
 
 \subsection{Experimentele observaties}
 
@@ -415,7 +437,8 @@ In figuur~\ref{fig:pixelgeb_gggrs_en_cputimes} vergelijken we enkele pixel-gebas
 Hoewel de afbeeldingen in onze testcollectie allemaal dezelfde resolutie hebben, zullen de
 resoluties van de beelden die we in de praktijk gaan vergelijken vrijwel altijd verschillend zijn.
 We beperken ons daarom tot resolutie-onafhankelijke similariteitsmaten. Deze maten construeren
-we op basis van een pixel-gebaseerde maat, zoals besproken in \ref{sectie:res-onafh}.
+we op basis van een pixel-gebaseerde maat, zoals besproken in \ref{sectie:res-onafh}. De 
+beeldonderdelen die we gebruiken bestaan uit $8 \cdot 8 = 64$ pixels.
 
 We beschouwen de drie bovenstaande manieren om de vaagsimilariteitsmaten toe te passen op een 
 onderdeel van een kleurbeeld:
@@ -657,18 +680,24 @@ implementatie geven we niet gedefinieerde componenten de waarde 0.
 Bij image retrieval is doorgaands vooral de kleurtint op zich belangrijk. We kunnen de grootte van
 een histogram dus beperken door het HSV model te gebruiken en meer belang te hechten aan de
 eerste kleurcomponent. Dit doen we door $N_1=16$, $N_2=4$ en $N_3=4$ te kiezen. We bekomen zo dus
-een histogram dat slechts $16 \cdot 4 \cdot 4 = 256$ waarden bevat. Bovendien is het discriminerend
-vermogen van dit histogram waarschijnlijk ook beter dan dat van een ongecomprimeerd kleurhistogram.
+een histogram dat slechts $16 \cdot 4 \cdot 4 = 256$ waarden bevat. 
+%Bovendien is het discriminerend
+%vermogen van dit histogram waarschijnlijk ook beter dan dat van een ongecomprimeerd kleurhistogram.
 
 Merk op dat onze keuzes voor $N_1$, $N_2$ en $N_3$ overeenstemmen met de keuzes die men gemaakt
 heeft voor de \emph{scalable color descriptor} (SCD), die gedefinieerd wordt in de MPEG-7
 standaard \cite{manjunath:color_and_texture_descriptors}.
 
+\subsubsection{OCS-histogram}
+
 \subsubsection{HMMD-histogram}
+
+\subsubsection{NCS-histogram}
+
+\subsubsection{XYZ-histogram}
 
 \subsubsection{Yxy-histogram}
 
-\subsubsection{OCS-histogram}
 
 \subsubsection{Experimentele observaties}
 
@@ -689,18 +718,20 @@ FC_c(c') & = & 1 & \textrm{als } d(c,c') \leq 2.3 \\
 $$  
 met $d$ de Euclidische afstand en $\lambda$ een vrij te kiezen parameter, die we in deze scriptie
 voor de eenvoud steeds gelijk aan $1$ zullen kiezen. In het geval van L*a*b* 
-komt de afstand $2.3$ namelijk overeen met de zogenaamde \emph{just noticeable difference} (JND). 
+komt de afstand $2.3$ namelijk overeen met de zogenaamde \emph{just noticeable difference} (JND)
+\cite{sharma:digital_color_imaging}. 
 Kleuren waarvan de onderlinge afstand kleiner dan of gelijk aan deze JND is, kunnen door de mens 
 niet onderscheiden worden.
 
 Het eigenlijk vaaghistogram $Fh_A$, voor een kleurbeeld $A$, defini\"eren we dan als de unie van 
 alle kleuren die voorkomen in $A$:
 $$
-\begin{array}{lrcl}
-Fh_A: 	& C_A 	& \to 		& [0,1] \\[5pt]
-		& c					& \mapsto	& \displaystyle\bigcup_{c \in C_A} FC_c,
-\quad\forall c \in C_A
-\end{array}
+Fh_A = \displaystyle\bigcup_{c \in C_A} FC_c
+%\begin{array}{lrcl}
+%Fh_A: 	& C_A 	& \to 		& [0,1] \\[5pt]
+%		& c					& \mapsto	& \displaystyle\bigcup_{c \in C_A} FC_c,
+%\quad\forall c \in C_A
+%\end{array}
 $$ 
 waarbij de verzameling $C_A$ bestaat uit de in $A$ voorkomende kleuren.
 
