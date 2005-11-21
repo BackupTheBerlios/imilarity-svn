@@ -38,7 +38,7 @@ public class SimpleMembership implements Membership {
 		double sum = 0;
 		for (int i = 0; i < components.length; i++)
 			sum += components[i] * components[i];
-		return Math.sqrt(sum) / Math.sqrt(3);
+		return Math.sqrt(sum) / Math.sqrt(components.length);
 	}
 	
 	public Membership plus(Membership m) {
