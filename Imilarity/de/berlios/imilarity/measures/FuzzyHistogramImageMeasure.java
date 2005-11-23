@@ -5,7 +5,9 @@ package de.berlios.imilarity.measures;
 
 import java.util.HashMap;
 
+import de.berlios.imilarity.fuzzy.DefaultSmoother;
 import de.berlios.imilarity.fuzzy.FuzzyHistogram;
+import de.berlios.imilarity.fuzzy.Smoother;
 import de.berlios.imilarity.image.Image;
 
 
@@ -17,9 +19,10 @@ public class FuzzyHistogramImageMeasure extends ImageMeasureBase {
 	private HashMap queryHistogram, targetHistogram;
 	private int queryHistLength, targetHistLength;
 	private int[] binsCounts = new int[] { 256 };
+	private Smoother smoother;
 	
 	
-	public FuzzyHistogramImageMeasure(FuzzyMeasure fuzzyMeasure, int[] binsCounts) {
+	public FuzzyHistogramImageMeasure(FuzzyMeasure fuzzyMeasure, int[] binsCounts, Smoother smoother) {
 		if (fuzzyMeasure == null)
 			throw new NullPointerException("fuzzyMeasure == null");
 		if (binsCounts == null)
@@ -28,12 +31,22 @@ public class FuzzyHistogramImageMeasure extends ImageMeasureBase {
 		queryHistogram = new HashMap();
 		targetHistogram = new HashMap();
 		this.binsCounts = binsCounts;
+		if (smoother == null)
+			throw new NullPointerException("smoother == null");
+		this.smoother = smoother;
+	}
+	
+	public FuzzyHistogramImageMeasure(FuzzyMeasure fuzzyMeasure, int[] binsCounts) {
+		this(fuzzyMeasure, binsCounts, new DefaultSmoother());
+	}
+	
+	public FuzzyHistogramImageMeasure(FuzzyMeasure fuzzyMeasure, int binsCount, Smoother smoother) {
+		this(fuzzyMeasure, new int[] { binsCount }, smoother);
 	}
 	
 	public FuzzyHistogramImageMeasure(FuzzyMeasure fuzzyMeasure, int binsCount) {
-		this(fuzzyMeasure, new int[] { binsCount });
+		this(fuzzyMeasure, binsCount, new DefaultSmoother());
 	}
-	
 	
 	
 	public void setQuery(Image query) {
@@ -62,14 +75,14 @@ public class FuzzyHistogramImageMeasure extends ImageMeasureBase {
 	public double getSimilarity() {
 		queryHistogram.clear();
 		targetHistogram.clear();
-		int queryMax = 0, targetMax = 0;
+		int queryMaxIndex = 0, targetMaxIndex = 0;
 		for (int i = 0; i < queryPc; i++) {
 			double[] comps = getQuery().getColor(i).getComponents();
-			int v1 = (int) (comps[0]*(binsCounts[0]-1));
+			int v1 = Math.min((int)(comps[0]*binsCounts[0]),binsCounts[0]-1);
 			int factor = 1;
 			for (int j = 1; j < comps.length; j++) {
 				factor *= binsCounts[j-1];
-				v1 += factor * (int)(comps[j]*(binsCounts[j]-1));
+				v1 += factor * Math.min((int)(comps[j]*binsCounts[j]),binsCounts[j]-1);
 			}
 			
 			Integer index = new Integer(v1);
@@ -78,15 +91,15 @@ public class FuzzyHistogramImageMeasure extends ImageMeasureBase {
 			
 			int newValue = prev.intValue()+1;
 			queryHistogram.put(index, new Integer(newValue));
-			if (newValue > queryMax) queryMax = newValue;
+			if (newValue > queryMaxIndex) queryMaxIndex = v1;
 		}
 		for (int i = 0; i < targetPc; i++) {
 			double[] comps = getTarget().getColor(i).getComponents(); 
-			int v2 = (int) (comps[0]*(binsCounts[0]-1));
+			int v2 = Math.min((int)(comps[0]*binsCounts[0]),binsCounts[0]-1);
 			int factor = 1;
 			for (int j = 1; j < comps.length; j++) {
 				factor *= binsCounts[j-1];
-				v2 += factor * (int)(comps[j]*(binsCounts[j]-1));
+				v2 += factor * Math.min((int)(comps[j]*binsCounts[j]), binsCounts[j]-1);
 			}
 			
 			Integer index = new Integer(v2);
@@ -95,13 +108,13 @@ public class FuzzyHistogramImageMeasure extends ImageMeasureBase {
 			
 			int newValue = prev.intValue()+1;
 			targetHistogram.put(index, new Integer(newValue));
-			if (newValue > targetMax) targetMax = newValue;
+			if (newValue > targetMaxIndex) targetMaxIndex = v2;
 		}
 		
 		fuzzyMeasure.setQuery
-			(new FuzzyHistogram(queryHistogram, queryMax, queryHistLength));
+			(new FuzzyHistogram(queryHistogram, queryMaxIndex, queryHistLength, smoother));
 		fuzzyMeasure.setTarget
-			(new FuzzyHistogram(targetHistogram, targetMax, targetHistLength));
+			(new FuzzyHistogram(targetHistogram, targetMaxIndex, targetHistLength, smoother));
 		return fuzzyMeasure.
 		getSimilarity();
 	}

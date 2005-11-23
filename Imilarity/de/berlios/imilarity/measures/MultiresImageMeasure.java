@@ -1,8 +1,6 @@
 package de.berlios.imilarity.measures;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -46,10 +44,16 @@ public class MultiresImageMeasure extends ImageMeasureBase {
 		targetSet = createPartsSet(target);
 	}
 	
-	public double getSimilarity() {
-		List sims = new ArrayList();
-		Iterator qIt = querySet.iterator();
-		Iterator tIt = targetSet.iterator();
+	public double getSimilarity() { 
+		double sim1 = calculateSimilarity(querySet, targetSet);
+		double sim2 = calculateSimilarity(targetSet, querySet);
+		return (sim1 + sim2) / 2; 
+	}
+	
+	private double calculateSimilarity(SortedSet a, SortedSet b) { 
+		aggregator.clearValues();
+		Iterator qIt = a.iterator();
+		Iterator tIt = b.iterator();
 		if (qIt.hasNext() && tIt.hasNext()) {
 			Image target = (Image) tIt.next();
 			while (qIt.hasNext() && tIt.hasNext()) {
@@ -64,12 +68,15 @@ public class MultiresImageMeasure extends ImageMeasureBase {
 					prevSim = sim;
 					sim = measure.getSimilarity();
 				}
-				sims.add(new Double(prevSim));
+				aggregator.addValue(prevSim);
 			}
-			aggregator.clearValues();
-			Iterator it = sims.iterator();
-			while (it.hasNext())
-				aggregator.addValue(((Double)it.next()).doubleValue());
+			if (qIt.hasNext()) {
+				Image query = (Image) qIt.next();
+				measure.setQuery(query);
+				measure.setTarget(target);
+				double sim = measure.getSimilarity();
+				aggregator.addValue(sim);
+			}	
 			return aggregator.getAggregatedValue();
 		} else
 			return 0; 

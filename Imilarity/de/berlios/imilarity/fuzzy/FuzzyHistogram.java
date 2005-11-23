@@ -8,8 +8,10 @@ import de.berlios.imilarity.image.Image;
 public class FuzzyHistogram extends FuzzySetBase {
 
 	private Map histogram;
-	private int elementsCount = 0, max = 0;
-
+	private int elementsCount = 0;
+	private double max = 0.0;
+	private Smoother smoother;
+	
 	
 	public FuzzyHistogram(Image image, int[] binsCounts) {
 		if (image == null)
@@ -19,6 +21,7 @@ public class FuzzyHistogram extends FuzzySetBase {
 		if (image.getColorComponentsCount() != binsCounts.length)
 			throw new IllegalArgumentException("binsCounts must have " 
 					+ image.getColorComponentsCount() + " components");
+		this.smoother = new DefaultSmoother();
 		
 		histogram = new HashMap();
 		elementsCount = binsCounts[0];
@@ -27,7 +30,8 @@ public class FuzzyHistogram extends FuzzySetBase {
 		
 		int pc = image.getWidth() * image.getHeight();
 		for (int i = 0; i < pc; i++) {
-			int value = (int) (image.getColor(i).getComponents()[0]*(binsCounts[i]-1));
+			int value = 
+				Math.min((int)(image.getColor(i).getComponents()[0]*binsCounts[i]),binsCounts[i]-1);
 			Integer index = new Integer(value);
 			Integer prev = (Integer)histogram.get(index);
 			if (prev == null) prev = new Integer(0);
@@ -38,12 +42,31 @@ public class FuzzyHistogram extends FuzzySetBase {
 		}
 	}
 	
-	public FuzzyHistogram(Map histogram, int max, int elementsCount) {
+	public FuzzyHistogram(Map histogram, int maxIndex, int elementsCount, Smoother smoother) {
 		if (histogram == null)
 			throw new NullPointerException("histogram == null");
 		this.histogram = histogram;
-		this.max = max;
+		if (smoother == null)
+			throw new IllegalArgumentException("smoother == null");
+		this.smoother = smoother;
 		this.elementsCount = elementsCount;
+		
+		int n = smoother.getRange();
+		double avg = 0.0;
+		for (int i = -n; i <= n; i++) {
+			int index = smoother.getIndex(maxIndex, i);
+			if (index > 0) {
+				Integer value = (Integer) histogram.get(new Integer(maxIndex+i));
+				if (value == null)
+					value = new Integer(0);
+				avg += smoother.getIncrement(maxIndex, i, value.intValue());
+			}
+		}
+		max = avg/(2*n+1);
+	}
+	
+	public FuzzyHistogram(Map histogram, int maxIndex, int elementsCount) {
+		this(histogram, maxIndex, elementsCount, new DefaultSmoother());
 	}
 	
 	
@@ -53,10 +76,18 @@ public class FuzzyHistogram extends FuzzySetBase {
 	}
 
 	public Membership getMembership(int element) {
-		Integer value = (Integer) histogram.get(new Integer(element));
-		if (value == null)
-			value = new Integer(0);
-		return new SimpleMembership(value.intValue() * 1.0 / max);
+		int n = smoother.getRange();
+		double avg = 0.0;
+		for (int i = -n; i <= n; i++) {
+			int index = smoother.getIndex(element, i);
+			if (index > 0) {
+				Integer value = (Integer) histogram.get(new Integer(element+i));
+				if (value == null)
+					value = new Integer(0);
+				avg += smoother.getIncrement(element, i, (value.intValue() / max));
+			}
+		}
+		return new SimpleMembership((avg/(2*n+1))); // / max);
 	}
 
 	public FuzzySet intersection(FuzzySet set) {

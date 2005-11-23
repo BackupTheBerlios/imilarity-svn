@@ -12,10 +12,19 @@ public class ComponentsImageMeasure extends ImageMeasureBase {
 	private ImageMeasure measure;
 	private Image[] compImages;
 	
-	public ComponentsImageMeasure(ImageMeasure measure) {
+	private int[] indices;
+	
+	public ComponentsImageMeasure(ImageMeasure measure, int[] indices) {
 		if (measure == null)
 			throw new NullPointerException("measure == null");
 		this.measure = measure;
+		if (indices == null)
+			throw new NullPointerException("indices == null");
+		this.indices = indices;
+	}
+	
+	public ComponentsImageMeasure(ImageMeasure measure) {
+		this(measure, new int[] {0,1,2});
 	}
 	
 	public void setQuery(Image image) {
@@ -27,12 +36,12 @@ public class ComponentsImageMeasure extends ImageMeasureBase {
 	
 	public double getSimilarity() {
 		double sum = 0.0;
-		for (int i = 0; i < 3; i++) {
-			measure.setQuery(compImages[i]);
+		for (int i = 0; i < indices.length; i++) {
+			measure.setQuery(compImages[indices[i]]);
 			measure.setTarget(new ComponentImage(getTarget(), i));
 			sum += measure.getSimilarity();
 		}
-		return sum / 3;
+		return sum / indices.length;
 	}
 
 	public String getDescription() {

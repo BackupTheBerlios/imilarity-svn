@@ -1,12 +1,13 @@
 package de.berlios.imilarity.measures;
 
+import de.berlios.imilarity.image.LabImage;
 import de.berlios.imilarity.image.Image;
-import de.berlios.imilarity.image.ParameterizedImage;
 
-public class ParameterizedImageMeasure extends ImageMeasureBase {
-private ImageMeasure measure;
+public class LabImageMeasure extends ImageMeasureBase {
 	
-	public ParameterizedImageMeasure(ImageMeasure measure) {
+	private ImageMeasure measure;
+	
+	public LabImageMeasure(ImageMeasure measure) {
 		if (measure == null)
 			throw new NullPointerException("measure == null");
 		this.measure = measure;
@@ -14,12 +15,12 @@ private ImageMeasure measure;
 	
 	public void setQuery(Image image) {
 		super.setQuery(image);
-		measure.setQuery(new ParameterizedImage(image));
+		measure.setQuery(new LabImage(image));
 	}
 	
 	public void setTarget(Image image) {
 		super.setTarget(image);
-		measure.setTarget(new ParameterizedImage(image));
+		measure.setTarget(new LabImage(image));
 	}
 	
 	public double getSimilarity() {
@@ -27,7 +28,7 @@ private ImageMeasure measure;
 	}
 
 	public String getDescription() {
-		return "Parameterized using " + measure.getDescription();
+		return "Lab using " + measure.getDescription();
 	}
 
 }
