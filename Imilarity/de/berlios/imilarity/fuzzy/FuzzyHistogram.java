@@ -3,7 +3,10 @@ package de.berlios.imilarity.fuzzy;
 import java.util.HashMap;
 import java.util.Map;
 
+
 import de.berlios.imilarity.image.Image;
+import de.berlios.imilarity.smoothers.DefaultSmoother;
+import de.berlios.imilarity.smoothers.Smoother;
 
 public class FuzzyHistogram extends FuzzySetBase {
 
@@ -55,7 +58,7 @@ public class FuzzyHistogram extends FuzzySetBase {
 		double avg = 0.0;
 		for (int i = -n; i <= n; i++) {
 			int index = smoother.getIndex(maxIndex, i);
-			if (index > 0) {
+			if (index >= 0) {
 				Integer value = (Integer) histogram.get(new Integer(maxIndex+i));
 				if (value == null)
 					value = new Integer(0);
@@ -80,7 +83,7 @@ public class FuzzyHistogram extends FuzzySetBase {
 		double avg = 0.0;
 		for (int i = -n; i <= n; i++) {
 			int index = smoother.getIndex(element, i);
-			if (index > 0) {
+			if (index >= 0) {
 				Integer value = (Integer) histogram.get(new Integer(element+i));
 				if (value == null)
 					value = new Integer(0);

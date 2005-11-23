@@ -5,10 +5,11 @@ package de.berlios.imilarity.measures;
 
 import java.util.HashMap;
 
-import de.berlios.imilarity.fuzzy.DefaultSmoother;
+
 import de.berlios.imilarity.fuzzy.FuzzyHistogram;
-import de.berlios.imilarity.fuzzy.Smoother;
 import de.berlios.imilarity.image.Image;
+import de.berlios.imilarity.smoothers.DefaultSmoother;
+import de.berlios.imilarity.smoothers.Smoother;
 
 
 public class FuzzyHistogramImageMeasure extends ImageMeasureBase {
