@@ -27,7 +27,7 @@ private ImageMeasure measure;
 	}
 
 	public String getDescription() {
-		return "Normalized using " + measure.getDescription();
+		return "Irb using " + measure.getDescription();
 	}
 
 }

@@ -39,6 +39,8 @@ public class NhSmoother implements Smoother {
 		//return (1.0/Math.abs(offset))*value;
 	}
 
-
+	public String getDescription() {
+		return "NH smoothing";
+	}
 
 }

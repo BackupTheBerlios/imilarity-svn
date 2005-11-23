@@ -15,4 +15,7 @@ public class DefaultSmoother implements Smoother {
 		return value;
 	}
 
+	public String getDescription() {
+		return "no smoothing";
+	}
 }

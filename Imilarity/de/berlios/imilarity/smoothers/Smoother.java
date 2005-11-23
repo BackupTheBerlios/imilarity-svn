@@ -7,5 +7,6 @@ public interface Smoother {
 	public int getIndex(int bin, int offset);
 	
 	public double getIncrement(int bin, int offset, double value);
-	
+
+	public String getDescription();
 }

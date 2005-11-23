@@ -28,7 +28,7 @@ public class I1i2i3ImageMeasure extends ImageMeasureBase {
 	}
 
 	public String getDescription() {
-		return "Opponent using " + measure.getDescription();
+		return "I1I2I3 using " + measure.getDescription();
 	}
 
 }

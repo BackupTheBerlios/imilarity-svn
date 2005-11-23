@@ -129,6 +129,8 @@ public class FuzzyHistogramImageMeasure extends ImageMeasureBase {
 			buf.append("x" + binsCounts[i]);
 		buf.append(" bins using ");
 		buf.append(fuzzyMeasure.getDescription());
+		buf.append(" and ");
+		buf.append(smoother.getDescription());
 		return buf.toString();
 	}
 
