@@ -76,7 +76,6 @@ public class FuzzyHistogramImageMeasure extends ImageMeasureBase {
 	public double getSimilarity() {
 		queryHistogram.clear();
 		targetHistogram.clear();
-		int queryMaxIndex = 0, targetMaxIndex = 0;
 		for (int i = 0; i < queryPc; i++) {
 			double[] comps = getQuery().getColor(i).getComponents();
 			int v1 = Math.min((int)(comps[0]*binsCounts[0]),binsCounts[0]-1);
@@ -92,7 +91,6 @@ public class FuzzyHistogramImageMeasure extends ImageMeasureBase {
 			
 			int newValue = prev.intValue()+1;
 			queryHistogram.put(index, new Integer(newValue));
-			if (newValue > queryMaxIndex) queryMaxIndex = v1;
 		}
 		for (int i = 0; i < targetPc; i++) {
 			double[] comps = getTarget().getColor(i).getComponents(); 
@@ -109,13 +107,12 @@ public class FuzzyHistogramImageMeasure extends ImageMeasureBase {
 			
 			int newValue = prev.intValue()+1;
 			targetHistogram.put(index, new Integer(newValue));
-			if (newValue > targetMaxIndex) targetMaxIndex = v2;
 		}
 		
 		fuzzyMeasure.setQuery
-			(new FuzzyHistogram(queryHistogram, queryMaxIndex, queryHistLength, smoother));
+			(new FuzzyHistogram(queryHistogram, queryHistLength, smoother));
 		fuzzyMeasure.setTarget
-			(new FuzzyHistogram(targetHistogram, targetMaxIndex, targetHistLength, smoother));
+			(new FuzzyHistogram(targetHistogram, targetHistLength, smoother));
 		return fuzzyMeasure.
 		getSimilarity();
 	}

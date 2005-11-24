@@ -45,7 +45,7 @@ public class FuzzyHistogram extends FuzzySetBase {
 		}
 	}
 	
-	public FuzzyHistogram(Map histogram, int maxIndex, int elementsCount, Smoother smoother) {
+	public FuzzyHistogram(Map histogram, int elementsCount, Smoother smoother) {
 		if (histogram == null)
 			throw new NullPointerException("histogram == null");
 		this.histogram = histogram;
@@ -54,22 +54,26 @@ public class FuzzyHistogram extends FuzzySetBase {
 		this.smoother = smoother;
 		this.elementsCount = elementsCount;
 		
-		int n = smoother.getRange();
-		double avg = 0.0;
-		for (int i = -n; i <= n; i++) {
-			int index = smoother.getIndex(maxIndex, i);
-			if (index >= 0) {
-				Integer value = (Integer) histogram.get(new Integer(maxIndex+i));
-				if (value == null)
-					value = new Integer(0);
-				avg += smoother.getIncrement(maxIndex, i, value.intValue());
+		max = 0.0;
+		for (int j = 0; j < elementsCount; j++) {
+			int n = smoother.getRange();
+			double avg = 0.0;
+			for (int i = -n; i <= n; i++) {
+				int index = smoother.getIndex(j, i);
+				if (index >= 0) {
+					Integer value = (Integer) histogram.get(new Integer(j+i));
+					if (value == null)
+						value = new Integer(0);
+					avg += smoother.getIncrement(j, i, value.intValue());
+				}
 			}
+			double v = avg/(2*n+1);
+			if (v > max) max = v;
 		}
-		max = avg/(2*n+1);
 	}
 	
-	public FuzzyHistogram(Map histogram, int maxIndex, int elementsCount) {
-		this(histogram, maxIndex, elementsCount, new DefaultSmoother());
+	public FuzzyHistogram(Map histogram, int elementsCount) {
+		this(histogram, elementsCount, new DefaultSmoother());
 	}
 	
 	
@@ -87,10 +91,10 @@ public class FuzzyHistogram extends FuzzySetBase {
 				Integer value = (Integer) histogram.get(new Integer(element+i));
 				if (value == null)
 					value = new Integer(0);
-				avg += smoother.getIncrement(element, i, (value.intValue() / max));
+				avg += smoother.getIncrement(element, i, (value.intValue())); // / max));
 			}
 		}
-		return new SimpleMembership((avg/(2*n+1))); // / max);
+		return new SimpleMembership((avg/(2*n+1)) / max);
 	}
 
 	public FuzzySet intersection(FuzzySet set) {
