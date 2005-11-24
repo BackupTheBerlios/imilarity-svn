@@ -421,6 +421,7 @@ public class SettingsDialog extends JDialog {
 			super(new BorderLayout());
 			this.elements = elements;
 			text = new JTextArea(5,20);
+			text.setEditable(false);
 			text.setLineWrap(true);
 			text.setWrapStyleWord(true);
 			add(new JScrollPane(text));
