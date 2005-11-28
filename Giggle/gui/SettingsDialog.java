@@ -182,7 +182,6 @@ public class SettingsDialog extends JDialog {
 		new XyzImageMeasure(new FuzzyHistogramImageMeasure(new M1a(), new int[] {8, 4, 8})),
 		new XyzImageMeasure(new FuzzyHistogramImageMeasure(new M1b(), new int[] {8, 4, 8})),
 		new XyzImageMeasure(new FuzzyHistogramImageMeasure(new M1c(), new int[] {8, 4, 8})),
-		new XyzImageMeasure(new FuzzyHistogramImageMeasure(new M1d(), new int[] {8, 4, 8})),
 		new XyzImageMeasure(new FuzzyHistogramImageMeasure(new M2(), new int[] {8, 4, 8})),
 		new XyzImageMeasure(new FuzzyHistogramImageMeasure(new M3(), new int[] {8, 4, 8})),
 		new XyzImageMeasure(new FuzzyHistogramImageMeasure(new M5(), new int[] {8, 4, 8})),
