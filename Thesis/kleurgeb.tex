@@ -1,9 +1,11 @@
 \chapter{Kleur-gebaseerde similariteitsmaten}
 
-In dit hoofdstuk construeren we enkele similariteitsmaten die afbeeldingen vergelijken op
+In dit hoofdstuk construeren we enkele similariteitsmaten die beelden vergelijken op
 basis van de kleuren die er in voorkomen. Vermits kleur \'e\'en van de meest gebruikte 
-kenmerken is bij CBIR \cite{rui:image_retr}, mogen we verwachten deze \emph{kleur-gebaseerde}
+kenmerken is bij CBIR \cite{rui:image_retr}, mogen we verwachten dat deze \emph{kleur-gebaseerde}
 aanpak effici\"ente similariteitsmaten zal opleveren.
+
+
 
 
 \section{Kleurquantisatie}
@@ -14,29 +16,29 @@ voor een RGB-ruimte bijvoorbeeld typisch 8 bits per kleurcomponent. Dit geeft ee
 24 bits per kleur, zodat men dus $2^{24}=2^4 \cdot 2^{20}=16 \cdot 2^{20} \approx 16 \cdot 10^6$
 kleuren kan voorstellen. 
 
-Om de complexiteit te verlagen, reduceert men daarom vaak het aantal
-kleuren door middel van \emph{kleurquantisatie}. Hierbij groepeert men de kleuren in 
-zogenaamde \emph{bins}. Men beschouwt dus geen aparte kleuren meer, maar wel verzamelingen 
+Om de complexiteit te verlagen, zullen we daarom het aantal kleuren 
+reduceren door middel van \emph{kleurquantisatie}. Hierbij groeperen we de kleuren in 
+zogenaamde \emph{bins}. We beschouwen dus geen aparte kleuren meer, maar wel verzamelingen 
 van kleuren. De kleuren die in dezelfde bin zitten, worden dan vervangen door \'e\'en enkele
 kleur. Het \emph{kleurenpalet} is de verzameling van al deze bin-kleuren.
 Bij de eenvoudige quantisatietechnieken
-gebruikt men steeds hetzelfde palet, onafhankelijk van de voor te stellen afbeelding(en). Meer
+wordt steeds hetzelfde palet gebruikt, onafhankelijk van de voor te stellen beelden. Meer
 geavanceerde technieken proberen een palet te gebruiken dat optimaal is voor de
-beschouwde afbeelding(en).
+beschouwde beelden.
 
 Wiskundig kunnen we kleurquantisatie modelleren aan de hand van twee functies: $bin$ en
 $kleur$. De eerste functie associeert met elke kleur $c$, uit de kleurruimte $C$, het
 nummer van de corresponderende bin. Met behulp van de tweede functie kan men dan de kleur
-van deze bin kan bepalen.  
+van deze bin bepalen.  
 
-\subsection{Uniforme quantisatie met een vast kleurenpalet}
+\subsection{Uniforme quantisatie}
 
-Bij uniforme quantisatie wordt elke component uniform verdeeld in een aantal intervallen.
+Bij uniforme quantisatie wordt elke kleurcomponent uniform verdeeld in een aantal intervallen.
 Als we zorgen dat $C=[0,1]^m$, $m > 0$, dan kunnen we 
 de volgende definitie voor $bin$ gebruiken:
 $$
 \begin{array}{lrcll}
-bin: & C & \to & \{1,2,...,N\}\\
+bin: & C & \to & \{1,2,...,N\}\\[5pt]
      & (c_1,c_2,\ldots,c_m) & \mapsto & \left[ \sum_{i=1}^m \left( \prod_{j=1}^{i-1} N_j \right) \mathit{fl}(c_i, N_i) \right] + 1, & \forall (c_1,c_2,\ldots,c_m) \in C
 \end{array}
 $$
@@ -53,18 +55,18 @@ van de intervallen doen hierbij dienst als componenten van de kleur van een bin:
 $$
 \begin{array}{lrcll}
 kleur: & \{1,2,\ldots,N\} & \to & C \\
-	   & n & \mapsto & (bin_1(n), bin_2(n), \dots, bin_m(n)), & \forall n \in \{1,2,\ldots,N\} 
+	   & n & \mapsto & (kleur_1(n), kleur_2(n), \dots, kleur_m(n)), & \forall n \in \{1,2,\ldots,N\} 
 \end{array}
 $$
 waarbij
 $$
-bin_i(n) = \frac{n}{\prod_{j=1}^i N_j} + \frac{1}{2 \cdot N_i}
+kleur_i(n) = \frac{n}{\prod_{j=1}^i N_j} + \frac{1}{2 \cdot N_i}
 $$
 voor alle $n \in \{1,2,\ldots,N\}$ en $i \in \{1,2,\ldots,m\}$.
 
-We beschouwen hieronder zes manier om uniform te quantiseren met een vast kleurpalet.  
+We beschouwen hieronder zes manier om uniform te quantiseren met een vast kleurenpalet.  
 Bij de eerste vijf gebruiken 
-we niet meer dan 256 bins. De laatste techniek gebruikt 343 bins.
+we slechts 256 bins. De laatste techniek gebruikt 343 bins.
 
 \subsubsection{HSV-gebaseerd}
 
@@ -212,12 +214,11 @@ $$
 Omdat we de perceptuele uniformiteit wensen te behouden, gebruiken we voor elke component evenveel bins: 
 $N_1=7$, $N_2=7$ en $N_3=7$.
 
-\subsection{Niet-uniforme quantisatie met een vast kleurenpalet}
+\subsection{Niet-uniforme quantisatie}
 
-\subsection{Uniforme quantisatie met een variabel kleurenpalet}
-
-\subsection{Niet-uniforme quantisatie met een variabel kleurenpalet} 
-
+De bovenstaande technieken die uniform quantiseren, zijn zeer eenvoudig, beschouwen we ook nog 
+een aantal niet-uniforme quantisatietechnieken.
+ 
 
 
 \section{Histogrammen}
@@ -251,7 +252,7 @@ We kunnen de rekentijd echter reduceren door de histogrammen te quantiseren. Hie
 maken we gebruik van zogenaamde \emph{bins}, die elk meerdere kleuren bevatten. We beschouwen dus 
 geen aparte kleuren meer, maar wel verzamelingen van kleuren. Per verzameling bepalen we dan 
 hoeveel keer de kleuren in die verzameling voorkomen 
-in de afbeelding in kwestie. De karakteristieke afbeelding van de vaagverzameling $\mathit{BPFh}_A$, die
+in het beeld in kwestie. De karakteristieke afbeelding van de vaagverzameling $\mathit{BPFh}_A$, die
 correspondeert met het in $N$ bins onderverdeelde histogram van beeld $A$, wordt dan als volgt
 gedefinieerd:  
 $$
@@ -418,7 +419,7 @@ corresponderende bin associeert.
 \includegraphics[width=1cm]{coil/beeld-60.eps}
 & {\scriptsize 0.20714285714285716}
 \end{tabular}
-\caption{\label{fig:results_i1i2i3_histgeb}De GGR-waarde en de eerste tien resultaten voor elke voorbeeld-afbeelding bij de beste I1I2I3-histogram-gebaseerde similariteitsmaat.}
+\caption{\label{fig:results_i1i2i3_histgeb}De GGR-waarde en de eerste tien resultaten voor elk voorbeeld-beeld bij de beste I1I2I3-histogram-gebaseerde similariteitsmaat.}
 \end{center}
 \end{figure}
 
@@ -559,7 +560,7 @@ corresponderende bin associeert.
 \includegraphics[width=1cm]{coil/beeld-44.eps}
 & {\scriptsize 0.06190476190476191}
 \end{tabular}
-\caption{\label{fig:results_irb_histgeb}De GGR-waarde en de eerste tien resultaten voor elke voorbeeld-afbeelding bij de beste Irb-histogram-gebaseerde similariteitsmaat.}
+\caption{\label{fig:results_irb_histgeb}De GGR-waarde en de eerste tien resultaten voor elk voorbeeld-beeld bij de beste Irb-histogram-gebaseerde similariteitsmaat.}
 \end{center}
 \end{figure}
 
@@ -700,7 +701,7 @@ corresponderende bin associeert.
 \includegraphics[width=1cm]{coil/beeld-44.eps}
 & {\scriptsize 0.07142857142857142}
 \end{tabular}
-\caption{\label{fig:results_yxy_histgeb}De GGR-waarde en de eerste tien resultaten voor elke voorbeeld-afbeelding bij de beste Yxy-histogram-gebaseerde similariteitsmaat.}
+\caption{\label{fig:results_yxy_histgeb}De GGR-waarde en de eerste tien resultaten voor elk voorbeeld-beeld bij de beste Yxy-histogram-gebaseerde similariteitsmaat.}
 \end{center}
 \end{figure}
 
@@ -711,7 +712,7 @@ corresponderende bin associeert.
 \subsection{Vaaghistogram}
 
 Naast de bovenstaande vage interpretatie van het klassieke kleurhistogram, beschouwen we
-ook nog een kleurbeschrijving die we op een ``volledig vage'' manier opbouwen. Bij dit
+ook nog een gelijkaardige kleurbeschrijving die we op een ``volledig vage'' manier opbouwen. Bij dit
 \emph{vaaghistogram} maken we gebruik van het (niet genormaliseerde) L*a*b* kleurmodel en 
 beschouwen we een vaagverzameling voor elke kleur. 
 De lidmaatschapsgraad van een kleur $c'$ in de vaagverzameling 

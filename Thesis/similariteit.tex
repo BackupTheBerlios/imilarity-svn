@@ -1,30 +1,30 @@
-\chapter{Similariteitsmaten voor afbeeldingen}
+\chapter{Similariteitsmaten voor beelden}
 
-Een similariteitsmaat voor afbeeldingen is een maat die de gelijkenis tussen twee gegeven
-afbeelding uitdrukt als een getal uit het interval $[0,1]$. Dit getal nadert naar 1
+Een similariteitsmaat voor beelden is een maat die de gelijkenis tussen twee gegeven
+beelden uitdrukt als een getal uit het interval $[0,1]$. Dit getal nadert naar 1
 naarmate de gelijkenis groter is. Bijgevolg kunnen we een dergelijke maat gebruiken om
-een lijst van zoekresultaten te herordenen volgens similariteit met een bepaalde 
-voorbeeld-afbeelding uit die lijst. 
+een lijst van zoekresultaten te herordenen volgens similariteit met een bepaald 
+voorbeeld-beeld uit die lijst. 
 
-We construeren een similariteitsmaat voor afbeeldingen in twee stappen. Eerst identificeren we
-een afbeelding, al dan niet rechtstreeks, met een (L-)vaagverzameling. Daarna maken we gebruik van
+We construeren een similariteitsmaat voor beelden in twee stappen. Eerst identificeren we
+een beeld, al dan niet rechtstreeks, met een (L-)vaagverzameling. Daarna maken we gebruik van
 de vaagsimilariteitsmaten uit \ref{sectie:vaagsimilariteitsmaten} om deze (L-)vaagverzamelingen te
 vergelijken. 
 
 In het vervolg van deze scriptie bedoelen we met de term ``similariteitsmaat'' steeds
-een similariteitsmaat voor afbeeldingen. Dit omvat dus zowel een manier van identificeren als een 
+een similariteitsmaat voor beelden. Dit omvat dus zowel een manier van identificeren als een 
 vaagsimilariteitsmaat.
 
 \section{Eigenschappen}
 
-In de volgende hoofdstukken construeren we een aantal similariteitsmaten voor afbeeldingen. Hierbij 
+In de volgende hoofdstukken construeren we een aantal similariteitsmaten voor beelden. Hierbij 
 eisen we dat al onze similariteitsmaten \emph{reflexief} en \emph{symmetrisch} zijn.
 
 \subsection{Reflexiviteit}
 
 Voor twee identieke beelden verwachten we dat een similariteitsmaat $M$ als output $1$
 teruggeeft. Met andere woorden, voor een beeld $A$ moet gelden: $M(A,A)=1$.
-Deze eigenschap heeft als gevolg dat de voorbeeld-afbeelding zich steeds vooraan in
+Deze eigenschap heeft als gevolg dat het voorbeeld-beeld zich steeds vooraan in
 de geordende lijst van zoekresultaten moet bevinden.
 
 \subsection{Symmetrisch}
@@ -40,17 +40,17 @@ $M(A,B)=M(B,A)$.
 Om uit meerdere similariteitsmaten de meest geschikte te kiezen, 
 moeten we een manier vinden om een dergelijke maat objectief te beoordelen. 
 Dit zullen we doen door elke
-maat, voor een bepaalde voorbeeld-afbeelding, toe te passen op een eenzelfde collectie 
-van afbeeldingen. Vervolgens zullen we de rangschikking die we zo bekomen
+maat, voor een bepaald voorbeeld-beeld, toe te passen op een eenzelfde collectie 
+van beelden. Vervolgens zullen we de rangschikking die we zo bekomen
 beoordelen met behulp van een performantiemaat.
 
-Figuur~\ref{fig:testcollectie} bevat de collectie van afbeeldingen die we gaan 
+Figuur~\ref{fig:testcollectie} bevat de collectie van beelden die we gaan 
 gebruiken. Deze collectie bestaat uit een selectie van beelden uit
-de \emph{Columbia object image library} \cite{coil-100}. Deze bibliotheek van afbeeldingen 
+de \emph{Columbia object image library} \cite{coil-100}. Deze bibliotheek van beelden 
 werd gegenereerd 
 door een aantal roterende objecten op bepaalde vaste momenten te fotograferen. 
 Onze testcollectie bestaat uit foto's van elf objecten. Van elke object zijn
-er zes momentopnames, wat een totaal van $11 \cdot 6 = 66$ afbeeldingen geeft.
+er zes momentopnames, wat een totaal van $11 \cdot 6 = 66$ beelden geeft.
 
 \begin{figure}[p]
 \begin{center}
@@ -135,18 +135,18 @@ er zes momentopnames, wat een totaal van $11 \cdot 6 = 66$ afbeeldingen geeft.
 \includegraphics[width=2cm]{coil/beeld-65.eps} \\
 
 \end{tabular}
-\caption{\label{fig:testcollectie}De gebruikte collectie van afbeeldingen.}
+\caption{\label{fig:testcollectie}De gebruikte collectie van beelden.}
 \end{center}
 \end{figure}
 
 Voor het beoordelen van een rangschikking, gebruiken we de \emph{genormaliseerde gemiddelde rang} 
 (GGR) \cite{muller:perf_eval}. Deze performantiemaat wordt toegepast op een collectie
-van $N$ afbeeldingen. Voor elk van deze afbeeldingen bevat de collectie
-$N_R$ zogenaamde \emph{relevante afbeeldingen}. In het geval van onze testcollectie geldt $N = 66$.
+van $N$ beelden. Voor elk van deze beelden bevat de collectie
+$N_R$ zogenaamde \emph{relevante beelden}. In het geval van onze testcollectie geldt $N = 66$.
 We gaan er in deze collectie vanuit dat foto's van eenzelfde object relevant zijn ten opzichte
 van elkaar: $N_R = 6$. Beschouw nu de vector 
 $(r_1,r_2,\ldots,r_{N_R}) \in \{1,2,\ldots,N\}^{N_R}$, waarbij $r_i$ het
-rangnummer van de $i$-de relevante afbeelding voorstelt. De performantiemaat
+rangnummer van het $i$-de relevante beeld voorstelt. De performantiemaat
 wordt dan als volgt gedefinieerd:
 \begin{definitie}
 De genormaliseerde gemiddelde rang wordt gegeven door de volgende afbeelding:
@@ -163,10 +163,10 @@ $$
 Deze maat nadert naar 1 naarmate de performantie slechter wordt.
 
 Tot nu toe hebben we er echter nog geen rekening mee gehouden dat de performantie van
-een similariteitsmaat afhankelijk kan zijn van de gekozen voorbeeld-afbeelding. Dit probleem lossen we
+een similariteitsmaat afhankelijk kan zijn van het gekozen voorbeeld. Dit probleem lossen we
 op door de GGR te berekenen voor meerdere voorbeelden en het gemiddelde van de bekomen waarden
 te beschouwen. We kiezen hierbij de beelden uit de linker kolom van 
-figuur~\ref{fig:testcollectie} als voorbeeld-afbeeldingen. De waarde die we zo bekomen noemen we de
+figuur~\ref{fig:testcollectie} als voorbeeld. De waarde die we zo bekomen noemen we de
 \emph{globale genormaliseerde gemiddelde rang} (GGGR). Het is deze waarde die we zullen gebruiken
 om de performantie van een similariteitsmaat te evalueren. We zullen dus met andere woorden op
 zoek gaan naar similariteitsmaten waarvan de GGGR zo klein mogelijk is.
@@ -177,7 +177,7 @@ We zullen voor elke similariteitsmaat die we construeren ook meten hoelang het d
 de rangschikkingen, die nodig zijn om de GGGR te bepalen, te berekenen. Aan deze 
 rekentijd hechten we echter niet zoveel belang als aan de GGGR, vermits het in onze
 praktische implementatie niet absoluut noodzakelijk is dat de similariteitsmaten zo weinig
-mogelijk rekentijd vereisen. De collecties van afbeeldingen waarop ze daar toegepast worden
+mogelijk rekentijd vereisen. De collecties van beelden waarop ze daar toegepast worden
 zijn immers beperkt in grootte. Bovendien worden de berekeningen aan de kant van de client
 uitgevoerd, waardoor er geen gevaar is voor overbelasting van de server.
 

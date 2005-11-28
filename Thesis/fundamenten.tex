@@ -287,7 +287,7 @@ $M_{10}$, $M_{10c}$, $M_{11}$, $M_{11c}$, $M_{12}$, $M_{13}$, $M_{14a}$, $M_{14b
 $M_{16e}$, $M_{16h}$, $M_{17a}$, $M_{17b}$, $M_{I_3}$, $M_{I_{3c}}$, $M_{18c}$, $M_{20}$ en $M_{20c}$.
 We gaan deze echter niet allemaal gebruiken. Vooreerst beperken we ons voor
 $$
-M_1(A,B) = 1 - \left(\frac{1}{M N} \sum_{x \in X} | A(x) - B(x)|^r\right)^\frac{1}{r} \textrm{ met } 
+M_1(A,B) = 1 - \left(\frac{1}{|X|} \sum_{x \in X} | A(x) - B(x)|^r\right)^\frac{1}{r} \textrm{ met } 
 r \in \{1,2,3,\ldots\}
 $$ tot de keuzes
 $r=1,2,4$. De overeenkomstige similariteitsmaten noemen we $M_{1a}$, $M_{1b}$ en $M_{1c}$. Vermits
@@ -309,9 +309,9 @@ voor elke maat $M$ geldt: $M(A,A)=1$.
 \\[1pt]
 $
 \begin{array}{rcl}
-\displaystyle M_{1a}(A,B) & = & \displaystyle 1-\frac{1}{M N}\sum_{x \in X} | A(x) - B(x) | \\
-\displaystyle M_{1b}(A,B) & = & \displaystyle 1-\left(\frac{1}{M N}\sum_{x \in X} | A(x) - B(x) |^2\right)^\frac{1}{2} \\
-\displaystyle M_{1c}(A,B) & = & \displaystyle 1-\left(\frac{1}{M N}\sum_{x \in X} | A(x) - B(x) |^4\right)^\frac{1}{4} \\
+\displaystyle M_{1a}(A,B) & = & \displaystyle 1-\frac{1}{|X|}\sum_{x \in X} | A(x) - B(x) | \\
+\displaystyle M_{1b}(A,B) & = & \displaystyle 1-\left(\frac{1}{|X|}\sum_{x \in X} | A(x) - B(x) |^2\right)^\frac{1}{2} \\
+\displaystyle M_{1c}(A,B) & = & \displaystyle 1-\left(\frac{1}{|X|}\sum_{x \in X} | A(x) - B(x) |^4\right)^\frac{1}{4} \\
 \end{array}
 \begin{array}{rcl}
 \displaystyle M_2(A,B) & = & \displaystyle 1 - \max_{x \in X} | A(x) - B(x) | \\[10pt]
@@ -350,10 +350,10 @@ $
 \\[1pt]
 $
 \begin{array}{rcl}
-\displaystyle M_{I_3}(A,B) & = & \displaystyle \frac{|(A \cap B) \cap (A^c \cap B^c)|)}{|(A \cup B) \cap (A^c \cup B^c)|)}
+\displaystyle M_{I_3}(A,B) & = & \displaystyle \frac{|(A \cap B) \cap (A^c \cap B^c)|}{|(A \cup B) \cap (A^c \cup B^c)|}
 \end{array}
 \begin{array}{rcl}
-\displaystyle M_{I_{3c}}(A,B) & = & \displaystyle \frac{|(A^c \cap B^c) \cup (A \cap B)|)}{|(A^c \cup B^c) \cup (A \cup B)|)}
+\displaystyle M_{I_{3c}}(A,B) & = & \displaystyle \frac{|(A^c \cap B^c) \cup (A \cap B)|}{|(A^c \cup B^c) \cup (A \cup B)|}
 \end{array}
 $
 \\
