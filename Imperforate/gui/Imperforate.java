@@ -126,11 +126,11 @@ public class Imperforate extends JFrame {
 		
 		final Map degreesMapper = new HashMap();
 		degreesMapper.put("0", new Integer(0));
-		degreesMapper.put("45", new Integer(1));
-		degreesMapper.put("90", new Integer(2));
-		degreesMapper.put("180", new Integer(3));
-		degreesMapper.put("270", new Integer(4));
-		degreesMapper.put("315", new Integer(0));
+		degreesMapper.put("180", new Integer(1));
+		degreesMapper.put("270", new Integer(2));
+		degreesMapper.put("315", new Integer(3));
+		degreesMapper.put("45", new Integer(4));
+		degreesMapper.put("90", new Integer(5));
 		
 		final JButton printLatexButton = new JButton("Print latex tabular");
 		printLatexButton.addActionListener(new ActionListener() {
