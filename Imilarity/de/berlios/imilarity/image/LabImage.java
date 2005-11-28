@@ -14,7 +14,7 @@ public class LabImage extends XyzImage {
 		return new Color(l/100, (500+a)/1000, (200+b)/400);
 	}
 	
-	private static double f(double t) {
+	private static final double f(double t) {
 		if (t > 0.008856)
 			return Math.pow(t, 1.0/3.0);
 		else
