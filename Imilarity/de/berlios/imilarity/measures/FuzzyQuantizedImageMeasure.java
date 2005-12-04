@@ -31,7 +31,7 @@ public class FuzzyQuantizedImageMeasure extends ImageMeasureBase {
 	}
 	
 	public FuzzyQuantizedImageMeasure(FuzzyMeasure fuzzyMeasure, Quantizer quantizer) {
-		this(fuzzyMeasure, quantizer, quantizer.getColorCount());
+		this(fuzzyMeasure, quantizer, quantizer.getBinsCount());
 	}
 	
 	public FuzzyQuantizedImageMeasure(FuzzyMeasure fuzzyMeasure) {
@@ -53,13 +53,8 @@ public class FuzzyQuantizedImageMeasure extends ImageMeasureBase {
 		//List colors = new ArrayList();
 		
 		final HashMap freqs = new HashMap();
-		for (int i = 0; i < quantizer.getColorCount(); i++) {
-			int[] intColor = quantizer.getColor(i);
-			double[] color = new double[intColor.length];
-			// normaliseren:
-			for (int j = 0; j < intColor.length; j++)
-				color[j] = intColor[j] * 1.0 / 255;
-			// toevoegen:
+		for (int i = 0; i < quantizer.getBinsCount(); i++) {
+			double[] color = quantizer.getBinColor(i).getComponents();
 			Membership m = new EqMembership(color);
 			colors.addMembership(m);
 			//colors.add(m);
@@ -68,12 +63,7 @@ public class FuzzyQuantizedImageMeasure extends ImageMeasureBase {
 		
 		int pc = image.getWidth() * image.getHeight();
 		for (int i = 0; i < pc; i++) {
-			int[] intColor = quantizer.getPixelColor(i);
-			double[] color = new double[intColor.length]; 
-			// normaliseren:
-			for (int j = 0; j < intColor.length; j++)
-				color[j] = intColor[j] * 1.0 / 255;
-			// incrementeren:
+			double[] color = quantizer.getBinColor(quantizer.getBin(i)).getComponents();
 			((Frequency)freqs.get(new EqMembership(color))).value++;
 		}
 		colors.sort(new Comparator() {

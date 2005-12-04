@@ -6,8 +6,8 @@ import java.util.TreeSet;
 
 import de.berlios.imilarity.aggregators.Aggregator;
 import de.berlios.imilarity.aggregators.ArithmeticMean;
+import de.berlios.imilarity.color.Color;
 import de.berlios.imilarity.fuzzy.ColorMembership;
-import de.berlios.imilarity.image.Color;
 import de.berlios.imilarity.image.Image;
 import de.berlios.imilarity.image.PartOfImage;
 
@@ -47,7 +47,7 @@ public class MultiresImageMeasure extends ImageMeasureBase {
 	public double getSimilarity() { 
 		double sim1 = calculateSimilarity(querySet, targetSet);
 		double sim2 = calculateSimilarity(targetSet, querySet);
-		return (sim1 + sim2) / 2; 
+		return (sim1 + sim2) / 2;
 	}
 	
 	private double calculateSimilarity(SortedSet a, SortedSet b) { 
@@ -56,25 +56,26 @@ public class MultiresImageMeasure extends ImageMeasureBase {
 		Iterator tIt = b.iterator();
 		if (qIt.hasNext() && tIt.hasNext()) {
 			Image target = (Image) tIt.next();
+			double prevSim = 0, sim = 0;
 			while (qIt.hasNext() && tIt.hasNext()) {
 				Image query = (Image) qIt.next();
 				measure.setQuery(query);
 				measure.setTarget(target);
-				double prevSim = measure.getSimilarity();
-				double sim = prevSim;
-				while (prevSim <= sim && tIt.hasNext()) {
+				prevSim = 0;
+				sim = measure.getSimilarity();
+				while (prevSim < sim && tIt.hasNext()) {
 					target = (Image) tIt.next();
 					measure.setTarget(target);
 					prevSim = sim;
 					sim = measure.getSimilarity();
 				}
-				aggregator.addValue(prevSim);
+				aggregator.addValue(Math.max(prevSim,sim));
 			}
-			if (qIt.hasNext()) {
+			if (prevSim >= sim && qIt.hasNext()) {
 				Image query = (Image) qIt.next();
 				measure.setQuery(query);
 				measure.setTarget(target);
-				double sim = measure.getSimilarity();
+				sim = measure.getSimilarity();
 				aggregator.addValue(sim);
 			}	
 			return aggregator.getAggregatedValue();
@@ -133,7 +134,7 @@ public class MultiresImageMeasure extends ImageMeasureBase {
 		public int compareTo(Object arg0) {
 			ColorMembership cm1 = new ColorMembership(getAvgColor());
 			ColorMembership cm2 = new ColorMembership(((AvgColorPartOfImage)arg0).getAvgColor());
-			return cm1.compareTo(cm2);
+			return -cm1.compareTo(cm2);
 		}
 	}
 }

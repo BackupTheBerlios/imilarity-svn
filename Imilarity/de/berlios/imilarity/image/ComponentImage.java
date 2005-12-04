@@ -3,6 +3,8 @@
  */
 package de.berlios.imilarity.image;
 
+import de.berlios.imilarity.color.Color;
+
 public class ComponentImage extends ImageBase {
 	
 	private Image image;

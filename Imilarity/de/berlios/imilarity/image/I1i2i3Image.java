@@ -1,5 +1,7 @@
 package de.berlios.imilarity.image;
 
+import de.berlios.imilarity.color.Color;
+
 public class I1i2i3Image extends ImageBase {
 
 	private Image image;

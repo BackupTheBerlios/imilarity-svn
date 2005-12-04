@@ -1,5 +1,7 @@
 package de.berlios.imilarity.image;
 
+import de.berlios.imilarity.color.Color;
+
 public class HsvImage extends ImageBase {
 	private Image image;
 
@@ -24,16 +26,23 @@ public class HsvImage extends ImageBase {
 		double h = 0.0;
 		if (max == min) 	h = 0;
 		else if (max == r)	h = 60 * (g - b) / (max - min);
-		else if (max == g)	h = (60 * (b - g) / (max - min)) + 120;
+		else if (max == g)	h = (60 * (b - r) / (max - min)) + 120;
 		else 				h = (60 * (r - g) / (max - min)) + 240;
-		while (h < 0) 	h = 360 - h;
-		while (h > 360)	h = h - 360; 
+		
+		h %= 360;
+		if (h < 0) h += 360;
+				
+		//while (h < 0) h = 360 + h;
+		//h %= 360;
+		
+		if (h/360 > 1)
+			System.out.println("h = " + h);
 		
 		double s = 0.0;
 		if (max > 0)
 			s = (max - min) / max;
 		
-		return new Color(h / 360, s, max);
+		return new Color(h/360, s, max);
 	}
 
 	public Image getScaledInstance(int w, int h) {

@@ -1,4 +1,4 @@
-package de.berlios.imilarity.image;
+package de.berlios.imilarity.color;
 
 
 public class Color {

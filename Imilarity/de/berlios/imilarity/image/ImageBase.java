@@ -3,6 +3,8 @@
  */
 package de.berlios.imilarity.image;
 
+import de.berlios.imilarity.color.Color;
+
 public abstract class ImageBase implements Image {
 	
 	public Color getColor(int pixelNr) {

@@ -1,5 +1,6 @@
 package de.berlios.imilarity.image;
 
+import de.berlios.imilarity.color.Color;
 import de.berlios.imilarity.image.quantizers.Quantizer;
 
 public class QuantizedImage extends ImageBase {
@@ -23,8 +24,7 @@ public class QuantizedImage extends ImageBase {
 	}
 
 	public Color getColor(int x, int y) {
-		int[] comps = quantizer.getPixelColor(y*image.getWidth()+x);
-		return new Color(comps[0], comps[1], comps[2]);
+		return quantizer.getBinColor(quantizer.getBin(y*image.getWidth()+x));
 	}
 
 	public Image getScaledInstance(int w, int h) {

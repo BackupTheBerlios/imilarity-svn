@@ -1,6 +1,6 @@
 package de.berlios.imilarity.fuzzy;
 
-import de.berlios.imilarity.image.Color;
+import de.berlios.imilarity.color.Color;
 
 public class ColorMembership extends SimpleMembership {
 	
@@ -51,10 +51,10 @@ public class ColorMembership extends SimpleMembership {
 		double dw1 = distanceTo(white), dw2 = m.distanceTo(white);
 		double db1 = distanceTo(black), db2 = m.distanceTo(black);
 		
-		if (dw1 < dw2) return 1; 		// max(this,m) = this 
-		else if (dw1 > dw2) return -1; 	// max(this,m) = m
-		else if (db1 > db2) return 1; 	// max(this,m) = this
+		if (db1 > db2) return 1; 		// max(this,m) = this
 		else if (db1 < db2) return -1; 	// max(this,m) = m
+		else if (dw1 < dw2) return 1; 	// max(this,m) = this 
+		else if (dw1 > dw2) return -1; 	// max(this,m) = m
 		else return super.compareTo(obj);
 	}
 }

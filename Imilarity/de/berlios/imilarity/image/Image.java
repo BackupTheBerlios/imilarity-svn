@@ -3,6 +3,8 @@
  */
 package de.berlios.imilarity.image;
 
+import de.berlios.imilarity.color.Color;
+
 /**
  * @author Klaas Bosteels
  */

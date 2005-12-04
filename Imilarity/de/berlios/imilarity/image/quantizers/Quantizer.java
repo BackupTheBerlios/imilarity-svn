@@ -1,16 +1,17 @@
 package de.berlios.imilarity.image.quantizers;
 
+import de.berlios.imilarity.color.Color;
 import de.berlios.imilarity.image.Image;
 
 public interface Quantizer {
 
 	public void quantize(Image im);
 	
-	public int getColorCount();
+	public int getBinsCount();
 	
-	public int[] getColor(int i);
+	public Color getBinColor(int binNr);
 	
-	public int[] getPixelColor(int i);
+	public int getBin(int pixelNr);
 	
 	public String getDescription();
 }

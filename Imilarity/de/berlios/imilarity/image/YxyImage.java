@@ -1,5 +1,7 @@
 package de.berlios.imilarity.image;
 
+import de.berlios.imilarity.color.Color;
+
 public class YxyImage extends XyzImage {
 
 	private Image image;

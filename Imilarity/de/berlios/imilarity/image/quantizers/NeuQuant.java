@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import de.berlios.imilarity.color.Color;
 import de.berlios.imilarity.image.Image;
 import de.berlios.imilarity.image.ImageData;
 
@@ -109,21 +110,20 @@ public class NeuQuant implements Quantizer {
 			convert(i);
 	}
 	
-	public int getColorCount() {
+	public int getBinsCount() {
 		return netsize;
 	}
 	
-	public int[] getColor(int i) {
+	public Color getBinColor(int i) {
 		if (i < 0 || i >= netsize) return null;
 		int bb = colormap[i][0];
 		int gg = colormap[i][1];
 		int rr = colormap[i][2];
-		return new int[] { rr, gg, bb };
+		return new Color(rr/255.0, gg/255.0, bb/255.0);
 	}
 	
-	public int[] getPixelColor(int i) {
-		int index = lookup(pixels[i]);
-		return getColor(index);
+	public int getBin(int i) {
+		return lookup(pixels[i]);
 	}
 	
 	public String getDescription() {
@@ -480,11 +480,12 @@ public class NeuQuant implements Quantizer {
 					BufferedImage.TYPE_INT_RGB);
 			for (int x = 0; x < image.getWidth(); x++) {
 				for (int y = 0; y < image.getHeight(); y++) {
-					int[] rgb = quantizer.getPixelColor(y*image.getWidth()+x);
+					double[] rgb = 
+						quantizer.getBinColor(quantizer.getBin(y*image.getWidth()+x)).getComponents();
 					int pixel = 0;
-					pixel |= rgb[0] << 16;
-					pixel |= rgb[1] << 8;
-					pixel |= rgb[2];
+					pixel |= (int)(rgb[0]*255) << 16;
+					pixel |= (int)(rgb[1]*255) << 8;
+					pixel |= (int)(rgb[2]*255);
 					outImage.setRGB(x,y,pixel);
 				}
 			}
