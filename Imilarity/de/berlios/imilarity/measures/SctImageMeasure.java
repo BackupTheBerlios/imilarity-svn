@@ -1,16 +1,16 @@
 package de.berlios.imilarity.measures;
 
-import de.berlios.imilarity.image.NhImage;
+import de.berlios.imilarity.image.SctImage;
 import de.berlios.imilarity.image.Image;
 
-public class NhImageMeasure extends ImageMeasureBase {
+public class SctImageMeasure extends ImageMeasureBase {
 
 	private ImageMeasure measure;
 	
 	private int grayscaleBinsCount;
 	private int colorBinsCount;
 	
-	public NhImageMeasure(ImageMeasure measure, int gbc, int cbc) {
+	public SctImageMeasure(ImageMeasure measure, int gbc, int cbc) {
 		if (measure == null)
 			throw new NullPointerException("measure == null");
 		this.measure = measure;
@@ -18,18 +18,18 @@ public class NhImageMeasure extends ImageMeasureBase {
 		this.colorBinsCount = cbc;
 	}
 	
-	public NhImageMeasure(ImageMeasure measure) {
+	public SctImageMeasure(ImageMeasure measure) {
 		this(measure, 16, 240);
 	}
 	
 	public void setQuery(Image image) {
 		super.setQuery(image);
-		measure.setQuery(new NhImage(image, grayscaleBinsCount, colorBinsCount));
+		measure.setQuery(new SctImage(image, grayscaleBinsCount, colorBinsCount));
 	}
 	
 	public void setTarget(Image image) {
 		super.setTarget(image);
-		measure.setTarget(new NhImage(image, grayscaleBinsCount, colorBinsCount));
+		measure.setTarget(new SctImage(image, grayscaleBinsCount, colorBinsCount));
 	}
 	
 	public double getSimilarity() {

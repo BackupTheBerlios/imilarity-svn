@@ -45,4 +45,8 @@ public class Hsv implements ColorSpace {
 		return new int[] {0,0,0};
 	}
 
+	public int getComponentsCount() {
+		return 3;
+	}
+
 }

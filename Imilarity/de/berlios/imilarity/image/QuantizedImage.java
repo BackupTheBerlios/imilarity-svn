@@ -20,11 +20,12 @@ public class QuantizedImage extends ImageBase {
 	}
 	
 	public int getColorComponentsCount() {
-		return 3;
+		return 1;
 	}
 
 	public Color getColor(int x, int y) {
-		return quantizer.getBinColor(quantizer.getBin(y*image.getWidth()+x));
+		//return quantizer.getBinColor(quantizer.getBin(y*image.getWidth()+x));
+		return new Color(quantizer.getBin(y*image.getWidth()+x)*1.0/quantizer.getBinsCount());
 	}
 
 	public Image getScaledInstance(int w, int h) {
@@ -37,6 +38,11 @@ public class QuantizedImage extends ImageBase {
 
 	public int getHeight() {
 		return image.getHeight();
+	}
+	
+	
+	public Quantizer getQuantizer() {
+		return quantizer;
 	}
 
 }

@@ -1,17 +1,17 @@
 package de.berlios.imilarity.smoothers;
 
 
-public class NhSmoother implements Smoother {
+public class SctSmoother implements Smoother {
 
 	private int gbc, cbc, range;
 	
-	public NhSmoother(int gbc, int cbc, int range) {
+	public SctSmoother(int gbc, int cbc, int range) {
 		this.gbc = gbc;
 		this.cbc = cbc;
 		this.range = range;
 	}
 	
-	public NhSmoother(int gbc, int cbc) {
+	public SctSmoother(int gbc, int cbc) {
 		this(gbc, cbc, 4);
 	}
 	

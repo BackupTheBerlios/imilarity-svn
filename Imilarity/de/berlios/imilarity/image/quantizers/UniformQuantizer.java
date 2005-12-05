@@ -9,9 +9,19 @@ import javax.imageio.ImageIO;
 import de.berlios.imilarity.color.Color;
 import de.berlios.imilarity.color.ColorSpace;
 import de.berlios.imilarity.color.Hsv;
+import de.berlios.imilarity.color.I1i2i3;
+import de.berlios.imilarity.color.Irb;
+import de.berlios.imilarity.color.Lab;
+import de.berlios.imilarity.color.Xyz;
+import de.berlios.imilarity.color.Yxy;
 import de.berlios.imilarity.image.HsvImage;
+import de.berlios.imilarity.image.I1i2i3Image;
 import de.berlios.imilarity.image.Image;
 import de.berlios.imilarity.image.ImageData;
+import de.berlios.imilarity.image.IrbImage;
+import de.berlios.imilarity.image.LabImage;
+import de.berlios.imilarity.image.XyzImage;
+import de.berlios.imilarity.image.YxyImage;
 
 public class UniformQuantizer implements Quantizer {
 
@@ -75,10 +85,48 @@ public class UniformQuantizer implements Quantizer {
 	// TESTPROGRAMMA
 	
 	public static void main(String[] args) throws IOException {
-		ColorSpace cs = new Hsv();
-		Image image = new HsvImage(
-			(ImageData.loadFile("/home/klbostee/Thesis/Misc/hsv_constant_v.png")).getRgbImage());
-		Quantizer quantizer = new UniformQuantizer(new int[] {16,4,4});
+		ColorSpace hsv = new Hsv();
+		ColorSpace i1i2i3 = new I1i2i3();
+		ColorSpace irb = new Irb();
+		ColorSpace xyz = new Xyz();
+		ColorSpace yxy = new Yxy();
+		ColorSpace lab = new Lab();
+		Image constS = (ImageData.loadFile("/home/klbostee/Thesis/Misc/hsv_constant_s.png")).getRgbImage();
+		Image constV = (ImageData.loadFile("/home/klbostee/Thesis/Misc/hsv_constant_v.png")).getRgbImage();
+		
+		doTest(hsv, new HsvImage(constS), new int[] {16,4,4}, 
+				new File("/home/klbostee/Thesis/Misc/uniform_hsv_constant_s.png"));
+		doTest(hsv, new HsvImage(constV), new int[] {16,4,4}, 
+				new File("/home/klbostee/Thesis/Misc/uniform_hsv_constant_v.png"));
+		
+		doTest(i1i2i3, new I1i2i3Image(constS), new int[] {4,8,8}, 
+				new File("/home/klbostee/Thesis/Misc/uniform_i1i2i3_constant_s.png"));
+		doTest(i1i2i3, new I1i2i3Image(constV), new int[] {4,8,8}, 
+				new File("/home/klbostee/Thesis/Misc/uniform_i1i2i3_constant_v.png"));
+		
+		doTest(irb, new IrbImage(constS), new int[] {4,8,8}, 
+				new File("/home/klbostee/Thesis/Misc/uniform_irb_constant_s.png"));
+		doTest(irb, new IrbImage(constV), new int[] {4,8,8}, 
+				new File("/home/klbostee/Thesis/Misc/uniform_irb_constant_v.png"));
+		
+		doTest(xyz, new XyzImage(constS), new int[] {8,4,8}, 
+				new File("/home/klbostee/Thesis/Misc/uniform_xyz_constant_s.png"));
+		doTest(xyz, new XyzImage(constV), new int[] {8,4,8}, 
+				new File("/home/klbostee/Thesis/Misc/uniform_xyz_constant_v.png"));
+		
+		doTest(yxy, new YxyImage(constS), new int[] {4,8,8}, 
+				new File("/home/klbostee/Thesis/Misc/uniform_yxy_constant_s.png"));
+		doTest(yxy, new YxyImage(constV), new int[] {4,8,8}, 
+				new File("/home/klbostee/Thesis/Misc/uniform_yxy_constant_v.png"));
+		
+		doTest(lab, new LabImage(constS), new int[] {7,7,7}, 
+				new File("/home/klbostee/Thesis/Misc/uniform_lab_constant_s.png"));
+		doTest(lab, new LabImage(constV), new int[] {7,7,7}, 
+				new File("/home/klbostee/Thesis/Misc/uniform_lab_constant_v.png"));
+	}
+	
+	public static void doTest(ColorSpace cs, Image image, int[] binsCounts, File file) throws IOException {
+		Quantizer quantizer = new UniformQuantizer(binsCounts);
 		quantizer.quantize(image);
 		BufferedImage bi = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
 		for (int x = 0; x < image.getWidth(); x++) {
@@ -88,7 +136,7 @@ public class UniformQuantizer implements Quantizer {
 				bi.setRGB(x, y, (rgb[0] << 16) | (rgb[1] << 8) | rgb[2]);
 			}
 		}
-		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_constant_v.png"));
+		ImageIO.write(bi, "png", file);
 		System.out.println("done.");
 	}
 }
