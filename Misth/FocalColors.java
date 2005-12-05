@@ -63,7 +63,7 @@ public class FocalColors {
 				bi.setRGB(h, v, c.getRGB());
 			}
 		}
-		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/hsv_colors.png"));
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/hsv_constant_s.png"));
 		image = new FocalImage((new ImageData(bi, "focal image", null)).getRgbImage());
 		//image = 
 		//	new FocalImage(ImageData.loadFile("/home/klbostee/Images/coil5/obj12__0.png").getRgbImage());

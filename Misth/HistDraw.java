@@ -9,6 +9,13 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 
+import de.berlios.imilarity.color.ColorSpace;
+import de.berlios.imilarity.color.Hsv;
+import de.berlios.imilarity.color.I1i2i3;
+import de.berlios.imilarity.color.Irb;
+import de.berlios.imilarity.color.Lab;
+import de.berlios.imilarity.color.Xyz;
+import de.berlios.imilarity.color.Yxy;
 import de.berlios.imilarity.fuzzy.FuzzyHistogram;
 import de.berlios.imilarity.image.FocalImage;
 import de.berlios.imilarity.image.GrayscaleImage;
@@ -17,13 +24,15 @@ import de.berlios.imilarity.image.Image;
 import de.berlios.imilarity.image.ImageData;
 import de.berlios.imilarity.image.IrbImage;
 import de.berlios.imilarity.image.LabImage;
-import de.berlios.imilarity.image.NhImage;
+import de.berlios.imilarity.image.SctImage;
 import de.berlios.imilarity.image.I1i2i3Image;
 import de.berlios.imilarity.image.XyzImage;
 import de.berlios.imilarity.image.YxyImage;
+import de.berlios.imilarity.image.quantizers.Quantizer;
 import de.berlios.imilarity.smoothers.DefaultSmoother;
-import de.berlios.imilarity.smoothers.NhSmoother;
+import de.berlios.imilarity.smoothers.SctSmoother;
 import de.berlios.imilarity.smoothers.Smoother;
+
 
 public class HistDraw {
 	
@@ -129,6 +138,43 @@ public class HistDraw {
 		}
 	}
 	
+	private static class ColorSpaceFactory implements ColorFactory {
+		private ColorSpace cs;
+		public ColorSpaceFactory(ColorSpace cs) {
+			this.cs = cs;
+		}
+		public Color createColor(double[] comps) {
+			int[] rgb = cs.toRgb(new de.berlios.imilarity.color.Color(comps));
+			return new Color(rgb[0], rgb[1], rgb[2]);
+		}
+	}
+	
+	private static class FocalFactory implements ColorFactory {
+		private Quantizer quantizer;
+		public FocalFactory(Quantizer quantizer) {
+			this.quantizer = quantizer;
+		}
+		public Color createColor(double[] comps) {
+			int index = (int)(comps[0]*11);
+			double[] rgb = quantizer.getBinColor(index).getComponents();
+			return new Color((int)(rgb[0]*255),(int)(rgb[1]*255),(int)(rgb[2]*255));
+		}
+	}
+	
+	private static class SctFactory extends ColorSpaceFactory {
+		private Quantizer quantizer;
+		public SctFactory(Quantizer quantizer) {
+			super(new Hsv());
+			this.quantizer = quantizer;
+		}
+		
+		public Color createColor(double[] comps) {
+			int index = (int)(comps[0]*256);
+			return super.createColor(quantizer.getBinColor(index).getComponents());
+		}
+	}
+	
+	/*
 	private static class HsvFactory implements ColorFactory {
 		public Color createColor(double[] comps) {
 			double h = comps[0]*6;
@@ -184,7 +230,7 @@ public class HistDraw {
 	private static class NhFactory extends HsvFactory {
 		private int gbc, cbc;
 		
-		public NhFactory(NhImage nhi) {
+		public NhFactory(SctImage nhi) {
 			gbc = nhi.getGrayscaleBinsCount();
 			cbc = nhi.getColorBinsCount();
 		}
@@ -267,6 +313,7 @@ public class HistDraw {
 			return super.createColor(new double[] {x,y,z});
 		}
 	}
+	*/
 	
 	private static final String OUTPUT_DIR = "/home/klbostee/Thesis/Histograms";
 	
@@ -284,50 +331,58 @@ public class HistDraw {
 				"png", new File(OUTPUT_DIR+"/grayscale_"+name));
 		System.out.println("grayscale done.");
 		
-		ImageIO.write(drawHistogram(new HsvImage(image), new int[] {16,4,4}, new HsvFactory()), 
+		ImageIO.write(drawHistogram(new HsvImage(image), new int[] {16,4,4}, 
+				new ColorSpaceFactory(new Hsv())), 
 				"png", new File(OUTPUT_DIR+"/hsv_"+name));
 		System.out.println("hsv done.");
 		
-		ImageIO.write(drawHistogram(new I1i2i3Image(image), new int[] {4,8,8}, new OcsFactory()), 
+		ImageIO.write(drawHistogram(new I1i2i3Image(image), new int[] {4,8,8}, 
+				new ColorSpaceFactory(new I1i2i3())), 
 				"png", new File(OUTPUT_DIR+"/i1i2i3_"+name));
 		System.out.println("i1i2i3 done.");
 		
-		ImageIO.write(drawHistogram(new LabImage(image), new int[] {7,7,7}, new LabFactory()), 
+		ImageIO.write(drawHistogram(new LabImage(image), new int[] {7,7,7}, 
+				new ColorSpaceFactory(new Lab())), 
 				"png", new File(OUTPUT_DIR+"/lab_"+name));
 		System.out.println("lab done.");
 		
-		ImageIO.write(drawHistogram(new IrbImage(image), new int[] {4,8,8}, new IrbFactory()), 
+		ImageIO.write(drawHistogram(new IrbImage(image), new int[] {4,8,8}, 
+				new ColorSpaceFactory(new Irb())), 
 				"png", new File(OUTPUT_DIR+"/irb_"+name));
 		System.out.println("irb done.");
 		
-		ImageIO.write(drawHistogram(new YxyImage(image), new int[] {4,8,8}, new YxyFactory()), 
+		ImageIO.write(drawHistogram(new YxyImage(image), new int[] {4,8,8}, 
+				new ColorSpaceFactory(new Yxy())), 
 				"png", new File(OUTPUT_DIR+"/yxy_"+name));
 		System.out.println("yxy done.");
 
-		ImageIO.write(drawHistogram(new FocalImage(image), new int[] {11}, new FocalFactory()), 
+		FocalImage fi = new FocalImage(new LabImage(image));
+		ImageIO.write(drawHistogram(fi, new int[] {11}, 
+				new FocalFactory(fi.getQuantizer())), 
 				"png", new File(OUTPUT_DIR+"/focal_"+name));
 		System.out.println("focal done.");
 		
-		NhImage nhi = new NhImage(image, 16, 240);
+		SctImage nhi = new SctImage(new HsvImage(image), 16, 240);
 		ImageIO.write(
 				drawHistogram(
 						nhi, 
-						new int[] {nhi.getGrayscaleBinsCount()+nhi.getColorBinsCount()}, 
-						new NhFactory(nhi)
+						new int[] {256}, 
+						new SctFactory(nhi.getQuantizer())
 					), 
-				"png", new File(OUTPUT_DIR+"/nh_"+name));
-		System.out.println("nh done.");
+				"png", new File(OUTPUT_DIR+"/sct_"+name));
+		System.out.println("sct done.");
 		ImageIO.write(
 				drawHistogram(
 						nhi, 
-						new int[] {nhi.getGrayscaleBinsCount()+nhi.getColorBinsCount()}, 
-						new NhFactory(nhi),
-						new NhSmoother(nhi.getGrayscaleBinsCount(), nhi.getColorBinsCount(), 4)
+						new int[] {256}, 
+						new SctFactory(nhi.getQuantizer()),
+						new SctSmoother(16, 240, 4)
 					), 
-				"png", new File(OUTPUT_DIR+"/smoothed_nh_"+name));
-		System.out.println("smoothed nh done.");
+				"png", new File(OUTPUT_DIR+"/smoothed_sct_"+name));
+		System.out.println("smoothed sct done.");
 		
-		ImageIO.write(drawHistogram(new XyzImage(image), new int[] {8,4,8}, new XyzFactory()), 
+		ImageIO.write(drawHistogram(new XyzImage(image), new int[] {8,4,8}, 
+				new ColorSpaceFactory(new Xyz())), 
 				"png", new File(OUTPUT_DIR+"/xyz_"+name));
 		System.out.println("xyz done.");
 	}
@@ -335,7 +390,7 @@ public class HistDraw {
 	
 	
 	public static void main(String[] args) throws IOException {
-		String objname = "obj3";
+		String objname = "obj43";
 		drawHistograms("/home/klbostee/Thesis/Histograms/"+objname+"__0.png");
 		drawHistograms("/home/klbostee/Thesis/Histograms/"+objname+"__45.png");
 		drawHistograms("/home/klbostee/Thesis/Histograms/"+objname+"__90.png");

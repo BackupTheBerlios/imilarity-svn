@@ -5,15 +5,13 @@ import java.util.TreeSet;
 
 import de.berlios.imilarity.aggregators.Aggregator;
 import de.berlios.imilarity.aggregators.ArithmeticMean;
+import de.berlios.imilarity.color.Color;
 import de.berlios.imilarity.fuzzy.ColorMembership;
-import de.berlios.imilarity.image.Color;
 import de.berlios.imilarity.image.Image;
 import de.berlios.imilarity.image.ImageData;
 import de.berlios.imilarity.image.PartOfImage;
-import de.berlios.imilarity.measures.FuzzyImageMeasure;
-import de.berlios.imilarity.measures.ImageMeasure;
-import de.berlios.imilarity.measures.ImageMeasureBase;
-import de.berlios.imilarity.measures.M3;
+import de.berlios.imilarity.measures.*;
+
 
 public class MultiresPrint extends ImageMeasureBase {
 
@@ -59,34 +57,53 @@ public class MultiresPrint extends ImageMeasureBase {
 	}
 	
 	public double getSimilarity() {
-		aggregator.clearValues();
+		
+		System.out.println("Matrix: ");
 		Iterator qIt = querySet.iterator();
-		Iterator tIt = targetSet.iterator();
+		Iterator tIt;
+		while (qIt.hasNext()) {
+			Image query = (Image) qIt.next();
+			tIt = targetSet.iterator();
+			while (tIt.hasNext()) {
+				Image target = (Image) tIt.next();
+				measure.setQuery(query);
+				measure.setTarget(target);
+				double sim = measure.getSimilarity();
+				System.out.print((int)(sim*255) + "\t");
+			}
+			System.out.println();
+		}
+		System.out.println();
+		
+		aggregator.clearValues();
+		qIt = querySet.iterator();
+		tIt = targetSet.iterator();
 		if (qIt.hasNext() && tIt.hasNext()) {
 			Image target = (Image) tIt.next();
+			double prevSim = 0, sim = 0;
 			while (qIt.hasNext() && tIt.hasNext()) {
 				Image query = (Image) qIt.next();
 				measure.setQuery(query);
 				measure.setTarget(target);
-				double prevSim = measure.getSimilarity();
-				double sim = prevSim;
+				prevSim = 0;
+				sim = measure.getSimilarity();
 				System.out.println("Sim between " + query + " and " + target + ": " + sim);
-				while (prevSim <= sim && tIt.hasNext()) {
+				while (prevSim < sim && tIt.hasNext()) {
 					target = (Image) tIt.next();
 					measure.setTarget(target);
 					prevSim = sim;
 					sim = measure.getSimilarity();
 					System.out.println("Sim between " + query + " and " + target + ": " + sim);
 				}
-				aggregator.addValue(prevSim);
-				System.out.println("Sim added: " + prevSim);
+				aggregator.addValue(Math.max(prevSim,sim));
+				System.out.println("Sim added: " + Math.max(prevSim,sim));
 				System.out.println();
 			}
-			if (qIt.hasNext()) {
+			if (prevSim >= sim && qIt.hasNext()) {
 				Image query = (Image) qIt.next();
 				measure.setQuery(query);
 				measure.setTarget(target);
-				double sim = measure.getSimilarity();
+				sim = measure.getSimilarity();
 				System.out.println("Sim between " + query + " and " + target + ": " + sim);
 				aggregator.addValue(sim);
 				System.out.println("Sim added: " + sim);
@@ -157,7 +174,7 @@ public class MultiresPrint extends ImageMeasureBase {
 		public int compareTo(Object arg0) {
 			ColorMembership cm1 = new ColorMembership(getAvgColor());
 			ColorMembership cm2 = new ColorMembership(((AvgColorPartOfImage)arg0).getAvgColor());
-			return cm1.compareTo(cm2);
+			return  - cm1.compareTo(cm2);
 		}
 		
 		public String toString() {
@@ -169,9 +186,11 @@ public class MultiresPrint extends ImageMeasureBase {
 	
 	
 	public static void main(String[] args) throws IOException {
-		MultiresPrint mp = new MultiresPrint(new FuzzyImageMeasure(new M3()));
-		mp.setQuery(ImageData.loadFile("/home/klbostee/Images/coil5/obj3__0.png").getRgbImage());
-		mp.setTarget(ImageData.loadFile("/home/klbostee/Images/coil5/obj3__270.png").getRgbImage());
+		MultiresPrint mp = new MultiresPrint(
+//		MultiresImageMeasure mp = new MultiresImageMeasure(		
+				new FuzzyImageMeasure(new M3()));
+		mp.setTarget(ImageData.loadFile("/home/klbostee/Images/coil5/obj3__0.png").getRgbImage());
+		mp.setQuery(ImageData.loadFile("/home/klbostee/Images/coil5/obj3__270.png").getRgbImage());
 		double sim = mp.getSimilarity();
 		System.out.println("Global sim: " + sim);
 	}

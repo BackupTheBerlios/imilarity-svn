@@ -3,8 +3,8 @@ import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import de.berlios.imilarity.color.Color;
 import de.berlios.imilarity.fuzzy.ColorMembership;
-import de.berlios.imilarity.image.Color;
 
 public class ColorSorter {
 
