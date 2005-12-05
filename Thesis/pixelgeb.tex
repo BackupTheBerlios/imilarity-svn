@@ -1,6 +1,6 @@
 \chapter{Pixel-gebaseerde similariteitsmaten}
 
-De similariteitsmaten die we in dit hoofdstuk beschouwen
+De similariteitsmaten die we in dit hoofdstuk beschouwen,
 meten de gelijkenis tussen twee beelden door hun beeldpunten met elkaar te vergelijken.
 Deze beeldpunten worden ook \emph{picture elements} of kortweg \emph{pixels} genoemd. Vandaar
 dat we zeggen dat deze maten \emph{pixel-gebaseerd} zijn.
@@ -62,6 +62,7 @@ kleurmodel. Men heeft het dus vaak over \emph{de} RGB kleurruimte, terwijl er ei
 kleurruimtes bestaan die gebaseerd zijn op RGB. 
 
 \subsection{Representatie}
+\label{sectie:kleurbeeld_repr}
 
 In een \emph{kleurbeeld} heeft elke pixel een bepaalde kleur. Deze kleur wordt beschreven met
 behulp van een kleurmodel. Ze wordt bijgevolg voorgesteld als een $n$-tal uit
@@ -112,7 +113,11 @@ Een andere mogelijkheid is dat men het beeld eerst omzet naar een grijswaardebee
 vervolgens een similariteitsmaat voor grijswaardebeelden op toe te passen. Deze omzetting kan 
 bijvoorbeeld aan de hand van de formule $y = 0.3 \cdot r + 0.59 \cdot g + 0.11 \cdot b$ gebeuren.
 
-In \ref{sectie:vaagsimilariteitsmaten} hebben echter vermeld dat de beschouwde 
+In het RGB-model zijn de componenten van een kleur echter sterk gecorreleerd 
+\cite{sharma:digital_color_imaging}, waardoor we 
+informatie verliezen als we ze elk afzonderlijk beschouwen. Een tralie-gebaseerde aanpak,
+op basis van de bovenstaande representatie, lijkt ons daarom interessanter.
+We hebben in \ref{sectie:vaagsimilariteitsmaten} reeds vermeld dat de beschouwde 
 vaagsimilariteitsmaten uitbreidbaar zijn naar L-vaag\-ver\-za\-me\-ling\-en met
 $L=[0,1]^3$. Daarvoor moeten we de bewerkingen waarvan deze maten gebruik maken veralgemenen van 
 $[0,1]$ naar $[0,1]^3$. 
@@ -132,15 +137,7 @@ $\cap$ (doorsnede) en $\cup$ (unie). Doordat we
 $(\mathcal{N},\mathcal{C},\mathcal{D})=(N_s,T_M,S_M)$ gekozen hebben, moeten we
 dus $1 - c$, $\max \{c,c'\}$ en $\min \{c,c'\}$ kunnen bepalen voor alle 
 $c(r,g,b),c'(r',g',b') \in [0,1]^3$. Hiervoor kunnen we $1 - c = (1,1,1) - (r,g,b)$ en de
-bovenstaande definities gebruiken.
-
-We kunnen kleurbeelden dus ook vergelijken door de bovenstaande representatie 
-te combineren met (een veralgemeende versie van) \'e\'en van de 
-vaagsimilariteitsmaten uit \ref{sectie:vaagsimilariteitsmaten}. 
-Deze tralie-gebaseerde aanpak lijkt ons de meest interessante van de drie, omdat
-de kleur-informatie hierbij het best behouden blijft. De componenten van een kleur
-in het RGB-model zijn namelijk sterk gecorreleerd, waardoor we informatie verliezen
-als we ze elk afzonderlijk beschouwen. 
+definities voor $\max$ en $\min$ uit \ref{sectie:kleurbeeld_repr} gebruiken.
 
 
 \section{Resolutie-onafhankelijk}
@@ -152,24 +149,25 @@ ze enkel kunnen toepassen op beelden die dezelfde resolutie hebben. We kunnen di
 door similariteitsmaten te construeren op een manier die ge\"inspireerd is op de constructie
 van de zogenaamde omgeving-gebaseerde similariteitsmaten in \cite{vanderweken:similariteitsmaten}. 
 
-Deze constructie gaat als volgt. Stel dat we twee beelden $A$ en $B$ willen
+Stel dat we twee beelden $A$ en $B$ willen
 vergelijken. We verdelen
-de te vergelijken beelden eerst in twee partities, die respectievelijk bestaan uit
-$n$ en $m$ beeldonderdelen. Hierbij zorgen we ervoor dat de onderdelen
+deze beelden eerst in partities, die respectievelijk bestaan uit
+$m$ en $n$ beeldonderdelen. Hierbij zorgen we ervoor dat de onderdelen
 van deze beide partities allemaal dezelfde resolutie hebben. We kunnen deze onderdelen bijgevolg 
 opvatten als kleine beelden, die men onderling kan vergelijken met behulp van de reeds 
 geziene pixel-gebaseerde similariteitsmaten.
-
 Vervolgens bepalen we de gemiddelde kleur van elk beeldonderdeel. Deze kleur gebruiken we om
-de collecties van beeldonderdelen voor te stellen als twee geordende lijsten, op basis
-van de ordening $\leq_{RGB,lex}$. De elementen van de lijst die correspondeert met $A$ noemen 
-we $A_i$, $i \in \{1,2,\ldots,n\}$, en die van de andere lijst $B_j$, $j \in \{1,2,\ldots,m\}$.
-
+de collecties van beeldonderdelen voor te stellen als twee geordende lijsten, waarbij de 
+helderheid van de geassocieerde kleur afneemt naarmate men ze verder doorloopt.
+Dit doen we met behulp van de ordening $\leq_{RGB,lex}$. 
+De elementen van de lijst die correspondeert met $A$ noemen 
+we $A_i$, $i \in \{1,2,\ldots,m\}$, en die van de andere lijst $B_j$, $j \in \{1,2,\ldots,n\}$.
 Figuur~\ref{fig:multires} illustreert de constructie van deze lijsten voor twee concrete
 kleurbeelden. In deze figuur is de kleur van een beeldonderdeel gelijk aan de gemiddelde 
 kleur van dat onderdeel.
 
-Zodra we beschikken over de twee geordende lijsten, overlopen we de elementen van de 
+De twee geordende lijsten die we zo bekomen, gebruiken we vervolgens voor het bepalen van 
+de similariteit tussen $A$ en $B$. Hiertoe overlopen we de elementen van de 
 lijst die correspondeert met $B$. Voor
 elk element dat we tegenkomen, bepalen we de similariteit met $A_1$. Dit blijven we doen
 tot we een similariteit vinden die kleiner is dan de vorige. We stoppen dus na $i$ iteraties 
@@ -180,66 +178,111 @@ similariteit toe aan $S$ als deze groter is dan de huidige. Zo gaan we verder to
 $B_m$ komen. Als we deze procedure $j$ keer kunnen herhalen, dan
 is de similariteit tussen $A_j$ en $B_m$ dus de laatste die we berekenen. Deze similariteit
 voegen we ook nog toe aan $S$. Tenslotte bepalen we de globale similarteit tussen $A$ en $B$ 
-door het gemiddelde van de waarden uit $S$ te berekenen.
+door het gemiddelde van de waarden uit $S$ te berekenen. De waarde $M(A,B)$ van een 
+resolutie-onafhankelijke similariteitsmaat $M$, op basis van een 
+pixel-gebaseerde maat $P$, wordt dus als volgt bepaald uit de geordende lijsten van
+beeldonderdelen:
+\begin{multicols}{2}
+\begin{algorithmic}[1]
+%\STATE partitioneer $A$ en $B$ zodanig dat alle beeldonderdelen dezelfde resolutie hebben
+%\STATE orden de beide collecties van beeldonderdelen volgens dalende helderheid van de gemiddelde 
+%kleur, met behulp van $\leq_{RGB,lex}$
+%\STATE $(i,j) \leftarrow (1,1)$
+%\STATE $(prev,curr) \leftarrow (0,0)$
+\STATE $i \leftarrow 1$
+\STATE $j \leftarrow 1$
+\WHILE{$i \leq m \land j \leq n$}
+\STATE $prev \leftarrow 0$
+\STATE $curr \leftarrow P(A_i,B_j)$
+\WHILE{$prev < curr$}
+\STATE $j \leftarrow j+1$
+\STATE $prev \leftarrow curr$
+\STATE $curr \leftarrow P(A_i,B_j)$
+\ENDWHILE
+\STATE voeg $\max \{prev, curr\}$ toe aan $S$
+\STATE $i \leftarrow i+1$
+%\STATE $sum \leftarrow sum + prev$
+\ENDWHILE
+\IF{$prev \geq curr \land i \leq m$}
+\STATE $curr \leftarrow P(A_i,B_j)$
+\STATE voeg $curr$ toe aan $S$
+%\STATE $sum \leftarrow sum + sim$
+\ENDIF
+\RETURN gemiddelde van de waarden in $S$
+\end{algorithmic}
+\end{multicols}
+\noindent
+De similariteitsmaat die we op deze manier bekomen is echter niet noodzakelijk symmetrisch. Om dit 
+probleem op te lossen, bepalen we zowel $M(A,B)$ als $M(B,A)$ en gebruiken we het gemiddelde van 
+deze waarden.
 
-Tabel~\ref{tab:multires} geeft een overzicht van de 
-verschillende similariteiten die berekend worden indien we de bovenstaande constructie
-toepassen op de kleurbeelden uit figuur~\ref{fig:multires}. We hebben hierbij gebruik gemaakt 
-van de vaagsimilariteitsmaat $M_3$ en de tralie-gebaseerde aanpak uit \ref{sectie:pixelgeb_kleurbeelden}.
-De similariteiten die  
-toegevoegd worden aan $S$ staan in het vet. Deze similariteiten 
-worden in figuur~\ref{fig:multires} grafisch weergeven als verbindingen tussen de
-geordende beeldonderdelen.
+%Tabel~\ref{tab:multires} geeft een overzicht van de 
+%verschillende similariteiten die berekend worden indien we de bovenstaande constructie
+%toepassen op de kleurbeelden uit figuur~\ref{fig:multires}. We hebben hierbij gebruik gemaakt 
+%van de vaagsimilariteitsmaat $M_3$ en de tralie-gebaseerde aanpak uit \ref{sectie:pixelgeb_kleurbeelden}.
+%De similariteiten die  
+%toegevoegd worden aan $S$ staan in het vet. 
 
 \begin{figure}[tbp]
 \begin{center}
-\includegraphics[width=\textwidth]{images/multires.eps}
+\includegraphics[width=10cm]{images/multires.eps}
 \caption{\label{fig:multires}Constructie van een resolutie-onafhankelijke similariteitsmaat op basis van een pixel-gebaseerde maat.}
 \end{center}
 \end{figure}
-\begin{table}
+
+\begin{figure}[tbp]
 \begin{center}
-\begin{tabular}{|c|ccccccccc|}
-\hline
-$\scriptstyle M_3(A_i,B_j)$	& $B_1$ & $B_2$ & $B_3$ & $B_4$ & $B_5$ & $B_6$ & $B_7$ & $B_8$ & $B_9$  \\
-\hline
-$A_1$ 	& $\mathbf{\scriptstyle 0.5198}$ & $\scriptstyle 0.4496$ & & & & & & & \\
-$A_2$ 	& & $\mathbf{\scriptstyle 0.4691}$ & $\scriptstyle 0.3859$ & & & & & & \\
-$A_3$ 	& & & $\scriptstyle 0.4133$ & $\mathbf{\scriptstyle 0.4404}$ & $\scriptstyle 0.3298$ & & & & \\
-$A_4$ 	& & & & & $\scriptstyle 0.3277$ & $\mathbf{\scriptstyle 0.4330}$ & $\scriptstyle 0.3648$ & & \\
-$A_5$ 	& & & & & & & $\mathbf{\scriptstyle 0.3849}$ & $\scriptstyle 0.3134$ & \\
-$A_6$ 	& & & & & & & & $\mathbf{\scriptstyle 0.3438}$ & $\scriptstyle 0.3427$ \\
-$A_7$ 	& & & & & & & & & $\mathbf{\scriptstyle 0.5066}$ \\
-\hline
-\end{tabular}
-\caption{\label{tab:multires}De similariteiten die berekend worden in de constructie die ge\"illustreerd wordt door figuur~\ref{fig:multires}.}
+\subfigure[]{
+\includegraphics[width=0.3\textwidth]{images/multires_sim-matrix_1.eps}
+\label{fig:multires_sim-matrix_1}
+}
+\subfigure[]{
+\includegraphics[width=0.3\textwidth]{images/multires_sim-matrix_2.eps}
+\label{fig:multires_sim-matrix_2}
+}
+\subfigure[]{
+\includegraphics[width=0.3\textwidth]{images/multires_sim-matrix_beide.eps}
+\label{fig:multires_sim-matrix_beide}
+}
+\caption{\label{fig:multires_sim-matrices}Het pad in de similariteitsmatrix van de beelden uit 
+figuur~\ref{fig:multires} voor (a) $M(A,B)$, (b) $M(B,A)$ en (c) beide.}
 \end{center}
-\end{table}
+\end{figure}
 
-De constructie van een resolutie-onafhankelijke similariteitsmaat, 
-op basis van een pixel-gebaseerde maat, bestaat dus uit vier stappen:
-\begin{enumerate}
-\item Verdeel de te vergelijken beelden $A$ en $B$
-in partities, zodanig dat alle beeldonderdelen dezelfde resolutie hebben.
-\item Bepaal de gemiddelde kleur van elk beeldonderdeel. Gebruik deze kleur vervolgens
-om de beide collecties van beeldonderdelen te ordenen met behulp van de ordening $\leq_{RGB,lex}$.
-\item Overloop de beeldonderdelen van $B$ en bepaal telkens de similariteit met het eerste 
-beeldonderdeel van $A$. Voeg de vorige similariteit toe aan de lijst van similariteiten $S$
-indien ze groter is dan de huidige. Herhaal deze stap op dat moment voor de resterende
-beeldonderdelen van $A$ en $B$. Het 
-beeldonderdeel van $B$ dat aanleiding gaf tot de huidige similariteit maakt deel uit van
-deze resterende beeldonderdelen.
+%\begin{table}
+%\begin{center}
+%\begin{tabular}{|c|ccccccccc|}
+%\hline
+%$\scriptstyle M_3(A_i,B_j)$	& $B_1$ & $B_2$ & $B_3$ & $B_4$ & $B_5$ & $B_6$ & $B_7$ & $B_8$ & $B_9$  \\
+%\hline
+%$A_1$ 	& $\mathbf{\scriptstyle 0.5198}$ & $\scriptstyle 0.4496$ & & & & & & & \\
+%$A_2$ 	& & $\mathbf{\scriptstyle 0.4691}$ & $\scriptstyle 0.3859$ & & & & & & \\
+%$A_3$ 	& & & $\scriptstyle 0.4133$ & $\mathbf{\scriptstyle 0.4404}$ & $\scriptstyle 0.3298$ & & & & \\
+%$A_4$ 	& & & & & $\scriptstyle 0.3277$ & $\mathbf{\scriptstyle 0.4330}$ & $\scriptstyle 0.3648$ & & \\
+%$A_5$ 	& & & & & & & $\mathbf{\scriptstyle 0.3849}$ & $\scriptstyle 0.3134$ & \\
+%$A_6$ 	& & & & & & & & $\mathbf{\scriptstyle 0.3438}$ & $\scriptstyle 0.3427$ \\
+%$A_7$ 	& & & & & & & & & $\mathbf{\scriptstyle 0.5066}$ \\
+%\hline
+%\end{tabular}
+%\caption{\label{tab:multires}De similariteiten die berekend worden in de constructie die ge\"illustreerd wordt door figuur~\ref{fig:multires}.}
+%\end{center}
+%\end{table}
 
-Als het laatste beeldonderdeel van $B$ bereikt wordt, dan wordt de similariteit tussen dit
-beeldonderdeel en het huidige beeldonderdeel van $A$ toegevoegd aan $S$. De overblijvende
-beeldonderdelen van $A$ worden dan buiten beschouwing gelaten. 
-\item Bepaal het gemiddelde van de similariteiten uit $S$. Deze waarde is de globale similariteit tussen
-$A$ en $B$.
-\end{enumerate}
+We kunnen de similariteiten tussen de verschillende beeldonderdelen van twee beelden
+samenbrengen in een \emph{similariteitsmatrix}. Een dergelijke matrix kan grafisch 
+voorgesteld worden als een grijswaardebeeld, waarbij de waarde van een beeldpunt evenredig is met
+de overeenkomstige similariteit. Figuur~\ref{fig:multires_sim-matrix_1} toont het pad in de 
+similariteitsmatrix van de beelden $A$ en $B$ uit figuur~\ref{fig:multires}, dat wordt afgelopen
+bij het bepalen van $M(A,B)$.
+De similariteiten die effectief berekend worden, hebben in deze figuur een volle rand. Diegene 
+die toegevoegd worden aan $S$ hebben een dikkere rand. Deze laatste similariteiten 
+worden in figuur~\ref{fig:multires} weergeven als volle verbindingen tussen de
+geordende beeldonderdelen. 
 
-Het resultaat $M$ van deze constructie, voor twee beelden $A$ en $B$, is echter niet noodzakelijk 
-een symmetrische similariteitsmaat. Om dit probleem op te lossen, bepalen we zowel $M(A,B)$ als
-$M(B,A)$ en gebruiken we het gemiddelde van deze waarden.
+Uit figuur~\ref{fig:multires_sim-matrices} blijkt inderdaad dat we
+het gemiddelde van $M(A,B)$ en $M(B,A)$ moeten gebruiken om een symmetrische maat te bekomen.
+De similariteiten die toegevoegd worden aan $S$ bij het berekenen van $M(B,A)$, worden in 
+figuur~\ref{fig:multires} weergegeven met stippelijnen.
 
 
 \section{Experimentele observaties}
@@ -274,137 +317,137 @@ is de pixel-gebaseerde benadering niet de meest geschikte voor image retrieval.
 \begin{tabular}{m{11cm} | m{3cm} |}
 \textbf{Eerste tien resultaten:} & \textbf{GGR:} \\
 \vspace{4pt}
-\includegraphics[width=1cm]{coil/beeld-12.eps}
-\includegraphics[width=1cm]{coil/beeld-17.eps}
-\includegraphics[width=1cm]{coil/beeld-14.eps}
-\includegraphics[width=1cm]{coil/beeld-13.eps}
-\includegraphics[width=1cm]{coil/beeld-16.eps}
-\includegraphics[width=1cm]{coil/beeld-15.eps}
-\includegraphics[width=1cm]{coil/beeld-19.eps}
-\includegraphics[width=1cm]{coil/beeld-39.eps}
-\includegraphics[width=1cm]{coil/beeld-22.eps}
-\includegraphics[width=1cm]{coil/beeld-9.eps}
-& {\scriptsize 0.0}
-\\
 \includegraphics[width=1cm]{coil/beeld-18.eps}
-\includegraphics[width=1cm]{coil/beeld-19.eps}
 \includegraphics[width=1cm]{coil/beeld-22.eps}
-\includegraphics[width=1cm]{coil/beeld-23.eps}
 \includegraphics[width=1cm]{coil/beeld-21.eps}
+\includegraphics[width=1cm]{coil/beeld-19.eps}
 \includegraphics[width=1cm]{coil/beeld-20.eps}
-\includegraphics[width=1cm]{coil/beeld-47.eps}
-\includegraphics[width=1cm]{coil/beeld-8.eps}
-\includegraphics[width=1cm]{coil/beeld-14.eps}
-\includegraphics[width=1cm]{coil/beeld-44.eps}
+\includegraphics[width=1cm]{coil/beeld-23.eps}
+\includegraphics[width=1cm]{coil/beeld-62.eps}
+\includegraphics[width=1cm]{coil/beeld-63.eps}
+\includegraphics[width=1cm]{coil/beeld-61.eps}
+\includegraphics[width=1cm]{coil/beeld-60.eps}
 & {\scriptsize 0.0}
 \\
-\includegraphics[width=1cm]{coil/beeld-60.eps}
-\includegraphics[width=1cm]{coil/beeld-63.eps}
-\includegraphics[width=1cm]{coil/beeld-61.eps}
-\includegraphics[width=1cm]{coil/beeld-64.eps}
-\includegraphics[width=1cm]{coil/beeld-62.eps}
-\includegraphics[width=1cm]{coil/beeld-30.eps}
-\includegraphics[width=1cm]{coil/beeld-46.eps}
-\includegraphics[width=1cm]{coil/beeld-31.eps}
-\includegraphics[width=1cm]{coil/beeld-6.eps}
-\includegraphics[width=1cm]{coil/beeld-1.eps}
-& {\scriptsize 0.02619047619047619}
-\\
-\includegraphics[width=1cm]{coil/beeld-24.eps}
-\includegraphics[width=1cm]{coil/beeld-29.eps}
-\includegraphics[width=1cm]{coil/beeld-26.eps}
-\includegraphics[width=1cm]{coil/beeld-28.eps}
-\includegraphics[width=1cm]{coil/beeld-52.eps}
-\includegraphics[width=1cm]{coil/beeld-48.eps}
-\includegraphics[width=1cm]{coil/beeld-49.eps}
-\includegraphics[width=1cm]{coil/beeld-51.eps}
-\includegraphics[width=1cm]{coil/beeld-53.eps}
-\includegraphics[width=1cm]{coil/beeld-50.eps}
-& {\scriptsize 0.02857142857142857}
-\\
-\includegraphics[width=1cm]{coil/beeld-54.eps}
-\includegraphics[width=1cm]{coil/beeld-56.eps}
-\includegraphics[width=1cm]{coil/beeld-59.eps}
-\includegraphics[width=1cm]{coil/beeld-35.eps}
-\includegraphics[width=1cm]{coil/beeld-31.eps}
-\includegraphics[width=1cm]{coil/beeld-58.eps}
-\includegraphics[width=1cm]{coil/beeld-30.eps}
-\includegraphics[width=1cm]{coil/beeld-34.eps}
-\includegraphics[width=1cm]{coil/beeld-4.eps}
-\includegraphics[width=1cm]{coil/beeld-33.eps}
-& {\scriptsize 0.04523809523809524}
-\\
-\includegraphics[width=1cm]{coil/beeld-30.eps}
-\includegraphics[width=1cm]{coil/beeld-31.eps}
-\includegraphics[width=1cm]{coil/beeld-34.eps}
-\includegraphics[width=1cm]{coil/beeld-35.eps}
-\includegraphics[width=1cm]{coil/beeld-61.eps}
-\includegraphics[width=1cm]{coil/beeld-55.eps}
-\includegraphics[width=1cm]{coil/beeld-60.eps}
-\includegraphics[width=1cm]{coil/beeld-1.eps}
-\includegraphics[width=1cm]{coil/beeld-63.eps}
-\includegraphics[width=1cm]{coil/beeld-4.eps}
-& {\scriptsize 0.047619047619047616}
-\\
-\includegraphics[width=1cm]{coil/beeld-6.eps}
-\includegraphics[width=1cm]{coil/beeld-7.eps}
-\includegraphics[width=1cm]{coil/beeld-37.eps}
-\includegraphics[width=1cm]{coil/beeld-10.eps}
-\includegraphics[width=1cm]{coil/beeld-9.eps}
-\includegraphics[width=1cm]{coil/beeld-62.eps}
-\includegraphics[width=1cm]{coil/beeld-46.eps}
-\includegraphics[width=1cm]{coil/beeld-1.eps}
-\includegraphics[width=1cm]{coil/beeld-40.eps}
-\includegraphics[width=1cm]{coil/beeld-60.eps}
-& {\scriptsize 0.05238095238095238}
-\\
-\includegraphics[width=1cm]{coil/beeld-48.eps}
 \includegraphics[width=1cm]{coil/beeld-24.eps}
 \includegraphics[width=1cm]{coil/beeld-25.eps}
 \includegraphics[width=1cm]{coil/beeld-28.eps}
 \includegraphics[width=1cm]{coil/beeld-27.eps}
-\includegraphics[width=1cm]{coil/beeld-52.eps}
-\includegraphics[width=1cm]{coil/beeld-53.eps}
 \includegraphics[width=1cm]{coil/beeld-26.eps}
 \includegraphics[width=1cm]{coil/beeld-29.eps}
-\includegraphics[width=1cm]{coil/beeld-49.eps}
-& {\scriptsize 0.06190476190476191}
-\\
-\includegraphics[width=1cm]{coil/beeld-36.eps}
-\includegraphics[width=1cm]{coil/beeld-1.eps}
-\includegraphics[width=1cm]{coil/beeld-40.eps}
-\includegraphics[width=1cm]{coil/beeld-9.eps}
-\includegraphics[width=1cm]{coil/beeld-39.eps}
+\includegraphics[width=1cm]{coil/beeld-38.eps}
 \includegraphics[width=1cm]{coil/beeld-10.eps}
-\includegraphics[width=1cm]{coil/beeld-0.eps}
-\includegraphics[width=1cm]{coil/beeld-7.eps}
 \includegraphics[width=1cm]{coil/beeld-11.eps}
-\includegraphics[width=1cm]{coil/beeld-6.eps}
-& {\scriptsize 0.1261904761904762}
+\includegraphics[width=1cm]{coil/beeld-9.eps}
+& {\scriptsize 0.0}
 \\
-\includegraphics[width=1cm]{coil/beeld-42.eps}
-\includegraphics[width=1cm]{coil/beeld-0.eps}
-\includegraphics[width=1cm]{coil/beeld-1.eps}
-\includegraphics[width=1cm]{coil/beeld-45.eps}
-\includegraphics[width=1cm]{coil/beeld-43.eps}
-\includegraphics[width=1cm]{coil/beeld-4.eps}
-\includegraphics[width=1cm]{coil/beeld-40.eps}
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+\includegraphics[width=1cm]{coil/beeld-35.eps}
+\includegraphics[width=1cm]{coil/beeld-34.eps}
 \includegraphics[width=1cm]{coil/beeld-31.eps}
-\includegraphics[width=1cm]{coil/beeld-36.eps}
-\includegraphics[width=1cm]{coil/beeld-3.eps}
-& {\scriptsize 0.2642857142857143}
+\includegraphics[width=1cm]{coil/beeld-32.eps}
+\includegraphics[width=1cm]{coil/beeld-33.eps}
+\includegraphics[width=1cm]{coil/beeld-61.eps}
+\includegraphics[width=1cm]{coil/beeld-63.eps}
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-55.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-61.eps}
+\includegraphics[width=1cm]{coil/beeld-63.eps}
+\includegraphics[width=1cm]{coil/beeld-62.eps}
+\includegraphics[width=1cm]{coil/beeld-64.eps}
+\includegraphics[width=1cm]{coil/beeld-65.eps}
+\includegraphics[width=1cm]{coil/beeld-34.eps}
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+\includegraphics[width=1cm]{coil/beeld-31.eps}
+\includegraphics[width=1cm]{coil/beeld-33.eps}
+& {\scriptsize 0.0}
 \\
 \includegraphics[width=1cm]{coil/beeld-0.eps}
-\includegraphics[width=1cm]{coil/beeld-42.eps}
-\includegraphics[width=1cm]{coil/beeld-43.eps}
-\includegraphics[width=1cm]{coil/beeld-37.eps}
 \includegraphics[width=1cm]{coil/beeld-1.eps}
-\includegraphics[width=1cm]{coil/beeld-46.eps}
-\includegraphics[width=1cm]{coil/beeld-40.eps}
-\includegraphics[width=1cm]{coil/beeld-62.eps}
+\includegraphics[width=1cm]{coil/beeld-5.eps}
+\includegraphics[width=1cm]{coil/beeld-42.eps}
 \includegraphics[width=1cm]{coil/beeld-4.eps}
+\includegraphics[width=1cm]{coil/beeld-2.eps}
+\includegraphics[width=1cm]{coil/beeld-44.eps}
+\includegraphics[width=1cm]{coil/beeld-46.eps}
+\includegraphics[width=1cm]{coil/beeld-43.eps}
 \includegraphics[width=1cm]{coil/beeld-3.eps}
-& {\scriptsize 0.2714285714285714}
+& {\scriptsize 0.014285714285714285}
+\\
+\includegraphics[width=1cm]{coil/beeld-48.eps}
+\includegraphics[width=1cm]{coil/beeld-27.eps}
+\includegraphics[width=1cm]{coil/beeld-53.eps}
+\includegraphics[width=1cm]{coil/beeld-50.eps}
+\includegraphics[width=1cm]{coil/beeld-52.eps}
+\includegraphics[width=1cm]{coil/beeld-26.eps}
+\includegraphics[width=1cm]{coil/beeld-51.eps}
+\includegraphics[width=1cm]{coil/beeld-28.eps}
+\includegraphics[width=1cm]{coil/beeld-49.eps}
+\includegraphics[width=1cm]{coil/beeld-29.eps}
+& {\scriptsize 0.01904761904761905}
+\\
+\includegraphics[width=1cm]{coil/beeld-54.eps}
+\includegraphics[width=1cm]{coil/beeld-55.eps}
+\includegraphics[width=1cm]{coil/beeld-57.eps}
+\includegraphics[width=1cm]{coil/beeld-58.eps}
+\includegraphics[width=1cm]{coil/beeld-34.eps}
+\includegraphics[width=1cm]{coil/beeld-35.eps}
+\includegraphics[width=1cm]{coil/beeld-31.eps}
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+\includegraphics[width=1cm]{coil/beeld-59.eps}
+\includegraphics[width=1cm]{coil/beeld-56.eps}
+& {\scriptsize 0.01904761904761905}
+\\
+\includegraphics[width=1cm]{coil/beeld-36.eps}
+\includegraphics[width=1cm]{coil/beeld-38.eps}
+\includegraphics[width=1cm]{coil/beeld-25.eps}
+\includegraphics[width=1cm]{coil/beeld-27.eps}
+\includegraphics[width=1cm]{coil/beeld-24.eps}
+\includegraphics[width=1cm]{coil/beeld-41.eps}
+\includegraphics[width=1cm]{coil/beeld-40.eps}
+\includegraphics[width=1cm]{coil/beeld-37.eps}
+\includegraphics[width=1cm]{coil/beeld-28.eps}
+\includegraphics[width=1cm]{coil/beeld-39.eps}
+& {\scriptsize 0.030952380952380953}
+\\
+\includegraphics[width=1cm]{coil/beeld-12.eps}
+\includegraphics[width=1cm]{coil/beeld-13.eps}
+\includegraphics[width=1cm]{coil/beeld-16.eps}
+\includegraphics[width=1cm]{coil/beeld-15.eps}
+\includegraphics[width=1cm]{coil/beeld-61.eps}
+\includegraphics[width=1cm]{coil/beeld-63.eps}
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-43.eps}
+\includegraphics[width=1cm]{coil/beeld-4.eps}
+& {\scriptsize 0.05238095238095238}
+\\
+\includegraphics[width=1cm]{coil/beeld-6.eps}
+\includegraphics[width=1cm]{coil/beeld-24.eps}
+\includegraphics[width=1cm]{coil/beeld-25.eps}
+\includegraphics[width=1cm]{coil/beeld-64.eps}
+\includegraphics[width=1cm]{coil/beeld-28.eps}
+\includegraphics[width=1cm]{coil/beeld-7.eps}
+\includegraphics[width=1cm]{coil/beeld-65.eps}
+\includegraphics[width=1cm]{coil/beeld-8.eps}
+\includegraphics[width=1cm]{coil/beeld-61.eps}
+\includegraphics[width=1cm]{coil/beeld-9.eps}
+& {\scriptsize 0.07142857142857142}
+\\
+\includegraphics[width=1cm]{coil/beeld-42.eps}
+\includegraphics[width=1cm]{coil/beeld-0.eps}
+\includegraphics[width=1cm]{coil/beeld-1.eps}
+\includegraphics[width=1cm]{coil/beeld-5.eps}
+\includegraphics[width=1cm]{coil/beeld-2.eps}
+\includegraphics[width=1cm]{coil/beeld-44.eps}
+\includegraphics[width=1cm]{coil/beeld-4.eps}
+\includegraphics[width=1cm]{coil/beeld-43.eps}
+\includegraphics[width=1cm]{coil/beeld-3.eps}
+\includegraphics[width=1cm]{coil/beeld-46.eps}
+& {\scriptsize 0.08333333333333333}
 \end{tabular}
 \caption{\label{fig:results_beste_pixelgeb}De GGR-waarde en de eerste tien resultaten voor elk voorbeeld-beeld bij de beste resolutie-onafhankelijke pixel-gebaseerde similariteitsmaat.}
 \end{center}
