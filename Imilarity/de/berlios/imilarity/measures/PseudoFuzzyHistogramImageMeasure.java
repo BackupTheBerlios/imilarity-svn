@@ -6,13 +6,13 @@ package de.berlios.imilarity.measures;
 import java.util.HashMap;
 
 
-import de.berlios.imilarity.fuzzy.FuzzyHistogram;
+import de.berlios.imilarity.fuzzy.PseudoFuzzyHistogram;
 import de.berlios.imilarity.image.Image;
 import de.berlios.imilarity.smoothers.DefaultSmoother;
 import de.berlios.imilarity.smoothers.Smoother;
 
 
-public class FuzzyHistogramImageMeasure extends ImageMeasureBase {
+public class PseudoFuzzyHistogramImageMeasure extends ImageMeasureBase {
 
 	private FuzzyMeasure fuzzyMeasure;
 	
@@ -23,7 +23,7 @@ public class FuzzyHistogramImageMeasure extends ImageMeasureBase {
 	private Smoother smoother;
 	
 	
-	public FuzzyHistogramImageMeasure(FuzzyMeasure fuzzyMeasure, int[] binsCounts, Smoother smoother) {
+	public PseudoFuzzyHistogramImageMeasure(FuzzyMeasure fuzzyMeasure, int[] binsCounts, Smoother smoother) {
 		if (fuzzyMeasure == null)
 			throw new NullPointerException("fuzzyMeasure == null");
 		if (binsCounts == null)
@@ -37,15 +37,15 @@ public class FuzzyHistogramImageMeasure extends ImageMeasureBase {
 		this.smoother = smoother;
 	}
 	
-	public FuzzyHistogramImageMeasure(FuzzyMeasure fuzzyMeasure, int[] binsCounts) {
+	public PseudoFuzzyHistogramImageMeasure(FuzzyMeasure fuzzyMeasure, int[] binsCounts) {
 		this(fuzzyMeasure, binsCounts, new DefaultSmoother());
 	}
 	
-	public FuzzyHistogramImageMeasure(FuzzyMeasure fuzzyMeasure, int binsCount, Smoother smoother) {
+	public PseudoFuzzyHistogramImageMeasure(FuzzyMeasure fuzzyMeasure, int binsCount, Smoother smoother) {
 		this(fuzzyMeasure, new int[] { binsCount }, smoother);
 	}
 	
-	public FuzzyHistogramImageMeasure(FuzzyMeasure fuzzyMeasure, int binsCount) {
+	public PseudoFuzzyHistogramImageMeasure(FuzzyMeasure fuzzyMeasure, int binsCount) {
 		this(fuzzyMeasure, binsCount, new DefaultSmoother());
 	}
 	
@@ -110,9 +110,9 @@ public class FuzzyHistogramImageMeasure extends ImageMeasureBase {
 		}
 		
 		fuzzyMeasure.setQuery
-			(new FuzzyHistogram(queryHistogram, queryHistLength, smoother));
+			(new PseudoFuzzyHistogram(queryHistogram, queryHistLength, smoother));
 		fuzzyMeasure.setTarget
-			(new FuzzyHistogram(targetHistogram, targetHistLength, smoother));
+			(new PseudoFuzzyHistogram(targetHistogram, targetHistLength, smoother));
 		return fuzzyMeasure.
 		getSimilarity();
 	}

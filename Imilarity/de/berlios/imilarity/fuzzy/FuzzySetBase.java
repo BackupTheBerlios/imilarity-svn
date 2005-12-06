@@ -17,4 +17,38 @@ public abstract class FuzzySetBase implements FuzzySet {
 			return sum / Math.sqrt(getMembership(0).getComponents().length);
 		}
 	}
+	
+	public FuzzySet intersection(FuzzySet set) {
+		int count = getElementsCount();
+		if (set.getElementsCount() != count)
+			throw new IllegalArgumentException("not the same elements count");
+		ArrayFuzzySet result = new ArrayFuzzySet();
+		for (int i = 0; i < count; i++) {
+			Membership m = getMembership(i);
+			result.addMembership(new SimpleMembership(m.and(set.getMembership(i)).getComponents()));
+		}
+		return result;
+	}
+
+	public FuzzySet union(FuzzySet set) {
+		int count = getElementsCount();
+		if (set.getElementsCount() != count)
+			throw new IllegalArgumentException("not the same elements count");
+		ArrayFuzzySet result = new ArrayFuzzySet();
+		for (int i = 0; i < count; i++) {
+			Membership m = getMembership(i);
+			result.addMembership(new SimpleMembership(m.or(set.getMembership(i)).getComponents()));
+		}
+		return result;
+	}
+
+	public FuzzySet complement() {
+		int count = getElementsCount();
+		ArrayFuzzySet result = new ArrayFuzzySet();
+		for (int i = 0; i < count; i++) {
+			Membership m = getMembership(i);
+			result.addMembership(new SimpleMembership(m.complement().getComponents()));
+		}
+		return result;
+	}
 }

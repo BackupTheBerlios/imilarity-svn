@@ -8,7 +8,7 @@ import de.berlios.imilarity.image.Image;
 import de.berlios.imilarity.smoothers.DefaultSmoother;
 import de.berlios.imilarity.smoothers.Smoother;
 
-public class FuzzyHistogram extends FuzzySetBase {
+public class PseudoFuzzyHistogram extends FuzzySetBase {
 
 	private Map histogram;
 	private int elementsCount = 0;
@@ -16,7 +16,7 @@ public class FuzzyHistogram extends FuzzySetBase {
 	private Smoother smoother;
 	
 	
-	public FuzzyHistogram(Image image, int[] binsCounts) {
+	public PseudoFuzzyHistogram(Image image, int[] binsCounts) {
 		if (image == null)
 			throw new NullPointerException("image == null");
 		if (binsCounts == null)
@@ -45,7 +45,7 @@ public class FuzzyHistogram extends FuzzySetBase {
 		}
 	}
 	
-	public FuzzyHistogram(Map histogram, int elementsCount, Smoother smoother) {
+	public PseudoFuzzyHistogram(Map histogram, int elementsCount, Smoother smoother) {
 		if (histogram == null)
 			throw new NullPointerException("histogram == null");
 		this.histogram = histogram;
@@ -72,7 +72,7 @@ public class FuzzyHistogram extends FuzzySetBase {
 		}
 	}
 	
-	public FuzzyHistogram(Map histogram, int elementsCount) {
+	public PseudoFuzzyHistogram(Map histogram, int elementsCount) {
 		this(histogram, elementsCount, new DefaultSmoother());
 	}
 	
