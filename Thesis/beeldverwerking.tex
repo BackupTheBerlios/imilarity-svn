@@ -1,0 +1,300 @@
+\chapter{Enkele begrippen uit beeldverwerking}
+
+We zullen in het vervolg van deze scriptie ook gebruik maken van enkele
+begrippen en technieken uit beeldverwerking. In dit hoofdstuk geven we 
+een overzicht van die begrippen en beschrijven we kort de corresponderende 
+technieken.
+
+\section{Modellering van kleuren en beelden}
+
+\subsection{kleurmodellen}
+
+Een \emph{kleurmodel} is een abstract mathematisch model dat beschrijft hoe kleuren gerepresenteerd 
+kunnen worden als $n$-tallen uit $\mathbb{R}^n$. RGB is het meest gebruikte kleurmodel. In dat model is elke kleur
+een gewogen som van drie hoofdkleuren: rood, groen en blauw. De gewichten van die som
+worden gebruikt als componenten van het drietal dat de kleur voorstelt. 
+%Naast RGB zijn ook
+%HSV en L*a*b* populaire kleurmodellen \cite{philips:beeldverwerking}.
+
+De kleuren die op basis van een bepaald model kunnen voorgesteld worden, vormen een \emph{kleurruimte}. 
+In het geval van RGB is dat een driedimensionale ruimte. De kleuren in die ruimte zijn afhankelijk
+van de manier waarop men ``rood'', ``groen'' en ``blauw'' definieert. Veelgebruikte kleurruimtes 
+op basis van het RGB model zijn sRGB en Adobe RGB.
+Hoewel het strikt gezien niet correct is, wordt de term ``kleurruimte'' vaak ook voor het
+kleurmodel gebruikt. Men heeft het dus dikwijls over \emph{de} RGB kleurruimte, terwijl er eigenlijk meerdere
+kleurruimtes bestaan die gebaseerd zijn op RGB. 
+
+Ook in het HSV kleurmodel \cite{tkalcic:colour_spaces} wordt elke kleur voorgesteld 
+door een drietal. Men noemt de componenten van zo'n drietal respectievelijk 
+``hue'', ``saturation'' en ``value''. De eerste van die componenten 
+correspondeert met de kleurtint, terwijl de overige componenten de verzadiging 
+en de helderheid aangeven. Men kan een kleur $(r,g,b) \in [0,1]^3$ uit het RGB 
+model als volgt omzetten naar een kleur $(h,s,v) \in [0,1]^3$ in het HSV model: 
+$$
+\begin{array}{rcll}
+h' & = & 60 \cdot \frac{g - b}{\max \{r,g,b\} - \min \{r,g,b\}}\quad & \textrm{ 
+als } \max \{r,g,b\} = r \\[2pt] & = & 60 \cdot \frac{b - r}{\max \{r,g,b\} - 
+\min \{r,g,b\}} + 120\quad & \textrm{ als } \max \{r,g,b\} = g \\[2pt] & = & 60 
+\cdot \frac{r - g}{\max \{r,g,b\} - \min \{r,g,b\}} + 240\quad & \textrm{ als } 
+\max \{r,g,b\} = b \\[6pt] h & = & \frac{h' \bmod 360}{360} & \textrm{ als } h' 
+\bmod 360 \geq 0 \\[2pt] & = & \frac{360 - (h' \bmod 360)}{360} & \textrm{ als 
+} h' \bmod 360 < 0 \\[6pt] s & = & \frac{\max \{r,g,b\} - \min \{r,g,b\}}{\max 
+\{r,g,b\}} & \\[6pt] v & = & \max \{r,g,b\}
+\end{array}
+$$ Als $s=0$ dan is $h$ niet gedefinieerd. Dit is logisch vermits we dan te 
+maken hebben met een grijswaarde. Indien $v=0$ dan is $s$ niet gedefinieerd. We 
+hebben het in dat geval dan ook over puur zwart, waarvoor er geen kleurtint of 
+saturatie kan gespecifieerd worden. In de praktische implementatie geven we 
+niet gedefinieerde componenten de waarde $0$.
+
+Een kleur in het Irb-model bestaat uit de volgende drie componenten 
+\cite{ohta:color_info_for_region_segm}: $$ i = \frac{r+g+b}{3} \qquad r' = 
+\frac{r}{r+g+b} \qquad b' = \frac{b}{r+g+b} $$ Hierbij zijn $r,g,b \in [0,1]$ 
+de co\"ordinaten van de beschouwde kleur in het RGB-model. 
+
+Het I1I2I3-model, dat werd voorgesteld door Ohta 
+\cite{ohta:color_info_for_region_segm}, is een \emph{opponent color space}. 
+We zetten een kleur $(r,g,b) \in 
+[0,1]^3$ uit het RGB-model als volgt om: $$
+%\begin{array}{rcl}
+i_1 = \frac{r+g+b}{3} \qquad i_2 = \frac{r-b}{2} \qquad i_3 = \frac{2 \cdot g - 
+r - b}{4}
+%\end{array}
+$$ De eerste component is achromatisch (\emph{white-black}), terwijl de overige 
+twee chromatisch zijn (\emph{red-green} en \emph{yellow-blue}).
+We gebruiken hier, zoals in \cite{wang:cbir_using_daubechies_wavelets}, een 
+genormaliseerde vorm van dit model: $$
+%\begin{array}{rcl}
+c_1 = \frac{r+g+b}{3} \qquad c_2 = \frac{r + (1 - b)}{2} \qquad c_3 = \frac{r + 
+2 \cdot (1 - g) + b}{4}
+%\end{array}
+$$ 
+
+In het XYZ-model wordt een kleur voorgesteld door de volgende drie componenten: 
+$$
+\begin{array}{rcl}
+x & = & 0.431 \cdot r+0.342 \cdot g+0.178 \cdot b \\ y & = & 0.222 \cdot 
+r+0.707 \cdot g+0.071 \cdot b \\ z & = & 0.020 \cdot r+0.130 \cdot g+0.939 
+\cdot b
+\end{array}
+$$ met $(r,g,b) \in [0,1]^3$ de vector van de kleur in het RGB-model. Hierbij 
+is $y$ evenredig met de luminantie van de kleur in kwestie. 
+
+De eerste component van een kleur in het Yxy-model is gelijk aan de $y$ 
+component van die kleur in het XYZ-model. De overige twee componenten berekenen 
+we als volgt: $$ x' = \frac{x}{x+y+z} \qquad y' = \frac{y}{x+y+z} $$ 
+
+Een kleurruimte op basis van het L*a*b*-model is \emph{perceptueel uniform} 
+\cite{sharma:digital_color_imaging}. Dat wil zeggen dat, in een dergelijke 
+ruimte, de Euclidische afstand een goede maat is voor het waargenomen verschil 
+tussen twee kleuren. De co\"ordinaten $(l,a,b)$ van een kleur in het 
+L*a*b*-model kunnen als volgt benaderd worden: $$
+\begin{array}{rcl}
+l & = & 116 \cdot f(\frac{y}{y_0}) - 16 \\[5pt] a & = & 500 \cdot 
+\left(f(\frac{x}{x_0}) - f(\frac{y}{y_0})\right) \\[5pt] b & = & 200 \cdot 
+\left(f(\frac{x}{x_0}) - f(\frac{z}{z_0})\right)
+\end{array}
+$$ met $$
+\begin{array}{rcll}
+f(t) & = & t^\frac{1}{3} & \textrm{als } t > 0.008856 \\ & = & 7.787 \cdot t + 
+\frac{16}{116} & \textrm{anders}
+\end{array}
+$$ voor elke re\"ele $t$. Hierbij zijn $x_0$, $y_0$ en $z_0$ de 
+XYZ-co\"ordinaten van een wit referentiepunt. We gebruiken hier 
+$(x_0,y_0,z_0)=(1,1,1)$.
+Er geldt dan $l \in [0,100]$, $a \in [-500,500]$ en $b \in [-200,200]$, zodat 
+we als volgt kunnen normaliseren: $$ l' = \frac{l}{100} \qquad a' = \frac{500 + 
+a}{1000} \qquad b' = \frac{200 + b}{400} $$
+
+
+\subsection{Kleurbeelden}
+
+In een \emph{kleurbeeld} heeft elk beeldpunt een bepaalde kleur, die beschreven wordt met
+behulp van een kleurmodel. Met andere woorden: een kleur wordt voorgesteld als een $n$-tal uit
+$\mathbb{R}^n$. Zoals hierboven reeds een aantal keer werd ge\"illustreerd, kunnen dergelijke 
+$n$-tallen genormaliseerd worden tot $n$-tallen uit $[0,1]^n$. We kunnen een $m$-dimensionaal 
+kleurbeeld dus modelleren als een $\mathbb{R}^m - [0,1]^n$ afbeelding $b$. 
+In de praktijk wordt een beeld echter voorgesteld als een rooster bestaande uit een
+eindig aantal beeldpunten. Bijgevolg zal $b$ eerder een afbeelding van een deelverzameling van $\mathbb{N}^2$
+naar $[0,1]^n$ zijn.
+
+\section{Kleurkwantisatie}
+\label{sectie:kleurkwantisatie}
+
+Een kleurruimte bevat meestal een groot aantal 
+kleuren. Zo gebruikt men voor een RGB-ruimte bijvoorbeeld typisch 8 bits per 
+kleurcomponent. Dit geeft een totaal van 24 bits per kleur, zodat men dus 
+$2^{24}=2^4 \cdot 2^{20}=16 \cdot 2^{20} \approx 16 \cdot 10^6$ kleuren kan 
+voorstellen.
+
+Om de complexiteit te beperken, kan het dus nodig zijn om het aantal kleuren te 
+reduceren. Dat kan door middel van \emph{kleurkwantisatie}. Hierbij groeperen we de kleuren in 
+zogenaamde \emph{bins}. We beschouwen dus geen aparte kleuren meer, maar wel 
+verzamelingen van kleuren. De kleuren die in dezelfde bin zitten, worden dan 
+vervangen door \'e\'en enkele kleur. Het \emph{kleurenpalet} is de verzameling 
+van alle bin-kleuren. Bij eenvoudige kwantisatietechnieken wordt steeds 
+hetzelfde palet gebruikt, onafhankelijk van de voor te stellen beelden. Meer 
+geavanceerde technieken proberen een palet te gebruiken dat optimaal is voor de 
+beschouwde beelden.
+
+Wiskundig kunnen we kleurkwantisatie modelleren aan de hand van twee functies: 
+$bin$ en $kleur$. De eerste functie associeert met elke kleur $c$, uit de 
+kleurruimte $C$, het nummer van de corresponderende bin. Met behulp van de 
+tweede functie kan men dan de kleur van die bin bepalen.
+
+\subsection{Uniforme kwantisatie}
+
+Bij uniforme kwantisatie wordt elke kleurcomponent uniform verdeeld in een 
+aantal intervallen. Als we zorgen dat $C=[0,1]^m$, $m > 0$, dan kunnen we de 
+volgende definitie voor $bin$ gebruiken: $$
+\begin{array}{lrcll}
+bin: & C & \to & \{1,2,...,N\}\\[5pt] & (c_1,c_2,\ldots,c_m) & \mapsto & \left[ 
+\sum_{i=1}^m \left( \prod_{j=1}^{i-1} N_j \right) \mathit{fl}(c_i, N_i) \right] 
++ 1, & \forall (c_1,c_2,\ldots,c_m) \in C
+\end{array}
+$$ met $N_j$ het aantal bins voor de $j$-de component, $N$ het totale aantal 
+bins ($N=N_1 \cdot N_2 \cdot \ldots \cdot N_m$) en $$
+\begin{array}{rcll}
+\mathit{fl}(x,n) & = & \lfloor x \cdot n \rfloor & \textrm{als } x < 1 \\ & = & 
+n - 1 & \textrm{als } x = 1
+\end{array}
+$$ voor alle $x \in [0,1]$ en $n \in \mathbb{N}$. De middelste waarden van de 
+intervallen doen hierbij dienst als componenten van de kleur van een bin: $$
+\begin{array}{lrcll}
+kleur: & \{1,2,\ldots,N\} & \to & C \\ & n & \mapsto & (kleur_1(n), kleur_2(n), 
+\dots, kleur_m(n)), & \forall n \in \{1,2,\ldots,N\}
+\end{array}
+$$ waarbij $$ kleur_i(n) = \frac{n}{\prod_{j=1}^i N_j} + \frac{1}{2 \cdot N_i} 
+$$ voor alle $n \in \{1,2,\ldots,N\}$ en $i \in \{1,2,\ldots,m\}$.
+
+Bij image retrieval is doorgaans vooral de kleurtint op zich belangrijk. Door
+minder belang te hechten aan de luminantie kan de prestatie zelfs verbeteren,
+vermits de similariteitsmaten dan bijvoorbeeld minder afhankelijk zijn van
+belichtingsvariaties. Een mogelijke manier om uniform te kwantiseren is dus
+het HSV model gebruiken en meer belang te hechten aan de eerste kleurcomponent. 
+Dat doen we door $N_1=16$, $N_2=4$ en $N_3=4$ te kiezen.
+%Bovendien is het discriminerend
+%vermogen van dit histogram waarschijnlijk ook beter dan dat van een ongecomprimeerd kleurhistogram.
+Die keuzes voor $N_1$, $N_2$ en $N_3$ stemmen overeen met de keuzes die men 
+gemaakt heeft voor de \emph{scalable color descriptor} (SCD), die gedefinieerd 
+wordt in de MPEG-7 standaard \cite{manjunath:color_and_texture_descriptors}.
+Via analoge redeneringen voor de andere kleurmodellen, bekomen we de zes manieren 
+uit tabel~\ref{tab:uniforme_kwantisatie} om uniform te kwantiseren met een vast kleurenpalet.
+
+\begin{table}[tbp]
+\begin{center}
+\begin{tabular}{|c|cccccc|}
+\hline
+ 		& HSV & Irb & I1I2I3 & XYZ & Yxy & L*a*b* \\
+\hline
+$N_1$ 	& 16 & 4 & 4 & 8 & 4 & 4 \\
+$N_2$	& 4  & 8 & 8 & 4 & 8 & 8 \\
+$N_3$	& 4  & 8 & 8 & 8 & 8 & 8 \\
+\hline
+\end{tabular}
+\caption{\label{tab:uniforme_kwantisatie}Zes manieren om uniform te kwantiseren met een vast kleurenpalet.}
+\end{center}
+\end{table}
+
+
+\subsection{Niet-uniforme kwantisatie}
+
+%De bovenstaande technieken die uniform kwantiseren, zijn zeer eenvoudig, beschouwen we ook nog 
+%een aantal niet-uniforme kwantisatietechnieken.
+
+\section{Lineaire filters}
+
+Bij het \emph{filteren} van een 2-dimensionaal beeld $b$ wordt de waarde van elk beeldpunt $(x,y) \in \mathbb{N}^2$ 
+vervangen door een nieuwe waarde die afhangt van de originele waarde $b(x,y)$ van het beeldpunt en van de waarden 
+van naburige beeldpunten. In het geval van een \emph{lineair filter} is die nieuwe waarde een lineaire combinatie 
+van de oude waarden. Het beeld $b'$ dat we bekomen door $b$ lineair te filteren, wordt gegeven door
+de volgende correlatie \cite{philips:beeldverwerking}:
+$$
+b'(x,y) = \sum_{(x',y') \in \Omega_m} b(x+x',y+y')m(x',y')
+$$
+met $m$ een re\"eelwaardige functie en $\Omega_m = \{ (x,y) \mid m(x,y) \ne 0 \}$. De functie $m$ wordt
+het \emph{filtermasker} genoemd.
+
+Het \emph{3x3 binomiaalfilter} is een voorbeeld van een lineair filter. Voor het filtermasker 
+$m_{bin}$ van dat filter geldt $m_{bin}(-1,-1)=m_{bin}(-1,1)=m_{bin}(1,-1)=m_{bin}(1,1)=1/16$, 
+$m_{bin}(-1,0)=m_{bin}(0,-1)=m_{bin}(1,0)=m_{bin}(0,1)=1/8$, $m_{bin}(0,0)=1/4$ en 
+$m_{bin}(x,y)=0$ voor de overige $(x,y)$. Als we veronderstellen dat $m_{bin}(x,y)=0$ voor de 
+posities $(x,y)$ die niet weergegeven worden, dan kunnen we dat masker noteren als een matrix:
+$$
+\frac{1}{16}\left[ \begin{array}{ccc} 1 & 2 & 1\\ 2 & 4 & 2\\ 1 & 2 & 1 \end{array} \right]
+= \frac{1}{16}\left[ \begin{array}{c} 1\\ 2\\ 1 \end{array} \right] \cdot 
+\left[ \begin{array}{ccc} 1 & 2 & 1 \end{array} \right]
+$$
+Zoals weergegeven in figuur~\ref{fig:indische_ruizig_en_binom}, kan een binomiaalfilter gebruikt worden om ruis te onderdrukken.
+
+\begin{figure}[tb]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=0.4\textwidth]{images/indische_ruizig.eps}
+\label{fig:indische_ruizig}
+}
+\subfigure[]{
+\includegraphics[width=0.4\textwidth]{images/indische_binom.eps}
+\label{fig:indische_binom}
+}
+\caption{\label{fig:indische_ruizig_en_binom}Een ruizig beeld (a) en het resultaat na filteren met een 5x5 binomiaalfilter (b).}
+\end{center}
+\end{figure}
+
+\section{Eenvoudige randdetectie}
+
+Beeldranden in een 2-dimensionaal beeld $b$ zijn plaatsen waar de luminantiecomponent $l(x,y)$ van $b(x,y)$ 
+sterk varieert als functie van $x$ en/of $y$. Op die plaatsen zullen de partieel afgeleiden $D_1 l(x,y)$ en 
+$D_2 l(x,y)$ dus groot zijn. Bijgevolg zal de \emph{gradi\"ent} $\nabla l$ daar ook groot zijn. We kunnen 
+dus de volgende formule gebruiken om randen te detecteren in $b$: 
+$$
+|\nabla l(x,y)| = \sqrt{(D_1 l(x,y))^2 + (D_2 l(x,y))^2}
+$$ 
+met $l$ de afbeelding die met elk beeldpunt $(x,y)$ de juiste luminantiecomponent associeert.
+
+Doordat $l$ in de praktijk geen continue maar een discrete functie is, moeten we de partieel afgeleiden benaderen.
+De Taylorreeksontwikkeling van een $\mathbb{R} - \mathbb{R}$ functie $f$ rond $x$ geeft
+$$
+f(x+h) = f(x) + h D f(x) + \frac{h^2}{2!} D^2 f(x) + \ldots
+$$
+en ook
+$$
+f(x-h) = f(x) - h D f(x) + \frac{h^2}{2!} D^2 f(x) + \ldots
+$$
+zodat
+$$
+\frac{f(x+h) - f(x-h)}{2h} \approx D f(x)
+$$
+Bijgevolg geldt $D_1 l(x,y) \approx (l(x+1,y) - l(x-1,y))/2$ en $D_2 l(x,y) \approx (l(x,y+1) - l(x,y-1))/2$. We
+kunnen de eerste en tweede partieel afgeleiden dus berekenen met behulp van lineaire filters met filtermaskers:
+$$
+D_1 l(x,y)\textrm{: }\quad \frac{1}{2} \left[ \begin{array}{ccc} -1 & 0 & 1 \end{array} \right] \qquad \textrm{ en } 
+\qquad D_2 l(x,y)\textrm{: }\quad \frac{1}{2} \left[ \begin{array}{c} -1 \\ 0 \\ 1 \end{array} \right]
+$$
+De \emph{Sobel-operator} is een variant hierop die minder ruisgevoelig is doordat er 
+extra ruisonderdrukking voorzien wordt via een binomiaalfilter loodrecht op de richting 
+van de parti\"ele afleiding:
+$$
+D_1 l(x,y)\textrm{: }\quad \frac{1}{8} \left[ \begin{array}{c} 1 \\ 2 \\ 1 \end{array} \right] \cdot \left[ \begin{array}{ccc} -1 & 0 & 1 \end{array} \right] \qquad \textrm{ en } 
+\qquad D_2 l(x,y)\textrm{: }\quad \frac{1}{8} \left[ \begin{array}{ccc} 1 & 2 & 1 \end{array} \right] \cdot \left[ \begin{array}{c} -1 \\ 0 \\ 1 \end{array} \right]
+$$
+Uit figuur~\ref{fig:randdetectie} blijkt echter dat beide technieken geen spectaculair verschillende 
+resultaten geven.
+
+\begin{figure}[tb]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=0.3\textwidth]{images/lena.eps}
+\label{fig:lena}
+}
+\subfigure[]{
+\includegraphics[width=0.3\textwidth]{images/lena_gradient.eps}
+\label{fig:lena_gradient}
+}
+\subfigure[]{
+\includegraphics[width=0.3\textwidth]{images/lena_sobel.eps}
+\label{fig:lena_sobel}
+}
+\caption{\label{fig:randdetectie}Het origineel luminantiebeeld (a) en het resultaat na filteren met een gradi\"ent-filter (b) en met een Sobel-filter (c).}
+\end{center}
+\end{figure}
