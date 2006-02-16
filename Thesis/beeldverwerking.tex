@@ -41,10 +41,10 @@ als } \max \{r,g,b\} = r \\[2pt] & = & 60 \cdot \frac{b - r}{\max \{r,g,b\} -
 } h' \bmod 360 < 0 \\[6pt] s & = & \frac{\max \{r,g,b\} - \min \{r,g,b\}}{\max 
 \{r,g,b\}} & \\[6pt] v & = & \max \{r,g,b\}
 \end{array}
-$$ Als $s=0$ dan is $h$ niet gedefinieerd. Dit is logisch vermits we dan te 
+$$ Als $s=0$ dan is $h$ niet gedefinieerd. Dat is logisch vermits we dan te 
 maken hebben met een grijswaarde. Indien $v=0$ dan is $s$ niet gedefinieerd. We 
 hebben het in dat geval dan ook over puur zwart, waarvoor er geen kleurtint of 
-saturatie kan gespecifieerd worden. In de praktische implementatie geven we 
+verzadiging kan gespecifieerd worden. In de praktische implementatie geven we 
 niet gedefinieerde componenten de waarde $0$.
 
 Een kleur in het Irb-model bestaat uit de volgende drie componenten 
@@ -88,11 +88,12 @@ Een kleurruimte op basis van het L*a*b*-model is \emph{perceptueel uniform}
 \cite{sharma:digital_color_imaging}. Dat wil zeggen dat, in een dergelijke 
 ruimte, de Euclidische afstand een goede maat is voor het waargenomen verschil 
 tussen twee kleuren. De co\"ordinaten $(l,a,b)$ van een kleur in het 
-L*a*b*-model kunnen als volgt benaderd worden: $$
+L*a*b*-model kunnen als volgt benaderd worden 
+\cite{debaets:similariteitsmaten_voor_kleurbeelden, philips:beeldverwerking}: $$
 \begin{array}{rcl}
-l & = & 116 \cdot f(\frac{y}{y_0}) - 16 \\[5pt] a & = & 500 \cdot 
-\left(f(\frac{x}{x_0}) - f(\frac{y}{y_0})\right) \\[5pt] b & = & 200 \cdot 
-\left(f(\frac{x}{x_0}) - f(\frac{z}{z_0})\right)
+l & = & 116 \cdot f(\frac{100 \cdot y}{y_0}) - 16 \\[5pt] a & = & 500 \cdot 
+\left(f(\frac{100 \cdot x}{x_0}) - f(\frac{100 \cdot y}{y_0})\right) \\[5pt] b & = & 200 \cdot 
+\left(f(\frac{100 \cdot y}{y_0}) - f(\frac{100 \cdot z}{z_0})\right)
 \end{array}
 $$ met $$
 \begin{array}{rcll}
@@ -101,16 +102,16 @@ f(t) & = & t^\frac{1}{3} & \textrm{als } t > 0.008856 \\ & = & 7.787 \cdot t +
 \end{array}
 $$ voor elke re\"ele $t$. Hierbij zijn $x_0$, $y_0$ en $z_0$ de 
 XYZ-co\"ordinaten van een wit referentiepunt. We gebruiken hier 
-$(x_0,y_0,z_0)=(1,1,1)$.
-Er geldt dan $l \in [0,100]$, $a \in [-500,500]$ en $b \in [-200,200]$, zodat 
-we als volgt kunnen normaliseren: $$ l' = \frac{l}{100} \qquad a' = \frac{500 + 
-a}{1000} \qquad b' = \frac{200 + b}{400} $$
+$(x_0,y_0,z_0)=(95.05,100,108.9)$.
+We kunnen dan als volgt normaliseren: $$ l' = \frac{l}{100} \qquad a' = \frac{120 + 
+\max\{\min\{a,120\},-120\}}{240} \qquad b' = \frac{120 + \max\{\min\{b,120\},-120\}}{240} $$
 
 
 \subsection{Kleurbeelden}
 
 In een \emph{kleurbeeld} heeft elk beeldpunt een bepaalde kleur, die beschreven wordt met
-behulp van een kleurmodel. Met andere woorden: een kleur wordt voorgesteld als een $n$-tal uit
+behulp van een kleurmodel. Met andere woorden: de kleur van een beeldpunt wordt voorgesteld 
+als een $n$-tal uit
 $\mathbb{R}^n$. Zoals hierboven reeds een aantal keer werd ge\"illustreerd, kunnen dergelijke 
 $n$-tallen genormaliseerd worden tot $n$-tallen uit $[0,1]^n$. We kunnen een $m$-dimensionaal 
 kleurbeeld dus modelleren als een $\mathbb{R}^m - [0,1]^n$ afbeelding $b$. 
@@ -128,7 +129,7 @@ $2^{24}=2^4 \cdot 2^{20}=16 \cdot 2^{20} \approx 16 \cdot 10^6$ kleuren kan
 voorstellen.
 
 Om de complexiteit te beperken, kan het dus nodig zijn om het aantal kleuren te 
-reduceren. Dat kan door middel van \emph{kleurkwantisatie}. Hierbij groeperen we de kleuren in 
+reduceren. Dat kan door middel van \emph{kleurkwantisatie}. Daarbij groeperen we de kleuren in 
 zogenaamde \emph{bins}. We beschouwen dus geen aparte kleuren meer, maar wel 
 verzamelingen van kleuren. De kleuren die in dezelfde bin zitten, worden dan 
 vervangen door \'e\'en enkele kleur. Het \emph{kleurenpalet} is de verzameling 
@@ -144,7 +145,7 @@ tweede functie kan men dan de kleur van die bin bepalen.
 
 \subsection{Uniforme kwantisatie}
 
-Bij uniforme kwantisatie wordt elke kleurcomponent uniform verdeeld in een 
+Bij \emph{uniforme kwantisatie} wordt elke kleurcomponent uniform verdeeld in een 
 aantal intervallen. Als we zorgen dat $C=[0,1]^m$, $m > 0$, dan kunnen we de 
 volgende definitie voor $bin$ gebruiken: $$
 \begin{array}{lrcll}
@@ -171,15 +172,17 @@ Bij image retrieval is doorgaans vooral de kleurtint op zich belangrijk. Door
 minder belang te hechten aan de luminantie kan de prestatie zelfs verbeteren,
 vermits de similariteitsmaten dan bijvoorbeeld minder afhankelijk zijn van
 belichtingsvariaties. Een mogelijke manier om uniform te kwantiseren is dus
-het HSV model gebruiken en meer belang te hechten aan de eerste kleurcomponent. 
+het HSV model gebruiken en meer belang hechten aan de eerste kleurcomponent. 
 Dat doen we door $N_1=16$, $N_2=4$ en $N_3=4$ te kiezen.
 %Bovendien is het discriminerend
 %vermogen van dit histogram waarschijnlijk ook beter dan dat van een ongecomprimeerd kleurhistogram.
 Die keuzes voor $N_1$, $N_2$ en $N_3$ stemmen overeen met de keuzes die men 
 gemaakt heeft voor de \emph{scalable color descriptor} (SCD), die gedefinieerd 
 wordt in de MPEG-7 standaard \cite{manjunath:color_and_texture_descriptors}.
+
 Via analoge redeneringen voor de andere kleurmodellen, bekomen we de zes manieren 
 uit tabel~\ref{tab:uniforme_kwantisatie} om uniform te kwantiseren met een vast kleurenpalet.
+Elk van die manieren gebruikt $256$ bins.
 
 \begin{table}[tbp]
 \begin{center}
@@ -199,8 +202,155 @@ $N_3$	& 4  & 8 & 8 & 8 & 8 & 8 \\
 
 \subsection{Niet-uniforme kwantisatie}
 
-%De bovenstaande technieken die uniform kwantiseren, zijn zeer eenvoudig, beschouwen we ook nog 
-%een aantal niet-uniforme kwantisatietechnieken.
+We hebben reeds vermeld dat bij image retrieval vooral de tinten van de kleuren belangrijk zijn. Daarom 
+lijkt het op het eerste zicht geen slecht idee om kleuren met een zelfde kleurtint te groeperen in 
+\'e\'en enkele bin. De eerste HSV-component bepaalt dan tot welke bin een kleur behoort. We passen
+met andere woorden uniforme HSV-kwantisatie toe met $(N_1,N_2,N_3)=(256,1,1)$. Een probleem daarbij 
+is echter dat beelden ook grijswaarden kunnen bevatten. Voor grijswaarden is de ``hue''-component immers 
+niet gedefinieerd. De waarde 0 gebruiken voor niet-gedefinieerde kleurtinten lost dit probleem maar 
+gedeeltelijk op, want dan komen alle grijswaarden in dezelfde bin terecht. Dat kan wel vermeden worden 
+door bijvoorbeeld $(N_1,N_2,N_3)=(64,1,4)$ te kiezen, maar dan kunnen we maar 64 tinten meer onderscheiden.
+
+Met behulp van niet-uniforme kwantisatie komen we tot een betere oplossing. Als we het HSV-model van naderbij
+bekijken, dan merken we dat elke kleur getransformeerd kan worden in een grijstint door de verzadiging
+voldoende te verlagen. De waarde van de verzadiging waarbij die transformatie plaatsvindt, hangt af
+van de helderheid. We gaan daarom als volgt te werk. Als $s > 1 - 0.8 \cdot v$ dan benaderen we de kleur
+met de kleurtint en kwantiseren we uniform met $(N_1,N_2,N_3)=(240,1,1)$. In het andere geval hebben we
+te maken met een grijstint en kwantiseren we uniform met $(N_1,N_2,N_3)=(1,1,16)$. We combineren dus
+twee uniforme kwantisaties tot \'e\'en niet-uniforme. Vermits $240 + 16 = 256$
+slagen we er zo in om 240 kleurtinten te onderscheiden, zonder het aantal bins te verhogen. Omdat het
+``Perceptually Smooth Color Transition Histogram'' uit \cite{sural:perceptually_smooth_histogram} 
+gebaseerd is op deze kwantisatietechniek, spreken we van Smooth Color Transition (SCT) kwantisatie.  
+
+Een andere niet-uniforme manier om te kwantiseren, is het mappen van de kleuren op elf 
+\emph{focale kleuren} \cite{van_den_broek:human_color_categorization_for_cbir}: zwart, wit, rood, groen, geen, blauw, bruin, paars, roze, oranje en grijs.
+Experimenten hebben aangetoond dat de mens geneigd is om enkel die kleurcategorie\"en te gebruiken bij 
+het beredeneren, onthouden en waarnemen van kleuren. We kunnen voor elke kleur de juiste mapping bepalen
+door op zoek te gaan naar de focale kleur die in het L*a*b*-model het dichtst bij die gegeven kleur ligt.
+
+\emph{Neural Image Quantization} (NeuQuant) \cite{dekker:neuquant} en de \emph{Wu quantizer} 
+\cite{wu:color_quantization_by_dynamic_programming_and_principal_analysis} 
+gebruiken, in tegenstelling tot de technieken die we 
+tot nu toe bekeken hebben, een variabel kleurenpalet. De eerste techniek is gebaseerd op
+Kohonen neurale netwerken, terwijl de tweede gebruik maakt van dynamisch programmeren
+en principal analysis. NeuQuant geeft doorgaans iets betere resultaten, maar Wu's techniek is
+sneller.
+
+\subsection{Enkele voorbeelden}
+
+\begin{figure}[tbp]
+\begin{center}
+\subfigure[]{
+\includegraphics[height=2.8cm]{images/hsv_constant_s.eps}
+\label{fig:hsv_constant_s}
+}
+\subfigure[]{
+\includegraphics[height=2.8cm]{images/hsv_constant_v.eps}
+\label{fig:hsv_constant_v}
+}
+\subfigure[]{
+\includegraphics[height=2.8cm]{images/flowers.eps}
+\label{fig:flowers}
+}
+\subfigure[]{
+\includegraphics[height=2.8cm]{images/autumn.eps}
+\label{fig:autumn}
+}
+\caption{\label{fig:kwantistatie_originelen}De beelden waarvan we de kleuren gaan kwantiseren op een aantal verschillende manieren.}
+\end{center}
+\end{figure}
+
+We illustreren de bovenstaande technieken door ze toe te passen op de beelden uit 
+figuur~\ref{fig:kwantistatie_originelen}. De eerste twee van die beelden hebben we geconstueerd
+door in het HSV-model twee componenten te laten vari\"eren en \'e\'en component constant te houden.
+Bij figuur~\ref{fig:hsv_constant_s} is de verzadiging steeds gelijk aan $1$ en laten we de kleurtint 
+horizontaal en de helderheid vertikaal vari\"eren. Figuur~\ref{fig:hsv_constant_v} construeren we
+op een analoge manier, maar in dit geval is de helderheid constant.
+
+\begin{figure}[tbp]
+\begin{center}
+\subfigure[]{
+\includegraphics[height=2.8cm]{images/uniform_hsv_constant_s.eps}
+\includegraphics[height=2.8cm]{images/uniform_hsv_constant_v.eps}
+\includegraphics[height=2.8cm]{images/uniform_hsv_flowers.eps}
+\includegraphics[height=2.8cm]{images/uniform_hsv_autumn.eps}
+\label{fig:uniform_hsv}
+}
+\subfigure[]{
+\includegraphics[height=2.8cm]{images/uniform_irb_constant_s.eps}
+\includegraphics[height=2.8cm]{images/uniform_irb_constant_v.eps}
+\includegraphics[height=2.8cm]{images/uniform_irb_flowers.eps}
+\includegraphics[height=2.8cm]{images/uniform_irb_autumn.eps}
+\label{fig:uniform_irb}
+}
+\subfigure[]{
+\includegraphics[height=2.8cm]{images/uniform_i1i2i3_constant_s.eps}
+\includegraphics[height=2.8cm]{images/uniform_i1i2i3_constant_v.eps}
+\includegraphics[height=2.8cm]{images/uniform_i1i2i3_flowers.eps}
+\includegraphics[height=2.8cm]{images/uniform_i1i2i3_autumn.eps}
+\label{fig:uniform_i1i2i3}
+}
+\subfigure[]{
+\includegraphics[height=2.8cm]{images/uniform_xyz_constant_s.eps}
+\includegraphics[height=2.8cm]{images/uniform_xyz_constant_v.eps}
+\includegraphics[height=2.8cm]{images/uniform_xyz_flowers.eps}
+\includegraphics[height=2.8cm]{images/uniform_xyz_autumn.eps}
+\label{fig:uniform_xyz}
+}
+\subfigure[]{
+\includegraphics[height=2.8cm]{images/uniform_yxy_constant_s.eps}
+\includegraphics[height=2.8cm]{images/uniform_yxy_constant_v.eps}
+\includegraphics[height=2.8cm]{images/uniform_yxy_flowers.eps}
+\includegraphics[height=2.8cm]{images/uniform_yxy_autumn.eps}
+\label{fig:uniform_yxy}
+}
+\subfigure[]{
+\includegraphics[height=2.8cm]{images/uniform_lab_constant_s.eps}
+\includegraphics[height=2.8cm]{images/uniform_lab_constant_v.eps}
+\includegraphics[height=2.8cm]{images/uniform_lab_flowers.eps}
+\includegraphics[height=2.8cm]{images/uniform_lab_autumn.eps}
+\label{fig:uniform_lab}
+}
+\caption{\label{fig:kwantistatie_uniform}De resultaten na uniforme kwantisatie op basis van (a) HSV, (b) Irb, (c) I1I2I3, (d) XYZ, (e) Yxy en (f) L*a*b*.}
+\end{center}
+\end{figure}
+
+Figuur~\ref{fig:kwantistatie_uniform} toont de resultaten die we bekomen door toepassing van de 
+zes manieren om uniform te kwantiseren. 
+
+\begin{figure}[tbp]
+\begin{center}
+\subfigure[]{
+\includegraphics[height=2.8cm]{images/sct_constant_s.eps}
+\includegraphics[height=2.8cm]{images/sct_constant_v.eps}
+\includegraphics[height=2.8cm]{images/sct_flowers.eps}
+\includegraphics[height=2.8cm]{images/sct_autumn.eps}
+\label{fig:sct}
+}
+\subfigure[]{
+\includegraphics[height=2.8cm]{images/focal_constant_s.eps}
+\includegraphics[height=2.8cm]{images/focal_constant_v.eps}
+\includegraphics[height=2.8cm]{images/focal_flowers.eps}
+\includegraphics[height=2.8cm]{images/focal_autumn.eps}
+\label{fig:focal}
+}
+\subfigure[]{
+\includegraphics[height=2.8cm]{images/neuquant_constant_s.eps}
+\includegraphics[height=2.8cm]{images/neuquant_constant_v.eps}
+\includegraphics[height=2.8cm]{images/neuquant_flowers.eps}
+\includegraphics[height=2.8cm]{images/neuquant_autumn.eps}
+\label{fig:neuquant}
+}
+\subfigure[]{
+\includegraphics[height=2.8cm]{images/wu_constant_s.eps}
+\includegraphics[height=2.8cm]{images/wu_constant_v.eps}
+\includegraphics[height=2.8cm]{images/wu_flowers.eps}
+\includegraphics[height=2.8cm]{images/wu_autumn.eps}
+\label{fig:wu}
+}
+\caption{\label{fig:kwantistatie_uniform}De resultaten na niet-uniforme kwantisatie op basis van (a) SCT, (b) focale kleuren, (c) NeuQuant en (d) de Wu quantizer.}
+\end{center}
+\end{figure}
 
 \section{Lineaire filters}
 
@@ -250,7 +400,7 @@ dus de volgende formule gebruiken om randen te detecteren in $b$:
 $$
 |\nabla l(x,y)| = \sqrt{(D_1 l(x,y))^2 + (D_2 l(x,y))^2}
 $$ 
-met $l$ de afbeelding die met elk beeldpunt $(x,y)$ de juiste luminantiecomponent associeert.
+met $l$ de $\mathbb{N}^2 - [0,1]$ afbeelding die met elk beeldpunt $(x,y)$ de juiste luminantiecomponent associeert.
 
 Doordat $l$ in de praktijk geen continue maar een discrete functie is, moeten we de partieel afgeleiden benaderen.
 De Taylorreeksontwikkeling van een $\mathbb{R} - \mathbb{R}$ functie $f$ rond $x$ geeft
