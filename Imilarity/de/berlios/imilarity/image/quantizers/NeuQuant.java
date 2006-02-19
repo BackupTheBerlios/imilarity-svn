@@ -475,9 +475,12 @@ public class NeuQuant implements Quantizer {
 			System.out.println("usage: java NeuQuant <input image> <output image>");
 		try {
 			Image image = ImageData.loadFile(args[0]).getRgbImage();
-			Quantizer quantizer = new NeuQuant(30, 8);
+			Quantizer quantizer = new NeuQuant(30, 256);
 			BufferedImage outImage = new BufferedImage(image.getWidth(), image.getHeight(), 
 					BufferedImage.TYPE_INT_RGB);
+			long millis = System.currentTimeMillis();
+			quantizer.quantize(image);
+			System.out.println("Time: " + (System.currentTimeMillis()-millis));
 			for (int x = 0; x < image.getWidth(); x++) {
 				for (int y = 0; y < image.getHeight(); y++) {
 					double[] rgb = 
@@ -489,7 +492,7 @@ public class NeuQuant implements Quantizer {
 					outImage.setRGB(x,y,pixel);
 				}
 			}
-			ImageIO.write(outImage,"jpg",new File(args[1]));
+			ImageIO.write(outImage,"png",new File(args[1]));
 		} catch (IOException e) {
 			System.err.println("IO Error: " + e.getMessage());
 			e.printStackTrace();

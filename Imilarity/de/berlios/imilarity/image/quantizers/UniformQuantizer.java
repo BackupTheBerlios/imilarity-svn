@@ -91,37 +91,63 @@ public class UniformQuantizer implements Quantizer {
 		ColorSpace xyz = new Xyz();
 		ColorSpace yxy = new Yxy();
 		ColorSpace lab = new Lab();
+		Image flowers = (ImageData.loadFile("/home/klbostee/Thesis/Misc/flowers.png")).getRgbImage();
+		Image autumn = (ImageData.loadFile("/home/klbostee/Thesis/Misc/autumn.png")).getRgbImage();
 		Image constS = (ImageData.loadFile("/home/klbostee/Thesis/Misc/hsv_constant_s.png")).getRgbImage();
 		Image constV = (ImageData.loadFile("/home/klbostee/Thesis/Misc/hsv_constant_v.png")).getRgbImage();
 		
+		doTest(hsv, new HsvImage(flowers), new int[] {16,4,4}, 
+				new File("/home/klbostee/Thesis/Misc/uniform_hsv_flowers.png"));
+		doTest(hsv, new HsvImage(autumn), new int[] {16,4,4}, 
+				new File("/home/klbostee/Thesis/Misc/uniform_hsv_autumn.png"));
 		doTest(hsv, new HsvImage(constS), new int[] {16,4,4}, 
 				new File("/home/klbostee/Thesis/Misc/uniform_hsv_constant_s.png"));
 		doTest(hsv, new HsvImage(constV), new int[] {16,4,4}, 
 				new File("/home/klbostee/Thesis/Misc/uniform_hsv_constant_v.png"));
 		
+		doTest(i1i2i3, new I1i2i3Image(flowers), new int[] {4,8,8}, 
+				new File("/home/klbostee/Thesis/Misc/uniform_i1i2i3_flowers.png"));
+		doTest(i1i2i3, new I1i2i3Image(autumn), new int[] {4,8,8}, 
+				new File("/home/klbostee/Thesis/Misc/uniform_i1i2i3_autumn.png"));
 		doTest(i1i2i3, new I1i2i3Image(constS), new int[] {4,8,8}, 
 				new File("/home/klbostee/Thesis/Misc/uniform_i1i2i3_constant_s.png"));
 		doTest(i1i2i3, new I1i2i3Image(constV), new int[] {4,8,8}, 
 				new File("/home/klbostee/Thesis/Misc/uniform_i1i2i3_constant_v.png"));
 		
+		doTest(irb, new IrbImage(flowers), new int[] {4,8,8}, 
+				new File("/home/klbostee/Thesis/Misc/uniform_irb_flowers.png"));
+		doTest(irb, new IrbImage(autumn), new int[] {4,8,8}, 
+				new File("/home/klbostee/Thesis/Misc/uniform_irb_autumn.png"));
 		doTest(irb, new IrbImage(constS), new int[] {4,8,8}, 
 				new File("/home/klbostee/Thesis/Misc/uniform_irb_constant_s.png"));
 		doTest(irb, new IrbImage(constV), new int[] {4,8,8}, 
 				new File("/home/klbostee/Thesis/Misc/uniform_irb_constant_v.png"));
 		
+		doTest(xyz, new XyzImage(flowers), new int[] {8,4,8}, 
+				new File("/home/klbostee/Thesis/Misc/uniform_xyz_flowers.png"));
+		doTest(xyz, new XyzImage(autumn), new int[] {8,4,8}, 
+				new File("/home/klbostee/Thesis/Misc/uniform_xyz_autumn.png"));
 		doTest(xyz, new XyzImage(constS), new int[] {8,4,8}, 
 				new File("/home/klbostee/Thesis/Misc/uniform_xyz_constant_s.png"));
 		doTest(xyz, new XyzImage(constV), new int[] {8,4,8}, 
 				new File("/home/klbostee/Thesis/Misc/uniform_xyz_constant_v.png"));
 		
+		doTest(yxy, new YxyImage(flowers), new int[] {4,8,8}, 
+				new File("/home/klbostee/Thesis/Misc/uniform_yxy_flowers.png"));
+		doTest(yxy, new YxyImage(autumn), new int[] {4,8,8}, 
+				new File("/home/klbostee/Thesis/Misc/uniform_yxy_autumn.png"));
 		doTest(yxy, new YxyImage(constS), new int[] {4,8,8}, 
 				new File("/home/klbostee/Thesis/Misc/uniform_yxy_constant_s.png"));
 		doTest(yxy, new YxyImage(constV), new int[] {4,8,8}, 
 				new File("/home/klbostee/Thesis/Misc/uniform_yxy_constant_v.png"));
 		
-		doTest(lab, new LabImage(constS), new int[] {7,7,7}, 
+		doTest(lab, new LabImage(flowers), new int[] {4,8,8}, 
+				new File("/home/klbostee/Thesis/Misc/uniform_lab_flowers.png"));
+		doTest(lab, new LabImage(autumn), new int[] {4,8,8}, 
+				new File("/home/klbostee/Thesis/Misc/uniform_lab_autumn.png"));
+		doTest(lab, new LabImage(constS), new int[] {4,8,8}, 
 				new File("/home/klbostee/Thesis/Misc/uniform_lab_constant_s.png"));
-		doTest(lab, new LabImage(constV), new int[] {7,7,7}, 
+		doTest(lab, new LabImage(constV), new int[] {4,8,8}, 
 				new File("/home/klbostee/Thesis/Misc/uniform_lab_constant_v.png"));
 	}
 	

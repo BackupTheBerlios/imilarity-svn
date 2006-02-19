@@ -90,21 +90,30 @@ public class FocalQuantizer implements Quantizer {
 	// TESTPROGRAMMA
 	
 	public static void main(String[] args) throws IOException {
-		Image image = new LabImage(
-			(ImageData.loadFile("/home/klbostee/Thesis/Misc/hsv_constant_v.png")).getRgbImage());
-		Quantizer quantizer = new FocalQuantizer();
-		quantizer.quantize(image);
-		BufferedImage bi = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
-		for (int x = 0; x < image.getWidth(); x++) {
-			for (int y = 0; y < image.getHeight(); y++) {
-				double[] comps = 
-					quantizer.getBinColor(quantizer.getBin(y*image.getWidth()+x)).getComponents();
-				bi.setRGB(x, y, 
-					((int)(comps[0]*255) << 16) | ((int)(comps[1]*255) << 8) | (int)(comps[2]*255));
+		//Image image = new LabImage(
+		//	(ImageData.loadFile("/home/klbostee/Thesis/Misc/hsv_constant_v.png")).getRgbImage());
+		if (args.length != 2)
+			System.out.println("usage: java FocalQuantizer <input image> <output image>");
+		try {
+			Image image = new LabImage(ImageData.loadFile(args[0]).getRgbImage());
+			Quantizer quantizer = new FocalQuantizer();
+			quantizer.quantize(image);
+			BufferedImage bi = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+			for (int x = 0; x < image.getWidth(); x++) {
+				for (int y = 0; y < image.getHeight(); y++) {
+					double[] comps = 
+						quantizer.getBinColor(quantizer.getBin(y*image.getWidth()+x)).getComponents();
+					bi.setRGB(x, y, 
+							((int)(comps[0]*255) << 16) | ((int)(comps[1]*255) << 8) | (int)(comps[2]*255));
+				}
 			}
+			//ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/focal_constant_v.png"));
+			ImageIO.write(bi, "png", new File(args[1]));
+			System.out.println("done.");
+		} catch (IOException e) {
+			System.err.println("IO Error: " + e.getMessage());
+			e.printStackTrace();
 		}
-		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/focal_constant_v.png"));
-		System.out.println("done.");
 	}
 	
 	

@@ -59,20 +59,29 @@ public class SctQuantizer implements Quantizer {
 	// TESTPROGRAMMA
 	
 	public static void main(String[] args) throws IOException {
-		ColorSpace cs = new Hsv();
-		Image image = new HsvImage(
-			(ImageData.loadFile("/home/klbostee/Thesis/Misc/hsv_constant_s.png")).getRgbImage());
-		Quantizer quantizer = new SctQuantizer();
-		quantizer.quantize(image);
-		BufferedImage bi = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
-		for (int x = 0; x < image.getWidth(); x++) {
-			for (int y = 0; y < image.getHeight(); y++) {
-				Color color = quantizer.getBinColor(quantizer.getBin(y*image.getWidth()+x));
-				int[] rgb = cs.toRgb(color);
-				bi.setRGB(x, y, (rgb[0] << 16) | (rgb[1] << 8) | rgb[2]);
+		if (args.length != 2)
+			System.out.println("usage: java SctQuantizer <input image> <output image>");
+		try {
+			Image image = new HsvImage(ImageData.loadFile(args[0]).getRgbImage());
+			ColorSpace cs = new Hsv();
+			//Image image = new HsvImage(
+			//	(ImageData.loadFile("/home/klbostee/Thesis/Misc/hsv_constant_s.png")).getRgbImage());
+			Quantizer quantizer = new SctQuantizer();
+			quantizer.quantize(image);
+			BufferedImage bi = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+			for (int x = 0; x < image.getWidth(); x++) {
+				for (int y = 0; y < image.getHeight(); y++) {
+					Color color = quantizer.getBinColor(quantizer.getBin(y*image.getWidth()+x));
+					int[] rgb = cs.toRgb(color);
+					bi.setRGB(x, y, (rgb[0] << 16) | (rgb[1] << 8) | rgb[2]);
+				}
 			}
+			//ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/sct_constant_s.png"));
+			ImageIO.write(bi,"png",new File(args[1]));
+			System.out.println("done.");
+		} catch (IOException e) {
+			System.err.println("IO Error: " + e.getMessage());
+			e.printStackTrace();
 		}
-		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/sct_constant_s.png"));
-		System.out.println("done.");
 	}
 }

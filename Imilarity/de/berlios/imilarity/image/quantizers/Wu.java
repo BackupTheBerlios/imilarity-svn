@@ -171,7 +171,8 @@ public class Wu implements Quantizer {
 	}
 	
 	public int getBinsCount() {
-		return MAXCOLOR;
+		//return MAXCOLOR;
+		return K;
 	}
 	
 	public Color getBinColor(int i) {
@@ -483,15 +484,19 @@ public class Wu implements Quantizer {
 	
 	
 	
+	// TESTPROGRAMMA
 	
 	public static void main(String[] args) {
 		if (args.length != 2)
-			System.out.println("usage: java NeuQuant <input image> <output image>");
+			System.out.println("usage: java Wu <input image> <output image>");
 		try {
 			Image image = ImageData.loadFile(args[0]).getRgbImage();
-			Quantizer quantizer = new Wu(8);
+			Quantizer quantizer = new Wu(256);
 			BufferedImage outImage = new BufferedImage(image.getWidth(), image.getHeight(), 
 					BufferedImage.TYPE_INT_RGB);
+			long millis = System.currentTimeMillis();
+			quantizer.quantize(image);
+			System.out.println("Time: " + (System.currentTimeMillis()-millis));
 			for (int x = 0; x < image.getWidth(); x++) {
 				for (int y = 0; y < image.getHeight(); y++) {
 					double[] rgb = 
@@ -503,7 +508,7 @@ public class Wu implements Quantizer {
 					outImage.setRGB(x,y,pixel);
 				}
 			}
-			ImageIO.write(outImage,"jpg",new File(args[1]));
+			ImageIO.write(outImage,"png",new File(args[1]));
 		} catch (IOException e) {
 			System.err.println("IO Error: " + e.getMessage());
 			e.printStackTrace();
