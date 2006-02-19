@@ -7,6 +7,9 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JButton;
@@ -14,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -24,6 +28,11 @@ public class Imperforate extends JFrame {
 	
 	private static final long serialVersionUID = 4051132972866159438L;
 
+	private boolean calculateRemaining = false, calculating = false;
+
+	private JTextArea console = new JTextArea(20,50);
+	
+	
 	public Imperforate() {
 		super("Imperforate");
 		
@@ -45,10 +54,35 @@ public class Imperforate extends JFrame {
 		final JButton calculateButton = new JButton("Calculate");
 		calculateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				for (int i = 0; i < sorter.getRowCount(); i++) {
-					if (table.getSelectionModel().isSelectedIndex(i)) {
-						evalsModel.calculate(sorter.modelIndex(i));
+				if (calculating) {
+					calculateButton.setText("Calculate");
+					calculateRemaining = false;
+					calculateButton.setEnabled(false);
+				} else {
+					calculateButton.setText("Do not calculate remaining");
+					calculateRemaining = true;
+					final List indices = new LinkedList(); 
+					for (int i = 0;	i < sorter.getRowCount(); i++) {
+						if (table.getSelectionModel().isSelectedIndex(i)) {
+							//evalsModel.calculate(sorter.modelIndex(i));
+							indices.add(new Integer(sorter.modelIndex(i)));
+						}
 					}
+					new Thread(new Runnable() {
+						public void run() {
+							calculating = true;
+							console.append("\nCALCULATION:\n\n");
+							Iterator it = indices.iterator();
+							while (it.hasNext() && calculateRemaining) {
+								int rowIndex = ((Integer)it.next()).intValue();
+								console.append("Calculating '" + evalsModel.getValueAt(rowIndex,0) + "'"
+										+ "  ["+(rowIndex+1)+"/"+indices.size()+"] ...");
+								evalsModel.calculate(rowIndex);
+								console.append(" done.\n");
+							}
+							calculating = false;
+						}
+					}).start();
 				}
 			}
 		});
@@ -96,15 +130,16 @@ public class Imperforate extends JFrame {
 		final JButton printGnuplotButton = new JButton("Print gnuplot data");
 		printGnuplotButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				console.append("\nGNUPLOT DATA:\n\n");
 				int counter = 0;
 				for (int i = 0; i < sorter.getRowCount(); i++) {
 					if (table.getSelectionModel().isSelectedIndex(i)) {
-						System.out.println("" + counter++ + "\t" 
+						console.append("" + counter++ + "\t" 
 								+ evalsModel.getValueAt(i,1) + "\t"
-								+ evalsModel.getValueAt(i,2));
+								+ evalsModel.getValueAt(i,2) + "\n");
 					}
 				}
-				System.out.println("e");
+				console.append("e\n");
 			}
 		});
 		printGnuplotButton.setEnabled(false);
@@ -137,10 +172,10 @@ public class Imperforate extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				for (int i = 0; i < sorter.getRowCount(); i++) {
 					if (table.getSelectionModel().isSelectedIndex(i)) {
-						System.out.println();
-						System.out.println("\\begin{tabular}{m{11cm} | m{3cm} |}");
-						System.out.println("\\textbf{Eerste tien resultaten:} & \\textbf{GGR:} \\\\");
-						System.out.println("\\vspace{4pt}");
+						console.append("\nLATEX TABULAR:\n\n");
+						console.append("\\begin{tabular}{m{11cm} | m{3cm} |}\n");
+						console.append("\\textbf{Eerste tien resultaten:} & \\textbf{GGR:} \\\\\n");
+						console.append("\\vspace{4pt}\n");
 						String[][] allUrls = evalsModel.getSortedFirstUrls(i);
 						double[] allNars = evalsModel.getSortedNars(i);
 						if (allUrls != null) {
@@ -152,14 +187,14 @@ public class Imperforate extends JFrame {
 									String key2 = allUrls[k][l].substring
 										(allUrls[k][l].lastIndexOf('_')+1,allUrls[k][l].indexOf('.'));
 									int offset = ((Integer) degreesMapper.get(key2)).intValue();
-									System.out.println("\\includegraphics[width=1cm]{coil/beeld-" 
-											+ (nr+offset) + ".eps}");
+									console.append("\\includegraphics[width=1cm]{coil/beeld-" 
+											+ (nr+offset) + ".eps}\n");
 								}
-								System.out.println("& {\\scriptsize " + allNars[k] + "}");
-								System.out.println("\\\\");
+								console.append("& {\\scriptsize " + allNars[k] + "}\n");
+								console.append("\\\\\n");
 							}
 						}
-						System.out.println("\\end{tabular}");
+						console.append("\\end{tabular}\n");
 					}
 				}
 			}
@@ -173,13 +208,19 @@ public class Imperforate extends JFrame {
 		//////////////////////
 		
 		
+		console.setEditable(false);
 		
-		getContentPane().add(buttonsPanel, BorderLayout.SOUTH);
+		JPanel bottomPanel = new JPanel(new BorderLayout());
+		bottomPanel.add(buttonsPanel, BorderLayout.NORTH);
+		bottomPanel.add(new JScrollPane(console), BorderLayout.CENTER);
+
+		getContentPane().add(bottomPanel, BorderLayout.SOUTH);
 		
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				boolean value = !table.getSelectionModel().isSelectionEmpty();
-				calculateButton.setEnabled(value);
+				if (!calculating)
+					calculateButton.setEnabled(value);
 				resultsButton.setEnabled(value);
 				printGnuplotButton.setEnabled(value);
 				printLatexButton.setEnabled(value);
