@@ -2,12 +2,22 @@ package de.berlios.imilarity.color;
 
 public class Lab extends Xyz {
 
+	private static final double X_REF = 95.05;
+	//private static final double Y_REF = 100.0;
+	private static final double Z_REF = 108.9; 
+	
 	public Color fromRgb(int[] rgb) {
 		double xyz[] = super.fromRgb(rgb).getComponents();
-		double l = 116 * f(xyz[1]) - 16;
-		double a = 500 * (f(xyz[0]) - f(xyz[1]));
-		double b = 200 * (f(xyz[0]) - f(xyz[2]));
-		return new Color(l/100, (500+a)/1000, (200+b)/400);
+		double l = 116.0 * f(xyz[1]) - 16;
+		double a = 500.0 * (f(100*xyz[0]/X_REF) - f(xyz[1]));
+		double b = 200.0 * (f(xyz[1]) - f(100*xyz[2]/Z_REF));
+		if (l > 100.0) l = 100.0;
+		else if (l < 0.0) l = 0.0;
+		if (a > 120.0) a = 120.0;
+		else if (a < -120.0) a = -120.0;
+		if (b > 120.0) b = 120.0;
+		else if (b < -120.0) b = -120.0;
+		return new Color(l/100.0, (120+a)/240.0, (120+b)/240.0);
 	}
 	
 	private static final double f(double t) {
@@ -23,15 +33,15 @@ public class Lab extends Xyz {
 	public int[] toRgb(Color color) {
 		double[] comps = color.getComponents();
 		double x, y, z;
-		double fy = (comps[0]*100 + 16)/116;
-		double fx = fy + (comps[1]*1000 - 500)/500;
-		double fz = fy - (comps[2]*400 - 200)/200;
+		double fy = (comps[0]*100 + 16)/116.0;
+		double fx = fy + (comps[1]*240.0 - 120)/500.0;
+		double fz = fy - (comps[2]*240.0 - 120)/200.0;
 		if (fy > d) y = fy*fy*fy;
 		else 		y = (fy - 16.0/116.0)*3*d*d;
-		if (fx > d) x = fx*fx*fx;
-		else		x = (fx - 16.0/116.0)*3*d*d;
-		if (fz > d) z = fz*fz*fz;
-		else		z = (fz - 16.0/116.0)*3*d*d;
+		if (fx > d) x = X_REF*fx*fx*fx/100.0;
+		else		x = (fx - 16.0/116.0)*3*d*d*X_REF/100.0;
+		if (fz > d) z = Z_REF*fz*fz*fz/100.0;
+		else		z = (fz - 16.0/116.0)*3*d*d*Z_REF/100.0;
 		return super.toRgb(new Color(x,y,z));
 	}
 }
