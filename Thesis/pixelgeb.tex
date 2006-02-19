@@ -1,26 +1,26 @@
-\chapter{Pixel-gebaseerde similariteitsmaten}
+\chapter{Pixelgebaseerde similariteitsmaten}
 
 De similariteitsmaten die we in dit hoofdstuk beschouwen,
 meten de gelijkenis tussen twee beelden door hun beeldpunten met elkaar te vergelijken.
 Deze beeldpunten worden ook \emph{picture elements} of kortweg \emph{pixels} genoemd. Vandaar
-dat we zeggen dat deze maten \emph{pixel-gebaseerd} zijn.
+dat we zeggen dat deze maten \emph{pixelgebaseerd} zijn.
 
 \section{Grijswaardebeelden}
 
 \subsection{Representatie}
 
 Een \emph{binair beeld} is een beeld dat enkel witte en zwarte beeldpunten bevat. We kunnen een 
-$n$-dimentionaal binair beeld dus modelleren als een scherpe verzameling $A$ in $\mathbb{R}^n$, met:
+$n$-dimensionaal binair beeld dus modelleren als een scherpe verzameling $A$ in $\mathbb{R}^n$, met:
 $$
 \begin{array}{rcl}
 x \in A & \iff & x \textrm{ is een wit punt in het beeld} \\
 x \notin A & \iff & x \textrm{ is een zwart punt in het beeld}
 \end{array}
 $$ 
-In de praktijk wordt een binair beeld echter voorgesteld als een rooster bestaande uit een
-eindig aantal beeldpunten. Men kiest dus eerder $\mathbb{N}^2$ als universum.
+Vermits een binair beeld in de praktijk voorgesteld wordt als een rooster bestaande uit een
+eindig aantal beeldpunten, zal het universum doorgaans eerder een deelverzameling van $\mathbb{N}^2$ zijn.
 
-Behalve wit en zwart, kan een \emph{grijswaardebeeld} ook grijstinten bevatten. Deze grijstinten
+Behalve wit en zwart, kan een \emph{grijswaardebeeld} ook grijstinten bevatten. Die grijstinten
 kunnen voorgesteld worden aan de hand van waarden uit het open eenheidsinterval $]0,1[$, waarbij
 geldt: hoe groter de grijswaarde, hoe lichter de grijstint. Een $n$-dimensionaal grijswaardebeeld
 kan dus gemodelleerd worden als een vaagverzameling $A$ in $\mathbb{R}^n$ bepaald door:
@@ -31,42 +31,21 @@ A(x) = 0 & \iff & x \textrm{ is een zwart punt in het beeld} \\
 A(x) \in\ ]0,1[ & \iff & x \textrm{ is een beeldpunt met een grijstint}
 \end{array}
 $$
-Ook bij grijswaardebeelden is het universum in de praktijk eerder $\mathbb{N}^2$.
+Ook bij grijswaardebeelden is het universum in de praktijk eerder een deelverzameling van $\mathbb{N}^2$.
 
 \subsection{Similariteitsmaten}
 
 Door de bovenstaande representatie te combineren met de vaagsimilariteitsmaten uit 
 \ref{sectie:vaagsimilariteitsmaten}, bekomen we 23 similariteitsmaten voor grijswaardebeelden.
-Hiermee kunnen we in onze praktische implementatie echter weinig aanvangen, vermits de
+Daarmee kunnen we in onze praktische implementatie echter weinig aanvangen, vermits de
 meeste beelden op internet kleurbeelden zijn. 
 
 
 \section{Kleurbeelden}
 \label{sectie:pixelgeb_kleurbeelden}
 
-\subsection{Kleurruimten}
-
-Een \emph{kleurmodel} is een abstract mathematisch model dat beschrijft hoe kleuren gerepresenteerd 
-kunnen worden als $n$-tallen. RGB is het meest gebruikte kleurmodel. In dit model is elke kleur
-een gewogen som van drie hoofdkleuren: rood, groen en blauw. De gewichten van deze som
-worden gebruikt als componenten van het drietal dat de kleur voorstelt. Naast RGB zijn ook
-HSV en L*a*b* populaire kleurmodellen \cite{phillips:beeldverwerking}.
-
-De kleuren die men op basis van een bepaald model kan voorstellen vormen een \emph{kleurruimte}. 
-In het geval van RGB is dit een driedimensionale ruimte. De kleuren in deze ruimte zijn afhankelijk
-van de manier waarop men ``rood'', ``groen'' en ``blauw'' definieert. Veelgebruikte kleurruimtes 
-op basis van het RGB model zijn sRGB en Adobe RGB.
-
-Hoewel het strikt gezien niet correct is, gebruikt men de term ``kleurruimte'' vaak ook voor het
-kleurmodel. Men heeft het dus vaak over \emph{de} RGB kleurruimte, terwijl er eigenlijk meerdere
-kleurruimtes bestaan die gebaseerd zijn op RGB. 
-
 \subsection{Representatie}
 \label{sectie:kleurbeeld_repr}
-
-In een \emph{kleurbeeld} heeft elke pixel een bepaalde kleur. Deze kleur wordt beschreven met
-behulp van een kleurmodel. Ze wordt bijgevolg voorgesteld als een $n$-tal uit
-$\mathbb{R}^n$. Dergelijke $n$-tallen kunnen we normaliseren tot $n$-tallen uit $[0,1]^n$. 
 
 We beperken ons tot het RGB model en we beschouwen de ordening $\leq_{RGB,lex}$, die
 gebaseerd is op de lexicografische ordening $\leq_{lex}$ en op de ordening voor kleuren in het 
@@ -83,7 +62,7 @@ c \leq_{RGB,lex} c' & \iff & c <_{RGB} c' \lor (c =_{RGB} c' \land c \leq_{lex} 
 \end{array}
 $$
 waarbij $Bl = (0,0,0)$, $Wh = (1,1,1)$ en $d$ de Euclidische afstand.
-Men kan gemakkelijk verifi\"eren dat $([0,1]^3,\leq_{RGB,lex})$ een complete tralie is, met:
+Het koppel $([0,1]^3,\leq_{RGB,lex})$ is een complete tralie, met:
 $$
 \begin{array}{@{}c@{}}
 \begin{array}{rcrcll}
@@ -98,32 +77,34 @@ $$
 \end{array}
 \end{array}
 $$
-We kunnen een $m$-dimensionaal RGB-kleurbeeld dus modelleren als een L-vaagverzameling in 
+Een $m$-dimensionaal RGB-kleurbeeld kan dus gemodelleerd worden als een L-vaagverzameling in 
 $\mathbb{R}^m$, waarbij $L=[0,1]^3$. Net zoals bij grijswaardebeelden, is 
-het universum in de praktijk echter eerder $\mathbb{N}^2$.
+het universum in de praktijk echter eerder een deelverzameling van $\mathbb{N}^2$.
 
 \subsection{Similariteitsmaten}
 
-De klassieke manier om kleurbeelden te vergelijken gaat als volgt. Men past een similariteitsmaat 
-voor grijswaardebeelden toe op elk van de kleurcomponenten en voegt daarna de resultaten van de
-verschillende componenten samen. In het geval van het RGB model beschouwt men een
-kleurbeeld dus als een combinatie van drie grijswaardebeelden. 
+De meest eenvoudige manier om twee kleurbeelden met elkaar te vergelijken, is de beelden eerst omzetten naar 
+grijswaardebeelden en er vervolgens een similariteitsmaat voor grijswaardebeelden op toepassen. Die omzetting 
+kan bijvoorbeeld aan de hand van de formule $y = 0.3 \cdot r + 0.59 \cdot g + 0.11 \cdot b$ 
+\cite{debaets:similariteitsmaten_voor_kleurbeelden} gebeuren.
 
-Een andere mogelijkheid is dat men het beeld eerst omzet naar een grijswaardebeeld, om er 
-vervolgens een similariteitsmaat voor grijswaardebeelden op toe te passen. Deze omzetting kan 
-bijvoorbeeld aan de hand van de formule $y = 0.3 \cdot r + 0.59 \cdot g + 0.11 \cdot b$ gebeuren.
+Bij de klassieke manier om kleurbeelden te vergelijken, wordt een similariteitsmaat 
+voor grijswaardebeelden toegepast op elk van de kleurcomponenten. De resultaten voor de
+verschillende componenten worden daarna samengevoegd. Een kleurbeeld in het RGB-model wordt daarbij
+dus ge\"interpreteerd als een combinatie van drie grijswaardebeelden. 
 
 In het RGB-model zijn de componenten van een kleur echter sterk gecorreleerd 
-\cite{sharma:digital_color_imaging}, waardoor we 
-informatie verliezen als we ze elk afzonderlijk beschouwen. Een tralie-gebaseerde aanpak,
-op basis van de bovenstaande representatie, lijkt ons daarom interessanter.
+\cite{sharma:digital_color_imaging}, waardoor er
+informatie verloren gaat als we ze elk afzonderlijk beschouwen. Dat verlies van informatie kan vermeden
+worden door gebruik te maken van een tralie-gebaseerde aanpak,
+op basis van de bovenstaande representatie.
 We hebben in \ref{sectie:vaagsimilariteitsmaten} reeds vermeld dat de beschouwde 
 vaagsimilariteitsmaten uitbreidbaar zijn naar L-vaag\-ver\-za\-me\-ling\-en met
-$L=[0,1]^3$. Daarvoor moeten we de bewerkingen waarvan deze maten gebruik maken veralgemenen van 
+$L=[0,1]^3$. Daarvoor moeten we de bewerkingen waarvan deze maten gebruik maken, veralgemenen van 
 $[0,1]$ naar $[0,1]^3$. 
-Voor de vaagsimilariteitsmaten $M_1$ tot $M_3$ betekent dit concreet dat we een zinvolle betekenis 
+Voor de vaagsimilariteitsmaten $M_1$ tot $M_3$ betekent dat concreet dat we een zinvolle betekenis 
 moeten geven aan $c - c'$ en $|c|$, voor alle $c(r,g,b),c'(r',g',b') \in [0,1]^3$. We gebruiken
-hiervoor 
+daarvoor 
 $$
 c - c' = (r-r',g-g',b-b') \quad \textrm{ en } \quad |c| = \frac{1}{\sqrt{3}} \cdot \sqrt{r^2 + g^2 + b^2}.
 $$
@@ -132,34 +113,42 @@ begrip sigma count nodig. Hiervoor gebruiken we
 $$
 |A|=\frac{1}{\sqrt{n}}\sum_{x \in X}\sqrt{(A_1(x))^2+(A_2(x))^2+\ldots+(A_n(x))^2}
 $$
-met $n=3$. Deze overige maten maken bovendien ook gebruik van de bewerkingen $co$ (complement), 
+met $n=3$. Die overige maten maken bovendien ook gebruik van de bewerkingen $co$ (complement), 
 $\cap$ (doorsnede) en $\cup$ (unie). Doordat we 
 $(\mathcal{N},\mathcal{C},\mathcal{D})=(N_s,T_M,S_M)$ gekozen hebben, moeten we
 dus $1 - c$, $\max \{c,c'\}$ en $\min \{c,c'\}$ kunnen bepalen voor alle 
-$c(r,g,b),c'(r',g',b') \in [0,1]^3$. Hiervoor kunnen we $1 - c = (1,1,1) - (r,g,b)$ en de
+$c(r,g,b),c'(r',g',b') \in [0,1]^3$. Daarvoor kunnen we $1 - c = (1,1,1) - (r,g,b)$ en de
 definities voor $\max$ en $\min$ uit \ref{sectie:kleurbeeld_repr} gebruiken.
 
 
-\section{Resolutie-onafhankelijk}
+\section{Resolutie-onafhankelijke similariteitsmaten}
 \label{sectie:res-onafh}
 
-Men noemt het aantal pixels in een beeld de \emph{resolutie} van dat beeld.
-Een belangrijke beperking van de bovenstaande pixel-gebaseerde similariteitsmaten is dat we
-ze enkel kunnen toepassen op beelden die dezelfde resolutie hebben. We kunnen dit oplossen
-door similariteitsmaten te construeren op een manier die ge\"inspireerd is op de constructie
-van de zogenaamde omgeving-gebaseerde similariteitsmaten in \cite{vanderweken:similariteitsmaten}. 
+Het aantal pixels in een beeld wordt de \emph{resolutie} van dat beeld genoemd.
+Een belangrijke beperking van de bovenstaande pixelgebaseerde similariteitsmaten is dat
+ze enkel kunnen toegepast worden op beelden die dezelfde resolutie hebben.
+We kunnen dit oplossen door ofwel intermediaire beelden ofwel omgevingen te gebruiken.
+
+\subsection{Intermediaire beelden}
+
+
+\subsection{Omgevingen}
+
+Een andere manier om resolutie-onafhankelijkheid te bekomen is door similariteitsmaten te construeren 
+op een manier die ge\"inspireerd is op de constructie van de zogenaamde omgeving-gebaseerde 
+similariteitsmaten in \cite{vanderweken:similariteitsmaten}. 
 
 Stel dat we twee beelden $A$ en $B$ willen
 vergelijken. We verdelen
-deze beelden eerst in partities, die respectievelijk bestaan uit
-$m$ en $n$ beeldonderdelen. Hierbij zorgen we ervoor dat de onderdelen
-van deze beide partities allemaal dezelfde resolutie hebben. We kunnen deze onderdelen bijgevolg 
-opvatten als kleine beelden, die men onderling kan vergelijken met behulp van de reeds 
-geziene pixel-gebaseerde similariteitsmaten.
-Vervolgens bepalen we de gemiddelde kleur van elk beeldonderdeel. Deze kleur gebruiken we om
+die beelden eerst in partities, die respectievelijk bestaan uit
+$m$ en $n$ beeldonderdelen. Daarbij zorgen we ervoor dat de onderdelen
+van die beide partities allemaal dezelfde resolutie hebben. We kunnen die onderdelen bijgevolg 
+opvatten als kleine beelden, waarvan de onderlinge similariteit kan nagegaan worden met behulp van de reeds 
+geziene pixelgebaseerde similariteitsmaten.
+Vervolgens bepalen we de gemiddelde kleur van elk beeldonderdeel. Die kleur gebruiken we om
 de collecties van beeldonderdelen voor te stellen als twee geordende lijsten, waarbij de 
-helderheid van de geassocieerde kleur afneemt naarmate men ze verder doorloopt.
-Dit doen we met behulp van de ordening $\leq_{RGB,lex}$. 
+helderheid van de geassocieerde kleur afneemt naarmate de lijsten verder doorlopen worden.
+Dat doen we met behulp van de ordening $\leq_{RGB,lex}$. 
 De elementen van de lijst die correspondeert met $A$ noemen 
 we $A_i$, $i \in \{1,2,\ldots,m\}$, en die van de andere lijst $B_j$, $j \in \{1,2,\ldots,n\}$.
 Figuur~\ref{fig:multires} illustreert de constructie van deze lijsten voor twee concrete
@@ -167,20 +156,20 @@ kleurbeelden. In deze figuur is de kleur van een beeldonderdeel gelijk aan de ge
 kleur van dat onderdeel.
 
 De twee geordende lijsten die we zo bekomen, gebruiken we vervolgens voor het bepalen van 
-de similariteit tussen $A$ en $B$. Hiertoe overlopen we de elementen van de 
+de similariteit tussen $A$ en $B$. Daartoe overlopen we de elementen van de 
 lijst die correspondeert met $B$. Voor
-elk element dat we tegenkomen, bepalen we de similariteit met $A_1$. Dit blijven we doen
+elk element dat we tegenkomen, bepalen we de similariteit met $A_1$. Dat blijven we doen
 tot we een similariteit vinden die kleiner is dan de vorige. We stoppen dus na $i$ iteraties 
 indien $A_1$ en $B_i$ minder gelijkenis vertonen dan $A_1$ en $B_{i-1}$. Op dat moment voegen
 we de similariteit tussen $A_1$ en $B_{i-1}$ toe aan de lijst van similariteiten $S$. Daarna
-beginnen we bij $B_i$ en herhalen we deze procedure voor $A_2$. We voegen dus opnieuw de vorige
-similariteit toe aan $S$ als deze groter is dan de huidige. Zo gaan we verder tot we bij
-$B_m$ komen. Als we deze procedure $j$ keer kunnen herhalen, dan
-is de similariteit tussen $A_j$ en $B_m$ dus de laatste die we berekenen. Deze similariteit
+beginnen we bij $B_i$ en herhalen we die procedure voor $A_2$. We voegen dus opnieuw de vorige
+similariteit toe aan $S$ als ze groter is dan de huidige. Zo gaan we verder tot we bij
+$B_m$ komen. Als we de procedure $j$ keer kunnen herhalen, dan
+is de similariteit tussen $A_j$ en $B_m$ dus de laatste die we berekenen. Die similariteit
 voegen we ook nog toe aan $S$. Tenslotte bepalen we de globale similarteit tussen $A$ en $B$ 
 door het gemiddelde van de waarden uit $S$ te berekenen. De waarde $M(A,B)$ van een 
 resolutie-onafhankelijke similariteitsmaat $M$, op basis van een 
-pixel-gebaseerde maat $P$, wordt dus als volgt bepaald uit de geordende lijsten van
+pixelgebaseerde maat $P$, wordt dus als volgt bepaald uit de geordende lijsten van
 beeldonderdelen:
 \begin{multicols}{2}
 \begin{algorithmic}[1]
@@ -212,9 +201,9 @@ beeldonderdelen:
 \end{algorithmic}
 \end{multicols}
 \noindent
-De similariteitsmaat die we op deze manier bekomen is echter niet noodzakelijk symmetrisch. Om dit 
+De similariteitsmaat die we op die manier bekomen is echter niet noodzakelijk symmetrisch. Om dat 
 probleem op te lossen, bepalen we zowel $M(A,B)$ als $M(B,A)$ en gebruiken we het gemiddelde van 
-deze waarden.
+die waarden.
 
 %Tabel~\ref{tab:multires} geeft een overzicht van de 
 %verschillende similariteiten die berekend worden indien we de bovenstaande constructie
@@ -226,7 +215,7 @@ deze waarden.
 \begin{figure}[tbp]
 \begin{center}
 \includegraphics[width=10cm]{images/multires.eps}
-\caption{\label{fig:multires}Constructie van een resolutie-onafhankelijke similariteitsmaat op basis van een pixel-gebaseerde maat.}
+\caption{\label{fig:multires}Constructie van een resolutie-onafhankelijke similariteitsmaat op basis van een pixelgebaseerde maat.}
 \end{center}
 \end{figure}
 
@@ -274,15 +263,15 @@ voorgesteld worden als een grijswaardebeeld, waarbij de waarde van een beeldpunt
 de overeenkomstige similariteit. Figuur~\ref{fig:multires_sim-matrix_1} toont het pad in de 
 similariteitsmatrix van de beelden $A$ en $B$ uit figuur~\ref{fig:multires}, dat wordt afgelopen
 bij het bepalen van $M(A,B)$.
-De similariteiten die effectief berekend worden, hebben in deze figuur een volle rand. Diegene 
-die toegevoegd worden aan $S$ hebben een dikkere rand. Deze laatste similariteiten 
-worden in figuur~\ref{fig:multires} weergeven als volle verbindingen tussen de
+De similariteiten die effectief berekend worden, hebben in die figuur een volle rand. Diegene 
+die toegevoegd worden aan $S$ hebben een dikkere rand. Die laatste similariteiten 
+worden in figuur~\ref{fig:multires} weergegeven als volle verbindingen tussen de
 geordende beeldonderdelen. 
 
-Uit figuur~\ref{fig:multires_sim-matrices} blijkt inderdaad dat we
-het gemiddelde van $M(A,B)$ en $M(B,A)$ moeten gebruiken om een symmetrische maat te bekomen.
+Uit figuur~\ref{fig:multires_sim-matrices} blijkt inderdaad dat
+het gemiddelde van $M(A,B)$ en $M(B,A)$ moet gebruikt worden om een symmetrische maat te bekomen.
 De similariteiten die toegevoegd worden aan $S$ bij het berekenen van $M(B,A)$, worden in 
-figuur~\ref{fig:multires} weergegeven met stippelijnen.
+figuur~\ref{fig:multires} weergegeven met stippellijnen.
 
 
 \section{Experimentele observaties}
@@ -290,27 +279,171 @@ figuur~\ref{fig:multires} weergegeven met stippelijnen.
 \begin{figure}[tbp]
 \begin{center}
 \includegraphics[width=\textwidth]{plots/pixelgeb_gggrs_en_cputimes_filled.eps}
-\caption{\label{fig:pixelgeb_gggrs_en_cputimes}De GGGR-waarde en de gebruikte rekentijd in ms voor elk van de resolutie-onafhankelijke pixel-gebaseerde similariteitsmaten.}
+\caption{\label{fig:pixelgeb_gggrs_en_cputimes}De GGGR-waarde en de gebruikte rekentijd in ms voor elk van de resolutie-onafhankelijke pixelgebaseerde similariteitsmaten.}
 \end{center}
 \end{figure}
 
-In figuur~\ref{fig:pixelgeb_gggrs_en_cputimes} vergelijken we enkele pixel-gebaseerde similariteitsmaten.
+In figuur~\ref{fig:pixelgeb_gggrs_en_cputimes} vergelijken we enkele pixelgebaseerde similariteitsmaten.
 Hoewel de beelden in onze testcollectie allemaal dezelfde resolutie hebben, zullen de
 resoluties van de beelden die we in de praktijk gaan vergelijken vrijwel altijd verschillend zijn.
-We beperken ons daarom tot resolutie-onafhankelijke similariteitsmaten. Deze maten construeren
-we op basis van een pixel-gebaseerde maat, zoals besproken in \ref{sectie:res-onafh}. De 
+We beperken ons daarom tot resolutie-onafhankelijke similariteitsmaten. Die maten construeren
+we op basis van een pixelgebaseerde maat, zoals besproken in \ref{sectie:res-onafh}. De 
 beeldonderdelen die we gebruiken bestaan uit $8 \cdot 8 = 64$ pixels.
-
-We beschouwen de drie bovenstaande manieren om de vaagsimilariteitsmaten toe te passen op een 
-onderdeel van een kleurbeeld:
+Voor het toepassen van de vaagsimilariteitsmaten op een 
+dergelijk onderdeel van een kleurbeeld, beschouwen we de drie bovenstaande manieren:
 eerst omzetten naar een grijswaardebeeld, 
 toepassen op de afzonderlijke kleurcomponenten en 
 de tralie-gebaseerde aanpak.
-De laatste manier in combinatie met $M_{3}$ levert de beste similariteitsmaat op. We vinden
-voor deze similariteitsmaat de GGGR-waarde $0.08398268398268396$. Dit is echter nog steeds een
-vrij hoge waarde. In figuur~\ref{fig:results_beste_pixelgeb}
-zien we dan ook dat de resultaten van deze maat niet zo overtuigend zijn. Blijkbaar 
-is de pixel-gebaseerde benadering niet de meest geschikte voor image retrieval. 
+
+De component-gebaseerde aanpak in 
+combinatie met $M_{I3c}$ geeft de GGGR-waarde $0.0240259$. Bij de tralie-gebaseerde aanpak
+bekomen we de GGGR-waarde $0.0264069$ als we $M_{1a}$ gebruiken. De resultaten van deze
+maten worden respectievelijk weergegeven in figuur~\ref{fig:results_beste_componenten_pixelgeb} en
+figuur~\ref{fig:results_beste_tralie_pixelgeb}.
+In die figuren zien we duidelijk dat de resultaten niet zo overtuigend zijn. Blijkbaar 
+is de pixelgebaseerde benadering niet de meest geschikte voor image retrieval. 
+
+\begin{figure}[tbp]
+\begin{center}
+\begin{tabular}{m{11cm} | m{3cm} |}
+\textbf{Eerste tien resultaten:} & \textbf{GGR:} \\
+\vspace{4pt}
+\includegraphics[width=1cm]{coil/beeld-18.eps}
+\includegraphics[width=1cm]{coil/beeld-22.eps}
+\includegraphics[width=1cm]{coil/beeld-21.eps}
+\includegraphics[width=1cm]{coil/beeld-19.eps}
+\includegraphics[width=1cm]{coil/beeld-20.eps}
+\includegraphics[width=1cm]{coil/beeld-23.eps}
+\includegraphics[width=1cm]{coil/beeld-61.eps}
+\includegraphics[width=1cm]{coil/beeld-63.eps}
+\includegraphics[width=1cm]{coil/beeld-62.eps}
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-24.eps}
+\includegraphics[width=1cm]{coil/beeld-25.eps}
+\includegraphics[width=1cm]{coil/beeld-28.eps}
+\includegraphics[width=1cm]{coil/beeld-27.eps}
+\includegraphics[width=1cm]{coil/beeld-26.eps}
+\includegraphics[width=1cm]{coil/beeld-29.eps}
+\includegraphics[width=1cm]{coil/beeld-10.eps}
+\includegraphics[width=1cm]{coil/beeld-38.eps}
+\includegraphics[width=1cm]{coil/beeld-11.eps}
+\includegraphics[width=1cm]{coil/beeld-9.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+\includegraphics[width=1cm]{coil/beeld-34.eps}
+\includegraphics[width=1cm]{coil/beeld-35.eps}
+\includegraphics[width=1cm]{coil/beeld-31.eps}
+\includegraphics[width=1cm]{coil/beeld-33.eps}
+\includegraphics[width=1cm]{coil/beeld-32.eps}
+\includegraphics[width=1cm]{coil/beeld-55.eps}
+\includegraphics[width=1cm]{coil/beeld-61.eps}
+\includegraphics[width=1cm]{coil/beeld-54.eps}
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-36.eps}
+\includegraphics[width=1cm]{coil/beeld-38.eps}
+\includegraphics[width=1cm]{coil/beeld-41.eps}
+\includegraphics[width=1cm]{coil/beeld-37.eps}
+\includegraphics[width=1cm]{coil/beeld-27.eps}
+\includegraphics[width=1cm]{coil/beeld-39.eps}
+\includegraphics[width=1cm]{coil/beeld-4.eps}
+\includegraphics[width=1cm]{coil/beeld-40.eps}
+\includegraphics[width=1cm]{coil/beeld-24.eps}
+\includegraphics[width=1cm]{coil/beeld-11.eps}
+& {\scriptsize 0.007142857142857143}
+\\
+\includegraphics[width=1cm]{coil/beeld-48.eps}
+\includegraphics[width=1cm]{coil/beeld-27.eps}
+\includegraphics[width=1cm]{coil/beeld-53.eps}
+\includegraphics[width=1cm]{coil/beeld-50.eps}
+\includegraphics[width=1cm]{coil/beeld-52.eps}
+\includegraphics[width=1cm]{coil/beeld-51.eps}
+\includegraphics[width=1cm]{coil/beeld-49.eps}
+\includegraphics[width=1cm]{coil/beeld-26.eps}
+\includegraphics[width=1cm]{coil/beeld-28.eps}
+\includegraphics[width=1cm]{coil/beeld-29.eps}
+& {\scriptsize 0.011904761904761904}
+\\
+\includegraphics[width=1cm]{coil/beeld-12.eps}
+\includegraphics[width=1cm]{coil/beeld-13.eps}
+\includegraphics[width=1cm]{coil/beeld-15.eps}
+\includegraphics[width=1cm]{coil/beeld-16.eps}
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+\includegraphics[width=1cm]{coil/beeld-20.eps}
+\includegraphics[width=1cm]{coil/beeld-34.eps}
+\includegraphics[width=1cm]{coil/beeld-31.eps}
+\includegraphics[width=1cm]{coil/beeld-17.eps}
+\includegraphics[width=1cm]{coil/beeld-14.eps}
+& {\scriptsize 0.01904761904761905}
+\\
+\includegraphics[width=1cm]{coil/beeld-54.eps}
+\includegraphics[width=1cm]{coil/beeld-55.eps}
+\includegraphics[width=1cm]{coil/beeld-57.eps}
+\includegraphics[width=1cm]{coil/beeld-58.eps}
+\includegraphics[width=1cm]{coil/beeld-34.eps}
+\includegraphics[width=1cm]{coil/beeld-31.eps}
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+\includegraphics[width=1cm]{coil/beeld-35.eps}
+\includegraphics[width=1cm]{coil/beeld-59.eps}
+\includegraphics[width=1cm]{coil/beeld-56.eps}
+& {\scriptsize 0.01904761904761905}
+\\
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-61.eps}
+\includegraphics[width=1cm]{coil/beeld-63.eps}
+\includegraphics[width=1cm]{coil/beeld-62.eps}
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+\includegraphics[width=1cm]{coil/beeld-34.eps}
+\includegraphics[width=1cm]{coil/beeld-31.eps}
+\includegraphics[width=1cm]{coil/beeld-64.eps}
+\includegraphics[width=1cm]{coil/beeld-35.eps}
+\includegraphics[width=1cm]{coil/beeld-33.eps}
+& {\scriptsize 0.02142857142857143}
+\\
+\includegraphics[width=1cm]{coil/beeld-0.eps}
+\includegraphics[width=1cm]{coil/beeld-1.eps}
+\includegraphics[width=1cm]{coil/beeld-42.eps}
+\includegraphics[width=1cm]{coil/beeld-5.eps}
+\includegraphics[width=1cm]{coil/beeld-43.eps}
+\includegraphics[width=1cm]{coil/beeld-2.eps}
+\includegraphics[width=1cm]{coil/beeld-44.eps}
+\includegraphics[width=1cm]{coil/beeld-4.eps}
+\includegraphics[width=1cm]{coil/beeld-64.eps}
+\includegraphics[width=1cm]{coil/beeld-3.eps}
+& {\scriptsize 0.023809523809523808}
+\\
+\includegraphics[width=1cm]{coil/beeld-6.eps}
+\includegraphics[width=1cm]{coil/beeld-64.eps}
+\includegraphics[width=1cm]{coil/beeld-7.eps}
+\includegraphics[width=1cm]{coil/beeld-8.eps}
+\includegraphics[width=1cm]{coil/beeld-65.eps}
+\includegraphics[width=1cm]{coil/beeld-9.eps}
+\includegraphics[width=1cm]{coil/beeld-25.eps}
+\includegraphics[width=1cm]{coil/beeld-24.eps}
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-61.eps}
+& {\scriptsize 0.06190476190476191}
+\\
+\includegraphics[width=1cm]{coil/beeld-42.eps}
+\includegraphics[width=1cm]{coil/beeld-0.eps}
+\includegraphics[width=1cm]{coil/beeld-1.eps}
+\includegraphics[width=1cm]{coil/beeld-5.eps}
+\includegraphics[width=1cm]{coil/beeld-43.eps}
+\includegraphics[width=1cm]{coil/beeld-3.eps}
+\includegraphics[width=1cm]{coil/beeld-2.eps}
+\includegraphics[width=1cm]{coil/beeld-44.eps}
+\includegraphics[width=1cm]{coil/beeld-4.eps}
+\includegraphics[width=1cm]{coil/beeld-64.eps}
+& {\scriptsize 0.1}
+\\
+\end{tabular}
+\caption{\label{fig:results_beste_componenten_pixelgeb}De GGR-waarde en de eerste tien resultaten voor elk voorbeeld bij de beste resolutie-onafhankelijke component-gebaseerde similariteitsmaat.}
+\end{center}
+\end{figure}
 
 \begin{figure}[tbp]
 \begin{center}
@@ -449,11 +582,11 @@ is de pixel-gebaseerde benadering niet de meest geschikte voor image retrieval.
 \includegraphics[width=1cm]{coil/beeld-46.eps}
 & {\scriptsize 0.08333333333333333}
 \end{tabular}
-\caption{\label{fig:results_beste_pixelgeb}De GGR-waarde en de eerste tien resultaten voor elk voorbeeld-beeld bij de beste resolutie-onafhankelijke pixel-gebaseerde similariteitsmaat.}
+\caption{\label{fig:results_beste_tralie_pixelgeb}De GGR-waarde en de eerste tien resultaten voor elk voorbeeld bij de beste resolutie-onafhankelijke tralie-gebaseerde similariteitsmaat.}
 \end{center}
 \end{figure}
 
 Op het vlak van rekentijd zijn de similariteitsmaten op basis van de eerste en de laatste manier
 aan elkaar gewaagd. Bij het toepassen van een similariteitsmaat voor grijswaardebeelden op de 
-afzonderlijke kleurcomponenten, hebben we echter aanzienlijk meer rekentijd nodig. Dit is niet
-verwonderlijk, vermits er dan ook driemaal zoveel werk moet verricht worden.
+afzonderlijke kleurcomponenten, hebben we echter aanzienlijk meer rekentijd nodig. Dat is niet
+verwonderlijk, aangezien er dan ook driemaal zoveel werk moet verricht worden.
