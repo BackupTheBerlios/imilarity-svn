@@ -1,16 +1,23 @@
 package de.berlios.imilarity.fuzzy;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class HashedFuzzySet extends FuzzySetBase {
 
 	private final Map memberships = new HashMap();
 	private Integer elementsCount = null;
+	private Membership defaultMembership = null;
 	
-	public HashedFuzzySet(int elementsCount) {
+	private SortedSet elements = new TreeSet();
+	
+	public HashedFuzzySet(int elementsCount, Membership defaultMembership) {
 		super();
 		this.elementsCount = new Integer(elementsCount);
+		this.defaultMembership = defaultMembership;
 	}
 	
 	public HashedFuzzySet() {
@@ -24,17 +31,26 @@ public class HashedFuzzySet extends FuzzySetBase {
 		else
 			return memberships.size();
 	}
+	
+	public Iterator iterator() {
+		return elements.iterator();
+	}
 
 	public Membership getMembership(int element) {
-		return (Membership) memberships.get(new Integer(element));
+		Membership res = (Membership) memberships.get(new Integer(element));
+		if (res == null)
+			return defaultMembership;
+		return res;
 	}
 	
 	public void addMembership(Membership m) {
-		memberships.put(new Integer(memberships.size()), m);
+		addMembership(memberships.size(), m);
 	}
 	
 	public void addMembership(int element, Membership m) {
-		memberships.put(new Integer(element), m);
+		Integer el = new Integer(element);
+		elements.add(el);
+		memberships.put(el, m);
 	}
 	
 	public Membership changeMembership(int element, Membership m) {
