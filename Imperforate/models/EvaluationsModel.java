@@ -97,6 +97,7 @@ public class EvaluationsModel extends AbstractTableModel {
 		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M2()))),
 		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M3()))),
 		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M5()))),
+		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M5c()))),
 		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M5())))),
 		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M6()))),
 		new MultiresImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new ComplementFuzzyMeasure(new M6())))),
@@ -445,7 +446,6 @@ public class EvaluationsModel extends AbstractTableModel {
 		new FuzzyHistogramImageMeasure(new M1a()),
 		new FuzzyHistogramImageMeasure(new MI3()),
 		
-			new FuzzyQuantizedImageMeasure(new PM1a(), new NeuQuant(30,16), 4),
 			new FuzzyQuantizedImageMeasure(new M1a(), new NeuQuant(30,16), 4),
 			new FuzzyQuantizedImageMeasure(new M1b(), new NeuQuant(30,16), 4),
 			new FuzzyQuantizedImageMeasure(new M1c(), new NeuQuant(30,16), 4),
@@ -463,7 +463,6 @@ public class EvaluationsModel extends AbstractTableModel {
 			new FuzzyQuantizedImageMeasure(new MI3(), new NeuQuant(30,16), 4),
 			new FuzzyQuantizedImageMeasure(new MI3c(), new NeuQuant(30,16), 4),
 			
-			new FuzzyQuantizedImageMeasure(new PM1a(), new Wu(8), 4),
 			new FuzzyQuantizedImageMeasure(new M1a(), new Wu(8), 4),
 			new FuzzyQuantizedImageMeasure(new M1b(), new Wu(8), 4),
 			new FuzzyQuantizedImageMeasure(new M1c(), new Wu(8), 4),
@@ -482,8 +481,6 @@ public class EvaluationsModel extends AbstractTableModel {
 			new FuzzyQuantizedImageMeasure(new MI3c(), new Wu(8), 4),
 			
 			new ComponentsImageMeasure(new FuzzyImageMeasure(new M1a())),
-			new FuzzyQuantizedImageMeasure(new PM1a(), new NeuQuant(30,6)),
-			new FuzzyQuantizedImageMeasure(new PM1a(), new Wu(10)),
 			
 			new ProductImageMeasure(new FuzzyImageMeasure(new M1c()), 
 					new I1i2i3ImageMeasure(new PseudoFuzzyHistogramImageMeasure(new MI3(), 15))),
