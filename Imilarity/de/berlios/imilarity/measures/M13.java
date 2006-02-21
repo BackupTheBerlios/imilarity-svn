@@ -2,7 +2,7 @@ package de.berlios.imilarity.measures;
 
 import de.berlios.imilarity.fuzzy.FuzzySet;
 
-public class M13 extends M8 {
+public class M13 extends M8c {
 	
 	private FuzzySet a, b;
 	
@@ -26,8 +26,8 @@ public class M13 extends M8 {
 	
 	private void setInternalQueryAndTarget() {
 		if (a != null && b != null) {
-			super.setQuery(b.union(a.complement()));
-			super.setTarget(a.union(b.complement()));
+			super.setQuery(a.minus(b));
+			super.setTarget(b.minus(a));
 		}
 	}
 	

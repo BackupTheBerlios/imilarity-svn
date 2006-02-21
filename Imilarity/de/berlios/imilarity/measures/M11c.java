@@ -2,7 +2,7 @@ package de.berlios.imilarity.measures;
 
 import de.berlios.imilarity.fuzzy.FuzzySet;
 
-public class M11 extends M5 {
+public class M11c extends M5c {
 
 	private FuzzySet a, b;
 	
@@ -32,7 +32,7 @@ public class M11 extends M5 {
 	}
 
 	public String getDescription() {
-		return "M11";
+		return "M11c";
 	}
 
 }
