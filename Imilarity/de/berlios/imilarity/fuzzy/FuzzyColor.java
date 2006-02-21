@@ -32,7 +32,7 @@ public class FuzzyColor extends FuzzySetBase {
 			double v = (d/2.3) - 1;
 			//System.out.println("v = " +v);
 			//System.out.println("m = " + Math.exp(-(v*v/100000.0)));
-			return new SimpleMembership(Math.exp(-(v*v/2.0)));
+			return new SimpleMembership(Math.exp(-(v*v/50.0)));
 		}
 	}
 	
@@ -40,8 +40,8 @@ public class FuzzyColor extends FuzzySetBase {
 		double[] comps1 = c1.getComponents();
 		double[] comps2 = c2.getComponents();
 		int d1 = (int)(comps1[0]*100) - (int)(comps2[0]*100);
-		int d2 = (int)(comps1[1]*1000) - (int)(comps2[1]*1000);
-		int d3 = (int)(comps1[2]*400) - (int)(comps2[2]*400);
+		int d2 = (int)(comps1[1]*240) - (int)(comps2[1]*240);
+		int d3 = (int)(comps1[2]*240) - (int)(comps2[2]*240);
 		return Math.sqrt(d1*d1+d2*d2+d3*d3);
 	}
 

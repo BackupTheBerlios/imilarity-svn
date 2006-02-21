@@ -101,9 +101,9 @@ public class PseudoFuzzyHistogramImageMeasure extends ImageMeasureBase {
 	
 	public String getDescription() {
 		StringBuffer buf = new StringBuffer();
-		buf.append("Fuzzy Histogram with ");
+		buf.append("Pseudo Fuzzy Histogram with ");
 		buf.append(quantizer.getDescription());
-		buf.append(" using ");
+		buf.append(" quantizer using ");
 		buf.append(fuzzyMeasure.getDescription());
 		buf.append(" and ");
 		buf.append(smoother.getDescription());

@@ -31,10 +31,13 @@ public abstract class FuzzySetBase implements FuzzySet {
 		int count = getElementsCount();
 		if (set.getElementsCount() != count)
 			throw new IllegalArgumentException("not the same elements count");
-		ArrayFuzzySet result = new ArrayFuzzySet();
-		for (int i = 0; i < count; i++) {
+		ArrayFuzzySet result = new ArrayFuzzySet(count, new SimpleMembership(0));
+		Iterator it = iterator();
+		while (it.hasNext()) {
+			int i = ((Integer)it.next()).intValue();
+		//for (int i = 0; i < count; i++) {
 			Membership m = getMembership(i);
-			result.addMembership(new SimpleMembership(m.and(set.getMembership(i)).getComponents()));
+			result.addMembership(i, new SimpleMembership(m.and(set.getMembership(i)).getComponents()));
 		}
 		return result;
 	}
@@ -43,10 +46,13 @@ public abstract class FuzzySetBase implements FuzzySet {
 		int count = getElementsCount();
 		if (set.getElementsCount() != count)
 			throw new IllegalArgumentException("not the same elements count");
-		ArrayFuzzySet result = new ArrayFuzzySet();
-		for (int i = 0; i < count; i++) {
+		ArrayFuzzySet result = new ArrayFuzzySet(count, new SimpleMembership(0));
+		//for (int i = 0; i < count; i++) {
+		Iterator it = iterator();
+		while (it.hasNext()) {
+			int i = ((Integer)it.next()).intValue();
 			Membership m = getMembership(i);
-			result.addMembership(new SimpleMembership(m.or(set.getMembership(i)).getComponents()));
+			result.addMembership(i, new SimpleMembership(m.or(set.getMembership(i)).getComponents()));
 		}
 		return result;
 	}
@@ -62,24 +68,47 @@ public abstract class FuzzySetBase implements FuzzySet {
 	}
 	
 	public FuzzySet minus(FuzzySet set) {
-		return intersection(set.complement());
+		int count = getElementsCount();
+		ArrayFuzzySet result = new ArrayFuzzySet(count, new SimpleMembership(0));
+		Iterator it = iterator();
+		while (it.hasNext()) {
+			int i = ((Integer)it.next()).intValue();
+			result.addMembership(i, 
+					new SimpleMembership(getMembership(i).minus(set.getMembership(i)).getComponents()));
+		}
+		return result;
 	}
 	
 	public FuzzySet iii(FuzzySet set) {
-		FuzzySet a = this;
-		FuzzySet b = set;
-		FuzzySet ac = a.complement();
-		FuzzySet bc = b.complement();
-		return a.intersection(b).intersection(ac.intersection(bc));
+		int count = getElementsCount();
+		ArrayFuzzySet result = new ArrayFuzzySet(count, new SimpleMembership(0));
+		Iterator it = iterator();
+		while (it.hasNext()) {
+			int i = ((Integer)it.next()).intValue();
+			Membership m1 = getMembership(i);
+			Membership m2 = set.getMembership(i);
+			result.addMembership(i, 
+					new SimpleMembership(m1.and(m2).and(m1.complement().and(m2.complement()))
+							.getComponents()));
+		}
+		return result;
 	}
 	
 	public FuzzySet uiu(FuzzySet set) {
-		FuzzySet a = this;
-		FuzzySet b = set;
-		FuzzySet ac = a.complement();
-		FuzzySet bc = b.complement();
-		return a.union(b).intersection(ac.union(bc));
+		int count = getElementsCount();
+		ArrayFuzzySet result = new ArrayFuzzySet(count, new SimpleMembership(0));
+		Iterator it = iterator();
+		while (it.hasNext()) {
+			int i = ((Integer)it.next()).intValue();
+			Membership m1 = getMembership(i);
+			Membership m2 = set.getMembership(i);
+			result.addMembership(i, 
+					new SimpleMembership(m1.or(m2).and(m1.complement().or(m2.complement()))
+							.getComponents()));
+		}
+		return result;
 	}
+	
 	
 	
 	private class MyIterator implements Iterator {

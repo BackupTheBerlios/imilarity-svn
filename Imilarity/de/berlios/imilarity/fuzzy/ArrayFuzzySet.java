@@ -9,11 +9,19 @@ import java.util.List;
 
 public class ArrayFuzzySet extends FuzzySetBase {
 
-	private List memberships;
+	private List memberships = new ArrayList();
+	private Integer elementsCount = null;
+	private Membership defaultMembership = null;
+	
+	
+	public ArrayFuzzySet(int elementsCount, Membership defaultMembership) {
+		super();
+		this.elementsCount = new Integer(elementsCount);
+		this.defaultMembership = defaultMembership;
+	}
 	
 	public ArrayFuzzySet() {
 		super();
-		memberships = new ArrayList();
 	}
 	
 	public ArrayFuzzySet(Collection c) {
@@ -23,15 +31,25 @@ public class ArrayFuzzySet extends FuzzySetBase {
 	
 	
 	public int getElementsCount() {
-		return memberships.size();
+		if (elementsCount != null)
+			return elementsCount.intValue();
+		else
+			return memberships.size();
 	}
 
 	public Membership getMembership(int element) {
-		return (Membership) memberships.get(element);
+		Membership res = (Membership) memberships.get(element);
+		if (res == null)
+			return defaultMembership;
+		return res;
 	}
 	
 	public void addMembership(Membership m) {
 		memberships.add(m);
+	}
+	
+	public void addMembership(int element, Membership m) {
+		memberships.add(element, m);
 	}
 	
 	public Membership changeMembership(int element, Membership m) {

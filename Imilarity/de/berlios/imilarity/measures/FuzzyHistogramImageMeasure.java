@@ -15,7 +15,7 @@ public class FuzzyHistogramImageMeasure extends ImageMeasureBase {
 		if (measure == null)
 			throw new NullPointerException("measure == null");
 		this.measure = measure;
-		this.quantizer = new UniformQuantizer(new int[] {7,7,7});
+		this.quantizer = new UniformQuantizer(new int[] {10,10,10}); // reduceren tot 512 kleuren
 	}
 	
 	public void setQuery(Image query) {
@@ -24,8 +24,6 @@ public class FuzzyHistogramImageMeasure extends ImageMeasureBase {
 	}
 	
 	public void setTarget(Image target) {
-		if (!sameResolution(getQuery(), target))
-			throw new IllegalArgumentException("query and target must have same resolution");
 		super.setTarget(target);
 		measure.setTarget(new FuzzyHistogram(new LabImage(target), quantizer));
 	}
@@ -37,7 +35,7 @@ public class FuzzyHistogramImageMeasure extends ImageMeasureBase {
 
 	public String getDescription() {
 		return "Fuzzy Histogam using " + measure.getDescription() + " and " 
-			+ quantizer.getDescription();
+			+ quantizer.getDescription() + " quantizer";
 	}
 
 }

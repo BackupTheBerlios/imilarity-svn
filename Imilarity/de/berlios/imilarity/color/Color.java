@@ -1,7 +1,7 @@
 package de.berlios.imilarity.color;
 
 
-public class Color {
+public class Color implements Comparable {
 
 	private final double[] components;
 	
@@ -21,5 +21,16 @@ public class Color {
 	
 	public double[] getComponents() {
 		return components;
+	}
+
+	
+	public int compareTo(Object obj) {
+		Color c = (Color) obj;
+		for (int i = 0; i < components.length; i++)
+			if (components[i] < c.components[i])
+				return -1;
+			else if (components[i] > c.components[i])
+				return 1;
+		return 0;
 	}
 }

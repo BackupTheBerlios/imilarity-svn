@@ -40,7 +40,7 @@ public class SctSmoother implements Smoother {
 	}
 
 	public String getDescription() {
-		return "NH smoothing";
+		return "SCT smoothing";
 	}
 
 }
