@@ -3,18 +3,23 @@
  */
 package de.berlios.imilarity.measures;
 
-import de.berlios.imilarity.aggregators.Minimum;
-import de.berlios.imilarity.fuzzy.Membership;
+import java.util.Iterator;
+
+import de.berlios.imilarity.util.CombinedIterator;
 
 
-public class M2 extends SimplifiedFuzzyMeasure {
-
-	public M2() {
-		super(new Minimum());
-	}
+public class M2 extends FuzzyMeasureBase {
 	
-	public double m(Membership x, Membership y) {
-		return 1 - x.minus(y).abs();
+	public double getSimilarity() {
+		double max = 0.0;
+		Iterator it = new CombinedIterator
+			(getQuery().iterator(), getTarget().iterator());
+		while (it.hasNext()) {
+			int i = ((Integer)it.next()).intValue();
+			double v = getQuery().getMembership(i).minus(getTarget().getMembership(i)).abs();
+			if (v > max) max = v; 
+		}
+		return 1 - max;
 	}
 	
 	public String getDescription() {

@@ -3,20 +3,24 @@
  */
 package de.berlios.imilarity.measures;
 
-import de.berlios.imilarity.aggregators.ArithmeticMean;
-import de.berlios.imilarity.fuzzy.Membership;
+import java.util.Iterator;
+import de.berlios.imilarity.util.CombinedIterator;
 
 
-public class M1a extends SimplifiedFuzzyMeasure {
+public class M1a extends FuzzyMeasureBase {
 
-	public M1a() {
-		super(new ArithmeticMean());
+	public double getSimilarity() {
+		int count = getQuery().getElementsCount();
+		double sum = 0.0;
+		Iterator it = new CombinedIterator
+			(getQuery().iterator(), getTarget().iterator());
+		while (it.hasNext()) {
+			int i = ((Integer)it.next()).intValue();
+			sum += getQuery().getMembership(i).minus(getTarget().getMembership(i)).abs();
+		}
+		return 1 - (sum / count);
 	}
 	
-	public double m(Membership x, Membership y) {
-		return 1 - x.minus(y).abs();
-	}
-
 	public String getDescription() {
 		return "M1a";
 	}

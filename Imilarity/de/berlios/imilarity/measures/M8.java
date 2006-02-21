@@ -9,11 +9,11 @@ public class M8 extends FuzzyMeasureBase {
 		FuzzySet b = getTarget();
 		double d = Math.min(a.abs(),b.abs());
 		
-		if (a.intersection(b).abs() / d > 1) {
-			System.out.println("a: " + a.abs());
-			System.out.println("b: " + b.abs());
-			System.out.println("teller: " + a.intersection(b).abs() + " noemer: " + d);
-		}
+		//if (a.intersection(b).abs() / d > 1) {
+		//	System.out.println("a: " + a.abs());
+		//	System.out.println("b: " + b.abs());
+		//	System.out.println("teller: " + a.intersection(b).abs() + " noemer: " + d);
+		//}
 			
 		if (d == 0)
 			return 0;
