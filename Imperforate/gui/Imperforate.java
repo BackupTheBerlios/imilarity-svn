@@ -73,14 +73,21 @@ public class Imperforate extends JFrame {
 							calculating = true;
 							console.append("\nCALCULATION:\n\n");
 							Iterator it = indices.iterator();
+							int counter = 1;
 							while (it.hasNext() && calculateRemaining) {
 								int rowIndex = ((Integer)it.next()).intValue();
 								console.append("Calculating '" + evalsModel.getValueAt(rowIndex,0) + "'"
-										+ "  ["+(rowIndex+1)+"/"+indices.size()+"] ...");
+										+ "  ["+(counter++)+"/"+indices.size()+"] ...");
 								evalsModel.calculate(rowIndex);
 								console.append(" done.\n");
 							}
 							calculating = false;
+							EventQueue.invokeLater(new Runnable() {
+								public void run() {
+									calculateButton.setText("Calculate");
+									calculateButton.setEnabled(!table.getSelectionModel().isSelectionEmpty());
+								}
+							});
 						}
 					}).start();
 				}
