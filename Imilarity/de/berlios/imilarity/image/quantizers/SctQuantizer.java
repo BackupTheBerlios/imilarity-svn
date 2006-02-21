@@ -18,8 +18,18 @@ public class SctQuantizer implements Quantizer {
 
 	private Image image;
 	
-	private int gbc = 16; // grayscale bins count
-	private int cbc = 240; // color bins count
+	private int gbc; // grayscale bins count
+	private int cbc; // color bins count
+	
+	public SctQuantizer(int gbc, int cbc) {
+		this.gbc = gbc;
+		this.cbc = cbc;
+	}
+	
+	public SctQuantizer() {
+		this(16, 240);
+	}
+	
 	
 	public void quantize(Image im) {
 		if (!(im instanceof HsvImage))
