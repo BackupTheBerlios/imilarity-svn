@@ -1,35 +1,36 @@
 \chapter{Similariteitsmaten voor beelden}
 
 Een similariteitsmaat voor beelden is een maat die de gelijkenis tussen twee gegeven
-beelden uitdrukt als een getal uit het interval $[0,1]$. Dit getal nadert naar 1
+beelden uitdrukt als een getal in het eenheidsinterval $[0,1]$. Dat getal nadert naar 1
 naarmate de gelijkenis groter is. Bijgevolg kunnen we een dergelijke maat gebruiken om
 een lijst van zoekresultaten te herordenen volgens similariteit met een bepaald 
-voorbeeld-beeld uit die lijst. 
+voorbeeld uit die lijst. 
 
 We construeren een similariteitsmaat voor beelden in twee stappen. Eerst identificeren we
 een beeld, al dan niet rechtstreeks, met een (L-)vaagverzameling. Daarna maken we gebruik van
-de vaagsimilariteitsmaten uit \ref{sectie:vaagsimilariteitsmaten} om deze (L-)vaagverzamelingen te
+de vaagsimilariteitsmaten uit \ref{sectie:vaagsimilariteitsmaten} om die (L-)vaagverzamelingen te
 vergelijken. 
 
 In het vervolg van deze scriptie bedoelen we met de term ``similariteitsmaat'' steeds
-een similariteitsmaat voor beelden. Dit omvat dus zowel een manier van identificeren als een 
-vaagsimilariteitsmaat.
+een similariteitsmaat voor beelden. We gebruiken die term dus niet voor een vaagsimilariteitsmaat
+op zich, maar wel voor de combinatie van een dergelijke vaagsimilariteitsmaat met een manier om beelden te 
+identificeren met (L-)vaagverzamelingen.
 
 \section{Eigenschappen}
 
-In de volgende hoofdstukken construeren we een aantal similariteitsmaten voor beelden. Hierbij 
+In de volgende hoofdstukken construeren we een aantal similariteitsmaten voor beelden. Daarbij 
 eisen we dat al onze similariteitsmaten \emph{reflexief} en \emph{symmetrisch} zijn.
 
 \subsection{Reflexiviteit}
 
-Voor twee identieke beelden verwachten we dat een similariteitsmaat $M$ als output $1$
+Voor twee identieke beelden verwachten we dat een similariteitsmaat $M$ als resultaat $1$
 teruggeeft. Met andere woorden, voor een beeld $A$ moet gelden: $M(A,A)=1$.
-Deze eigenschap heeft als gevolg dat het voorbeeld-beeld zich steeds vooraan in
+Die eigenschap heeft als gevolg dat het voorbeeld zich steeds vooraan in
 de geordende lijst van zoekresultaten moet bevinden.
 
 \subsection{Symmetrisch}
 
-De output van een similariteitsmaat $M$ wordt verwacht onafhankelijk te zijn van de 
+Het resultaat van een similariteitsmaat $M$ wordt verwacht onafhankelijk te zijn van de 
 volgorde waarin de beelden aangeboden worden. Voor beelden $A$ en $B$ moet dus gelden:
 $M(A,B)=M(B,A)$.
 
@@ -39,17 +40,14 @@ $M(A,B)=M(B,A)$.
 
 Om uit meerdere similariteitsmaten de meest geschikte te kiezen, 
 moeten we een manier vinden om een dergelijke maat objectief te beoordelen. 
-Dit zullen we doen door elke
-maat, voor een bepaald voorbeeld-beeld, toe te passen op een eenzelfde collectie 
-van beelden. Vervolgens zullen we de rangschikking die we zo bekomen
-beoordelen met behulp van een performantiemaat.
+Dat doen we door, voor een bepaald voorbeeld, elke maat toe te passen op een eenzelfde collectie 
+van beelden. Vervolgens beoordelen we de zo bekomen rangschikking met behulp van een performantiemaat.
 
 Figuur~\ref{fig:testcollectie} bevat de collectie van beelden die we gaan 
-gebruiken. Deze collectie bestaat uit een selectie van beelden uit
-de \emph{Columbia object image library} \cite{coil-100}. Deze bibliotheek van beelden 
-werd gegenereerd 
+gebruiken. Die collectie bestaat uit een selectie van beelden uit
+de \emph{Columbia object image library} \cite{coil-100}, die gegenereerd werd 
 door een aantal roterende objecten op bepaalde vaste momenten te fotograferen. 
-Onze testcollectie bestaat uit foto's van elf objecten. Van elke object zijn
+Onze testcollectie bestaat uit foto's van elf objecten. Van elk object zijn
 er zes momentopnames, wat een totaal van $11 \cdot 6 = 66$ beelden geeft.
 
 \begin{figure}[p]
@@ -140,10 +138,10 @@ er zes momentopnames, wat een totaal van $11 \cdot 6 = 66$ beelden geeft.
 \end{figure}
 
 Voor het beoordelen van een rangschikking, gebruiken we de \emph{genormaliseerde gemiddelde rang} 
-(GGR) \cite{muller:perf_eval}. Deze performantiemaat wordt toegepast op een collectie
-van $N$ beelden. Voor elk van deze beelden bevat de collectie
+(GGR) \cite{muller:perf_eval}. Die performantiemaat wordt toegepast op een collectie
+van $N$ beelden. Voor elk van die beelden bevat de collectie
 $N_R$ zogenaamde \emph{relevante beelden}. In het geval van onze testcollectie geldt $N = 66$.
-We gaan er in deze collectie vanuit dat foto's van eenzelfde object relevant zijn ten opzichte
+We gaan er in die collectie van uit dat foto's van eenzelfde object relevant zijn ten opzichte
 van elkaar: $N_R = 6$. Beschouw nu de vector 
 $(r_1,r_2,\ldots,r_{N_R}) \in \{1,2,\ldots,N\}^{N_R}$, waarbij $r_i$ het
 rangnummer van het $i$-de relevante beeld voorstelt. De performantiemaat
@@ -162,22 +160,189 @@ $$
 \noindent
 Deze maat nadert naar 1 naarmate de performantie slechter wordt.
 
-Tot nu toe hebben we er echter nog geen rekening mee gehouden dat de performantie van
-een similariteitsmaat afhankelijk kan zijn van het gekozen voorbeeld. Dit probleem lossen we
+Tot nu toe hebben we er nog geen rekening mee gehouden dat de performantie van
+een similariteitsmaat afhankelijk kan zijn van het gekozen voorbeeld. Dat probleem lossen we
 op door de GGR te berekenen voor meerdere voorbeelden en het gemiddelde van de bekomen waarden
-te beschouwen. We kiezen hierbij de beelden uit de linker kolom van 
+te beschouwen. We kiezen daarbij de beelden uit de linker kolom van 
 figuur~\ref{fig:testcollectie} als voorbeeld. De waarde die we zo bekomen noemen we de
-\emph{globale genormaliseerde gemiddelde rang} (GGGR). Het is deze waarde die we zullen gebruiken
+\emph{globale genormaliseerde gemiddelde rang} (GGGR). Het is die waarde die we zullen gebruiken
 om de performantie van een similariteitsmaat te evalueren. We zullen dus met andere woorden op
 zoek gaan naar similariteitsmaten waarvan de GGGR zo klein mogelijk is.
 
 \subsection{Rekentijd}
 
-We zullen voor elke similariteitsmaat die we construeren ook meten hoelang het duurt om
-de rangschikkingen, die nodig zijn om de GGGR te bepalen, te berekenen. Aan deze 
+Voor elke similariteitsmaat die we construeren meten we ook hoe lang het duurt om
+de rangschikkingen, die nodig zijn om de GGGR te bepalen, te berekenen. Aan die 
 rekentijd hechten we echter niet zoveel belang als aan de GGGR, vermits het in onze
 praktische implementatie niet absoluut noodzakelijk is dat de similariteitsmaten zo weinig
-mogelijk rekentijd vereisen. De collecties van beelden waarop ze daar toegepast worden
+mogelijk rekentijd vereisen. De collecties van beelden waarop ze daarbij toegepast worden,
 zijn immers beperkt in grootte. Bovendien worden de berekeningen aan de kant van de client
 uitgevoerd, waardoor er geen gevaar is voor overbelasting van de server.
 
+Indien we de similariteitsmaten zouden construeren voor een zuiver CBIR-systeem, zoals weergegeven
+in figuur~\ref{fig:cbir}, dan zou de rekentijd wel zeer belangrijk zijn. Hoewel het aantal
+beelden beperkt wordt door het gebruik van multidimensionale indexering, zal een dergelijk
+systeem de similariteitsmaten immers toch nog moeten toepassen op een groot aantal
+beelden. Anderzijds laat een zuiver CBIR-systeem wel toe om berekeningen op voorhand te doen
+en de resultaten ervan samen met de beelden op te slaan in de databank. Bij het similariteitsgebaseerd
+rangschikken van de zoekresultaten is dat niet mogelijk, omdat de databank daarbij niet rechtstreeks
+toegankelijk is.
+
+Als we het bepalen van de similariteiten vergelijken met het studeren voor een examen, dan 
+heeft de student in het geval van echte CBIR op voorhand meer dan voldoende tijd om de leerstof
+te verwerken. Vlak voor het examen is er echter maar net genoeg tijd om alles nog eens 
+te herhalen. Bij het similariteitsgebaseerd rangschikken van de zoekresultaten kan er niet vooraf 
+gestudeerd worden, maar juist voor het examen heeft de student wel nog enkele dagen ter beschikking 
+om alles in te studeren.
+
+
+\section{Beperken van de rekentijd}
+
+Hoewel de rekentijd voor onze praktische toepassing niet van cruciaal belang is, kan het beperken 
+ervan uiteraard geen kwaad. Door toch voldoende aandacht te schenken aan de rekentijd kunnen
+we er zelfs voor zorgen dat similariteitsmaten waarvoor we zonder extra inspanning veel te lang zouden 
+moeten rekenen, toch nog bruikbaar zijn.
+
+Stel dat $A$ en $B$ twee vaagverzamelingen zijn in een zelfde universum $X$. Het kan dan voorkomen dat 
+$X'= supp\ A \cup supp\ B$ veel minder elementen bevat dan $X$. In dat geval kunnen we de rekentijd sterk
+reduceren door het bereik van de sommaties in de vaagsimilariteitsmaten te beperken tot $X'$. Doordat
+$A(x)=B(x)=0$ voor alle $x \in X \setminus X'$ geldt er dan immers zowel
+$$
+\begin{array}{r@{\quad = \quad}l}
+\displaystyle \sum_{x \in X} | A(x) - B(x) | & \displaystyle \sum_{x \in X \setminus X'} | A(x) - B(x) | + \displaystyle \sum_{x \in X'} | A(x) - B(x) | \\
+& \displaystyle \sum_{x \in X \setminus X'} | 0 - 0 | + \displaystyle \sum_{x \in X'} | A(x) - B(x) | \\
+& \displaystyle \sum_{x \in X'} | A(x) - B(x) |
+\end{array}
+$$
+als
+$$
+|A| = \sum_{x \in X} A(x) = \sum_{x \in X \setminus X'} A(x) + \sum_{x \in X'} A(x) 
+= \sum_{x \in X \setminus X'} 0 + \sum_{x \in X'} A(x) = \sum_{x \in X'} A(x)
+$$
+Wanneer we $||A|| = \sum_{x \in X'} A(x)$ defini\"eren, dan geldt dus $|A| = ||A||$ en ook:
+$$
+\begin{array}{r@{\quad = \quad}l@{\qquad}l}
+| A \cap B | & \displaystyle \sum_{x \in X} \min \{A(x),B(x)\} & \\
+& \displaystyle \sum_{x \in X'} \min \{A(x),B(x)\} & (\min\{0,0\}=\min\{0\}=0) \\
+& ||A \cap B|| & \\[5pt]
+| A \cup B | & \displaystyle \sum_{x \in X} \max \{A(x),B(x)\} & \\
+& \displaystyle \sum_{x \in X'} \max \{A(x),B(x)\} & (\max\{0,0\}=\max\{0\}=0) \\
+& ||A \cup B|| & \\[5pt]
+| A \setminus B | & | A \cap B^c | & \\
+& \displaystyle \sum_{x \in X} \min \{A(x),1-B(x)\} & \\
+& \displaystyle \sum_{x \in X'} \min \{A(x),1-B(x)\} & (\min\{0,1-0\}=\min\{0,1\}=0) \\
+& || A \cap B^c || & \\
+& ||A \setminus B|| & \\[5pt]
+| A \triangle B | & | (A \setminus B) \cup (B \setminus A) | & \\
+& || (A \setminus B) \cup (B \setminus A) || & (\min\{0,1\}=0 \textrm{ en } \max\{0,0\}=1) \\
+& || A \triangle B || & \\
+\end{array}
+$$
+$$
+\begin{array}{r@{\quad = \quad}l@{\qquad}l}
+|(A \cap B) \cap (A^c \cap B^c)| & ||(A \cap B) \cap (A^c \cap B^c)|| & (\min\{0,1\}=0)\\[5pt]
+|(A \cup B) \cap (A^c \cup B^c)| & ||(A \cup B) \cap (A^c \cup B^c)|| & (\min\{0,1\}=0)
+\end{array}
+$$
+Met behulp van de eigenschap
+$$
+|A^c| = \sum_{x \in X} (1 - A(x)) = \sum_{x \in X} 1 - \sum_{x \in X} A(x) = |X| - |A|
+$$
+vinden we bovendien:
+$$
+\begin{array}{l@{\ =\ }l@{\ =\ }l@{\ =\ }l}
+|A^c \cap B^c| & |(A \cup B)^c| & |X| - |A \cup B| & |X| - ||A \cup B|| \\[5pt]
+|A^c \cup B^c| & |(A \cap B)^c| & |X| - |A \cap B| & |X| - ||A \cap B|| \\
+\end{array}
+$$
+$$
+\begin{array}{l@{\ =\ }l@{\ =\ }l}
+| (A \setminus B)^c | & |X| - |A \setminus B| & |X| - ||A \setminus B|| \\[5pt]
+| (A \triangle B)^c | & |X| - |A \triangle B| & |X| - ||A \triangle B|| \\
+\end{array}
+$$
+$$
+\begin{array}{l@{\ =\ }l@{\ =\ }l}
+|(A^c \cap B^c) \cup (A \cap B)| & |((A \cup B) \cap (A^c \cup B^c))^c| & |X| - ||(A \cup B) \cap (A^c \cup B^c)|| \\[5pt]
+|(A^c \cup B^c) \cup (A \cup B)| & |((A \cap B) \cap (A^c \cap B^c))^c| & |X| - ||(A \cap B) \cap (A^c \cap B^c)||
+\end{array}
+$$
+We kunnen tabel~\ref{tab:similatiteitsmaten} bijgevolg herschrijven tot tabel~\ref{tab:beperkte_similatiteitsmaten}.
+
+\begin{table}[tbp]
+\begin{center}
+\begin{tabular}{|l|}
+\hline
+\\[1pt]
+$
+\begin{array}{r@{\ }c@{\ }l}
+\displaystyle M_{1a}(A,B) & = & \displaystyle 1-\frac{1}{|X|}\sum_{x \in X'} | A(x) - B(x) | \\
+\displaystyle M_{1b}(A,B) & = & \displaystyle 1-\left(\frac{1}{|X|}\sum_{x \in X'} | A(x) - B(x) |^2\right)^\frac{1}{2} \\
+\displaystyle M_{1c}(A,B) & = & \displaystyle 1-\left(\frac{1}{|X|}\sum_{x \in X'} | A(x) - B(x) |^4\right)^\frac{1}{4} \\
+\end{array}
+\begin{array}{r@{\ }c@{\ }l}
+\displaystyle M_2(A,B) & = & \displaystyle 1 - \max_{x \in X'} | A(x) - B(x) | \\[10pt]
+\displaystyle M_3(A,B) & = & \displaystyle 1 - \frac{\displaystyle \sum_{x \in X'} | A(x) - B(x) |}{\displaystyle ||A|| + ||B||} \\
+\end{array}
+$
+\\
+\\[1pt]
+\hline
+\\[1pt]
+$
+\begin{array}{r@{\ }c@{\ }l}
+\displaystyle M_5(A,B) & = & \displaystyle \frac{\min \{||A||,||B||\}}{\max \{||A||,||B||\}} \\[10pt]
+\displaystyle M_{5c}(A,B) & = & \displaystyle \frac{|X|-\max \{||A||,||B||\}}{|X|-\min \{||A||,||B||\}} \\[10pt]
+\displaystyle M_6(A,B) & = & \displaystyle \frac{||A \cap B||}{||A \cup B||} \\[10pt]
+\displaystyle M_{6c}(A,B) & = & \displaystyle \frac{|X|-||A \cup B||}{|X|-||A \cap B||} \\[10pt]
+\displaystyle M_7(A,B) & = & \displaystyle \frac{||A \cap B||}{\max \{||A||,||B||\}} \\[10pt]
+\displaystyle M_{7c}(A,B) & = & \displaystyle \frac{|X|-||A \cup B||}{|X|-\min \{||A||,||B||\}} \\[10pt]
+\displaystyle M_8(A,B) & = & \displaystyle \frac{||A \cap B||}{\min \{||A||,||B||\}} \\[10pt]
+\displaystyle M_{8c}(A,B) & = & \displaystyle \frac{|X|-||A \cup B||}{|X|-\max \{||A||,||B||\}} \\[10pt]
+\end{array}
+\begin{array}{@{\qquad}r@{\ }c@{\ }l}
+\displaystyle M_9(A,B) & = & \displaystyle \frac{\min \{||A||,||B||\}}{||A \cup B||} \\[10pt]
+\displaystyle M_{9c}(A,B) & = & \displaystyle \frac{|X| - \max \{||A||,||B||\}}{|X| - ||A \cap B||} \\[10pt]
+\displaystyle M_{10}(A,B) & = & \displaystyle \frac{\max \{||A||,||B||\}}{||A \cup B||} \\[10pt]
+\displaystyle M_{10c}(A,B) & = & \displaystyle \frac{|X| - \min \{||A||,||B||\}}{|X| - ||A \cap B||} \\[10pt]
+\displaystyle M_{11}(A,B) & = & \displaystyle \frac{\min \{||A \setminus B||,||B \setminus A||\}}{\max \{||A \setminus B||,||B \setminus A||\}} \\[10pt]
+\displaystyle M_{11c}(A,B) & = & \displaystyle \frac{|X| - \max \{||A \setminus B||,||B \setminus A||\}}{|X| - \min \{||A \setminus B||,||B \setminus A||\}} \\[10pt]
+\displaystyle M_{12}(A,B) & = & \displaystyle \frac{|X| - ||A \triangle B||}{|X|-\min \{||A \setminus B||,||B \setminus A||\}} \\[10pt]
+\displaystyle M_{13}(A,B) & = & \displaystyle \frac{|X|-||A \triangle B||}{|X|-\max \{||A \setminus B||,||B \setminus A||\}}
+\end{array}
+$
+\\
+\\[1pt]
+\hline
+\\[1pt]
+$
+\begin{array}{r@{\ }c@{\ }l}
+\displaystyle M_{I_3}(A,B) & = & \displaystyle \frac{||(A \cap B) \cap (A^c \cap B^c)||}{||(A \cup B) \cap (A^c \cup B^c)||}
+\end{array}
+\begin{array}{@{\qquad}r@{\ }c@{\ }l}
+\displaystyle M_{I_{3c}}(A,B) & = & \displaystyle \frac{|X| - ||(A \cup B) \cap (A^c \cup B^c)||}{|X|-||(A \cap B) \cap (A^c \cap B^c)||}
+\end{array}
+$
+\\
+\\[1pt]
+\hline
+\end{tabular}
+\caption{\label{tab:beperkte_similatiteitsmaten}De vaagsimilariteitsmaten geschreven met sommaties waarvan het bereik beperkt is.}
+\end{center}
+\end{table}
+
+Beschouw bijvoorbeeld $M_{5c}$. We herschrijven de oorspronkelijke formule als volgt:
+$$
+\begin{array}{rclcl}
+\displaystyle M_{5c}(A,B) & = & \displaystyle \frac{\min \{|A^c|,|B^c|\}}{\max \{|A^c|,|B^c|\}} 
+& = & \displaystyle \frac{\min \{|X|-||A||,|X|-||B||\}}{\max \{|X|-||A||,|X|-||B||\}} \\[10pt]
+& & & = & \displaystyle \frac{|X| + \min \{-||A||,-||B||\}}{|X| + \max \{-||A||,-||B||\}} \\[10pt]
+& & & = & \displaystyle \frac{|X| - \max \{||A||,||B||\}}{|X| - \min \{||A||,||B||\}}
+\end{array}
+$$
+Bij de oude formule moeten er twee keer twee getallen met elkaar vergeleken worden en zijn er
+$4 \cdot (|X|-1)$ optellingen en \'e\'en deling nodig. De herschreven vorm vereist twee aftrekkingen, 
+twee vergelijkingen, $ 4 \cdot (|X'|-1)$ optellingen en \'e\'en deling. Vermits $|X'| << |X|$ impliceert 
+dat $4 \cdot (|X'|-1) + 5 << 4 \cdot (|X|-1) + 3$, zal de nieuwe formule dus inderdaad een stuk sneller kunnen 
+berekend worden dan de oude als $X'$ veel minder elementen bevat dan $X$. Bovendien is het verschil in 
+rekentijd verwaarloosbaar als $X'=X$. De nieuwe vorm is dus steeds minstens even snel als de oude.
