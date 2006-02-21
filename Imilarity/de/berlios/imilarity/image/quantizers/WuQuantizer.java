@@ -25,7 +25,7 @@ import de.berlios.imilarity.image.Image;
 import de.berlios.imilarity.image.ImageData;
 
 
-public class Wu implements Quantizer {
+public class WuQuantizer implements Quantizer {
 	private static final int MAXCOLOR = 256;
 	private static final int RED = 2;
 	private static final int GREEN = 1;
@@ -49,7 +49,7 @@ public class Wu implements Quantizer {
 	private int tag[][][];
 	
 	
-	public Wu(int nK) {
+	public WuQuantizer(int nK) {
 		K = nK;
 	}
 	
@@ -491,7 +491,7 @@ public class Wu implements Quantizer {
 			System.out.println("usage: java Wu <input image> <output image>");
 		try {
 			Image image = ImageData.loadFile(args[0]).getRgbImage();
-			Quantizer quantizer = new Wu(256);
+			Quantizer quantizer = new WuQuantizer(256);
 			BufferedImage outImage = new BufferedImage(image.getWidth(), image.getHeight(), 
 					BufferedImage.TYPE_INT_RGB);
 			long millis = System.currentTimeMillis();
