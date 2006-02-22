@@ -32,6 +32,9 @@ import de.berlios.imilarity.image.YxyImage;
 import de.berlios.imilarity.image.quantizers.Quantizer;
 import de.berlios.imilarity.image.quantizers.SctQuantizer;
 import de.berlios.imilarity.image.quantizers.UniformQuantizer;
+import de.berlios.imilarity.scales.DefaultScale;
+import de.berlios.imilarity.scales.Scale;
+import de.berlios.imilarity.scales.SpatialScale;
 import de.berlios.imilarity.smoothers.DefaultSmoother;
 import de.berlios.imilarity.smoothers.SctSmoother;
 import de.berlios.imilarity.smoothers.Smoother;
@@ -39,7 +42,8 @@ import de.berlios.imilarity.smoothers.Smoother;
 
 public class HistDraw {
 	
-	public static PseudoFuzzyHistogram calculateHistogram(Image image, Quantizer quantizer, Smoother smoother) {
+	public static PseudoFuzzyHistogram calculateHistogram(Image image, Quantizer quantizer, 
+			Smoother smoother, Scale scale) {
 		Map histogram = new HashMap();
 		int pc = image.getWidth() * image.getHeight();
 		
@@ -67,15 +71,21 @@ public class HistDraw {
 //		return new PseudoFuzzyHistogram(histogram,histLength,smoother);
 		
 		quantizer.quantize(image);
+		scale.setImage(image);
 		int histLength = quantizer.getBinsCount();
 		for (int i = 0; i < pc; i++) {
 			Integer index = new Integer(quantizer.getBin(i));
-			Integer oldValue = (Integer) histogram.get(index);
-			if (oldValue == null) oldValue = new Integer(0);
-			Integer newValue = new Integer(oldValue.intValue()+1);
+			Double oldValue = (Double) histogram.get(index);
+			if (oldValue == null) oldValue = new Double(0);
+			Double newValue = new Double(oldValue.doubleValue()+scale.getWeight(i));
 			histogram.put(index, newValue);
 		}
 		return new PseudoFuzzyHistogram(histogram, histLength, smoother);
+	}
+	
+	public static PseudoFuzzyHistogram calculateHistogram(Image image, Quantizer quantizer, 
+			Smoother smoother) {
+		return calculateHistogram(image, quantizer, smoother, new DefaultScale());
 	}
 	
 	private static final int HIST_HEIGHT = 200, SPACING = 4, BAR_HEIGHT = 10;
@@ -124,6 +134,11 @@ public class HistDraw {
 		
 		g.dispose();
 		return histImage;
+	}
+	
+	public static BufferedImage drawHistogram(Image image, Quantizer quantizer, ColorFactory cf, 
+			Smoother smoother, Scale scale) {
+		return drawHistogram(calculateHistogram(image, quantizer, smoother, scale), quantizer, cf);
 	}
 	
 	public static BufferedImage drawHistogram(Image image, Quantizer quantizer, ColorFactory cf, 
@@ -405,6 +420,26 @@ public class HistDraw {
 					), 
 				"png", new File(OUTPUT_DIR+"/smoothed_sct_"+name));
 		System.out.println("smoothed sct done.");
+		ImageIO.write(
+				drawHistogram(
+						nhi, 
+						sctQuant, 
+						new SctFactory(sctQuant),
+						new DefaultSmoother(),
+						new SpatialScale()
+					), 
+				"png", new File(OUTPUT_DIR+"/spatial_sct_"+name));
+		System.out.println("spatial sct done.");
+		ImageIO.write(
+				drawHistogram(
+						nhi, 
+						sctQuant, 
+						new SctFactory(sctQuant),
+						new SctSmoother(6, 250),
+						new SpatialScale()
+					), 
+				"png", new File(OUTPUT_DIR+"/smoothed_spatial_sct_"+name));
+		System.out.println("smoothed spatial sct done.");
 		
 		ImageIO.write(drawHistogram(new XyzImage(image), new int[] {8,4,8}, 
 				new ColorSpaceFactory(new Xyz())), 
@@ -448,7 +483,7 @@ public class HistDraw {
 	
 	public static void main(String[] args) throws IOException {
 		
-		String objname = "obj43";
+		String objname = "obj3";
 		drawHistograms("/home/klbostee/Thesis/Histograms/"+objname+"__0.png");
 		drawHistograms("/home/klbostee/Thesis/Histograms/"+objname+"__45.png");
 		drawHistograms("/home/klbostee/Thesis/Histograms/"+objname+"__90.png");
