@@ -3,6 +3,5 @@
 	<classpathentry kind="src" path=""/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Imilarity"/>
-	<classpathentry kind="lib" path="jai_linux-i586.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>
