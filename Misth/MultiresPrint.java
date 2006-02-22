@@ -189,8 +189,8 @@ public class MultiresPrint extends ImageMeasureBase {
 		MultiresPrint mp = new MultiresPrint(
 //		MultiresImageMeasure mp = new MultiresImageMeasure(		
 				new FuzzyImageMeasure(new M3()));
-		mp.setTarget(ImageData.loadFile("/home/klbostee/Images/coil5/obj3__0.png").getRgbImage());
-		mp.setQuery(ImageData.loadFile("/home/klbostee/Images/coil5/obj3__270.png").getRgbImage());
+		mp.setQuery(ImageData.loadFile("/home/klbostee/Workspace/Thesis/images/beeld_A.png").getRgbImage());
+		mp.setTarget(ImageData.loadFile("/home/klbostee/Workspace/Thesis/images/beeld_B.png").getRgbImage());
 		double sim = mp.getSimilarity();
 		System.out.println("Global sim: " + sim);
 	}
