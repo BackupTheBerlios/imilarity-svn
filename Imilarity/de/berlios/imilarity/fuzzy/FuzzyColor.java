@@ -32,7 +32,9 @@ public class FuzzyColor extends FuzzySetBase {
 			double v = (d/2.3) - 1;
 			//System.out.println("v = " +v);
 			//System.out.println("m = " + Math.exp(-(v*v/100000.0)));
-			return new SimpleMembership(Math.exp(-(v*v/50.0)));
+			double m = Math.exp(-(v*v/50.0));
+			if (m < 0.01) m = 0;
+			return new SimpleMembership(m);
 		}
 	}
 	

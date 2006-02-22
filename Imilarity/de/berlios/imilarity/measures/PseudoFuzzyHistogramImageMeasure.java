@@ -59,20 +59,9 @@ public class PseudoFuzzyHistogramImageMeasure extends ImageMeasureBase {
 	public void setQuery(Image query) {
 		super.setQuery(query);
 		queryPc = query.getWidth() * query.getHeight();
-	}
-	
-	public void setTarget(Image target) {
-		super.setTarget(target);
-		targetPc = target.getWidth() * target.getHeight();
-	}
-
-	
-	public double getSimilarity() {
-		queryHistogram.clear();
-		targetHistogram.clear();
-		
 		quantizer.quantize(getQuery());
 		queryHistLength = quantizer.getBinsCount();
+		queryHistogram.clear();
 		for (int i = 0; i < queryPc; i++) {
 			Integer index = new Integer(quantizer.getBin(i));
 			Integer oldValue = (Integer) queryHistogram.get(index);
@@ -80,9 +69,16 @@ public class PseudoFuzzyHistogramImageMeasure extends ImageMeasureBase {
 			Integer newValue = new Integer(oldValue.intValue()+1);
 			queryHistogram.put(index, newValue);
 		}
-		
+		fuzzyMeasure.setQuery
+			(new PseudoFuzzyHistogram(queryHistogram, queryHistLength, smoother));
+	}
+	
+	public void setTarget(Image target) {
+		super.setTarget(target);
+		targetPc = target.getWidth() * target.getHeight();
 		quantizer.quantize(getTarget());
 		targetHistLength = quantizer.getBinsCount();
+		targetHistogram.clear();
 		for (int i = 0; i < targetPc; i++) {
 			Integer index = new Integer(quantizer.getBin(i));
 			Integer oldValue = (Integer) targetHistogram.get(index);
@@ -90,11 +86,12 @@ public class PseudoFuzzyHistogramImageMeasure extends ImageMeasureBase {
 			Integer newValue = new Integer(oldValue.intValue()+1);
 			targetHistogram.put(index, newValue);
 		}
-		
-		fuzzyMeasure.setQuery
-			(new PseudoFuzzyHistogram(queryHistogram, queryHistLength, smoother));
 		fuzzyMeasure.setTarget
 			(new PseudoFuzzyHistogram(targetHistogram, targetHistLength, smoother));
+	}
+
+	
+	public double getSimilarity() {
 		return fuzzyMeasure.getSimilarity();
 	}
 

@@ -59,10 +59,10 @@ public abstract class FuzzySetBase implements FuzzySet {
 
 	public FuzzySet complement() {
 		int count = getElementsCount();
-		ArrayFuzzySet result = new ArrayFuzzySet();
+		ArrayFuzzySet result = new ArrayFuzzySet(count);
 		for (int i = 0; i < count; i++) {
 			Membership m = getMembership(i);
-			result.addMembership(new SimpleMembership(m.complement().getComponents()));
+			result.addMembership(i, new SimpleMembership(m.complement().getComponents()));
 		}
 		return result;
 	}

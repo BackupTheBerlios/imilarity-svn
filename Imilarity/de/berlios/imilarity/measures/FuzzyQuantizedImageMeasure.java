@@ -49,14 +49,15 @@ public class FuzzyQuantizedImageMeasure extends ImageMeasureBase {
 	
 	private FuzzySet calculateColors(Image image) {
 		quantizer.quantize(image);
-		ArrayFuzzySet colors = new ArrayFuzzySet();
+		int bc = quantizer.getBinsCount();
+		ArrayFuzzySet colors = new ArrayFuzzySet(bc);
 		//List colors = new ArrayList();
 		
 		final HashMap freqs = new HashMap();
-		for (int i = 0; i < quantizer.getBinsCount(); i++) {
+		for (int i = 0; i < bc; i++) {
 			double[] color = quantizer.getBinColor(i).getComponents();
 			Membership m = new EqMembership(color);
-			colors.addMembership(m);
+			colors.addMembership(i, m);
 			//colors.add(m);
 			freqs.put(m, new Frequency());
  		}

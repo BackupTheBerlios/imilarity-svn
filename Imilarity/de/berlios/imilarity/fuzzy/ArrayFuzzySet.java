@@ -1,102 +1,104 @@
 package de.berlios.imilarity.fuzzy;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
 
 public class ArrayFuzzySet extends FuzzySetBase {
 
-	private List memberships = new ArrayList();
-	private Integer elementsCount = null;
+	private Membership[] memberships;
+	private int elementsCount = 0;
 	private Membership defaultMembership = null;
 	
 	
-	public ArrayFuzzySet(int elementsCount, Membership defaultMembership) {
+	private ArrayFuzzySet(Membership[] memberships, int elementsCount, Membership defaultMembership) {
 		super();
-		this.elementsCount = new Integer(elementsCount);
+		this.memberships = memberships;
+		this.elementsCount = elementsCount;
 		this.defaultMembership = defaultMembership;
 	}
 	
-	public ArrayFuzzySet() {
-		super();
+	public ArrayFuzzySet(int elementsCount, Membership defaultMembership) {
+		this(new Membership[elementsCount], elementsCount, defaultMembership);
 	}
 	
-	public ArrayFuzzySet(Collection c) {
-		this();
-		memberships.addAll(c);
+	public ArrayFuzzySet(int elementsCount) {
+		this(elementsCount, new SimpleMembership(0));
 	}
+	
+	//public ArrayFuzzySet(Collection c) {
+	//	this();
+	//	memberships.addAll(c);
+	//}
 	
 	
 	public int getElementsCount() {
-		if (elementsCount != null)
-			return elementsCount.intValue();
-		else
-			return memberships.size();
+		return memberships.length;
 	}
 
 	public Membership getMembership(int element) {
-		Membership res = (Membership) memberships.get(element);
+		if (element < 0 || element >= elementsCount)
+			throw new IndexOutOfBoundsException();
+		Membership res = memberships[element];
 		if (res == null)
 			return defaultMembership;
 		return res;
 	}
 	
-	public void addMembership(Membership m) {
-		memberships.add(m);
-	}
+	//public void addMembership(Membership m) {
+	//	memberships.add(m);
+	//}
 	
 	public void addMembership(int element, Membership m) {
-		memberships.add(element, m);
+		memberships[element] = m;
 	}
 	
 	public Membership changeMembership(int element, Membership m) {
-		return (Membership) memberships.set(element, m);
+		Membership old = memberships[element];
+		memberships[element] = m;
+		return old;
 	}
 	
 	public void sort(Comparator comparator) {
-		Collections.sort(memberships, comparator);
+		Arrays.sort(memberships, comparator);
 	}
 
 	public ArrayFuzzySet head(int elementCount) {
-		return new ArrayFuzzySet(memberships.subList(0,elementCount));
+		return new ArrayFuzzySet(memberships, elementCount, defaultMembership);
 	}
 	
 	
-	public FuzzySet intersection(FuzzySet set) {
-		if (set.getElementsCount() != memberships.size())
-			throw new IllegalArgumentException("not the same elements count");
-		ArrayFuzzySet result = new ArrayFuzzySet();
-		Iterator it = memberships.iterator();
-		for (int i = 0; it.hasNext(); i++) {
-			Membership m = (Membership) it.next();
-			result.addMembership(new SimpleMembership(m.and(set.getMembership(i)).getComponents()));
-		}
-		return result;
-	}
-
-	public FuzzySet union(FuzzySet set) {
-		if (set.getElementsCount() != memberships.size())
-			throw new IllegalArgumentException("not the same elements count");
-		ArrayFuzzySet result = new ArrayFuzzySet();
-		Iterator it = memberships.iterator();
-		for (int i = 0; it.hasNext(); i++) {
-			Membership m = (Membership) it.next();
-			result.addMembership(new SimpleMembership(m.or(set.getMembership(i)).getComponents()));
-		}
-		return result;
-	}
-
-	public FuzzySet complement() {
-		ArrayFuzzySet result = new ArrayFuzzySet();
-		Iterator it = memberships.iterator();
-		for (int i = 0; it.hasNext(); i++) {
-			Membership m = (Membership) it.next();
-			result.addMembership(new SimpleMembership(m.complement().getComponents()));
-		}
-		return result;
-	}
+//	public FuzzySet intersection(FuzzySet set) {
+//		if (set.getElementsCount() != memberships.size())
+//			throw new IllegalArgumentException("not the same elements count");
+//		ArrayFuzzySet result = new ArrayFuzzySet();
+//		Iterator it = memberships.iterator();
+//		for (int i = 0; it.hasNext(); i++) {
+//			Membership m = (Membership) it.next();
+//			result.addMembership(new SimpleMembership(m.and(set.getMembership(i)).getComponents()));
+//		}
+//		return result;
+//	}
+//
+//	public FuzzySet union(FuzzySet set) {
+//		if (set.getElementsCount() != memberships.size())
+//			throw new IllegalArgumentException("not the same elements count");
+//		ArrayFuzzySet result = new ArrayFuzzySet();
+//		Iterator it = memberships.iterator();
+//		for (int i = 0; it.hasNext(); i++) {
+//			Membership m = (Membership) it.next();
+//			result.addMembership(new SimpleMembership(m.or(set.getMembership(i)).getComponents()));
+//		}
+//		return result;
+//	}
+//
+//	public FuzzySet complement() {
+//		ArrayFuzzySet result = new ArrayFuzzySet();
+//		Iterator it = memberships.iterator();
+//		for (int i = 0; it.hasNext(); i++) {
+//			Membership m = (Membership) it.next();
+//			result.addMembership(new SimpleMembership(m.complement().getComponents()));
+//		}
+//		return result;
+//	}
 
 }
