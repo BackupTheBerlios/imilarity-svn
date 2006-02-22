@@ -12,7 +12,7 @@ import de.berlios.imilarity.Imilarity;
 import de.berlios.imilarity.aggregators.*;
 import de.berlios.imilarity.image.ImageData;
 import de.berlios.imilarity.image.quantizers.NeuQuant;
-import de.berlios.imilarity.image.quantizers.Wu;
+import de.berlios.imilarity.image.quantizers.WuQuantizer;
 import de.berlios.imilarity.measures.*;
 import de.berlios.imilarity.providors.Providor;
 
@@ -245,7 +245,7 @@ public class EvalImilarity extends Imilarity implements Comparable {
 				new FuzzyImageMeasure(new M1a()),
 				new ComponentsImageMeasure(new FuzzyImageMeasure(new M1a())),
 				new FuzzyQuantizedImageMeasure(new M1a(), new NeuQuant(30,4)),
-				new FuzzyQuantizedImageMeasure(new M1a(), new Wu(8))
+				new FuzzyQuantizedImageMeasure(new M1a(), new WuQuantizer(8))
 		};
 		Aggregator[] aggregators = new Aggregator[] {
 				new ArithmeticMean()
