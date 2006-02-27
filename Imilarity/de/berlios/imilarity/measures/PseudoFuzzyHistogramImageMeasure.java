@@ -10,6 +10,8 @@ import de.berlios.imilarity.fuzzy.PseudoFuzzyHistogram;
 import de.berlios.imilarity.image.Image;
 import de.berlios.imilarity.image.quantizers.Quantizer;
 import de.berlios.imilarity.image.quantizers.UniformQuantizer;
+import de.berlios.imilarity.scales.DefaultScale;
+import de.berlios.imilarity.scales.Scale;
 import de.berlios.imilarity.smoothers.DefaultSmoother;
 import de.berlios.imilarity.smoothers.Smoother;
 
@@ -24,21 +26,30 @@ public class PseudoFuzzyHistogramImageMeasure extends ImageMeasureBase {
 	private HashMap queryHistogram, targetHistogram;
 	private int queryHistLength, targetHistLength;
 	private Smoother smoother;
+	private Scale scale;
 	
 	
 	public PseudoFuzzyHistogramImageMeasure(FuzzyMeasure fuzzyMeasure, Quantizer quantizer, 
-			Smoother smoother) {
+			Smoother smoother, Scale scale) {
 		if (fuzzyMeasure == null)
 			throw new NullPointerException("fuzzyMeasure == null");
+		this.fuzzyMeasure = fuzzyMeasure;
 		if (quantizer == null)
 			throw new NullPointerException("quantizer == null");
-		this.fuzzyMeasure = fuzzyMeasure;
-		queryHistogram = new HashMap();
-		targetHistogram = new HashMap();
 		this.quantizer = quantizer;
 		if (smoother == null)
 			throw new NullPointerException("smoother == null");
 		this.smoother = smoother;
+		if (scale == null)
+			throw new NullPointerException("scale == null");
+		this.scale = scale;
+		queryHistogram = new HashMap();
+		targetHistogram = new HashMap();
+	}
+	
+	public PseudoFuzzyHistogramImageMeasure(FuzzyMeasure fuzzyMeasure, Quantizer quantizer, 
+			Smoother smoother) {
+		this(fuzzyMeasure, quantizer, smoother, new DefaultScale());
 	}
 	
 	public PseudoFuzzyHistogramImageMeasure(FuzzyMeasure fuzzyMeasure, Quantizer quantizer) {
@@ -60,13 +71,14 @@ public class PseudoFuzzyHistogramImageMeasure extends ImageMeasureBase {
 		super.setQuery(query);
 		queryPc = query.getWidth() * query.getHeight();
 		quantizer.quantize(getQuery());
+		scale.setImage(query);
 		queryHistLength = quantizer.getBinsCount();
 		queryHistogram.clear();
 		for (int i = 0; i < queryPc; i++) {
 			Integer index = new Integer(quantizer.getBin(i));
-			Integer oldValue = (Integer) queryHistogram.get(index);
-			if (oldValue == null) oldValue = new Integer(0);
-			Integer newValue = new Integer(oldValue.intValue()+1);
+			Double oldValue = (Double) queryHistogram.get(index);
+			if (oldValue == null) oldValue = new Double(0);
+			Double newValue = new Double(oldValue.intValue()+scale.getWeight(i));
 			queryHistogram.put(index, newValue);
 		}
 		fuzzyMeasure.setQuery
@@ -77,13 +89,14 @@ public class PseudoFuzzyHistogramImageMeasure extends ImageMeasureBase {
 		super.setTarget(target);
 		targetPc = target.getWidth() * target.getHeight();
 		quantizer.quantize(getTarget());
+		scale.setImage(target);
 		targetHistLength = quantizer.getBinsCount();
 		targetHistogram.clear();
 		for (int i = 0; i < targetPc; i++) {
 			Integer index = new Integer(quantizer.getBin(i));
-			Integer oldValue = (Integer) targetHistogram.get(index);
-			if (oldValue == null) oldValue = new Integer(0);
-			Integer newValue = new Integer(oldValue.intValue()+1);
+			Double oldValue = (Double) targetHistogram.get(index);
+			if (oldValue == null) oldValue = new Double(0);
+			Double newValue = new Double(oldValue.intValue()+scale.getWeight(i));
 			targetHistogram.put(index, newValue);
 		}
 		fuzzyMeasure.setTarget
@@ -102,8 +115,10 @@ public class PseudoFuzzyHistogramImageMeasure extends ImageMeasureBase {
 		buf.append(quantizer.getDescription());
 		buf.append(" quantizer using ");
 		buf.append(fuzzyMeasure.getDescription());
-		buf.append(" and ");
+		buf.append(", ");
 		buf.append(smoother.getDescription());
+		buf.append(" and ");
+		buf.append(scale.getDescription());
 		return buf.toString();
 	}
 
