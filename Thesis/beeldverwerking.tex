@@ -27,29 +27,29 @@ kleurruimtes bestaan die gebaseerd zijn op RGB.
 Ook in het HSV kleurmodel \cite{tkalcic:colour_spaces} wordt elke kleur voorgesteld 
 door een drietal. Men noemt de componenten van zo'n drietal respectievelijk 
 ``hue'', ``saturation'' en ``value''. De eerste van die componenten 
-correspondeert met de kleurtint, terwijl de overige componenten de verzadiging 
+correspondeert met de kleurtint, terwijl de overige componenten de saturatie
 en de helderheid aangeven. Men kan een kleur $(r,g,b) \in [0,1]^3$ uit het RGB 
 model als volgt omzetten naar een kleur $(h,s,v) \in [0,1]^3$ in het HSV model: 
 $$
 \begin{array}{rcll}
 h' & = & 60 \cdot \frac{g - b}{\max \{r,g,b\} - \min \{r,g,b\}}\quad & \textrm{ 
-als } \max \{r,g,b\} = r \\[2pt] & = & 60 \cdot \frac{b - r}{\max \{r,g,b\} - 
-\min \{r,g,b\}} + 120\quad & \textrm{ als } \max \{r,g,b\} = g \\[2pt] & = & 60 
+als } \max \{r,g,b\} = r \\[4pt] & = & 60 \cdot \frac{b - r}{\max \{r,g,b\} - 
+\min \{r,g,b\}} + 120\quad & \textrm{ als } \max \{r,g,b\} = g \\[4pt] & = & 60 
 \cdot \frac{r - g}{\max \{r,g,b\} - \min \{r,g,b\}} + 240\quad & \textrm{ als } 
 \max \{r,g,b\} = b \\[6pt] h & = & \frac{h' \bmod 360}{360} & \textrm{ als } h' 
-\bmod 360 \geq 0 \\[2pt] & = & \frac{360 - (h' \bmod 360)}{360} & \textrm{ als 
+\bmod 360 \geq 0 \\[4pt] & = & \frac{360 - (h' \bmod 360)}{360} & \textrm{ als 
 } h' \bmod 360 < 0 \\[6pt] s & = & \frac{\max \{r,g,b\} - \min \{r,g,b\}}{\max 
 \{r,g,b\}} & \\[6pt] v & = & \max \{r,g,b\}
 \end{array}
 $$ Als $s=0$ dan is $h$ niet gedefinieerd. Dat is logisch vermits we dan te 
 maken hebben met een grijswaarde. Indien $v=0$ dan zijn $s$ en $h$ niet gedefinieerd. We 
 hebben het in dat geval dan ook over puur zwart, waarvoor er geen kleurtint of 
-verzadiging kan gespecificeerd worden. In de praktische implementatie geven we 
+saturatie kan gespecificeerd worden. In de praktische implementatie geven we 
 niet gedefinieerde componenten de waarde $0$.
 
-Een kleur in het Irb-model bestaat uit de volgende drie componenten 
+Een kleur in het Irb-model bestaat uit een intensiteit en een genormaliseerde $r$ en $b$ 
 \cite{ohta:color_info_for_region_segm}: $$ i = \frac{r+g+b}{3} \qquad r' = 
-\frac{r}{r+g+b} \qquad b' = \frac{b}{r+g+b} $$ Hierbij zijn $r,g,b \in [0,1]$ 
+\frac{r}{r+g+b} \qquad b' = \frac{b}{r+g+b} $$ met $r,g,b \in [0,1]$ 
 de co\"ordinaten van de beschouwde kleur in het RGB-model. 
 
 Het I1I2I3-model, dat werd voorgesteld door Ohta 
@@ -146,15 +146,15 @@ tweede functie kan men dan de kleur van die bin bepalen.
 \subsection{Uniforme kwantisatie}
 
 Bij \emph{uniforme kwantisatie} wordt elke kleurcomponent uniform verdeeld in een 
-aantal intervallen. Als we zorgen dat $C=[0,1]^m$, $m > 0$, dan kunnen we de 
+aantal intervallen. Als we zorgen dat $C=[0,1]^l$, $l > 0$, dan kunnen we de 
 volgende definitie voor $bin$ gebruiken: $$
 \begin{array}{lrcll}
-bin: & C & \to & \{1,2,...,N\}\\[5pt] & (c_1,c_2,\ldots,c_m) & \mapsto & \left[ 
-\sum_{i=1}^m \left( \prod_{j=1}^{i-1} N_j \right) \mathit{fl}(c_i, N_i) \right] 
-+ 1, & \forall (c_1,c_2,\ldots,c_m) \in C
+bin: & C & \to & \{1,2,...,N\}\\[5pt] & (c_1,c_2,\ldots,c_l) & \mapsto & \left[ 
+\displaystyle\sum_{i=1}^l \left( \prod_{j=1}^{i-1} N_j \right) \mathit{fl}(c_i, N_i) \right] 
++ 1, & \forall (c_1,c_2,\ldots,c_l) \in C
 \end{array}
 $$ met $N_j$ het aantal bins voor de $j$-de component, $N$ het totale aantal 
-bins ($N=N_1 \cdot N_2 \cdot \ldots \cdot N_m$) en $$
+bins ($N=N_1 \cdot N_2 \cdot \ldots \cdot N_l$) en $$
 \begin{array}{rcll}
 \mathit{fl}(x,n) & = & \lfloor x \cdot n \rfloor & \textrm{als } x < 1 \\ & = & 
 n - 1 & \textrm{als } x = 1
@@ -163,15 +163,17 @@ $$ voor alle $x \in [0,1]$ en $n \in \mathbb{N}$. De middelste waarden van de
 intervallen doen hierbij dienst als componenten van de kleur van een bin: $$
 \begin{array}{lrcll}
 kleur: & \{1,2,\ldots,N\} & \to & C \\ & n & \mapsto & (kleur_1(n), kleur_2(n), 
-\dots, kleur_m(n)), & \forall n \in \{1,2,\ldots,N\}
+\dots, kleur_l(n)), & \forall n \in \{1,2,\ldots,N\}
 \end{array}
 $$ waarbij $$ kleur_i(n) = \frac{n}{\prod_{j=1}^i N_j} + \frac{1}{2 \cdot N_i} 
-$$ voor alle $n \in \{1,2,\ldots,N\}$ en $i \in \{1,2,\ldots,m\}$.
+$$ voor alle $n \in \{1,2,\ldots,N\}$ en $i \in \{1,2,\ldots,l\}$.
 
 Bij image retrieval is doorgaans vooral de kleurtint op zich belangrijk. Door
 minder belang te hechten aan de luminantie kan de prestatie zelfs verbeteren,
 vermits de similariteitsmaten dan bijvoorbeeld minder afhankelijk zijn van
-belichtingsvariaties. Een mogelijke manier om uniform te kwantiseren is dus
+belichtingsvariaties. 
+
+Een mogelijke manier om uniform te kwantiseren is dus
 het HSV model gebruiken en meer belang hechten aan de eerste kleurcomponent. 
 Dat doen we door $N_1=16$, $N_2=4$ en $N_3=4$ te kiezen.
 %Bovendien is het discriminerend
@@ -212,8 +214,8 @@ gedeeltelijk op, want dan komen alle grijswaarden in dezelfde bin terecht. Dat k
 door bijvoorbeeld $(N_1,N_2,N_3)=(64,1,4)$ te kiezen, maar dan kunnen we maar 64 tinten meer onderscheiden.
 
 Met behulp van niet-uniforme kwantisatie komen we tot een betere oplossing. Als we het HSV-model van naderbij
-bekijken, dan merken we dat elke kleur getransformeerd kan worden in een grijstint door de verzadiging
-voldoende te verlagen. De waarde van de verzadiging waarbij die transformatie plaatsvindt, hangt af
+bekijken, dan merken we dat elke kleur getransformeerd kan worden in een grijstint door de saturatie
+voldoende te verlagen. De waarde van de saturatie waarbij die transformatie plaatsvindt, hangt af
 van de helderheid. We gaan daarom als volgt te werk. Als $s > 1 - 0.8 \cdot v$ dan benaderen we de kleur
 met de kleurtint en kwantiseren we uniform met $(N_1,N_2,N_3)=(240,1,1)$. In het andere geval hebben we
 te maken met een grijstint en kwantiseren we uniform met $(N_1,N_2,N_3)=(1,1,16)$. We combineren dus
@@ -234,25 +236,53 @@ gebruiken, in tegenstelling tot de technieken die we
 tot nu toe bekeken hebben, een variabel kleurenpalet. De eerste techniek is gebaseerd op
 Kohonen neurale netwerken, terwijl de tweede gebruik maakt van dynamisch programmeren
 en principal analysis. NeuQuant geeft doorgaans iets betere resultaten, maar Wu's techniek is
-sneller. Uit figuur~\ref{fig:nuequant_vs_wu} blijkt echter dat het verschil in rekentijd zich
+sneller. Uit figuur~\ref{fig:rekentijden_quant} blijkt echter dat het verschil in rekentijd zich
 enkel manifesteert als er naar een relatief groot aantal kleuren gekwantiseerd wordt. Voor een
 klein aantal kleuren is NeuQuant zelfs iets sneller.
 
 \begin{figure}[tbp]
 \begin{center}
 \subfigure[]{
-\includegraphics[width=0.4\textwidth]{plots/neuquant_vs_wu_small_filled.eps}
-\label{fig:neuquant_vs_wu_small}
+\begin{minipage}[t]{0.4\textwidth}
+\vspace{0pt}
+\centering
+\includegraphics[height=3.8cm]{plots/uniform_quant_small_filled.eps}
+\end{minipage}
+\begin{minipage}[t]{0.4\textwidth}
+\vspace{0pt}
+\centering
+\includegraphics[height=4.1cm]{plots/neuquant_vs_wu_small_filled.eps}
+\end{minipage}
+\label{fig:rekentijden_quant_small}
 }
 \subfigure[]{
-\includegraphics[width=0.4\textwidth]{plots/neuquant_vs_wu_big_filled.eps}
-\label{fig:neuquant_vs_wu_big}
+\begin{minipage}[t]{0.4\textwidth}
+\vspace{0pt}
+\centering
+\includegraphics[height=3.8cm]{plots/uniform_quant_big_filled.eps}
+\end{minipage}
+\begin{minipage}[t]{0.4\textwidth}
+\vspace{0pt}
+\centering
+\includegraphics[height=4.1cm]{plots/neuquant_vs_wu_big_filled.eps}
+\end{minipage}
+\label{fig:rekentijden_quant_big}
 }
-\caption{\label{fig:nuequant_vs_wu}Vergelijking van de rekentijden bij NeuQuant en Wu kwantisatie van (a) een klein en (b) een groot beeld.}
+\caption{\label{fig:rekentijden_quant}Vergelijking van de rekentijden bij kwantisatie van (a) een klein en (b) een groot beeld.}
 \end{center}
 \end{figure}
 
 \subsection{Enkele voorbeelden}
+
+We illustreren de bovenstaande technieken door ze toe te passen op de beelden uit 
+figuur~\ref{fig:kwantistatie_originelen}. De eerste twee van die beelden hebben we geconstueerd
+door in het HSV-model twee componenten te laten vari\"eren en \'e\'en component constant te houden.
+Bij figuur~\ref{fig:hsv_constant_s} is de saturatie steeds gelijk aan $1$ en hebben we de kleurtint 
+horizontaal en de helderheid vertikaal laten vari\"eren. Figuur~\ref{fig:hsv_constant_v} werd 
+op een analoge manier geconstrueerd, maar in dit geval is de helderheid constant.
+De beelden die we bekomen door toepassing van de zes manieren om uniform te kwantiseren,
+worden weergegeven in figuur~\ref{fig:kwantistatie_uniform}. Figuur~\ref{fig:kwantistatie_niet-uniform}
+toont de resultaten van de vier niet-uniforme kwantistatietechnieken.
 
 \begin{figure}[tbp]
 \begin{center}
@@ -276,23 +306,18 @@ klein aantal kleuren is NeuQuant zelfs iets sneller.
 \end{center}
 \end{figure}
 
-We illustreren de bovenstaande technieken door ze toe te passen op de beelden uit 
-figuur~\ref{fig:kwantistatie_originelen}. De eerste twee van die beelden hebben we geconstueerd
-door in het HSV-model twee componenten te laten vari\"eren en \'e\'en component constant te houden.
-Bij figuur~\ref{fig:hsv_constant_s} is de verzadiging steeds gelijk aan $1$ en hebben we de kleurtint 
-horizontaal en de helderheid vertikaal laten vari\"eren. Figuur~\ref{fig:hsv_constant_v} werd 
-op een analoge manier geconstrueerd, maar in dit geval is de helderheid constant.
-De beelden die we bekomen door toepassing van de zes manieren om uniform te kwantiseren,
-worden weergegeven in figuur~\ref{fig:kwantistatie_uniform}. Figuur~\ref{fig:kwantistatie_niet-uniform}
-toont de resultaten van de vier niet-uniforme kwantistatietechnieken.
-
 De technieken met een variabel kleurenpalet doen het duidelijk beter dan diegene met een vast palet. 
 Anderzijds zijn de technieken met een vast kleurenpalet wel een stuk sneller. Bovendien is het soms niet
 gewenst dat voor alle beelden een andere verzameling van kleuren gebruikt wordt. In deze scriptie gebruiken
 we kwantisatie trouwens louter om meer performante similariteitsmaten te constueren. De visuele kwaliteit
 van de gekwantiseerde beelden is daarbij minder belangrijk. Similariteitsmaten op basis van kwantisatietechnieken 
-waarbij de gekwantiseerde beelden een lagere kwaliteit hebben, kunnen in bepaalde gevallen immers beter 
-presteren dan maten die gebaseerd zijn op ``betere'' kwantisatietechnieken.
+waarbij de gekwantiseerde beelden een lagere kwaliteit hebben, presteren immers niet noodzakelijk
+slechter dan maten die gebaseerd zijn op ``betere'' kwantisatietechnieken. Zo zouden we bijvoorbeeld 
+betere kwantisatie kunnen bekomen door extra luminantiedata te behouden, maar daardoor zullen
+de similariteitsmaten doorgaans minder goed werken vermits ze dan gevoeliger worden voor 
+belichtingsvariaties.
+%kunnen in bepaalde gevallen immers beter 
+%presteren dan maten die gebaseerd zijn op ``betere'' kwantisatietechnieken.
 
 \begin{figure}[tbp]
 \begin{center}
@@ -384,10 +409,10 @@ van naburige beeldpunten. In het geval van een \emph{lineair filter} is die nieu
 van de oude waarden. Het beeld $b'$ dat we bekomen door $b$ lineair te filteren, wordt gegeven door
 de volgende correlatie \cite{philips:beeldverwerking}:
 $$
-b'(x,y) = \sum_{(x',y') \in \Omega_m} b(x+x',y+y')m(x',y')
+b'(x,y) = \sum_{(k,l) \in \Omega_m} b(x+k,y+l)m(k,l)
 $$
-met $m$ een re\"eelwaardige functie en $\Omega_m = \{ (x,y) \mid m(x,y) \ne 0 \}$. De functie $m$ wordt
-het \emph{filtermasker} genoemd.
+met $m$ een $\mathbb{N}^2 - \mathbb{R}$ afbeelding en $\Omega_m = \{ (k,l) \in \mathbb{N}^2 \mid m(k,l) \ne 0 \}$. 
+De functie $m$ wordt het \emph{filtermasker} genoemd.
 
 Het \emph{3x3 binomiaalfilter} is een voorbeeld van een lineair filter. Voor het filtermasker 
 $m_{bin}$ van dat filter geldt $m_{bin}(-1,-1)=m_{bin}(-1,1)=m_{bin}(1,-1)=m_{bin}(1,1)=1/16$, 
@@ -422,7 +447,7 @@ sterk varieert als functie van $x$ en/of $y$. Op die plaatsen zullen de partieel
 $D_2 l(x,y)$ dus groot zijn. Bijgevolg zal de \emph{gradi\"ent} $\nabla l$ daar ook groot zijn. We kunnen 
 dus de volgende formule gebruiken om randen te detecteren in $b$: 
 $$
-|\nabla l(x,y)| = \sqrt{(D_1 l(x,y))^2 + (D_2 l(x,y))^2}
+|\nabla l(x,y)| / \sqrt{2} = \sqrt{(D_1 l(x,y))^2 + (D_2 l(x,y))^2} / \sqrt{2}
 $$ 
 met $l$ de $\mathbb{N}^2 - [0,1]$ functie die met elk beeldpunt $(x,y)$ de juiste luminantiecomponent associeert.
 
