@@ -1,9 +1,10 @@
 \chapter{Kleurgebaseerde similariteitsmaten}
 
 In dit hoofdstuk construeren we enkele similariteitsmaten die beelden 
-vergelijken op basis van de kleuren die er in voorkomen. Vermits kleur \'e\'en 
+vergelijken op basis van de kleuren die er in voorkomen. Het universum wordt
+in dit geval dus gevormd door de kleuren in plaats van de beeldpunten. Vermits kleur \'e\'en 
 van de meest gebruikte kenmerken is bij CBIR \cite{rui:image_retr}, mogen we 
-verwachten dat deze \emph{kleurgebaseerde} aanpak effici\"ente 
+verwachten dat die \emph{kleurgebaseerde} aanpak effici\"ente 
 similariteitsmaten zal opleveren. 
 
 Een histogram van een kleurbeeld is een voorstelling van de frequentieverdeling 
@@ -31,19 +32,19 @@ andere kleuren hebben kleinere lidmaatschapsgraden.
 %kleuren kan voorstellen. Een genormaliseerd histogram bestaat dan dus uit 16 miljoen waarden.
 %Similariteitsmaten op basis van dergelijke histogrammen zouden dus veel te veel rekentijd vragen.
 
-%Om de rekentijd echter te beperken, maken we gebruik van kleurkwantisatie. 
-%De karakteristieke afbeelding van de vaagverzameling $\mathit{BPFh}_A$, die
-%correspondeert met het in $N$ bins onderverdeelde histogram van beeld $A$, wordt dan als volgt
-%gedefinieerd:  
-%$$
-%\begin{array}{lrcl}
-%\mathit{BPFh}_A: 	& \{1,2,\ldots,N\} 	& \to 		& [0,1] \\[5pt]
-%		& n						& \mapsto	& \displaystyle\sum_{c \in C} \delta (n -  bin(c)),
-%\quad\forall n \in \{1,2,\ldots,N\}
-%\end{array}
-%$$
-%Hierbij is $bin$ de $C - \{1,2,\ldots,N\}$ afbeelding uit \ref{sectie:kleurkwantisatie}, die met 
-%elke kleur het nummer van de corresponderende bin associeert. 
+Om de rekentijd te beperken, maken we gebruik van kleurkwantisatie. 
+De karakteristieke afbeelding van de vaagverzameling $\mathit{BPFh}_A$, die
+correspondeert met het in $N$ bins onderverdeelde histogram van beeld $A$, wordt dan als volgt
+gedefinieerd:  
+$$
+\begin{array}{lrcl}
+\mathit{BPFh}_A: 	& \{1,2,\ldots,N\} 	& \to 		& [0,1] \\[5pt]
+		& n						& \mapsto	& \displaystyle\sum_{c \in C} \delta (n -  bin(c)),
+\quad\forall n \in \{1,2,\ldots,N\}
+\end{array}
+$$
+Hierbij is $bin$ de $C - \{1,2,\ldots,N\}$ afbeelding uit \ref{sectie:kleurkwantisatie}, die met 
+elke kleur het nummer van de corresponderende bin associeert. 
 
 
 \section{Vaaghistogrammen}

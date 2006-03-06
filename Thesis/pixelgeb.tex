@@ -2,8 +2,9 @@
 
 De similariteitsmaten die we in dit hoofdstuk beschouwen,
 meten de gelijkenis tussen twee beelden door hun beeldpunten met elkaar te vergelijken.
-Deze beeldpunten worden ook \emph{picture elements} of kortweg \emph{pixels} genoemd. Vandaar
-dat we zeggen dat deze maten \emph{pixelgebaseerd} zijn.
+We identificeren de beelden dus met vaagverzamelingen in een universum dat bestaat uit beeldpunten.
+Die beeldpunten worden ook \emph{picture elements} of kortweg \emph{pixels} genoemd. Vandaar
+dat we spreken van \emph{pixelgebaseerde} maten.
 
 \section{Grijswaardebeelden}
 
@@ -82,6 +83,7 @@ $\mathbb{R}^m$, waarbij $L=[0,1]^3$. Net zoals bij grijswaardebeelden, is
 het universum in de praktijk echter eerder een deelverzameling van $\mathbb{N}^2$.
 
 \subsection{Similariteitsmaten}
+\label{sectie:kleurbeelden_similariteitsmaten}
 
 De meest eenvoudige manier om twee kleurbeelden met elkaar te vergelijken, is de beelden eerst omzetten naar 
 grijswaardebeelden en er vervolgens een similariteitsmaat voor grijswaardebeelden op toepassen. Die omzetting 
@@ -127,12 +129,42 @@ definities voor $\max$ en $\min$ uit \ref{sectie:kleurbeeld_repr} gebruiken.
 Het aantal pixels in een beeld wordt de \emph{resolutie} van dat beeld genoemd.
 Een belangrijke beperking van de bovenstaande pixelgebaseerde similariteitsmaten is dat
 ze enkel kunnen toegepast worden op beelden die dezelfde resolutie hebben.
-We kunnen dit oplossen door ofwel intermediaire beelden ofwel omgevingen te gebruiken.
+We kunnen dit oplossen door ofwel intermediaire beelden ofwel beeldonderdelen te gebruiken.
 
 \subsection{Intermediaire beelden}
 
+\begin{figure}[tbp]
+\begin{center}
+\subfigure[]{
+\includegraphics[height=3cm]{images/rescale.eps}
+\label{fig:rescale}
+}
+$\qquad$
+\subfigure[]{
+\includegraphics[height=3cm]{images/dominant_colors.eps}
+\label{fig:dominant_colors}
+}
+\caption{\label{fig:intermediaire_beelden}Constructie van een resolutie-onafhankelijke similariteitsmaat door gebruik van intermediaire beelden.}
+\end{center}
+\end{figure}
 
-\subsection{Omgevingen}
+De meest voor de hand liggende manier om het probleem met betrekking tot de resolutie van de beelden
+te verhelpen, is (\'e\'en van) beide beelden te herschalen. Op die manier kunnen we er immers gemakkelijk 
+voor zorgen dat we twee beelden met dezelfde resolutie bekomen. Een nadeel hierbij is echter dat de
+herschaling sterk vervormde intermediaire beelden kan opleveren. Figuur~\ref{fig:rescale} illustreert
+het gebruike van herschaling. Het berekenen van de similariteit tussen twee beelden stellen we grafisch
+voor door de beelden met elkaar te verbinden. 
+
+We kunnen ook volledig nieuwe intermediaire beelden construeren. Een mogelijkheid is bijvoorbeeld om
+eerst kleurkwantisatie met een variabel kleurenpalet toe te passen en vervolgens een
+nieuw beeld te construeren op basis van de kleuren van het bekomen palet. Die mogelijkheid wordt getoond
+in figuur~\ref{fig:dominant_colors}.  We construeren de beelpunten 
+van het nieuwe beeld van links naar rechts en van boven naar onder. Daarbij is de kleur van een beeldpunt 
+telkens de nog niet gebruikte kleur die het meest voorkomt in het gekwantiseerde beeld. Voor een 
+intermediair beeld van $M$ bij $N$ pixels krijgt het beeldpunt $(0,0)$ dus de kleur die het meest
+voorkomt in het gekwantiseerde beeld, terwijl we voor positie $(M,N)$ de minst voorkomende kleur gebruiken.
+
+\subsection{Beeldonderdelen}
 
 Een andere manier om resolutie-onafhankelijkheid te bekomen is door similariteitsmaten te construeren 
 op een manier die ge\"inspireerd is op de constructie van de zogenaamde omgeving-gebaseerde 
@@ -215,7 +247,7 @@ die waarden.
 \begin{figure}[tbp]
 \begin{center}
 \includegraphics[width=10cm]{images/multires.eps}
-\caption{\label{fig:multires}Constructie van een resolutie-onafhankelijke similariteitsmaat op basis van een pixelgebaseerde maat.}
+\caption{\label{fig:multires}Constructie van een resolutie-onafhankelijke similariteitsmaat door gebruik van beeldonderdelen.}
 \end{center}
 \end{figure}
 
@@ -276,24 +308,62 @@ figuur~\ref{fig:multires} weergegeven met stippellijnen.
 
 \section{Experimentele observaties}
 
-\begin{figure}[tbp]
-\begin{center}
-\includegraphics[width=\textwidth]{plots/pixelgeb_gggrs_en_cputimes_filled.eps}
-\caption{\label{fig:pixelgeb_gggrs_en_cputimes}De GGGR-waarde en de gebruikte rekentijd in ms voor elk van de resolutie-onafhankelijke pixelgebaseerde similariteitsmaten.}
-\end{center}
-\end{figure}
-
-In figuur~\ref{fig:pixelgeb_gggrs_en_cputimes} vergelijken we enkele pixelgebaseerde similariteitsmaten.
+%In figuur~\ref{fig:pixelgeb_gggrs_en_cputimes} 
+Tot slot van dit hoofdstuk vergelijken we enkele pixelgebaseerde similariteitsmaten.
 Hoewel de beelden in onze testcollectie allemaal dezelfde resolutie hebben, zullen de
 resoluties van de beelden die we in de praktijk gaan vergelijken vrijwel altijd verschillend zijn.
 We beperken ons daarom tot resolutie-onafhankelijke similariteitsmaten. Die maten construeren
-we op basis van een pixelgebaseerde maat, zoals besproken in \ref{sectie:res-onafh}. De 
-beeldonderdelen die we gebruiken bestaan uit $8 \cdot 8 = 64$ pixels.
-Voor het toepassen van de vaagsimilariteitsmaten op een 
-dergelijk onderdeel van een kleurbeeld, beschouwen we de drie bovenstaande manieren:
-eerst omzetten naar een grijswaardebeeld, 
+we op basis van een pixelgebaseerde maat, zoals besproken in \ref{sectie:res-onafh}. 
+Voor het toepassen van de vaagsimilariteitsmaten op
+intermediaire beelden of op beeldonderdelen, beschouwen we de drie manieren uit \ref{sectie:kleurbeelden_similariteitsmaten}:
+eerst omzetten naar grijswaardebeelden, 
 toepassen op de afzonderlijke kleurcomponenten en 
 de tralie-gebaseerde aanpak.
+
+Figuur~\ref{fig:scaling_gggrs_en_cputimes} toont de GGGRs en de rekentijden voor de 
+similariteitsmaten op basis van herschaling. De beste GGGR-waarde bekomen we in combinatie
+met $M_7$. In figuur~\ref{fig:results_beste_scaling} worden de resultaten van die maat
+weergegeven. Die resultaten zijn vrij goed, maar dat is slechts een vertekend beeld van de
+werkelijkheid. De beelden in onze testcollectie hebben immers allemaal dezelfde resolutie,
+waardoor er nooit herschaling nodig is. Als er wel herschaald moet worden, dan kunnen
+eventuele vervormingen zorgen voor slechtere performantie. 
+
+Een opvallende vastelling is dat de component-gebaseerde aanpak blijkbaar betere resultaten 
+geeft dan de tralie-gebaseerde. Verkeerdelijk hoge similariteiten tussen sterk verschillende 
+beelden zijn de oorzaak daarvan. Bij het vergelijken
+van beelden die niet sterk verschillen kunnen dergelijke \emph{valse positieven} niet optreden.
+Vandaar dat de tralie-gebaseerde aanpak wel goed kan presteren bij de constructie van
+kwaliteitsmaten voor beelden \cite{debaets:similariteitsmaten_voor_kleurbeelden}.
+Beschouw bijvoorbeeld twee beelden $A$ en $B$ die elk uit \'e\'en enkele pixel bestaan. De pixel 
+van $A$ is rood en die van $B$ is groen, met andere woorden: $A((0,0))=(1,0,0)$ en 
+$B((0,0))=(0,1,0)$. Er geldt dan: 
+$$
+|A_1|=1 \quad |A_2|=0 \quad |A_3|=0 \qquad |B_1|=0 \quad |B_2|=1 \quad |B_3|=0 \qquad |A|=|B|=\frac{\sqrt{1}}{\sqrt{3}}
+$$
+met $A(x)=(A_1(x),A_2(x),A_3(x))$ en $B(x)=(B_1(x),B_2(x),B_3(x))$ voor alle $x \in X$. Als we
+$\frac{0}{0} = 0$ veronderstellen, dan geeft de component-gebaseerde aanpak dus
+$$
+\begin{array}{r@{\ =\ }l}
+\displaystyle\frac{M_5(A_1,B_1)+M_5(A_2,B_2)+M_5(A_3,B_3)}{3} &
+\displaystyle\frac{\frac{\min\{|A_1|,|B_1|\}}{\max\{|A_1|,|B_1|\}}+\frac{\min\{|A_2|,|B_2|\}}{\max\{|A_2|,|B_2|\}}+\frac{\min\{|A_3|,|B_3|\}}{\max\{|A_3|,|B_3|\}}}{3} \\[5pt]
+ & \displaystyle\frac{\frac{0}{1}+\frac{0}{1}+0}{3} = 0
+\end{array}
+$$
+terwijl we via de tralie-gebaseerde aanpak
+$$
+M_5(A,B) = \frac{\min\{|A|,|B|\}}{\max\{|A|,|B|\}} = \frac{\frac{\sqrt{1}}{\sqrt{3}}}{\frac{\sqrt{1}}{\sqrt{3}}} = 1
+$$
+bekomen. Voor de andere vaagsimilariteitsmaten die gebaseerd zijn op cardinaliteit, kunnen
+analoge redeneringen gemaakt worden. De op afstand gebaseerde vaagsimilariteitsmaten ondervinden
+minder hinder van dit probleem. Vandaar dat de tralie-gebaseerde aanpak in combinatie met
+$M_{1a}$, $M_{1b}$, $M_{1c}$ of $M_{3}$ relatief gezien iets beter werkt. 
+
+Als we de similariteiten berekenen op nieuwe intermediaire beelden van 8 pixels, die 
+geconstrueerd worden met behulp van NeuQuant en Wu kwantisatie, dan bekomen we de
+de meetresultaten die in figuur~\ref{fig:dom_colors_gggrs_en_cputimes} worden weergegeven.
+
+%We gebruiken zowel NeuQuant als de Wu quantizer. De beeldonderdelen die we gebruiken bestaan 
+%uit $8 \cdot 8 = 64$ pixels.
 
 De component-gebaseerde aanpak in 
 combinatie met $M_{I3c}$ geeft de GGGR-waarde $0.0240259$. Bij de tralie-gebaseerde aanpak
@@ -302,6 +372,329 @@ maten worden respectievelijk weergegeven in figuur~\ref{fig:results_beste_compon
 figuur~\ref{fig:results_beste_tralie_pixelgeb}.
 In die figuren zien we duidelijk dat de resultaten niet zo overtuigend zijn. Blijkbaar 
 is de pixelgebaseerde benadering niet de meest geschikte voor image retrieval. 
+
+Op het vlak van rekentijd zijn de similariteitsmaten op basis van de eerste en de laatste manier
+aan elkaar gewaagd. Bij het toepassen van een similariteitsmaat voor grijswaardebeelden op de 
+afzonderlijke kleurcomponenten, hebben we echter aanzienlijk meer rekentijd nodig. Dat is niet
+verwonderlijk, aangezien er dan ook driemaal zoveel werk moet verricht worden.
+
+\begin{figure}[tbp]
+\begin{center}
+\includegraphics[width=\textwidth]{plots/scaling_gggrs_en_cputimes_filled.eps}
+\caption{\label{fig:scaling_gggrs_en_cputimes}De GGGR-waarde en de gebruikte rekentijd in ms voor elk van de resolutie-onafhankelijke pixelgebaseerde similariteitsmaten op basis van herschaalde beelden.}
+\end{center}
+\end{figure}
+
+\begin{figure}[tbp]
+\begin{center}
+\begin{tabular}{m{11cm} | m{3cm} |}
+\textbf{Eerste tien resultaten:} & \textbf{GGR:} \\
+\vspace{4pt}
+\includegraphics[width=1cm]{coil/beeld-0.eps}
+\includegraphics[width=1cm]{coil/beeld-1.eps}
+\includegraphics[width=1cm]{coil/beeld-3.eps}
+\includegraphics[width=1cm]{coil/beeld-4.eps}
+\includegraphics[width=1cm]{coil/beeld-2.eps}
+\includegraphics[width=1cm]{coil/beeld-5.eps}
+\includegraphics[width=1cm]{coil/beeld-46.eps}
+\includegraphics[width=1cm]{coil/beeld-42.eps}
+\includegraphics[width=1cm]{coil/beeld-44.eps}
+\includegraphics[width=1cm]{coil/beeld-47.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-18.eps}
+\includegraphics[width=1cm]{coil/beeld-19.eps}
+\includegraphics[width=1cm]{coil/beeld-22.eps}
+\includegraphics[width=1cm]{coil/beeld-21.eps}
+\includegraphics[width=1cm]{coil/beeld-20.eps}
+\includegraphics[width=1cm]{coil/beeld-23.eps}
+\includegraphics[width=1cm]{coil/beeld-32.eps}
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+\includegraphics[width=1cm]{coil/beeld-33.eps}
+\includegraphics[width=1cm]{coil/beeld-63.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-24.eps}
+\includegraphics[width=1cm]{coil/beeld-25.eps}
+\includegraphics[width=1cm]{coil/beeld-28.eps}
+\includegraphics[width=1cm]{coil/beeld-27.eps}
+\includegraphics[width=1cm]{coil/beeld-26.eps}
+\includegraphics[width=1cm]{coil/beeld-29.eps}
+\includegraphics[width=1cm]{coil/beeld-37.eps}
+\includegraphics[width=1cm]{coil/beeld-41.eps}
+\includegraphics[width=1cm]{coil/beeld-40.eps}
+\includegraphics[width=1cm]{coil/beeld-38.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+\includegraphics[width=1cm]{coil/beeld-34.eps}
+\includegraphics[width=1cm]{coil/beeld-32.eps}
+\includegraphics[width=1cm]{coil/beeld-33.eps}
+\includegraphics[width=1cm]{coil/beeld-35.eps}
+\includegraphics[width=1cm]{coil/beeld-31.eps}
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-63.eps}
+\includegraphics[width=1cm]{coil/beeld-61.eps}
+\includegraphics[width=1cm]{coil/beeld-62.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-48.eps}
+\includegraphics[width=1cm]{coil/beeld-50.eps}
+\includegraphics[width=1cm]{coil/beeld-51.eps}
+\includegraphics[width=1cm]{coil/beeld-52.eps}
+\includegraphics[width=1cm]{coil/beeld-53.eps}
+\includegraphics[width=1cm]{coil/beeld-49.eps}
+\includegraphics[width=1cm]{coil/beeld-29.eps}
+\includegraphics[width=1cm]{coil/beeld-26.eps}
+\includegraphics[width=1cm]{coil/beeld-27.eps}
+\includegraphics[width=1cm]{coil/beeld-28.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-54.eps}
+\includegraphics[width=1cm]{coil/beeld-55.eps}
+\includegraphics[width=1cm]{coil/beeld-57.eps}
+\includegraphics[width=1cm]{coil/beeld-58.eps}
+\includegraphics[width=1cm]{coil/beeld-56.eps}
+\includegraphics[width=1cm]{coil/beeld-59.eps}
+\includegraphics[width=1cm]{coil/beeld-35.eps}
+\includegraphics[width=1cm]{coil/beeld-34.eps}
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+\includegraphics[width=1cm]{coil/beeld-33.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-6.eps}
+\includegraphics[width=1cm]{coil/beeld-9.eps}
+\includegraphics[width=1cm]{coil/beeld-8.eps}
+\includegraphics[width=1cm]{coil/beeld-10.eps}
+\includegraphics[width=1cm]{coil/beeld-11.eps}
+\includegraphics[width=1cm]{coil/beeld-2.eps}
+\includegraphics[width=1cm]{coil/beeld-36.eps}
+\includegraphics[width=1cm]{coil/beeld-5.eps}
+\includegraphics[width=1cm]{coil/beeld-7.eps}
+\includegraphics[width=1cm]{coil/beeld-47.eps}
+& {\scriptsize 0.007142857142857143}
+\\
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-63.eps}
+\includegraphics[width=1cm]{coil/beeld-61.eps}
+\includegraphics[width=1cm]{coil/beeld-62.eps}
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+\includegraphics[width=1cm]{coil/beeld-64.eps}
+\includegraphics[width=1cm]{coil/beeld-32.eps}
+\includegraphics[width=1cm]{coil/beeld-65.eps}
+\includegraphics[width=1cm]{coil/beeld-33.eps}
+\includegraphics[width=1cm]{coil/beeld-31.eps}
+& {\scriptsize 0.007142857142857143}
+\\
+\includegraphics[width=1cm]{coil/beeld-36.eps}
+\includegraphics[width=1cm]{coil/beeld-40.eps}
+\includegraphics[width=1cm]{coil/beeld-39.eps}
+\includegraphics[width=1cm]{coil/beeld-38.eps}
+\includegraphics[width=1cm]{coil/beeld-10.eps}
+\includegraphics[width=1cm]{coil/beeld-41.eps}
+\includegraphics[width=1cm]{coil/beeld-3.eps}
+\includegraphics[width=1cm]{coil/beeld-11.eps}
+\includegraphics[width=1cm]{coil/beeld-6.eps}
+\includegraphics[width=1cm]{coil/beeld-24.eps}
+& {\scriptsize 0.016666666666666666}
+\\
+\includegraphics[width=1cm]{coil/beeld-42.eps}
+\includegraphics[width=1cm]{coil/beeld-43.eps}
+\includegraphics[width=1cm]{coil/beeld-46.eps}
+\includegraphics[width=1cm]{coil/beeld-0.eps}
+\includegraphics[width=1cm]{coil/beeld-45.eps}
+\includegraphics[width=1cm]{coil/beeld-3.eps}
+\includegraphics[width=1cm]{coil/beeld-1.eps}
+\includegraphics[width=1cm]{coil/beeld-4.eps}
+\includegraphics[width=1cm]{coil/beeld-2.eps}
+\includegraphics[width=1cm]{coil/beeld-10.eps}
+& {\scriptsize 0.0380952380952381}
+\\
+\includegraphics[width=1cm]{coil/beeld-12.eps}
+\includegraphics[width=1cm]{coil/beeld-13.eps}
+\includegraphics[width=1cm]{coil/beeld-16.eps}
+\includegraphics[width=1cm]{coil/beeld-15.eps}
+\includegraphics[width=1cm]{coil/beeld-21.eps}
+\includegraphics[width=1cm]{coil/beeld-22.eps}
+\includegraphics[width=1cm]{coil/beeld-18.eps}
+\includegraphics[width=1cm]{coil/beeld-19.eps}
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+\includegraphics[width=1cm]{coil/beeld-33.eps}
+& {\scriptsize 0.15}
+\\
+\end{tabular}
+\caption{\label{fig:results_beste_scaling}De GGR-waarde en de eerste tien resultaten voor elk voorbeeld bij de resolutie-onafhankelijke similariteitsmaat die we bekomen door herschaalde beelden componentsgewijs te vergelijken met behulp van $M_7$.}
+\end{center}
+\end{figure}
+
+\begin{figure}[tbp]
+\begin{center}
+\subfigure[]{
+\begin{minipage}{\textwidth}
+\includegraphics[width=\textwidth]{plots/dom_colors_neuquant_gggrs_en_cputimes_filled.eps}
+\vspace{2pt}
+\end{minipage}
+\label{fig:dom_colors_neuquant_gggrs_en_cputimes}
+}
+\subfigure[]{
+\begin{minipage}{\textwidth}
+\includegraphics[width=\textwidth]{plots/dom_colors_wu_gggrs_en_cputimes_filled.eps}
+\vspace{2pt}
+\end{minipage}
+\label{fig:dom_colors_wu_gggrs_en_cputimes}
+}
+\caption{\label{fig:dom_colors_gggrs_en_cputimes}De GGGR-waarde en de gebruikte rekentijd in ms voor elk van de resolutie-onafhankelijke pixelgebaseerde similariteitsmaten op basis van nieuwe geconstrueerde intermediaire beelden met (a) NeuQuant en (b) Wu kwantisatie.}
+\end{center}
+\end{figure}
+
+\begin{figure}[!p]
+\begin{center}
+\begin{tabular}{m{11cm} | m{3cm} |}
+\textbf{Eerste tien resultaten:} & \textbf{GGR:} \\
+\vspace{4pt}
+\includegraphics[width=1cm]{coil/beeld-12.eps}
+\includegraphics[width=1cm]{coil/beeld-17.eps}
+\includegraphics[width=1cm]{coil/beeld-13.eps}
+\includegraphics[width=1cm]{coil/beeld-15.eps}
+\includegraphics[width=1cm]{coil/beeld-14.eps}
+\includegraphics[width=1cm]{coil/beeld-16.eps}
+\includegraphics[width=1cm]{coil/beeld-42.eps}
+\includegraphics[width=1cm]{coil/beeld-5.eps}
+\includegraphics[width=1cm]{coil/beeld-4.eps}
+\includegraphics[width=1cm]{coil/beeld-1.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-18.eps}
+\includegraphics[width=1cm]{coil/beeld-20.eps}
+\includegraphics[width=1cm]{coil/beeld-23.eps}
+\includegraphics[width=1cm]{coil/beeld-22.eps}
+\includegraphics[width=1cm]{coil/beeld-21.eps}
+\includegraphics[width=1cm]{coil/beeld-19.eps}
+\includegraphics[width=1cm]{coil/beeld-45.eps}
+\includegraphics[width=1cm]{coil/beeld-31.eps}
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+\includegraphics[width=1cm]{coil/beeld-33.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+\includegraphics[width=1cm]{coil/beeld-31.eps}
+\includegraphics[width=1cm]{coil/beeld-33.eps}
+\includegraphics[width=1cm]{coil/beeld-32.eps}
+\includegraphics[width=1cm]{coil/beeld-35.eps}
+\includegraphics[width=1cm]{coil/beeld-34.eps}
+\includegraphics[width=1cm]{coil/beeld-61.eps}
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-63.eps}
+\includegraphics[width=1cm]{coil/beeld-62.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-54.eps}
+\includegraphics[width=1cm]{coil/beeld-58.eps}
+\includegraphics[width=1cm]{coil/beeld-59.eps}
+\includegraphics[width=1cm]{coil/beeld-56.eps}
+\includegraphics[width=1cm]{coil/beeld-55.eps}
+\includegraphics[width=1cm]{coil/beeld-57.eps}
+\includegraphics[width=1cm]{coil/beeld-35.eps}
+\includegraphics[width=1cm]{coil/beeld-34.eps}
+\includegraphics[width=1cm]{coil/beeld-32.eps}
+\includegraphics[width=1cm]{coil/beeld-33.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-24.eps}
+\includegraphics[width=1cm]{coil/beeld-28.eps}
+\includegraphics[width=1cm]{coil/beeld-29.eps}
+\includegraphics[width=1cm]{coil/beeld-25.eps}
+\includegraphics[width=1cm]{coil/beeld-27.eps}
+\includegraphics[width=1cm]{coil/beeld-37.eps}
+\includegraphics[width=1cm]{coil/beeld-41.eps}
+\includegraphics[width=1cm]{coil/beeld-26.eps}
+\includegraphics[width=1cm]{coil/beeld-48.eps}
+\includegraphics[width=1cm]{coil/beeld-51.eps}
+& {\scriptsize 0.004761904761904762}
+\\
+\includegraphics[width=1cm]{coil/beeld-48.eps}
+\includegraphics[width=1cm]{coil/beeld-51.eps}
+\includegraphics[width=1cm]{coil/beeld-50.eps}
+\includegraphics[width=1cm]{coil/beeld-52.eps}
+\includegraphics[width=1cm]{coil/beeld-26.eps}
+\includegraphics[width=1cm]{coil/beeld-49.eps}
+\includegraphics[width=1cm]{coil/beeld-27.eps}
+\includegraphics[width=1cm]{coil/beeld-53.eps}
+\includegraphics[width=1cm]{coil/beeld-37.eps}
+\includegraphics[width=1cm]{coil/beeld-25.eps}
+& {\scriptsize 0.007142857142857143}
+\\
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-63.eps}
+\includegraphics[width=1cm]{coil/beeld-62.eps}
+\includegraphics[width=1cm]{coil/beeld-61.eps}
+\includegraphics[width=1cm]{coil/beeld-7.eps}
+\includegraphics[width=1cm]{coil/beeld-64.eps}
+\includegraphics[width=1cm]{coil/beeld-8.eps}
+\includegraphics[width=1cm]{coil/beeld-9.eps}
+\includegraphics[width=1cm]{coil/beeld-65.eps}
+\includegraphics[width=1cm]{coil/beeld-0.eps}
+& {\scriptsize 0.009523809523809525}
+\\
+\includegraphics[width=1cm]{coil/beeld-6.eps}
+\includegraphics[width=1cm]{coil/beeld-10.eps}
+\includegraphics[width=1cm]{coil/beeld-40.eps}
+\includegraphics[width=1cm]{coil/beeld-65.eps}
+\includegraphics[width=1cm]{coil/beeld-11.eps}
+\includegraphics[width=1cm]{coil/beeld-38.eps}
+\includegraphics[width=1cm]{coil/beeld-9.eps}
+\includegraphics[width=1cm]{coil/beeld-39.eps}
+\includegraphics[width=1cm]{coil/beeld-8.eps}
+\includegraphics[width=1cm]{coil/beeld-64.eps}
+& {\scriptsize 0.0380952380952381}
+\\
+\includegraphics[width=1cm]{coil/beeld-0.eps}
+\includegraphics[width=1cm]{coil/beeld-2.eps}
+\includegraphics[width=1cm]{coil/beeld-46.eps}
+\includegraphics[width=1cm]{coil/beeld-44.eps}
+\includegraphics[width=1cm]{coil/beeld-45.eps}
+\includegraphics[width=1cm]{coil/beeld-1.eps}
+\includegraphics[width=1cm]{coil/beeld-43.eps}
+\includegraphics[width=1cm]{coil/beeld-47.eps}
+\includegraphics[width=1cm]{coil/beeld-3.eps}
+\includegraphics[width=1cm]{coil/beeld-4.eps}
+& {\scriptsize 0.04523809523809524}
+\\
+\includegraphics[width=1cm]{coil/beeld-36.eps}
+\includegraphics[width=1cm]{coil/beeld-11.eps}
+\includegraphics[width=1cm]{coil/beeld-40.eps}
+\includegraphics[width=1cm]{coil/beeld-39.eps}
+\includegraphics[width=1cm]{coil/beeld-38.eps}
+\includegraphics[width=1cm]{coil/beeld-10.eps}
+\includegraphics[width=1cm]{coil/beeld-6.eps}
+\includegraphics[width=1cm]{coil/beeld-46.eps}
+\includegraphics[width=1cm]{coil/beeld-41.eps}
+\includegraphics[width=1cm]{coil/beeld-47.eps}
+& {\scriptsize 0.047619047619047616}
+\\
+\includegraphics[width=1cm]{coil/beeld-42.eps}
+\includegraphics[width=1cm]{coil/beeld-5.eps}
+\includegraphics[width=1cm]{coil/beeld-4.eps}
+\includegraphics[width=1cm]{coil/beeld-3.eps}
+\includegraphics[width=1cm]{coil/beeld-43.eps}
+\includegraphics[width=1cm]{coil/beeld-47.eps}
+\includegraphics[width=1cm]{coil/beeld-1.eps}
+\includegraphics[width=1cm]{coil/beeld-46.eps}
+\includegraphics[width=1cm]{coil/beeld-44.eps}
+\includegraphics[width=1cm]{coil/beeld-2.eps}
+& {\scriptsize 0.047619047619047616}
+\\
+\end{tabular}
+\caption{\label{fig:results_beste_dom_colors}De GGR-waarde en de eerste tien resultaten voor elk voorbeeld bij de resolutie-onafhankelijke similariteitsmaat die we bekomen door nieuwe geconstrueerde intermediaire beelden componentsgewijs te vergelijken met behulp van $M_5$.}
+\end{center}
+\end{figure}
+
+\begin{figure}[!t]
+\begin{center}
+\includegraphics[width=\textwidth]{plots/multires_gggrs_en_cputimes_filled.eps}
+\caption{\label{fig:multires_gggrs_en_cputimes}De GGGR-waarde en de gebruikte rekentijd in ms voor elk van de resolutie-onafhankelijke pixelgebaseerde similariteitsmaten op basis van beeldonderdelen.}
+\end{center}
+\end{figure}
 
 \begin{figure}[tbp]
 \begin{center}
@@ -441,152 +834,6 @@ is de pixelgebaseerde benadering niet de meest geschikte voor image retrieval.
 & {\scriptsize 0.1}
 \\
 \end{tabular}
-\caption{\label{fig:results_beste_componenten_pixelgeb}De GGR-waarde en de eerste tien resultaten voor elk voorbeeld bij de beste resolutie-onafhankelijke component-gebaseerde similariteitsmaat.}
+\caption{\label{fig:results_beste_componenten_pixelgeb}De GGR-waarde en de eerste tien resultaten voor elk voorbeeld bij de resolutie-onafhankelijke similariteitsmaat die we bekomen door beeldonderdelen componentsgewijs te vergelijken met behulp van $M_{I3c}$.}
 \end{center}
 \end{figure}
-
-\begin{figure}[tbp]
-\begin{center}
-\begin{tabular}{m{11cm} | m{3cm} |}
-\textbf{Eerste tien resultaten:} & \textbf{GGR:} \\
-\vspace{4pt}
-\includegraphics[width=1cm]{coil/beeld-18.eps}
-\includegraphics[width=1cm]{coil/beeld-22.eps}
-\includegraphics[width=1cm]{coil/beeld-21.eps}
-\includegraphics[width=1cm]{coil/beeld-19.eps}
-\includegraphics[width=1cm]{coil/beeld-20.eps}
-\includegraphics[width=1cm]{coil/beeld-23.eps}
-\includegraphics[width=1cm]{coil/beeld-62.eps}
-\includegraphics[width=1cm]{coil/beeld-63.eps}
-\includegraphics[width=1cm]{coil/beeld-61.eps}
-\includegraphics[width=1cm]{coil/beeld-60.eps}
-& {\scriptsize 0.0}
-\\
-\includegraphics[width=1cm]{coil/beeld-24.eps}
-\includegraphics[width=1cm]{coil/beeld-25.eps}
-\includegraphics[width=1cm]{coil/beeld-28.eps}
-\includegraphics[width=1cm]{coil/beeld-27.eps}
-\includegraphics[width=1cm]{coil/beeld-26.eps}
-\includegraphics[width=1cm]{coil/beeld-29.eps}
-\includegraphics[width=1cm]{coil/beeld-38.eps}
-\includegraphics[width=1cm]{coil/beeld-10.eps}
-\includegraphics[width=1cm]{coil/beeld-11.eps}
-\includegraphics[width=1cm]{coil/beeld-9.eps}
-& {\scriptsize 0.0}
-\\
-\includegraphics[width=1cm]{coil/beeld-30.eps}
-\includegraphics[width=1cm]{coil/beeld-35.eps}
-\includegraphics[width=1cm]{coil/beeld-34.eps}
-\includegraphics[width=1cm]{coil/beeld-31.eps}
-\includegraphics[width=1cm]{coil/beeld-32.eps}
-\includegraphics[width=1cm]{coil/beeld-33.eps}
-\includegraphics[width=1cm]{coil/beeld-61.eps}
-\includegraphics[width=1cm]{coil/beeld-63.eps}
-\includegraphics[width=1cm]{coil/beeld-60.eps}
-\includegraphics[width=1cm]{coil/beeld-55.eps}
-& {\scriptsize 0.0}
-\\
-\includegraphics[width=1cm]{coil/beeld-60.eps}
-\includegraphics[width=1cm]{coil/beeld-61.eps}
-\includegraphics[width=1cm]{coil/beeld-63.eps}
-\includegraphics[width=1cm]{coil/beeld-62.eps}
-\includegraphics[width=1cm]{coil/beeld-64.eps}
-\includegraphics[width=1cm]{coil/beeld-65.eps}
-\includegraphics[width=1cm]{coil/beeld-34.eps}
-\includegraphics[width=1cm]{coil/beeld-30.eps}
-\includegraphics[width=1cm]{coil/beeld-31.eps}
-\includegraphics[width=1cm]{coil/beeld-33.eps}
-& {\scriptsize 0.0}
-\\
-\includegraphics[width=1cm]{coil/beeld-0.eps}
-\includegraphics[width=1cm]{coil/beeld-1.eps}
-\includegraphics[width=1cm]{coil/beeld-5.eps}
-\includegraphics[width=1cm]{coil/beeld-42.eps}
-\includegraphics[width=1cm]{coil/beeld-4.eps}
-\includegraphics[width=1cm]{coil/beeld-2.eps}
-\includegraphics[width=1cm]{coil/beeld-44.eps}
-\includegraphics[width=1cm]{coil/beeld-46.eps}
-\includegraphics[width=1cm]{coil/beeld-43.eps}
-\includegraphics[width=1cm]{coil/beeld-3.eps}
-& {\scriptsize 0.014285714285714285}
-\\
-\includegraphics[width=1cm]{coil/beeld-48.eps}
-\includegraphics[width=1cm]{coil/beeld-27.eps}
-\includegraphics[width=1cm]{coil/beeld-53.eps}
-\includegraphics[width=1cm]{coil/beeld-50.eps}
-\includegraphics[width=1cm]{coil/beeld-52.eps}
-\includegraphics[width=1cm]{coil/beeld-26.eps}
-\includegraphics[width=1cm]{coil/beeld-51.eps}
-\includegraphics[width=1cm]{coil/beeld-28.eps}
-\includegraphics[width=1cm]{coil/beeld-49.eps}
-\includegraphics[width=1cm]{coil/beeld-29.eps}
-& {\scriptsize 0.01904761904761905}
-\\
-\includegraphics[width=1cm]{coil/beeld-54.eps}
-\includegraphics[width=1cm]{coil/beeld-55.eps}
-\includegraphics[width=1cm]{coil/beeld-57.eps}
-\includegraphics[width=1cm]{coil/beeld-58.eps}
-\includegraphics[width=1cm]{coil/beeld-34.eps}
-\includegraphics[width=1cm]{coil/beeld-35.eps}
-\includegraphics[width=1cm]{coil/beeld-31.eps}
-\includegraphics[width=1cm]{coil/beeld-30.eps}
-\includegraphics[width=1cm]{coil/beeld-59.eps}
-\includegraphics[width=1cm]{coil/beeld-56.eps}
-& {\scriptsize 0.01904761904761905}
-\\
-\includegraphics[width=1cm]{coil/beeld-36.eps}
-\includegraphics[width=1cm]{coil/beeld-38.eps}
-\includegraphics[width=1cm]{coil/beeld-25.eps}
-\includegraphics[width=1cm]{coil/beeld-27.eps}
-\includegraphics[width=1cm]{coil/beeld-24.eps}
-\includegraphics[width=1cm]{coil/beeld-41.eps}
-\includegraphics[width=1cm]{coil/beeld-40.eps}
-\includegraphics[width=1cm]{coil/beeld-37.eps}
-\includegraphics[width=1cm]{coil/beeld-28.eps}
-\includegraphics[width=1cm]{coil/beeld-39.eps}
-& {\scriptsize 0.030952380952380953}
-\\
-\includegraphics[width=1cm]{coil/beeld-12.eps}
-\includegraphics[width=1cm]{coil/beeld-13.eps}
-\includegraphics[width=1cm]{coil/beeld-16.eps}
-\includegraphics[width=1cm]{coil/beeld-15.eps}
-\includegraphics[width=1cm]{coil/beeld-61.eps}
-\includegraphics[width=1cm]{coil/beeld-63.eps}
-\includegraphics[width=1cm]{coil/beeld-30.eps}
-\includegraphics[width=1cm]{coil/beeld-60.eps}
-\includegraphics[width=1cm]{coil/beeld-43.eps}
-\includegraphics[width=1cm]{coil/beeld-4.eps}
-& {\scriptsize 0.05238095238095238}
-\\
-\includegraphics[width=1cm]{coil/beeld-6.eps}
-\includegraphics[width=1cm]{coil/beeld-24.eps}
-\includegraphics[width=1cm]{coil/beeld-25.eps}
-\includegraphics[width=1cm]{coil/beeld-64.eps}
-\includegraphics[width=1cm]{coil/beeld-28.eps}
-\includegraphics[width=1cm]{coil/beeld-7.eps}
-\includegraphics[width=1cm]{coil/beeld-65.eps}
-\includegraphics[width=1cm]{coil/beeld-8.eps}
-\includegraphics[width=1cm]{coil/beeld-61.eps}
-\includegraphics[width=1cm]{coil/beeld-9.eps}
-& {\scriptsize 0.07142857142857142}
-\\
-\includegraphics[width=1cm]{coil/beeld-42.eps}
-\includegraphics[width=1cm]{coil/beeld-0.eps}
-\includegraphics[width=1cm]{coil/beeld-1.eps}
-\includegraphics[width=1cm]{coil/beeld-5.eps}
-\includegraphics[width=1cm]{coil/beeld-2.eps}
-\includegraphics[width=1cm]{coil/beeld-44.eps}
-\includegraphics[width=1cm]{coil/beeld-4.eps}
-\includegraphics[width=1cm]{coil/beeld-43.eps}
-\includegraphics[width=1cm]{coil/beeld-3.eps}
-\includegraphics[width=1cm]{coil/beeld-46.eps}
-& {\scriptsize 0.08333333333333333}
-\end{tabular}
-\caption{\label{fig:results_beste_tralie_pixelgeb}De GGR-waarde en de eerste tien resultaten voor elk voorbeeld bij de beste resolutie-onafhankelijke tralie-gebaseerde similariteitsmaat.}
-\end{center}
-\end{figure}
-
-Op het vlak van rekentijd zijn de similariteitsmaten op basis van de eerste en de laatste manier
-aan elkaar gewaagd. Bij het toepassen van een similariteitsmaat voor grijswaardebeelden op de 
-afzonderlijke kleurcomponenten, hebben we echter aanzienlijk meer rekentijd nodig. Dat is niet
-verwonderlijk, aangezien er dan ook driemaal zoveel werk moet verricht worden.
