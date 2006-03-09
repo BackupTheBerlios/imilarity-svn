@@ -19,7 +19,7 @@ worden gebruikt als componenten van het drietal dat de kleur voorstelt.
 De kleuren die op basis van een bepaald model kunnen voorgesteld worden, vormen een \emph{kleurruimte}. 
 In het geval van RGB is dat een driedimensionale ruimte. De kleuren in die ruimte zijn afhankelijk
 van de manier waarop men ``rood'', ``groen'' en ``blauw'' definieert. Veelgebruikte kleurruimtes 
-op basis van het RGB model zijn sRGB en Adobe RGB.
+op basis van het RGB-model zijn sRGB en Adobe RGB.
 Hoewel het strikt gezien niet correct is, wordt de term ``kleurruimte'' vaak ook voor het
 kleurmodel gebruikt. Men heeft het dus dikwijls over \emph{de} RGB kleurruimte, terwijl er eigenlijk meerdere
 kleurruimtes bestaan die gebaseerd zijn op RGB. 
@@ -29,7 +29,7 @@ door een drietal. Men noemt de componenten van zo'n drietal respectievelijk
 ``hue'', ``saturation'' en ``value''. De eerste van die componenten 
 correspondeert met de kleurtint, terwijl de overige componenten de saturatie
 en de helderheid aangeven. Men kan een kleur $(r,g,b) \in [0,1]^3$ uit het RGB 
-model als volgt omzetten naar een kleur $(h,s,v) \in [0,1]^3$ in het HSV model: 
+model als volgt omzetten naar een kleur $(h,s,v) \in [0,1]^3$ in het HSV-model: 
 $$
 \begin{array}{rcll}
 h' & = & 60 \cdot \frac{g - b}{\max \{r,g,b\} - \min \{r,g,b\}}\quad & \textrm{ 
@@ -174,7 +174,7 @@ vermits de similariteitsmaten dan bijvoorbeeld minder afhankelijk zijn van
 belichtingsvariaties. 
 
 Een mogelijke manier om uniform te kwantiseren is dus
-het HSV model gebruiken en meer belang hechten aan de eerste kleurcomponent. 
+het HSV-model gebruiken en meer belang hechten aan de eerste kleurcomponent. 
 Dat doen we door $N_1=16$, $N_2=4$ en $N_3=4$ te kiezen.
 %Bovendien is het discriminerend
 %vermogen van dit histogram waarschijnlijk ook beter dan dat van een ongecomprimeerd kleurhistogram.
@@ -231,14 +231,16 @@ het beredeneren, onthouden en waarnemen van kleuren. We kunnen voor elke kleur d
 door op zoek te gaan naar de focale kleur die in het L*a*b*-model het dichtst bij die gegeven kleur ligt.
 
 \emph{Neural Image Quantization} (NeuQuant) \cite{dekker:neuquant} en de \emph{Wu quantizer} 
-\cite{wu:color_quantization_by_dynamic_programming_and_principal_analysis} 
-gebruiken, in tegenstelling tot de technieken die we 
-tot nu toe bekeken hebben, een variabel kleurenpalet. De eerste techniek is gebaseerd op
+\cite{wu:color_quantization_by_dynamic_programming_and_principal_analysis} zijn twee
+populaire kwantisatietechnieken die, in tegenstelling tot de technieken die we 
+tot nu toe bekeken hebben, een variabel kleurenpalet gebruiken. De eerste techniek is gebaseerd op
 Kohonen neurale netwerken, terwijl de tweede gebruik maakt van dynamisch programmeren
-en principal analysis. NeuQuant geeft doorgaans iets betere resultaten, maar Wu's techniek is
+en ``principal analysis''. NeuQuant geeft doorgaans iets betere resultaten, maar Wu's techniek is
 sneller. Uit figuur~\ref{fig:rekentijden_quant} blijkt echter dat het verschil in rekentijd zich
 enkel manifesteert als er naar een relatief groot aantal kleuren gekwantiseerd wordt. Voor een
-klein aantal kleuren is NeuQuant zelfs iets sneller.
+klein aantal kleuren is NeuQuant zelfs iets sneller. Anderzijds is Wu's techniek wel meer
+geschikt voor kwantisatie naar een zeer klein aantal kleuren.
+ 
 
 \begin{figure}[tbp]
 \begin{center}
@@ -318,6 +320,10 @@ de similariteitsmaten doorgaans minder goed werken vermits ze dan gevoeliger wor
 belichtingsvariaties.
 %kunnen in bepaalde gevallen immers beter 
 %presteren dan maten die gebaseerd zijn op ``betere'' kwantisatietechnieken.
+
+Merk ook op dat uit figuur~\ref{fig:kwantistatie_klein_aantal_kleuren} inderdaad blijkt
+dat NeuQuant minder geschikt is dan Wu's techniek voor kwantisatie naar een zeer klein
+aantal kleuren. 
 
 \begin{figure}[tbp]
 \begin{center}
@@ -401,6 +407,26 @@ belichtingsvariaties.
 \end{center}
 \end{figure}
 
+\begin{figure}[tbp]
+\begin{center}
+\subfigure[]{
+\includegraphics[height=2.8cm]{images/neuquant_constant_s_8.eps}
+\includegraphics[height=2.8cm]{images/neuquant_constant_v_8.eps}
+\includegraphics[height=2.8cm]{images/neuquant_flowers_8.eps}
+\includegraphics[height=2.8cm]{images/neuquant_autumn_8.eps}
+\label{fig:neuquant_8}
+}
+\subfigure[]{
+\includegraphics[height=2.8cm]{images/wu_constant_s_8.eps}
+\includegraphics[height=2.8cm]{images/wu_constant_v_8.eps}
+\includegraphics[height=2.8cm]{images/wu_flowers_8.eps}
+\includegraphics[height=2.8cm]{images/wu_autumn_8.eps}
+\label{fig:wu_8}
+}
+\caption{\label{fig:kwantistatie_klein_aantal_kleuren}De resultaten na kwantisatie naar slechts 8 kleuren op basis van (a) NeuQuant en (b) de Wu quantizer.}
+\end{center}
+\end{figure}
+
 \section{Lineaire filters}
 
 Bij het \emph{filteren} van een 2-dimensionaal beeld $b$ wordt de waarde van elk beeldpunt $(x,y) \in \mathbb{N}^2$ 
@@ -417,8 +443,8 @@ De functie $m$ wordt het \emph{filtermasker} genoemd.
 Het \emph{3x3 binomiaalfilter} is een voorbeeld van een lineair filter. Voor het filtermasker 
 $m_{bin}$ van dat filter geldt $m_{bin}(-1,-1)=m_{bin}(-1,1)=m_{bin}(1,-1)=m_{bin}(1,1)=1/16$, 
 $m_{bin}(-1,0)=m_{bin}(0,-1)=m_{bin}(1,0)=m_{bin}(0,1)=1/8$, $m_{bin}(0,0)=1/4$ en 
-$m_{bin}(x,y)=0$ voor de overige $(x,y)$. Als we veronderstellen dat $m_{bin}(x,y)=0$ voor de 
-posities $(x,y)$ die niet weergegeven worden, dan kunnen we dat masker noteren als een matrix:
+$m_{bin}(k,l)=0$ voor de overige $(k,l)$. Als we veronderstellen dat $m_{bin}(k,l)=0$ voor de 
+posities $(k,l)$ die niet weergegeven worden, dan kunnen we dat masker noteren als een matrix:
 $$
 \frac{1}{16}\left[ \begin{array}{ccc} 1 & 2 & 1\\ 2 & 4 & 2\\ 1 & 2 & 1 \end{array} \right]
 = \frac{1}{16}\left[ \begin{array}{c} 1\\ 2\\ 1 \end{array} \right] \cdot 
@@ -429,11 +455,12 @@ Zoals ge\"illustreerd in figuur~\ref{fig:indische_ruizig_en_binom}, kan een bino
 \begin{figure}[tb]
 \begin{center}
 \subfigure[]{
-\includegraphics[width=0.4\textwidth]{images/indische_ruizig.eps}
+\includegraphics[width=0.3\textwidth]{images/indische_ruizig.eps}
 \label{fig:indische_ruizig}
 }
+\hspace{1cm}
 \subfigure[]{
-\includegraphics[width=0.4\textwidth]{images/indische_binom.eps}
+\includegraphics[width=0.3\textwidth]{images/indische_binom.eps}
 \label{fig:indische_binom}
 }
 \caption{\label{fig:indische_ruizig_en_binom}Een ruizig beeld (a) en het resultaat na filteren met een binomiaalfilter (b).}
@@ -475,7 +502,7 @@ extra ruisonderdrukking voorzien wordt via een binomiaalfilter loodrecht op de r
 van de parti\"ele afleiding:
 $$
 D_1 l(x,y)\textrm{: }\quad \frac{1}{8} \left[ \begin{array}{c} 1 \\ 2 \\ 1 \end{array} \right] \cdot \left[ \begin{array}{ccc} -1 & 0 & 1 \end{array} \right] \qquad \textrm{ en } 
-\qquad D_2 l(x,y)\textrm{: }\quad \frac{1}{8} \left[ \begin{array}{ccc} 1 & 2 & 1 \end{array} \right] \cdot \left[ \begin{array}{c} -1 \\ 0 \\ 1 \end{array} \right]
+\qquad D_2 l(x,y)\textrm{: }\quad \frac{1}{8} \left[ \begin{array}{c} -1 \\ 0 \\ 1 \end{array} \right] \cdot \left[ \begin{array}{ccc} 1 & 2 & 1 \end{array} \right]
 $$
 Uit figuur~\ref{fig:randdetectie} blijkt echter dat beide technieken geen spectaculair verschillende 
 resultaten geven.
@@ -483,17 +510,49 @@ resultaten geven.
 \begin{figure}[tbp]
 \begin{center}
 \subfigure[]{
-\includegraphics[width=0.3\textwidth]{images/lena.eps}
+\begin{tabular}{@{}c@{}}
+\includegraphics[width=0.3\textwidth]{images/lena.eps}\\
+\includegraphics[width=0.3\textwidth]{images/lena_met_ruis.eps}
+\end{tabular}
 \label{fig:lena}
 }
+%\hspace{0.5cm}
 \subfigure[]{
-\includegraphics[width=0.3\textwidth]{images/lena_gradient.eps}
+\begin{tabular}{@{}c@{}}
+\includegraphics[width=0.3\textwidth]{images/edges_lena.eps}\\
+\includegraphics[width=0.3\textwidth]{images/edges_lena_met_ruis.eps}
+\end{tabular}
 \label{fig:lena_gradient}
 }
+%\hspace{0.5cm}
 \subfigure[]{
-\includegraphics[width=0.3\textwidth]{images/lena_sobel.eps}
+\begin{tabular}{@{}c@{}}
+\includegraphics[width=0.3\textwidth]{images/edges_sobel_lena.eps}\\
+\includegraphics[width=0.3\textwidth]{images/edges_sobel_lena_met_ruis.eps}
+\end{tabular}
 \label{fig:lena_sobel}
 }
 \caption{\label{fig:randdetectie}Het origineel luminantiebeeld (a) en het resultaat na filteren met een gradi\"ent-filter (b) en met een Sobel-filter (c).}
 \end{center}
 \end{figure}
+
+
+% \begin{figure}[tbp]
+% \begin{center}
+% \subfigure[]{
+% \includegraphics[width=0.25\textwidth]{images/lena_met_ruis.eps}
+% \label{fig:lena_met_ruis}
+% }
+% \hspace{0.5cm}
+% \subfigure[]{
+% \includegraphics[width=0.25\textwidth]{images/edges_lena_met_ruis.eps}
+% \label{fig:lena_met_ruis_gradient}
+% }
+% \hspace{0.5cm}
+% \subfigure[]{
+% \includegraphics[width=0.25\textwidth]{images/edges_sobel_lena_met_ruis.eps}
+% \label{fig:lena_met_ruis_sobel}
+% }
+% \caption{\label{fig:randdetectie_met_ruis}Het origineel ruizig luminantiebeeld (a) en het resultaat na filteren met een gradi\"ent-filter (b) en met een Sobel-filter (c).}
+% \end{center}
+% \end{figure}

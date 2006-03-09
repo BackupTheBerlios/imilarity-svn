@@ -28,11 +28,28 @@ teruggeeft. Met andere woorden, voor een beeld $A$ moet gelden: $M(A,A)=1$.
 Die eigenschap heeft als gevolg dat het voorbeeld zich steeds vooraan in
 de geordende lijst van zoekresultaten moet bevinden.
 
-\subsection{Symmetrisch}
+\subsection{Symmetrie}
 
 Het resultaat van een similariteitsmaat $M$ wordt verwacht onafhankelijk te zijn van de 
 volgorde waarin de beelden aangeboden worden. Voor beelden $A$ en $B$ moet dus gelden:
 $M(A,B)=M(B,A)$.
+
+\subsection{Transitiviteit}
+
+De bovenstaande eigenschappen doen denken aan een klassieke equivalentierelatie. Dergelijke
+relaties zijn naast reflexief en symmetrisch ook transitief. In 
+\cite{zadeh:similarity_relations_and_fuzzy_orderings} definieert Zadeh
+de \emph{similariteitsrelatie} als vage uitbreiding van dat scherpe begrip. Als we zouden
+afdwingen dat een similariteitsmaat $M$ een similariteitsrelatie is, dan moet $M$ 
+\emph{$\min$-transitief} zijn: voor drie beelden $A$, $B$ en $C$ moet 
+$\min\{M(A,B),M(B,C)\} \le M(A,C)$ gelden. Die
+eigenschap komt echter niet overeen met de intu\"itieve betekenis van similariteit
+\cite{de_cock:on_unsuitable_relations_for_approx_equal, de_cock:why_fuzzy_relations_do_not_resolve_pointcare_paradox}. 
+Beschouw bijvoorbeeld de afzonderlijke beelden $A_i$, $i \in \{1,2,\ldots,n\}$, uit \'e\'en sc\`ene van een video. 
+Daarbij zullen opeenvolgende beelden doorgaans zeer similair zijn, met andere woorden: 
+$M(A_i,A_{i+1}) \approx 1$ voor $i \in \{1,2,\ldots,n-1\}$. Uit de $\min$-transitiviteit
+zou dan volgen dat ook $M(A_1,A_n) \approx 1$, terwijl het eerste en het laatste beeld
+van een sc\`ene meestal sterk verschillend zijn.   
 
 \section{Evaluatie van performantie}
 
@@ -222,26 +239,32 @@ $$
 Wanneer we $||A|| = \sum_{x \in X'} A(x)$ defini\"eren, dan geldt dus $|A| = ||A||$ en ook:
 $$
 \begin{array}{r@{\quad = \quad}l@{\qquad}l}
-| A \cap B | & \displaystyle \sum_{x \in X} \min \{A(x),B(x)\} & \\
-& \displaystyle \sum_{x \in X'} \min \{A(x),B(x)\} & (\min\{0,0\}=\min\{0\}=0) \\
+| A \cap B | & \displaystyle \sum_{x \in X} T_M(A(x),B(x)) & \\
+& \displaystyle \sum_{x \in X'} T_M(A(x),B(x)) & (T_M(0,0)=0) \\
 & ||A \cap B|| & \\[5pt]
-| A \cup B | & \displaystyle \sum_{x \in X} \max \{A(x),B(x)\} & \\
-& \displaystyle \sum_{x \in X'} \max \{A(x),B(x)\} & (\max\{0,0\}=\max\{0\}=0) \\
-& ||A \cup B|| & \\[5pt]
-| A \setminus B | & | A \cap B^c | & \\
-& \displaystyle \sum_{x \in X} \min \{A(x),1-B(x)\} & \\
-& \displaystyle \sum_{x \in X'} \min \{A(x),1-B(x)\} & (\min\{0,1-0\}=\min\{0,1\}=0) \\
-& || A \cap B^c || & \\
-& ||A \setminus B|| & \\[5pt]
+| A \cup B | & \displaystyle \sum_{x \in X} S_M(A(x),B(x)) & \\
+& \displaystyle \sum_{x \in X'} S_M(A(x),B(x)) & (S_M(0,0)=0) \\
+& ||A \cup_{\mathcal{D}} B|| & \\[5pt]
+%\end{array}
+%$$
+%$$
+%\begin{array}{r@{\quad = \quad}l@{\qquad}l}
+| A \setminus B | = | A \cap B^c | & \displaystyle \sum_{x \in X} T_M(A(x),1-B(x)) & \\
+& \displaystyle \sum_{x \in X'} T_M(A(x),1-B(x)) & (T_M(0,1-0)=T_M(0,1)=0) \\
+& || A \cap B^c || = ||A \setminus B|| & %\\[5pt]
+\end{array}
+$$
+$$
+\begin{array}{r@{\quad = \quad}l@{\qquad}l}
 | A \triangle B | & | (A \setminus B) \cup (B \setminus A) | & \\
-& || (A \setminus B) \cup (B \setminus A) || & (\min\{0,1\}=0 \textrm{ en } \max\{0,0\}=1) \\
+& || (A \setminus B) \cup (B \setminus A) || & (T_M(0,1)=0 \textrm{ en } S_M(0,0)=0) \\
 & || A \triangle B || & \\
 \end{array}
 $$
 $$
 \begin{array}{r@{\quad = \quad}l@{\qquad}l}
-|(A \cap B) \cap (A^c \cap B^c)| & ||(A \cap B) \cap (A^c \cap B^c)|| & (\min\{0,1\}=0)\\[5pt]
-|(A \cup B) \cap (A^c \cup B^c)| & ||(A \cup B) \cap (A^c \cup B^c)|| & (\min\{0,1\}=0)
+|(A \cap B) \cap (A^c \cap B^c)| & ||(A \cap B) \cap (A^c \cap B^c)|| & (T_M(0,1)=0)\\[5pt]
+|(A \cup B) \cap (A^c \cup B^c)| & ||(A \cup B) \cap (A^c \cup B^c)|| & (T_M(0,1)=0)
 \end{array}
 $$
 Met behulp van de eigenschap
@@ -252,13 +275,13 @@ vinden we bovendien:
 $$
 \begin{array}{l@{\ =\ }l@{\ =\ }l@{\ =\ }l}
 |A^c \cap B^c| & |(A \cup B)^c| & |X| - |A \cup B| & |X| - ||A \cup B|| \\[5pt]
-|A^c \cup B^c| & |(A \cap B)^c| & |X| - |A \cap B| & |X| - ||A \cap B|| \\
+|A^c \cup B^c| & |(A \cap B)^c| & |X| - |A \cap B| & |X| - ||A \cap B||
 \end{array}
 $$
 $$
 \begin{array}{l@{\ =\ }l@{\ =\ }l}
 | (A \setminus B)^c | & |X| - |A \setminus B| & |X| - ||A \setminus B|| \\[5pt]
-| (A \triangle B)^c | & |X| - |A \triangle B| & |X| - ||A \triangle B|| \\
+| (A \triangle B)^c | & |X| - |A \triangle B| & |X| - ||A \triangle B||
 \end{array}
 $$
 $$
@@ -346,3 +369,9 @@ twee vergelijkingen, $ 4 \cdot (|X'|-1)$ optellingen en \'e\'en deling. Vermits 
 dat $4 \cdot (|X'|-1) + 5 << 4 \cdot (|X|-1) + 3$, zal de nieuwe formule dus inderdaad een stuk sneller kunnen 
 berekend worden dan de oude als $X'$ veel minder elementen bevat dan $X$. Bovendien is het verschil in 
 rekentijd verwaarloosbaar als $X'=X$. De nieuwe vorm is dus steeds minstens even snel als de oude.
+
+Merk op dat we in de bovenstaande redeneringen enkel gesteund hebben op $T_M(0,0)=T_M(0,1)=0$ en 
+$S_M(0,0)=0$. 
+De bekomen eigenschappen blijven dus gelden indien we $T_M$ en $S_M$ vervangen door respectievelijk 
+een willekeurige conjunctor $\mathcal{C}$ en een willekeurige disjunctor $\mathcal{D}$, waarvoor per 
+definitie geldt: $\mathcal{C}(0,0)=\mathcal{C}(0,1)=\mathcal{C}(1,0)=0$ en $\mathcal{D}(0,0)=0$. 

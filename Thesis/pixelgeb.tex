@@ -48,9 +48,9 @@ meeste beelden op internet kleurbeelden zijn.
 \subsection{Representatie}
 \label{sectie:kleurbeeld_repr}
 
-We beperken ons tot het RGB model en we beschouwen de ordening $\leq_{RGB,lex}$, die
+We beperken ons tot het RGB-model en we beschouwen de ordening $\leq_{RGB,lex}$, die
 gebaseerd is op de lexicografische ordening $\leq_{lex}$ en op de ordening voor kleuren in het 
-RGB model uit \cite{dewitte:vect_morph_ops}:
+RGB-model uit \cite{dewitte:vect_morph_ops}:
 $$
 \begin{array}{rcl}
 c <_{RGB} c' & \iff & d(c,Bl) < d(c',Bl)\ \lor \\
@@ -58,7 +58,7 @@ c <_{RGB} c' & \iff & d(c,Bl) < d(c',Bl)\ \lor \\
 c >_{RGB} c' & \iff & d(c,Wh) < d(c',Wh)\ \lor \\
 			   &	  & \quad(d(c,Wh) = d(c',Wh) \land d(c,Bl) > d(c',Bl)) \\[5pt]
 c =_{RGB} c'   & \iff & (d(c,Bl) = d(c',Bl) \land d(c,Wh) = d(c',Wh)) \\[10pt]
-c \leq_{lex} c' & \iff & r < r' \lor (r = r' \land g < g') \lor (r = r' \land g = g' \land b < b') \\[10pt]
+c \leq_{lex} c' & \iff & r < r' \lor (r = r' \land g < g') \lor (r = r' \land g = g' \land b \leq b') \\[10pt]
 c \leq_{RGB,lex} c' & \iff & c <_{RGB} c' \lor (c =_{RGB} c' \land c \leq_{lex} c')
 \end{array}
 $$
@@ -81,6 +81,9 @@ $$
 Een $m$-dimensionaal RGB-kleurbeeld kan dus gemodelleerd worden als een L-vaagverzameling in 
 $\mathbb{R}^m$, waarbij $L=[0,1]^3$. Net zoals bij grijswaardebeelden, is 
 het universum in de praktijk echter eerder een deelverzameling van $\mathbb{N}^2$.
+
+Merk op dat er gelijkaardige representaties kunnen gedefineerd worden voor het HSV- en L*a*b*-model
+\cite{vanderweken:construction_of_quality_measures}.
 
 \subsection{Similariteitsmaten}
 \label{sectie:kleurbeelden_similariteitsmaten}
@@ -320,6 +323,8 @@ eerst omzetten naar grijswaardebeelden,
 toepassen op de afzonderlijke kleurcomponenten en 
 de tralie-gebaseerde aanpak.
 
+\subsection{Resultaten van experimenten}
+
 Figuur~\ref{fig:scaling_gggrs_en_cputimes} toont de GGGRs en de rekentijden voor de 
 similariteitsmaten op basis van herschaling. De beste GGGR-waarde bekomen we in combinatie
 met $M_7$. In figuur~\ref{fig:results_beste_scaling} worden de resultaten van die maat
@@ -328,7 +333,25 @@ werkelijkheid. De beelden in onze testcollectie hebben immers allemaal dezelfde 
 waardoor er nooit herschaling nodig is. Als er wel herschaald moet worden, dan kunnen
 eventuele vervormingen zorgen voor slechtere performantie. 
 
-Een opvallende vastelling is dat de component-gebaseerde aanpak blijkbaar betere resultaten 
+Als we de similariteiten berekenen op nieuwe intermediaire beelden van 8 pixels, die 
+geconstrueerd worden met behulp van NeuQuant en Wu kwantisatie, dan bekomen we
+de meetresultaten die in figuur~\ref{fig:dom_colors_gggrs_en_cputimes} worden weergegeven.
+De maten op basis van NeuQuant geven duidelijk slechtere resultaten. Dat is wellicht te wijten
+aan het feit dat NeuQuant minder geschikt is voor kwantistatie naar een zeer klein aantal 
+kleuren. Door $M_5$ componentsgewijs toe te passen bekomen we in dit geval de beste resultaten. 
+Figuur~\ref{fig:results_beste_dom_colors} toont de resultaten van de component-gebaseerde aanpak
+in combinatie met Wu kwantisatie en $M_5$.
+
+In figuur~\ref{fig:multires_gggrs_en_cputimes} worden de GGGRs en de rekentijden van
+de similariteitsmaten op basis van beeldonderdelen getoond.
+De combinatie van de component-gebaseerde aanpak met
+$M_{I3c}$ geeft daarbij de beste GGGR-waarde. Zoals blijkt uit
+figuur~\ref{fig:results_beste_multires_pixelgeb}, zijn de resultaten van die
+maat niet zo overtuigend.
+
+\subsection{Verklaringen voor observaties}
+
+Een opvallende observatie is dat de component-gebaseerde aanpak blijkbaar betere resultaten 
 geeft dan de tralie-gebaseerde. Verkeerdelijk hoge similariteiten tussen sterk verschillende 
 beelden zijn de oorzaak daarvan. Bij het vergelijken
 van beelden die niet sterk verschillen kunnen dergelijke \emph{valse positieven} niet optreden.
@@ -340,8 +363,9 @@ $B((0,0))=(0,1,0)$. Er geldt dan:
 $$
 |A_1|=1 \quad |A_2|=0 \quad |A_3|=0 \qquad |B_1|=0 \quad |B_2|=1 \quad |B_3|=0 \qquad |A|=|B|=\frac{\sqrt{1}}{\sqrt{3}}
 $$
-met $A(x)=(A_1(x),A_2(x),A_3(x))$ en $B(x)=(B_1(x),B_2(x),B_3(x))$ voor alle $x \in X$. Als we
-$\frac{0}{0} = 0$ veronderstellen, dan geeft de component-gebaseerde aanpak dus
+met $A(x)=(A_1(x),A_2(x),A_3(x))$ en $B(x)=(B_1(x),B_2(x),B_3(x))$ voor elke $x$ uit het universum. Als we
+$\frac{0}{0} = 0$ veronderstellen, dan geeft rechtstreekse component-gebaseerde toepassing van 
+$M_5$ dus
 $$
 \begin{array}{r@{\ =\ }l}
 \displaystyle\frac{M_5(A_1,B_1)+M_5(A_2,B_2)+M_5(A_3,B_3)}{3} &
@@ -351,32 +375,45 @@ $$
 $$
 terwijl we via de tralie-gebaseerde aanpak
 $$
-M_5(A,B) = \frac{\min\{|A|,|B|\}}{\max\{|A|,|B|\}} = \frac{\frac{\sqrt{1}}{\sqrt{3}}}{\frac{\sqrt{1}}{\sqrt{3}}} = 1
+M_5(A,B) = \frac{\min\{|A|,|B|\}}{\max\{|A|,|B|\}} = \frac{\scriptstyle \sqrt{1} / \sqrt{3}}{\scriptstyle \sqrt{1} / \sqrt{3}} = 1
 $$
 bekomen. Voor de andere vaagsimilariteitsmaten die gebaseerd zijn op cardinaliteit, kunnen
-analoge redeneringen gemaakt worden. De op afstand gebaseerde vaagsimilariteitsmaten ondervinden
+gelijkaardige redeneringen gemaakt worden. De op afstand gebaseerde vaagsimilariteitsmaten ondervinden
 minder hinder van dit probleem. Vandaar dat de tralie-gebaseerde aanpak in combinatie met
-$M_{1a}$, $M_{1b}$, $M_{1c}$ of $M_{3}$ relatief gezien iets beter werkt. 
+$M_{1a}$, $M_{1b}$, $M_{1c}$, $M_{2}$ of $M_{3}$ relatief gezien iets beter werkt. 
 
-Als we de similariteiten berekenen op nieuwe intermediaire beelden van 8 pixels, die 
-geconstrueerd worden met behulp van NeuQuant en Wu kwantisatie, dan bekomen we de
-de meetresultaten die in figuur~\ref{fig:dom_colors_gggrs_en_cputimes} worden weergegeven.
+We stellen ook vast dat $M_8$, $M_{8c}$, $M_{10}$, $M_{10c}$ en $M_{13}$ systematisch aanleiding
+geven tot de minst performante maten. Dat kunnen we als volgt verklaren. Stel dat $A$ en $B$
+twee vaagverzamelingen in een zelfde universum $X$ zijn, waarvoor $A(x) \le B(x)$ voor alle
+$x \in X$. Er geldt dan $A \cap B$ = A en ook $\min\{|A|,|B|\}=|A|$ zodat
+$$
+M_8(A,B)= \frac{|A \cap B|}{\min\{|A|,|B|\}} = \frac{|A|}{|A|} = 1
+$$
+als $|A| \ne 0$. Hoewel $A(x) \le B(x)$ in de praktijk zelden zal gelden voor alle $x$ uit $X$, 
+is het niet uitzonderlijk dat die ongelijkheid geldt voor de meeste $x \in X$. In dergelijke 
+gevallen zal $M_8(A,B) \approx 1$, terwijl de beelden waaruit $A$ en $B$ werden afgeleid toch 
+zeer verschillend kunnen zijn. Er treden dus opnieuw valse positieven op.
+Gelijkaardige redeneringen zijn mogelijk voor $M_{8c}$, $M_{10}$, $M_{10c}$ en $M_{13}$.
 
-%We gebruiken zowel NeuQuant als de Wu quantizer. De beeldonderdelen die we gebruiken bestaan 
-%uit $8 \cdot 8 = 64$ pixels.
+% We stellen ook vast dat $M_8$, $M_{8c}$, $M_{10}$, $M_{10c}$ en $M_{13}$ systematisch aanleiding
+% geven tot de minst performante maten. Dat kunnen we als volgt verklaren. Stel dat $A$ een 
+% volledig wit beeld is: $A(x)=(1,1,1)$ voor alle $x \in X$. Voor een willekeurig beeld $B$ met
+% dezelfde resolutie als $A$ geldt dan $A \cap B = B$ en ook $min\{|A|,|B|\}=|B|$, zodat:
+% $$
+% M_8(A,B) = \frac{|A \cap B|}{max\{|A|,|B|\}} = \frac{|B|}{|B|} = 1
+% $$
+% Volledig analoog vinden we voor een volledig zwart beeld $A$ en een willekeurig beeld $B$ met
+% dezelfde resolutie als $A$:
+% $$
+% M_8(A,B) = \frac{|A \cap B|}{max\{|A|,|B|\}} = \frac{|A|}{|A|} = \frac{0}{0}
+% $$
 
-De component-gebaseerde aanpak in 
-combinatie met $M_{I3c}$ geeft de GGGR-waarde $0.0240259$. Bij de tralie-gebaseerde aanpak
-bekomen we de GGGR-waarde $0.0264069$ als we $M_{1a}$ gebruiken. De resultaten van deze
-maten worden respectievelijk weergegeven in figuur~\ref{fig:results_beste_componenten_pixelgeb} en
-figuur~\ref{fig:results_beste_tralie_pixelgeb}.
-In die figuren zien we duidelijk dat de resultaten niet zo overtuigend zijn. Blijkbaar 
-is de pixelgebaseerde benadering niet de meest geschikte voor image retrieval. 
-
-Op het vlak van rekentijd zijn de similariteitsmaten op basis van de eerste en de laatste manier
-aan elkaar gewaagd. Bij het toepassen van een similariteitsmaat voor grijswaardebeelden op de 
-afzonderlijke kleurcomponenten, hebben we echter aanzienlijk meer rekentijd nodig. Dat is niet
-verwonderlijk, aangezien er dan ook driemaal zoveel werk moet verricht worden.
+Tenslotte blijkt ook nog dat de similariteitsmaten die een maat voor grijswaardebeelden 
+toepassen op de afzonderlijke kleurcomponenten, meestal aanzienlijk meer rekentijd nodig hebben. 
+Dat is niet verwonderlijk, aangezien er daarbij ook grosso modo driemaal zoveel werk verricht moet worden.
+Bij de maten op basis van de geconstrueerde intermediaire beelden is de rekentijd overal even
+groot. Ook dat is logisch, vermits de zeer kleine afmetingen van die intermediaire beelden als
+gevolg hebben dat de rekentijd nagenoeg enkel afhangt van de kleurkwantisatie.
 
 \begin{figure}[tbp]
 \begin{center}
@@ -834,6 +871,6 @@ verwonderlijk, aangezien er dan ook driemaal zoveel werk moet verricht worden.
 & {\scriptsize 0.1}
 \\
 \end{tabular}
-\caption{\label{fig:results_beste_componenten_pixelgeb}De GGR-waarde en de eerste tien resultaten voor elk voorbeeld bij de resolutie-onafhankelijke similariteitsmaat die we bekomen door beeldonderdelen componentsgewijs te vergelijken met behulp van $M_{I3c}$.}
+\caption{\label{fig:results_beste_multires_pixelgeb}De GGR-waarde en de eerste tien resultaten voor elk voorbeeld bij de resolutie-onafhankelijke similariteitsmaat die we bekomen door beeldonderdelen componentsgewijs te vergelijken met behulp van $M_{I3c}$.}
 \end{center}
 \end{figure}
