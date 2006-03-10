@@ -2,9 +2,9 @@
 
 De similariteitsmaten die we in dit hoofdstuk beschouwen,
 meten de gelijkenis tussen twee beelden door hun beeldpunten met elkaar te vergelijken.
-We identificeren de beelden dus met vaagverzamelingen in een universum dat bestaat uit beeldpunten.
-Die beeldpunten worden ook \emph{picture elements} of kortweg \emph{pixels} genoemd. Vandaar
-dat we spreken van \emph{pixelgebaseerde} maten.
+We identificeren de beelden dus met vaagverzamelingen in een universum $P$ dat bestaat uit 
+beeldpunten. Die beeldpunten worden ook \emph{picture elements} of kortweg \emph{pixels} genoemd. 
+Vandaar dat we spreken van \emph{pixelgebaseerde} maten.
 
 \section{Grijswaardebeelden}
 
@@ -14,8 +14,8 @@ Een \emph{binair beeld} is een beeld dat enkel witte en zwarte beeldpunten bevat
 $n$-dimensionaal binair beeld dus modelleren als een scherpe verzameling $A$ in $\mathbb{R}^n$, met:
 $$
 \begin{array}{rcl}
-x \in A & \iff & x \textrm{ is een wit punt in het beeld} \\
-x \notin A & \iff & x \textrm{ is een zwart punt in het beeld}
+p \in A & \iff & p \textrm{ is een wit punt in het beeld} \\
+p \notin A & \iff & p \textrm{ is een zwart punt in het beeld}
 \end{array}
 $$ 
 Vermits een binair beeld in de praktijk voorgesteld wordt als een rooster bestaande uit een
@@ -27,9 +27,9 @@ geldt: hoe groter de grijswaarde, hoe lichter de grijstint. Een $n$-dimensionaal
 kan dus gemodelleerd worden als een vaagverzameling $A$ in $\mathbb{R}^n$ bepaald door:
 $$
 \begin{array}{rcl}
-A(x) = 1 & \iff & x \textrm{ is een wit punt in het beeld} \\
-A(x) = 0 & \iff & x \textrm{ is een zwart punt in het beeld} \\
-A(x) \in\ ]0,1[ & \iff & x \textrm{ is een beeldpunt met een grijstint}
+A(p) = 1 & \iff & p \textrm{ is een wit punt in het beeld} \\
+A(p) = 0 & \iff & p \textrm{ is een zwart punt in het beeld} \\
+A(p) \in\ ]0,1[ & \iff & p \textrm{ is een beeldpunt met een grijstint}
 \end{array}
 $$
 Ook bij grijswaardebeelden is het universum in de praktijk eerder een deelverzameling van $\mathbb{N}^2$.
@@ -78,8 +78,8 @@ $$
 \end{array}
 \end{array}
 $$
-Een $m$-dimensionaal RGB-kleurbeeld kan dus gemodelleerd worden als een L-vaagverzameling in 
-$\mathbb{R}^m$, waarbij $L=[0,1]^3$. Net zoals bij grijswaardebeelden, is 
+Een $n$-dimensionaal RGB-kleurbeeld kan dus gemodelleerd worden als een L-vaagverzameling in 
+$\mathbb{R}^n$, waarbij $L=[0,1]^3$. Net zoals bij grijswaardebeelden, is 
 het universum in de praktijk echter eerder een deelverzameling van $\mathbb{N}^2$.
 
 Merk op dat er gelijkaardige representaties kunnen gedefineerd worden voor het HSV- en L*a*b*-model
@@ -114,11 +114,12 @@ $$
 c - c' = (r-r',g-g',b-b') \quad \textrm{ en } \quad |c| = \frac{1}{\sqrt{3}} \cdot \sqrt{r^2 + g^2 + b^2}.
 $$
 Om de overige vaagsimilariteitsmaten te veralgemenen, hebben we een uitbreiding van het
-begrip sigma count nodig. Hiervoor gebruiken we
+begrip sigma count nodig. Dat kan door
 $$
-|A|=\frac{1}{\sqrt{n}}\sum_{x \in X}\sqrt{(A_1(x))^2+(A_2(x))^2+\ldots+(A_n(x))^2}
+|A|=\frac{1}{\sqrt{n}}\sum_{p \in P}\sqrt{(A_1(p))^2+(A_2(p))^2+(A_3(p))^2}
 $$
-met $n=3$. Die overige maten maken bovendien ook gebruik van de bewerkingen $co$ (complement), 
+te defini\"eren, waarbij $A(p)=(A_1(p),A_2(p),A_3(p))$ voor alle $p$ uit $P$. Die overige maten maken 
+bovendien ook gebruik van de bewerkingen $co$ (complement), 
 $\cap$ (doorsnede) en $\cup$ (unie). Doordat we 
 $(\mathcal{N},\mathcal{C},\mathcal{D})=(N_s,T_M,S_M)$ gekozen hebben, moeten we
 dus $1 - c$, $\max \{c,c'\}$ en $\min \{c,c'\}$ kunnen bepalen voor alle 
@@ -155,7 +156,7 @@ De meest voor de hand liggende manier om het probleem met betrekking tot de reso
 te verhelpen, is (\'e\'en van) beide beelden te herschalen. Op die manier kunnen we er immers gemakkelijk 
 voor zorgen dat we twee beelden met dezelfde resolutie bekomen. Een nadeel hierbij is echter dat de
 herschaling sterk vervormde intermediaire beelden kan opleveren. Figuur~\ref{fig:rescale} illustreert
-het gebruike van herschaling. Het berekenen van de similariteit tussen twee beelden stellen we grafisch
+het gebruik van herschaling. Het berekenen van de similariteit tussen twee beelden stellen we grafisch
 voor door de beelden met elkaar te verbinden. 
 
 We kunnen ook volledig nieuwe intermediaire beelden construeren. Een mogelijkheid is bijvoorbeeld om
@@ -166,6 +167,36 @@ van het nieuwe beeld van links naar rechts en van boven naar onder. Daarbij is d
 telkens de nog niet gebruikte kleur die het meest voorkomt in het gekwantiseerde beeld. Voor een 
 intermediair beeld van $M$ bij $N$ pixels krijgt het beeldpunt $(0,0)$ dus de kleur die het meest
 voorkomt in het gekwantiseerde beeld, terwijl we voor positie $(M,N)$ de minst voorkomende kleur gebruiken.
+
+Een andere optie is de constructie van de intermediaire beelden te baseren op
+\emph{kleurmomenten}. Het \emph{moment van de $k$-de orde rond $a$} ($a
+\in \mathbb{R}$) van een discrete toevalsveranderlijke $T$ met
+probabilitietsfunctie $Pr_T$ wordt als volgt gedefinieerd
+\cite{demeyder:statistiek}: 
+$$
+\mu_k(a) = E[(T-a)^k] = \sum_{t \in W} (t-a)^k Pr_T(t)
+$$
+met $W$ de aftelbare verzameling van re\"ele waarden die $T$ kan aannemen. Het
+moment
+van de eerste orde rond $0$ is het \emph{gemiddelde} en wordt doorgaans kortweg als
+$\mu$ genoteerd. Bij de \emph{centrale momenten} is $a=\mu$. De centrale 
+momenten van de tweede en derde orde zijn beter bekend als respectievelijk de
+\emph{variantie} en de \emph{scheefheid}. We construeren het intermediair beeld
+voor een beeld $A$ dan als volgt. Zij $A(p)=(A_1(p),A_2(p),A_3(p))$ voor
+alle $p \in P$. Voor de componenten $c_{1,i}$, $i \in \{1,2,3\}$, van de
+kleur $c_1 \in [0,1]^3$ van de eerste pixel gebruiken we het gemiddelde: $$
+c_{1,i} = \frac{1}{|P|} \sum_{p \in P} A_i(p)  
+$$
+De componenten $c_{j,i}$, $i \in \{1,2,3\}$, van de kleuren $c_j$, $j \in
+\{2,\ldots,M-1\}$, van de overige pixels worden gegeven door de $j$-de
+machtswortel van het centrale moment van de $j$-de orde: $$
+c_{j,i} = \left( \frac{1}{|P|} \sum_{p \in P} (A_i(p) - c_{1,i})^j \right)^{1/j}
+$$  
+Op die manier construeren we een intermediair beeld dat de
+belangrijkste informatie uit de distributie van de kleuren van het origineel
+destilleert. Net zoals in \cite{stricker:similarity_of_color_images} kiezen we 
+in deze scriptie steeds $M = 3$. We vullen het gemiddelde dus aan met twee
+centrale momenten.
 
 \subsection{Beeldonderdelen}
 
@@ -204,7 +235,7 @@ is de similariteit tussen $A_j$ en $B_m$ dus de laatste die we berekenen. Die si
 voegen we ook nog toe aan $S$. Tenslotte bepalen we de globale similarteit tussen $A$ en $B$ 
 door het gemiddelde van de waarden uit $S$ te berekenen. De waarde $M(A,B)$ van een 
 resolutie-onafhankelijke similariteitsmaat $M$, op basis van een 
-pixelgebaseerde maat $P$, wordt dus als volgt bepaald uit de geordende lijsten van
+pixelgebaseerde maat $M'$, wordt dus als volgt bepaald uit de geordende lijsten van
 beeldonderdelen:
 \begin{multicols}{2}
 \begin{algorithmic}[1]
@@ -217,18 +248,18 @@ beeldonderdelen:
 \STATE $j \leftarrow 1$
 \WHILE{$i \leq m \land j \leq n$}
 \STATE $prev \leftarrow 0$
-\STATE $curr \leftarrow P(A_i,B_j)$
+\STATE $curr \leftarrow M'(A_i,B_j)$
 \WHILE{$prev < curr$}
 \STATE $j \leftarrow j+1$
 \STATE $prev \leftarrow curr$
-\STATE $curr \leftarrow P(A_i,B_j)$
+\STATE $curr \leftarrow M'(A_i,B_j)$
 \ENDWHILE
 \STATE voeg $\max \{prev, curr\}$ toe aan $S$
 \STATE $i \leftarrow i+1$
 %\STATE $sum \leftarrow sum + prev$
 \ENDWHILE
 \IF{$prev \geq curr \land i \leq m$}
-\STATE $curr \leftarrow P(A_i,B_j)$
+\STATE $curr \leftarrow M'(A_i,B_j)$
 \STATE voeg $curr$ toe aan $S$
 %\STATE $sum \leftarrow sum + sim$
 \ENDIF
@@ -333,7 +364,7 @@ werkelijkheid. De beelden in onze testcollectie hebben immers allemaal dezelfde 
 waardoor er nooit herschaling nodig is. Als er wel herschaald moet worden, dan kunnen
 eventuele vervormingen zorgen voor slechtere performantie. 
 
-Als we de similariteiten berekenen op nieuwe intermediaire beelden van 8 pixels, die 
+Als we de similariteiten berekenen op intermediaire beelden van 8 pixels die 
 geconstrueerd worden met behulp van NeuQuant en Wu kwantisatie, dan bekomen we
 de meetresultaten die in figuur~\ref{fig:dom_colors_gggrs_en_cputimes} worden weergegeven.
 De maten op basis van NeuQuant geven duidelijk slechtere resultaten. Dat is wellicht te wijten
@@ -363,7 +394,7 @@ $B((0,0))=(0,1,0)$. Er geldt dan:
 $$
 |A_1|=1 \quad |A_2|=0 \quad |A_3|=0 \qquad |B_1|=0 \quad |B_2|=1 \quad |B_3|=0 \qquad |A|=|B|=\frac{\sqrt{1}}{\sqrt{3}}
 $$
-met $A(x)=(A_1(x),A_2(x),A_3(x))$ en $B(x)=(B_1(x),B_2(x),B_3(x))$ voor elke $x$ uit het universum. Als we
+met $A(p)=(A_1(p),A_2(p),A_3(p))$ en $B(p)=(B_1(p),B_2(p),B_3(p))$ voor elke $p$ uit het universum. Als we
 $\frac{0}{0} = 0$ veronderstellen, dan geeft rechtstreekse component-gebaseerde toepassing van 
 $M_5$ dus
 $$
@@ -384,13 +415,13 @@ $M_{1a}$, $M_{1b}$, $M_{1c}$, $M_{2}$ of $M_{3}$ relatief gezien iets beter werk
 
 We stellen ook vast dat $M_8$, $M_{8c}$, $M_{10}$, $M_{10c}$ en $M_{13}$ systematisch aanleiding
 geven tot de minst performante maten. Dat kunnen we als volgt verklaren. Stel dat $A$ en $B$
-twee vaagverzamelingen in een zelfde universum $X$ zijn, waarvoor $A(x) \le B(x)$ voor alle
-$x \in X$. Er geldt dan $A \cap B$ = A en ook $\min\{|A|,|B|\}=|A|$ zodat
+twee beelden zijn, waarvoor $A(p) \le B(p)$ voor alle
+$p \in P$. Er geldt dan $A \cap B$ = A en ook $\min\{|A|,|B|\}=|A|$ zodat
 $$
 M_8(A,B)= \frac{|A \cap B|}{\min\{|A|,|B|\}} = \frac{|A|}{|A|} = 1
 $$
-als $|A| \ne 0$. Hoewel $A(x) \le B(x)$ in de praktijk zelden zal gelden voor alle $x$ uit $X$, 
-is het niet uitzonderlijk dat die ongelijkheid geldt voor de meeste $x \in X$. In dergelijke 
+als $|A| \ne 0$. Hoewel $A(x) \le B(x)$ in de praktijk zelden zal gelden voor alle $p$ uit $P$, 
+is het niet uitzonderlijk dat die ongelijkheid geldt voor de meeste $p \in P$. In dergelijke 
 gevallen zal $M_8(A,B) \approx 1$, terwijl de beelden waaruit $A$ en $B$ werden afgeleid toch 
 zeer verschillend kunnen zijn. Er treden dus opnieuw valse positieven op.
 Gelijkaardige redeneringen zijn mogelijk voor $M_{8c}$, $M_{10}$, $M_{10c}$ en $M_{13}$.
@@ -580,7 +611,9 @@ gevolg hebben dat de rekentijd nagenoeg enkel afhangt van de kleurkwantisatie.
 \end{minipage}
 \label{fig:dom_colors_wu_gggrs_en_cputimes}
 }
-\caption{\label{fig:dom_colors_gggrs_en_cputimes}De GGGR-waarde en de gebruikte rekentijd in ms voor elk van de resolutie-onafhankelijke pixelgebaseerde similariteitsmaten op basis van nieuwe geconstrueerde intermediaire beelden met (a) NeuQuant en (b) Wu kwantisatie.}
+\caption{\label{fig:dom_colors_gggrs_en_cputimes}De GGGR-waarde en de gebruikte rekentijd in ms 
+voor elk van de resolutie-onafhankelijke pixelgebaseerde similariteitsmaten die gebruik maken 
+van op basis van (a) NeuQuant en (b) Wu kwantisatie geconstrueerde intermediaire beelden.}
 \end{center}
 \end{figure}
 
@@ -722,9 +755,164 @@ gevolg hebben dat de rekentijd nagenoeg enkel afhangt van de kleurkwantisatie.
 & {\scriptsize 0.047619047619047616}
 \\
 \end{tabular}
-\caption{\label{fig:results_beste_dom_colors}De GGR-waarde en de eerste tien resultaten voor elk voorbeeld bij de resolutie-onafhankelijke similariteitsmaat die we bekomen door nieuwe geconstrueerde intermediaire beelden componentsgewijs te vergelijken met behulp van $M_5$.}
+\caption{\label{fig:results_beste_dom_colors}De GGR-waarde en de eerste tien resultaten voor elk 
+voorbeeld bij de resolutie-onafhankelijke similariteitsmaat die we bekomen door op basis van Wu 
+kwantisatie geconstrueerde intermediaire beelden componentsgewijs te vergelijken met behulp van 
+$M_5$.}
 \end{center}
 \end{figure}
+
+\begin{figure}[!t]
+\begin{center}
+\includegraphics[width=\textwidth]{plots/moments_gggrs_en_cputimes_filled.eps}
+\caption{\label{fig:multires_gggrs_en_cputimes}De GGGR-waarde en de gebruikte rekentijd in ms voor elk van de resolutie-onafhankelijke pixelgebaseerde similariteitsmaten die gebruik maken 
+van op basis van kleurmomenten geconstrueerde intermediaire beelden.}
+\end{center}
+\end{figure}
+
+\begin{figure}[tbp]
+\begin{center}
+\begin{tabular}{m{11cm} | m{3cm} |}
+\textbf{Eerste tien resultaten:} & \textbf{GGR:} \\
+\vspace{4pt}
+\includegraphics[width=1cm]{coil/beeld-12.eps}
+\includegraphics[width=1cm]{coil/beeld-13.eps}
+\includegraphics[width=1cm]{coil/beeld-16.eps}
+\includegraphics[width=1cm]{coil/beeld-15.eps}
+\includegraphics[width=1cm]{coil/beeld-17.eps}
+\includegraphics[width=1cm]{coil/beeld-14.eps}
+\includegraphics[width=1cm]{coil/beeld-44.eps}
+\includegraphics[width=1cm]{coil/beeld-1.eps}
+\includegraphics[width=1cm]{coil/beeld-5.eps}
+\includegraphics[width=1cm]{coil/beeld-4.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-6.eps}
+\includegraphics[width=1cm]{coil/beeld-9.eps}
+\includegraphics[width=1cm]{coil/beeld-8.eps}
+\includegraphics[width=1cm]{coil/beeld-10.eps}
+\includegraphics[width=1cm]{coil/beeld-7.eps}
+\includegraphics[width=1cm]{coil/beeld-11.eps}
+\includegraphics[width=1cm]{coil/beeld-65.eps}
+\includegraphics[width=1cm]{coil/beeld-64.eps}
+\includegraphics[width=1cm]{coil/beeld-4.eps}
+\includegraphics[width=1cm]{coil/beeld-43.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-18.eps}
+\includegraphics[width=1cm]{coil/beeld-22.eps}
+\includegraphics[width=1cm]{coil/beeld-23.eps}
+\includegraphics[width=1cm]{coil/beeld-21.eps}
+\includegraphics[width=1cm]{coil/beeld-20.eps}
+\includegraphics[width=1cm]{coil/beeld-19.eps}
+\includegraphics[width=1cm]{coil/beeld-12.eps}
+\includegraphics[width=1cm]{coil/beeld-13.eps}
+\includegraphics[width=1cm]{coil/beeld-16.eps}
+\includegraphics[width=1cm]{coil/beeld-15.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-24.eps}
+\includegraphics[width=1cm]{coil/beeld-25.eps}
+\includegraphics[width=1cm]{coil/beeld-28.eps}
+\includegraphics[width=1cm]{coil/beeld-27.eps}
+\includegraphics[width=1cm]{coil/beeld-26.eps}
+\includegraphics[width=1cm]{coil/beeld-29.eps}
+\includegraphics[width=1cm]{coil/beeld-8.eps}
+\includegraphics[width=1cm]{coil/beeld-7.eps}
+\includegraphics[width=1cm]{coil/beeld-9.eps}
+\includegraphics[width=1cm]{coil/beeld-6.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+\includegraphics[width=1cm]{coil/beeld-31.eps}
+\includegraphics[width=1cm]{coil/beeld-32.eps}
+\includegraphics[width=1cm]{coil/beeld-33.eps}
+\includegraphics[width=1cm]{coil/beeld-34.eps}
+\includegraphics[width=1cm]{coil/beeld-35.eps}
+\includegraphics[width=1cm]{coil/beeld-61.eps}
+\includegraphics[width=1cm]{coil/beeld-63.eps}
+\includegraphics[width=1cm]{coil/beeld-62.eps}
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-36.eps}
+\includegraphics[width=1cm]{coil/beeld-39.eps}
+\includegraphics[width=1cm]{coil/beeld-40.eps}
+\includegraphics[width=1cm]{coil/beeld-41.eps}
+\includegraphics[width=1cm]{coil/beeld-37.eps}
+\includegraphics[width=1cm]{coil/beeld-38.eps}
+\includegraphics[width=1cm]{coil/beeld-11.eps}
+\includegraphics[width=1cm]{coil/beeld-10.eps}
+\includegraphics[width=1cm]{coil/beeld-3.eps}
+\includegraphics[width=1cm]{coil/beeld-46.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-48.eps}
+\includegraphics[width=1cm]{coil/beeld-49.eps}
+\includegraphics[width=1cm]{coil/beeld-50.eps}
+\includegraphics[width=1cm]{coil/beeld-51.eps}
+\includegraphics[width=1cm]{coil/beeld-53.eps}
+\includegraphics[width=1cm]{coil/beeld-52.eps}
+\includegraphics[width=1cm]{coil/beeld-37.eps}
+\includegraphics[width=1cm]{coil/beeld-40.eps}
+\includegraphics[width=1cm]{coil/beeld-41.eps}
+\includegraphics[width=1cm]{coil/beeld-38.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-54.eps}
+\includegraphics[width=1cm]{coil/beeld-55.eps}
+\includegraphics[width=1cm]{coil/beeld-57.eps}
+\includegraphics[width=1cm]{coil/beeld-58.eps}
+\includegraphics[width=1cm]{coil/beeld-56.eps}
+\includegraphics[width=1cm]{coil/beeld-59.eps}
+\includegraphics[width=1cm]{coil/beeld-35.eps}
+\includegraphics[width=1cm]{coil/beeld-32.eps}
+\includegraphics[width=1cm]{coil/beeld-31.eps}
+\includegraphics[width=1cm]{coil/beeld-33.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-63.eps}
+\includegraphics[width=1cm]{coil/beeld-61.eps}
+\includegraphics[width=1cm]{coil/beeld-62.eps}
+\includegraphics[width=1cm]{coil/beeld-64.eps}
+\includegraphics[width=1cm]{coil/beeld-65.eps}
+\includegraphics[width=1cm]{coil/beeld-43.eps}
+\includegraphics[width=1cm]{coil/beeld-7.eps}
+\includegraphics[width=1cm]{coil/beeld-1.eps}
+\includegraphics[width=1cm]{coil/beeld-32.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-0.eps}
+\includegraphics[width=1cm]{coil/beeld-42.eps}
+\includegraphics[width=1cm]{coil/beeld-1.eps}
+\includegraphics[width=1cm]{coil/beeld-4.eps}
+\includegraphics[width=1cm]{coil/beeld-44.eps}
+\includegraphics[width=1cm]{coil/beeld-43.eps}
+\includegraphics[width=1cm]{coil/beeld-2.eps}
+\includegraphics[width=1cm]{coil/beeld-5.eps}
+\includegraphics[width=1cm]{coil/beeld-46.eps}
+\includegraphics[width=1cm]{coil/beeld-3.eps}
+& {\scriptsize 0.02857142857142857}
+\\
+\includegraphics[width=1cm]{coil/beeld-42.eps}
+\includegraphics[width=1cm]{coil/beeld-0.eps}
+\includegraphics[width=1cm]{coil/beeld-1.eps}
+\includegraphics[width=1cm]{coil/beeld-43.eps}
+\includegraphics[width=1cm]{coil/beeld-4.eps}
+\includegraphics[width=1cm]{coil/beeld-44.eps}
+\includegraphics[width=1cm]{coil/beeld-2.eps}
+\includegraphics[width=1cm]{coil/beeld-5.eps}
+\includegraphics[width=1cm]{coil/beeld-3.eps}
+\includegraphics[width=1cm]{coil/beeld-45.eps}
+& {\scriptsize 0.06428571428571428}
+\\
+\end{tabular}
+\caption{\label{fig:results_beste_moments_pixelgeb}De GGR-waarde en de eerste tien resultaten voor elk voorbeeld bij de resolutie-onafhankelijke similariteitsmaat die we bekomen door op basis van kleurmomenten geconstrueerde intermediaire beelden componentsgewijs te vergelijken met behulp van $M_{I3c}$.}
+\end{center}
+\end{figure}
+
+
 
 \begin{figure}[!t]
 \begin{center}
