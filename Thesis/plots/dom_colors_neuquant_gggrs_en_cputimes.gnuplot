@@ -3,8 +3,8 @@ set data style boxes
 set size 1.0,0.7
 set grid
 
-set yrange [0.0:0.5]
-set y2range [4096:70000]
+set yrange [0.0:0.8]
+set y2range [4096:120000]
 set log y2 2
 set format y2 "2^{%L}"
 set y2tics
