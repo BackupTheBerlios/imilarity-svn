@@ -1,0 +1,115 @@
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M7c, SCT smoothing and Spatial scale	145455	0.014935064935064935
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M12, SCT smoothing and Spatial scale	149386	0.014935064935064935
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M6c, SCT smoothing and Spatial scale	146651	0.015584415584415584
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using MI3c, SCT smoothing and Spatial scale	146430	0.015584415584415584
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M1a, SCT smoothing and Spatial scale	146144	0.015584415584415588
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using MI3, no smoothing and Default scale	36866	0.0158008658008658
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M1c, SCT smoothing and Spatial scale	145885	0.016666666666666666
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M1b, SCT smoothing and Spatial scale	145836	0.017316017316017316
+Fuzzy Histogam using M6c and Uniform quantizer	296845	0.017316017316017316
+Fuzzy Histogam using M1a and Uniform quantizer	293403	0.01774891774891775
+Fuzzy Histogam using MI3c and Uniform quantizer	296174	0.01774891774891775
+Fuzzy Histogam using M1b and Uniform quantizer	293896	0.01904761904761905
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M3, SCT smoothing and Spatial scale	147790	0.019696969696969695
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M9c, SCT smoothing and Spatial scale	146254	0.019913419913419914
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M6, SCT smoothing and Spatial scale	147349	0.020129870129870133
+Fuzzy Histogam using MI3 and Uniform quantizer	296633	0.02034632034632035
+Fuzzy Histogam using M1c and Uniform quantizer	293916	0.02207792207792208
+Fuzzy Histogam using M3 and Uniform quantizer	293949	0.02207792207792208
+Fuzzy Histogam using M6 and Uniform quantizer	296892	0.02207792207792208
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M7, SCT smoothing and Spatial scale	145332	0.022727272727272728
+Fuzzy Histogam using M9c and Uniform quantizer	296171	0.023809523809523805
+Fuzzy Histogam using M7 and Uniform quantizer	296593	0.024242424242424242
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using MI3, SCT smoothing and Spatial scale	146509	0.025974025974025972
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M3, SCT smoothing and Default scale	38613	0.026406926406926403
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M6, SCT smoothing and Default scale	37936	0.027056277056277056
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using MI3, SCT smoothing and Default scale	37971	0.029220779220779217
+Fuzzy Histogam using M7c and Uniform quantizer	296651	0.03073593073593073
+Fuzzy Histogam using M12 and Uniform quantizer	296783	0.03073593073593073
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M3, no smoothing and Default scale	36673	0.0354978354978355
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M6, no smoothing and Default scale	36846	0.0354978354978355
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M9, SCT smoothing and Spatial scale	145846	0.03722943722943723
+Focal using Pseudo Fuzzy Histogram with Uniform quantizer using MI3, no smoothing and Default scale	204501	0.03744588744588744
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M7, SCT smoothing and Default scale	37853	0.03766233766233766
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M1a, SCT smoothing and Default scale	37093	0.0393939393939394
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M6c, SCT smoothing and Default scale	37934	0.03982683982683983
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using MI3c, SCT smoothing and Default scale	37926	0.03982683982683983
+Fuzzy Histogam using M2 and Uniform quantizer	293552	0.04090909090909091
+Fuzzy Histogam using M9 and Uniform quantizer	296272	0.04307359307359307
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M7, no smoothing and Default scale	36639	0.04437229437229437
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M8, no smoothing and Default scale	37585	0.04502164502164502
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M2, SCT smoothing and Spatial scale	146508	0.04588744588744589
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M8c, SCT smoothing and Default scale	37634	0.0487012987012987
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M13, SCT smoothing and Default scale	40736	0.0487012987012987
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M1a, no smoothing and Default scale	36641	0.04956709956709957
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M6c, no smoothing and Default scale	36775	0.04956709956709957
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using MI3c, no smoothing and Default scale	36653	0.04956709956709957
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M10, SCT smoothing and Default scale	37726	0.051515151515151514
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M8, SCT smoothing and Default scale	37864	0.05454545454545454
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M7c, SCT smoothing and Default scale	37977	0.05606060606060606
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M12, SCT smoothing and Default scale	40748	0.05606060606060606
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M1b, SCT smoothing and Default scale	37236	0.05649350649350649
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M9c, SCT smoothing and Default scale	37727	0.0606060606060606
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M1c, SCT smoothing and Default scale	37660	0.06125541125541126
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M8c, no smoothing and Default scale	37279	0.061471861471861476
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M13, no smoothing and Default scale	36862	0.061471861471861476
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M2, SCT smoothing and Default scale	37535	0.06428571428571428
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M7c, no smoothing and Default scale	36990	0.06558441558441558
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M12, no smoothing and Default scale	37250	0.06558441558441558
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M10, no smoothing and Default scale	36670	0.06558441558441559
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M9c, no smoothing and Default scale	36859	0.06645021645021644
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M9, SCT smoothing and Default scale	37687	0.0722943722943723
+Focal using Pseudo Fuzzy Histogram with Uniform quantizer using M3, no smoothing and Default scale	203289	0.07251082251082251
+Focal using Pseudo Fuzzy Histogram with Uniform quantizer using M6, no smoothing and Default scale	203344	0.07251082251082251
+Focal using Pseudo Fuzzy Histogram with Uniform quantizer using M1a, no smoothing and Default scale	204981	0.07813852813852813
+Focal using Pseudo Fuzzy Histogram with Uniform quantizer using MI3c, no smoothing and Default scale	205034	0.07987012987012986
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M8, SCT smoothing and Spatial scale	145668	0.08030303030303032
+Focal using Pseudo Fuzzy Histogram with Uniform quantizer using M6c, no smoothing and Default scale	203470	0.08051948051948052
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M1b, no smoothing and Default scale	36693	0.08246753246753247
+Focal using Pseudo Fuzzy Histogram with Uniform quantizer using M7, no smoothing and Default scale	203473	0.08398268398268398
+Focal using Pseudo Fuzzy Histogram with Uniform quantizer using M8, no smoothing and Default scale	203241	0.08419913419913419
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M9, no smoothing and Default scale	36945	0.08441558441558443
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M5c, SCT smoothing and Spatial scale	146912	0.08679653679653682
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M11c, SCT smoothing and Spatial scale	149211	0.08679653679653682
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M11c, SCT smoothing and Spatial scale	149690	0.08679653679653682
+Focal using Pseudo Fuzzy Histogram with Uniform quantizer using M10, no smoothing and Default scale	203255	0.08852813852813853
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M5, SCT smoothing and Spatial scale	146565	0.09025974025974026
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M11, SCT smoothing and Spatial scale	149225	0.09025974025974026
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M1c, no smoothing and Default scale	36683	0.09415584415584415
+Focal using Pseudo Fuzzy Histogram with Uniform quantizer using M8c, no smoothing and Default scale	203426	0.09437229437229439
+Focal using Pseudo Fuzzy Histogram with Uniform quantizer using M13, no smoothing and Default scale	204718	0.09437229437229439
+Focal using Pseudo Fuzzy Histogram with Uniform quantizer using M7c, no smoothing and Default scale	203873	0.09545454545454544
+Focal using Pseudo Fuzzy Histogram with Uniform quantizer using M12, no smoothing and Default scale	204209	0.09545454545454544
+Fuzzy Histogam using M8 and Uniform quantizer	296136	0.09632034632034632
+Focal using Pseudo Fuzzy Histogram with Uniform quantizer using M9c, no smoothing and Default scale	203426	0.0974025974025974
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M2, no smoothing and Default scale	36562	0.09826839826839827
+Focal using Pseudo Fuzzy Histogram with Uniform quantizer using M1b, no smoothing and Default scale	203388	0.09999999999999999
+Focal using Pseudo Fuzzy Histogram with Uniform quantizer using M9, no smoothing and Default scale	203539	0.10497835497835496
+Focal using Pseudo Fuzzy Histogram with Uniform quantizer using M1c, no smoothing and Default scale	203881	0.10930735930735928
+Focal using Pseudo Fuzzy Histogram with Uniform quantizer using M2, no smoothing and Default scale	203188	0.11363636363636363
+Fuzzy Histogam using M5c and Uniform quantizer	293308	0.12164502164502165
+Fuzzy Histogam using M11c and Uniform quantizer	296202	0.12164502164502165
+Fuzzy Histogam using M11c and Uniform quantizer	296460	0.12164502164502165
+Fuzzy Histogam using M5 and Uniform quantizer	293715	0.12337662337662338
+Fuzzy Histogam using M11 and Uniform quantizer	296131	0.12337662337662338
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M8c, SCT smoothing and Spatial scale	145759	0.1699134199134199
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M13, SCT smoothing and Spatial scale	149275	0.1699134199134199
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M5, SCT smoothing and Default scale	39356	0.19264069264069264
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M11, SCT smoothing and Default scale	40082	0.19264069264069264
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M5c, SCT smoothing and Default scale	37751	0.1978354978354978
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M11c, SCT smoothing and Default scale	39778	0.1978354978354978
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M11c, SCT smoothing and Default scale	40428	0.1978354978354978
+Focal using Pseudo Fuzzy Histogram with Uniform quantizer using M5, no smoothing and Default scale	203057	0.2019480519480519
+Focal using Pseudo Fuzzy Histogram with Uniform quantizer using M11, no smoothing and Default scale	203423	0.2019480519480519
+Focal using Pseudo Fuzzy Histogram with Uniform quantizer using M5c, no smoothing and Default scale	203390	0.21038961038961038
+Focal using Pseudo Fuzzy Histogram with Uniform quantizer using M11c, no smoothing and Default scale	203435	0.21038961038961038
+Focal using Pseudo Fuzzy Histogram with Uniform quantizer using M11c, no smoothing and Default scale	203420	0.21038961038961038
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M5, no smoothing and Default scale	36511	0.24134199134199133
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M11, no smoothing and Default scale	36764	0.24134199134199133
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M5c, no smoothing and Default scale	36511	0.24329004329004328
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M11c, no smoothing and Default scale	37036	0.24329004329004328
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M11c, no smoothing and Default scale	36830	0.24329004329004328
+HSV using Pseudo Fuzzy Histogram with SCT quantizer using M10, SCT smoothing and Spatial scale	146439	0.245021645021645
+Fuzzy Histogam using M8c and Uniform quantizer	296117	0.30000000000000004
+Fuzzy Histogam using M13 and Uniform quantizer	296522	0.30000000000000004
+Fuzzy Histogam using M10 and Uniform quantizer	296487	0.30173160173160174
