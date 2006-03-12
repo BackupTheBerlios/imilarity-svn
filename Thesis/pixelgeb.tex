@@ -116,7 +116,7 @@ $$
 Om de overige vaagsimilariteitsmaten te veralgemenen, hebben we een uitbreiding van het
 begrip sigma count nodig. Dat kan door
 $$
-|A|=\frac{1}{\sqrt{n}}\sum_{p \in P}\sqrt{(A_1(p))^2+(A_2(p))^2+(A_3(p))^2}
+|A|=\frac{1}{\sqrt{3}}\sum_{p \in P}\sqrt{(A_1(p))^2+(A_2(p))^2+(A_3(p))^2}
 $$
 te defini\"eren, waarbij $A(p)=(A_1(p),A_2(p),A_3(p))$ voor alle $p$ uit $P$. Die overige maten maken 
 bovendien ook gebruik van de bewerkingen $co$ (complement), 
@@ -143,12 +143,17 @@ We kunnen dit oplossen door ofwel intermediaire beelden ofwel beeldonderdelen te
 \includegraphics[height=3cm]{images/rescale.eps}
 \label{fig:rescale}
 }
-$\qquad$
+\qquad
 \subfigure[]{
 \includegraphics[height=3cm]{images/dominant_colors.eps}
 \label{fig:dominant_colors}
 }
-\caption{\label{fig:intermediaire_beelden}Constructie van een resolutie-onafhankelijke similariteitsmaat door gebruik van intermediaire beelden.}
+\qquad
+\subfigure[]{
+\includegraphics[height=3cm]{images/moments.eps}
+\label{fig:moments}
+}
+\caption{\label{fig:intermediaire_beelden}Constructie van een resolutie-onafhankelijke similariteitsmaat door gebruik van intermediaire beelden op basis van (a) herschaling, (b) kleurkwantisatie en (c) kleurmomenten.}
 \end{center}
 \end{figure}
 
@@ -168,13 +173,13 @@ telkens de nog niet gebruikte kleur die het meest voorkomt in het gekwantiseerde
 intermediair beeld van $M$ bij $N$ pixels krijgt het beeldpunt $(0,0)$ dus de kleur die het meest
 voorkomt in het gekwantiseerde beeld, terwijl we voor positie $(M,N)$ de minst voorkomende kleur gebruiken.
 
-Een andere optie is de constructie van de intermediaire beelden te baseren op
-\emph{kleurmomenten}. Het \emph{moment van de $k$-de orde rond $a$} ($a
+Figuur\ref{fig:moments} illustreert een derde optie, waarbij \emph{kleurmomenten} gebruikt
+worden om nieuwe intermediaire beelden te construeren. Het \emph{moment van de $k$-de orde rond $a$} ($a
 \in \mathbb{R}$) van een discrete toevalsveranderlijke $T$ met
-probabilitietsfunctie $Pr_T$ wordt als volgt gedefinieerd
+probabilitietsfunctie $prob_T$ wordt als volgt gedefinieerd
 \cite{demeyder:statistiek}: 
 $$
-\mu_k(a) = E[(T-a)^k] = \sum_{t \in W} (t-a)^k Pr_T(t)
+\mu_k(a) = E[(T-a)^k] = \sum_{t \in W} (t-a)^k prob_T(t)
 $$
 met $W$ de aftelbare verzameling van re\"ele waarden die $T$ kan aannemen. Het
 moment
@@ -908,7 +913,7 @@ van op basis van kleurmomenten geconstrueerde intermediaire beelden.}
 & {\scriptsize 0.06428571428571428}
 \\
 \end{tabular}
-\caption{\label{fig:results_beste_moments_pixelgeb}De GGR-waarde en de eerste tien resultaten voor elk voorbeeld bij de resolutie-onafhankelijke similariteitsmaat die we bekomen door op basis van kleurmomenten geconstrueerde intermediaire beelden componentsgewijs te vergelijken met behulp van $M_{I3c}$.}
+\caption{\label{fig:results_beste_moments_pixelgeb}De GGR-waarde en de eerste tien resultaten voor elk voorbeeld bij de resolutie-onafhankelijke similariteitsmaat die we bekomen door op basis van kleurmomenten geconstrueerde intermediaire beelden componentsgewijs te vergelijken met behulp van $M_{9}$.}
 \end{center}
 \end{figure}
 
