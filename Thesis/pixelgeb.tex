@@ -96,7 +96,9 @@ kan bijvoorbeeld aan de hand van de formule $y = 0.3 \cdot r + 0.59 \cdot g + 0.
 Bij de klassieke manier om kleurbeelden te vergelijken, wordt een similariteitsmaat 
 voor grijswaardebeelden toegepast op elk van de kleurcomponenten. De resultaten voor de
 verschillende componenten worden daarna samengevoegd. Een kleurbeeld in het RGB-model wordt daarbij
-dus ge\"interpreteerd als een combinatie van drie grijswaardebeelden. 
+dus ge\"interpreteerd als een combinatie van drie grijswaardebeelden. In deze scriptie beperken we ons tot
+het rekenkundig gemiddelde om de similariteiten van de componenten samen te voegen,
+maar er kunnen uiteraard ook andere aggregatieoperatoren gebruikt worden.
 
 In het RGB-model zijn de componenten van een kleur echter sterk gecorreleerd 
 \cite{sharma:digital_color_imaging}, waardoor er
@@ -105,7 +107,7 @@ worden door gebruik te maken van een tralie-gebaseerde aanpak,
 op basis van de bovenstaande representatie.
 We hebben in \ref{sectie:vaagsimilariteitsmaten} reeds vermeld dat de beschouwde 
 vaagsimilariteitsmaten uitbreidbaar zijn naar L-vaag\-ver\-za\-me\-ling\-en met
-$L=[0,1]^3$. Daarvoor moeten we de bewerkingen waarvan deze maten gebruik maken, veralgemenen van 
+$L=[0,1]^3$. Daarvoor moeten we de bewerkingen waarvan die maten gebruik maken, veralgemenen van 
 $[0,1]$ naar $[0,1]^3$. 
 Voor de vaagsimilariteitsmaten $M_1$ tot $M_3$ betekent dat concreet dat we een zinvolle betekenis 
 moeten geven aan $c - c'$ en $|c|$, voor alle $c(r,g,b),c'(r',g',b') \in [0,1]^3$. We gebruiken
@@ -133,7 +135,7 @@ definities voor $\max$ en $\min$ uit \ref{sectie:kleurbeeld_repr} gebruiken.
 Het aantal pixels in een beeld wordt de \emph{resolutie} van dat beeld genoemd.
 Een belangrijke beperking van de bovenstaande pixelgebaseerde similariteitsmaten is dat
 ze enkel kunnen toegepast worden op beelden die dezelfde resolutie hebben.
-We kunnen dit oplossen door ofwel intermediaire beelden ofwel beeldonderdelen te gebruiken.
+We kunnen dit oplossen door ofwel intermediaire beelden ofwel beeldonderdelen te beschouwen.
 
 \subsection{Intermediaire beelden}
 
@@ -169,9 +171,13 @@ eerst kleurkwantisatie met een variabel kleurenpalet toe te passen en vervolgens
 nieuw beeld te construeren op basis van de kleuren van het bekomen palet. Die mogelijkheid wordt getoond
 in figuur~\ref{fig:dominant_colors}.  We construeren de beelpunten 
 van het nieuwe beeld van links naar rechts en van boven naar onder. Daarbij is de kleur van een beeldpunt 
-telkens de nog niet gebruikte kleur die het meest voorkomt in het gekwantiseerde beeld. Voor een 
-intermediair beeld van $M$ bij $N$ pixels krijgt het beeldpunt $(0,0)$ dus de kleur die het meest
-voorkomt in het gekwantiseerde beeld, terwijl we voor positie $(M,N)$ de minst voorkomende kleur gebruiken.
+telkens de nog niet gebruikte kleur die het meest voorkomt in het gekwantiseerde beeld. 
+%Voor een 
+%intermediair beeld van $M$ bij $N$ pixels krijgt het beeldpunt $(0,0)$ dus de kleur die het meest
+%voorkomt in het gekwantiseerde beeld, terwijl we voor positie $(M,N)$ de minst voorkomende kleur gebruiken.
+De pixel in de rechter bovenhoek van een intermediair beeld krijgt dus de kleur die het meest voorkomt
+in het gekwantiseerde beeld, terwijl we voor het beeldpunt rechts onderaan de minst voorkomende kleur
+gebruiken. 
 
 Figuur\ref{fig:moments} illustreert een derde optie, waarbij \emph{kleurmomenten} gebruikt
 worden om nieuwe intermediaire beelden te construeren. Het \emph{moment van de $k$-de orde rond $a$} ($a
@@ -378,6 +384,12 @@ kleuren. Door $M_5$ componentsgewijs toe te passen bekomen we in dit geval de be
 Figuur~\ref{fig:results_beste_dom_colors} toont de resultaten van de component-gebaseerde aanpak
 in combinatie met Wu kwantisatie en $M_5$.
 
+Intermediaire beelden op basis van kleurmomenten leiden tot de meetresultaten uit 
+figuur \ref{fig:moments_gggrs_en_cputimes}. Hoewel het eigenlijk een zeer eenvoudige
+techniek is, blijkt hij toch verrassend goed te werken. De combinatie met $M_9$ presteert
+deze keer het best. Figuur~\ref{fig:results_beste_moments_pixelgeb} toont de resultaten
+die we met die similariteitsmaat bekomen.
+
 In figuur~\ref{fig:multires_gggrs_en_cputimes} worden de GGGRs en de rekentijden van
 de similariteitsmaten op basis van beeldonderdelen getoond.
 De combinatie van de component-gebaseerde aanpak met
@@ -413,10 +425,57 @@ terwijl we via de tralie-gebaseerde aanpak
 $$
 M_5(A,B) = \frac{\min\{|A|,|B|\}}{\max\{|A|,|B|\}} = \frac{\scriptstyle \sqrt{1} / \sqrt{3}}{\scriptstyle \sqrt{1} / \sqrt{3}} = 1
 $$
-bekomen. Voor de andere vaagsimilariteitsmaten die gebaseerd zijn op cardinaliteit, kunnen
-gelijkaardige redeneringen gemaakt worden. De op afstand gebaseerde vaagsimilariteitsmaten ondervinden
-minder hinder van dit probleem. Vandaar dat de tralie-gebaseerde aanpak in combinatie met
+bekomen. Als $A$ en $B$ meerdere respectievelijk rode en groene pixels bevatten, dan moeten de cardinaliteiten
+vermenigvuldigd worden met het aantal pixels. We bekomen in dat geval dus dezelfde similariteiten. Zoals
+ge\"illustreerd wordt in figuur~\ref{fig:valse_positieven_M5}, manifesteert dit probleem zich ook als de 
+beelden naast de groene of rode pixels ook nog (ongeveer) evenveel beeldpunten van een zelfde kleur bevatten. 
+Voor de andere vaagsimilariteitsmaten die gebaseerd zijn op cardinaliteit, kunnen gelijkaardige redeneringen 
+gemaakt worden. De op afstand gebaseerde vaagsimilariteitsmaten ondervinden minder hinder van dit probleem. 
+Vandaar dat de tralie-gebaseerde aanpak in combinatie met
 $M_{1a}$, $M_{1b}$, $M_{1c}$, $M_{2}$ of $M_{3}$ relatief gezien iets beter werkt. 
+
+\begin{figure}[tbp]
+\begin{center}
+\subfigure[]{
+\begin{tabular}{cccccc}
+\includegraphics[width=1.5cm]{coil/beeld-18.eps} & 
+\includegraphics[width=1.5cm]{coil/beeld-54.eps} &
+\includegraphics[width=1.5cm]{coil/beeld-55.eps} &
+\includegraphics[width=1.5cm]{coil/beeld-19.eps} &
+\includegraphics[width=1.5cm]{coil/beeld-21.eps} &
+\includegraphics[width=1.5cm]{coil/beeld-57.eps} \\
+{\scriptsize 1.0} & 
+{\scriptsize 0.979455} & 
+{\scriptsize 0.954748} & 
+{\scriptsize 0.952282} & 
+{\scriptsize 0.923282} &
+{\scriptsize 0.910956} 
+\end{tabular}
+\label{fig:valse_positieven_M5}
+}
+\vspace{6pt}
+\subfigure[]{
+\begin{tabular}{cccccc}
+\includegraphics[width=1.5cm]{coil/beeld-18.eps} &
+\includegraphics[width=1.5cm]{coil/beeld-26.eps} &
+\includegraphics[width=1.5cm]{coil/beeld-29.eps} &
+\includegraphics[width=1.5cm]{coil/beeld-27.eps} &
+\includegraphics[width=1.5cm]{coil/beeld-24.eps} &
+\includegraphics[width=1.5cm]{coil/beeld-28.eps} \\
+{\scriptsize 1.0} & 
+{\scriptsize 0.999472} & 
+{\scriptsize 0.998082} & 
+{\scriptsize 0.997874} & 
+{\scriptsize 0.992790} &
+{\scriptsize 0.992584} 
+\end{tabular}
+\label{fig:valse_positieven_M8}
+}
+\caption{\label{fig:valse_positieven}Valse positieven bij het rangschikken volgens similariteit met 
+het ``rood bootje'' voorbeeld door herschaalde intermediaire beelden te vergelijken met behulp van 
+(a) $M_5$ en (b) $M_8$.}
+\end{center}
+\end{figure}
 
 We stellen ook vast dat $M_8$, $M_{8c}$, $M_{10}$, $M_{10c}$ en $M_{13}$ systematisch aanleiding
 geven tot de minst performante maten. Dat kunnen we als volgt verklaren. Stel dat $A$ en $B$
@@ -425,11 +484,12 @@ $p \in P$. Er geldt dan $A \cap B$ = A en ook $\min\{|A|,|B|\}=|A|$ zodat
 $$
 M_8(A,B)= \frac{|A \cap B|}{\min\{|A|,|B|\}} = \frac{|A|}{|A|} = 1
 $$
-als $|A| \ne 0$. Hoewel $A(x) \le B(x)$ in de praktijk zelden zal gelden voor alle $p$ uit $P$, 
+als $|A| \ne 0$. Hoewel $A(p) \le B(p)$ in de praktijk zelden zal gelden voor alle $p$ uit $P$, 
 is het niet uitzonderlijk dat die ongelijkheid geldt voor de meeste $p \in P$. In dergelijke 
 gevallen zal $M_8(A,B) \approx 1$, terwijl de beelden waaruit $A$ en $B$ werden afgeleid toch 
-zeer verschillend kunnen zijn. Er treden dus opnieuw valse positieven op.
-Gelijkaardige redeneringen zijn mogelijk voor $M_{8c}$, $M_{10}$, $M_{10c}$ en $M_{13}$.
+zeer verschillend kunnen zijn. Er treden dus opnieuw valse positieven op. Figuur~\ref{fig:valse_positieven_M8}
+illustreert dat met een concreet voorbeeld. Gelijkaardige redeneringen zijn mogelijk voor $M_{8c}$, $M_{10}$, 
+$M_{10c}$ en $M_{13}$.
 
 % We stellen ook vast dat $M_8$, $M_{8c}$, $M_{10}$, $M_{10c}$ en $M_{13}$ systematisch aanleiding
 % geven tot de minst performante maten. Dat kunnen we als volgt verklaren. Stel dat $A$ een 
@@ -447,9 +507,12 @@ Gelijkaardige redeneringen zijn mogelijk voor $M_{8c}$, $M_{10}$, $M_{10c}$ en $
 Tenslotte blijkt ook nog dat de similariteitsmaten die een maat voor grijswaardebeelden 
 toepassen op de afzonderlijke kleurcomponenten, meestal aanzienlijk meer rekentijd nodig hebben. 
 Dat is niet verwonderlijk, aangezien er daarbij ook grosso modo driemaal zoveel werk verricht moet worden.
-Bij de maten op basis van de geconstrueerde intermediaire beelden is de rekentijd overal even
-groot. Ook dat is logisch, vermits de zeer kleine afmetingen van die intermediaire beelden als
-gevolg hebben dat de rekentijd nagenoeg enkel afhangt van de kleurkwantisatie.
+Bij de maten op basis van geconstrueerde intermediaire beelden is de rekentijd telkens even
+lang. Ook dat is logisch, vermits de zeer kleine afmetingen van de intermediaire beelden als
+gevolg hebben dat de rekentijd gedomineerd wordt door de tijd die nodig is om die 
+intermediaire beelden te genereren.
+
+%\newpage
 
 \begin{figure}[tbp]
 \begin{center}
@@ -770,7 +833,7 @@ $M_5$.}
 \begin{figure}[!t]
 \begin{center}
 \includegraphics[width=\textwidth]{plots/moments_gggrs_en_cputimes_filled.eps}
-\caption{\label{fig:multires_gggrs_en_cputimes}De GGGR-waarde en de gebruikte rekentijd in ms voor elk van de resolutie-onafhankelijke pixelgebaseerde similariteitsmaten die gebruik maken 
+\caption{\label{fig:moments_gggrs_en_cputimes}De GGGR-waarde en de gebruikte rekentijd in ms voor elk van de resolutie-onafhankelijke pixelgebaseerde similariteitsmaten die gebruik maken 
 van op basis van kleurmomenten geconstrueerde intermediaire beelden.}
 \end{center}
 \end{figure}
