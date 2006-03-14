@@ -2,6 +2,8 @@ package de.berlios.imilarity.fuzzy;
 
 import java.util.Iterator;
 
+import de.berlios.imilarity.util.CombinedIterator;
+
 public abstract class FuzzySetBase implements FuzzySet {
 
 	public Iterator iterator() {
@@ -32,7 +34,7 @@ public abstract class FuzzySetBase implements FuzzySet {
 		if (set.getElementsCount() != count)
 			throw new IllegalArgumentException("not the same elements count");
 		ArrayFuzzySet result = new ArrayFuzzySet(count, new SimpleMembership(0));
-		Iterator it = iterator();
+		Iterator it = new CombinedIterator(iterator(), set.iterator());
 		while (it.hasNext()) {
 			int i = ((Integer)it.next()).intValue();
 		//for (int i = 0; i < count; i++) {
@@ -48,7 +50,7 @@ public abstract class FuzzySetBase implements FuzzySet {
 			throw new IllegalArgumentException("not the same elements count");
 		ArrayFuzzySet result = new ArrayFuzzySet(count, new SimpleMembership(0));
 		//for (int i = 0; i < count; i++) {
-		Iterator it = iterator();
+		Iterator it = new CombinedIterator(iterator(), set.iterator());
 		while (it.hasNext()) {
 			int i = ((Integer)it.next()).intValue();
 			Membership m = getMembership(i);
@@ -70,7 +72,7 @@ public abstract class FuzzySetBase implements FuzzySet {
 	public FuzzySet minus(FuzzySet set) {
 		int count = getElementsCount();
 		ArrayFuzzySet result = new ArrayFuzzySet(count, new SimpleMembership(0));
-		Iterator it = iterator();
+		Iterator it = new CombinedIterator(iterator(), set.iterator());
 		while (it.hasNext()) {
 			int i = ((Integer)it.next()).intValue();
 			result.addMembership(i, 
@@ -82,7 +84,7 @@ public abstract class FuzzySetBase implements FuzzySet {
 	public FuzzySet iii(FuzzySet set) {
 		int count = getElementsCount();
 		ArrayFuzzySet result = new ArrayFuzzySet(count, new SimpleMembership(0));
-		Iterator it = iterator();
+		Iterator it = new CombinedIterator(iterator(), set.iterator());
 		while (it.hasNext()) {
 			int i = ((Integer)it.next()).intValue();
 			Membership m1 = getMembership(i);
@@ -97,7 +99,7 @@ public abstract class FuzzySetBase implements FuzzySet {
 	public FuzzySet uiu(FuzzySet set) {
 		int count = getElementsCount();
 		ArrayFuzzySet result = new ArrayFuzzySet(count, new SimpleMembership(0));
-		Iterator it = iterator();
+		Iterator it = new CombinedIterator(iterator(), set.iterator());
 		while (it.hasNext()) {
 			int i = ((Integer)it.next()).intValue();
 			Membership m1 = getMembership(i);
