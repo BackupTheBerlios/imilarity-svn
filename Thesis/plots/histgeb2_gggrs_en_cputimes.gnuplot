@@ -4,7 +4,7 @@ set size 1.0,0.7
 set grid
 
 set yrange [0:0.6]
-set y2range [5000:500000]
+set y2range [1024:1800000]
 set log y2 2
 set format y2 "2^{%L}"
 set y2tics

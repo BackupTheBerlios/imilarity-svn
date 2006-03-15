@@ -185,19 +185,20 @@ worden om nieuwe intermediaire beelden te construeren. Het \emph{moment van de $
 probabilitietsfunctie $prob_T$ wordt als volgt gedefinieerd
 \cite{demeyder:statistiek}: 
 $$
-\mu_k(a) = E[(T-a)^k] = \sum_{t \in W} (t-a)^k prob_T(t)
+\mu_k(a) = \sum_{t \in W} (t-a)^k prob_T(t)
 $$
 met $W$ de aftelbare verzameling van re\"ele waarden die $T$ kan aannemen. Het
 moment
-van de eerste orde rond $0$ is het \emph{gemiddelde} en wordt doorgaans kortweg als
+van de eerste orde rond $0$ is de \emph{verwachtingswaarde} en wordt doorgaans kortweg als
 $\mu$ genoteerd. Bij de \emph{centrale momenten} is $a=\mu$. De centrale 
 momenten van de tweede en derde orde zijn beter bekend als respectievelijk de
 \emph{variantie} en de \emph{scheefheid}. We construeren het intermediair beeld
 voor een beeld $A$ dan als volgt. Zij $A(p)=(A_1(p),A_2(p),A_3(p))$ voor
 alle $p \in P$. Voor de componenten $c_{1,i}$, $i \in \{1,2,3\}$, van de
-kleur $c_1 \in [0,1]^3$ van de eerste pixel gebruiken we het gemiddelde: $$
+kleur $c_1 \in [0,1]^3$ van de eerste pixel gebruiken we de verwachtingswaarde $$
 c_{1,i} = \frac{1}{|P|} \sum_{p \in P} A_i(p)  
 $$
+die in dit geval overeenkomt met de gemiddelde kleur van de pixels.
 De componenten $c_{j,i}$, $i \in \{1,2,3\}$, van de kleuren $c_j$, $j \in
 \{2,\ldots,M-1\}$, van de overige pixels worden gegeven door de $j$-de
 machtswortel van het centrale moment van de $j$-de orde: $$
@@ -391,7 +392,7 @@ deze keer het best. Figuur~\ref{fig:results_beste_moments_pixelgeb} toont de res
 die we met die similariteitsmaat bekomen.
 
 In figuur~\ref{fig:multires_gggrs_en_cputimes} worden de GGGRs en de rekentijden van
-de similariteitsmaten op basis van beeldonderdelen getoond.
+de similariteitsmaten op basis van beeldonderdelen van $8 \cdot 8$ pixels getoond.
 De combinatie van de component-gebaseerde aanpak met
 $M_{I3c}$ geeft daarbij de beste GGGR-waarde. Zoals blijkt uit
 figuur~\ref{fig:results_beste_multires_pixelgeb}, zijn de resultaten van die
@@ -406,8 +407,8 @@ van beelden die niet sterk verschillen kunnen dergelijke \emph{valse positieven}
 Vandaar dat de tralie-gebaseerde aanpak wel goed kan presteren bij de constructie van
 kwaliteitsmaten voor beelden \cite{debaets:similariteitsmaten_voor_kleurbeelden}.
 Beschouw bijvoorbeeld twee beelden $A$ en $B$ die elk uit \'e\'en enkele pixel bestaan. De pixel 
-van $A$ is rood en die van $B$ is groen, met andere woorden: $A((0,0))=(1,0,0)$ en 
-$B((0,0))=(0,1,0)$. Er geldt dan: 
+van $A$ is rood en die van $B$ is groen, met andere woorden: $A(0,0)=(1,0,0)$ en 
+$B(0,0)=(0,1,0)$. Er geldt dan: 
 $$
 |A_1|=1 \quad |A_2|=0 \quad |A_3|=0 \qquad |B_1|=0 \quad |B_2|=1 \quad |B_3|=0 \qquad |A|=|B|=\frac{\sqrt{1}}{\sqrt{3}}
 $$
@@ -486,7 +487,7 @@ M_8(A,B)= \frac{|A \cap B|}{\min\{|A|,|B|\}} = \frac{|A|}{|A|} = 1
 $$
 als $|A| \ne 0$. Hoewel $A(p) \le B(p)$ in de praktijk zelden zal gelden voor alle $p$ uit $P$, 
 is het niet uitzonderlijk dat die ongelijkheid geldt voor de meeste $p \in P$. In dergelijke 
-gevallen zal $M_8(A,B) \approx 1$, terwijl de beelden waaruit $A$ en $B$ werden afgeleid toch 
+gevallen zal $M_8(A,B) \approx 1$, terwijl $A$ en $B$ toch 
 zeer verschillend kunnen zijn. Er treden dus opnieuw valse positieven op. Figuur~\ref{fig:valse_positieven_M8}
 illustreert dat met een concreet voorbeeld. Gelijkaardige redeneringen zijn mogelijk voor $M_{8c}$, $M_{10}$, 
 $M_{10c}$ en $M_{13}$.
@@ -506,7 +507,7 @@ $M_{10c}$ en $M_{13}$.
 
 Tenslotte blijkt ook nog dat de similariteitsmaten die een maat voor grijswaardebeelden 
 toepassen op de afzonderlijke kleurcomponenten, meestal aanzienlijk meer rekentijd nodig hebben. 
-Dat is niet verwonderlijk, aangezien er daarbij ook grosso modo driemaal zoveel werk verricht moet worden.
+Dat is niet verwonderlijk, aangezien het vergelijken daarbij grosso modo driemaal zoveel werk vereist.
 Bij de maten op basis van geconstrueerde intermediaire beelden is de rekentijd telkens even
 lang. Ook dat is logisch, vermits de zeer kleine afmetingen van de intermediaire beelden als
 gevolg hebben dat de rekentijd gedomineerd wordt door de tijd die nodig is om die 

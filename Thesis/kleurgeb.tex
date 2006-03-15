@@ -1,98 +1,293 @@
 \chapter{Kleurgebaseerde similariteitsmaten}
 
 In dit hoofdstuk construeren we enkele similariteitsmaten die beelden 
-vergelijken op basis van de kleuren die er in voorkomen. Het universum wordt
-in dit geval dus gevormd door de kleuren in plaats van de beeldpunten. Vermits kleur \'e\'en 
-van de meest gebruikte kenmerken is bij CBIR \cite{rui:image_retr}, mogen we 
+vergelijken op basis van de kleuren die er in voorkomen. We identificeren de beelden
+in dit geval dus met vaagverzamelingen in een universum dat bestaat uit kleuren 
+in plaats van beeldpunten. Vermits kleur \'e\'en  van de meest gebruikte kenmerken is bij CBIR 
+\cite{rui:image_retr, schettini:survey_of_methods_for_colour_image_indexing_and_retrieval}, mogen we 
 verwachten dat die \emph{kleurgebaseerde} aanpak effici\"ente 
 similariteitsmaten zal opleveren. 
 
+\section{Histogrammen}
+
 Een histogram van een kleurbeeld is een voorstelling van de frequentieverdeling 
 van de verschillende kleuren. De waarde van het histogram voor een kleurbeeld 
-$A$ in de kleur $c$ is dus gelijk aan het totaal aantal pixels in het beeld met 
-kleur $c$. We noteren dit met $h_A(c)$: $$ h_A(c) = \sum_{x \in X} \delta (c - 
-A(x)) $$ waarbij $\delta$ de Diracfuntie is en $X$ het universum der beelpunten 
-voorstelt.
+$A$ in de kleur $c \in C$ is dus gelijk aan het totaal aantal pixels in het beeld met 
+kleur $c$. Om de complexiteit te beperken wordt er in de praktijk gebruik gemaakt
+van kleurkwantisatie. Het universum der kleuren $C$ wordt dus beperkt tot $C' \subset C$. 
+%Het histogram wordt dus berekend voor verzamelingen van
+%kleuren in plaats van individuele kleuren. 
+De waarde van het histogram voor een beeld $A$ in de kleur $c \in C'$ is dan gelijk aan 
+het totaal aantal pixels in $A$ die tot bin $bin(c)$ behoren. Met andere woorden: het histogram 
+geeft de frequentieverdeling weer van de kleuren uit $C'$ in de gekwantiseerde versie van 
+$A$. We noteren de waarde in $c$ van het histogram van een beeld $A$ met $h_A(c)$: 
+$$ 
+h_A(c) = \sum_{p \in P} \delta (bin(c) - bin(A(p))) 
+$$ 
+waarbij $\delta$ de Diracfuntie is en $P$ het universum der beelpunten 
+voorstelt. De functie $bin$ is uiteraard de $C - \{1,2,\ldots,N\}$ afbeelding 
+uit \ref{sectie:kleurkwantisatie}, die met 
+elke kleur het nummer van \'e\'en van de $N$ bins associeert. 
 
 
-\section{Pseudo-vage histogrammen}
+\subsection{Pseudo-vage histogrammen}
 
 Door de waarden van een histogram te normaliseren, kunnen we het omzetten naar 
-een vaagverzameling in het universum der kleuren $C$. Dit houdt in dat we elke 
+een vaagverzameling in het universum der kleuren $C'$ 
+\cite{debaets:similariteitsmaten_voor_kleurbeelden, vanderweken:similariteitsmaten, vertan:embedding_fuzzy_logic_in_cbir}. 
+Dat houdt in dat we elke 
 waarde van het histogram delen door het maximaal aantal pixels met dezelfde 
 kleur. We hebben dus de volgende uitdrukking voor de lidmaatschapsgraad van de 
-kleur $c$ in de vaagverzameling $\mathit{PFh}_A$ geassocieerd met het histogram 
-van beeld $A$: $$
-\mathit{PFh}_A(c) = \frac{\displaystyle h_A(c)}{\displaystyle \max_{c \in C}(h_A(c))}
-$$ De kleur die het meest voorkomt heeft dus lidmaatschapsgraad $1$. Alle 
-andere kleuren hebben kleinere lidmaatschapsgraden.
+kleur $c \in C$ in de vaagverzameling $H_A$ geassocieerd met het histogram 
+van beeld $A$: 
+$$
+H_A(c) = \frac{\displaystyle h_A(c)}{\displaystyle \max_{c \in C'}(h_A(c))}
+$$ 
+Een dergelijke vaagverzameling noemen we een \emph{pseudo-vaag histogram}. 
+De kleur die het meest voorkomt heeft daarbij lidmaatschapsgraad $1$. Alle 
+andere kleuren hebben kleinere lidmaatschapsgraden. 
+
+We beschouwen de zes uniforme en de eerste twee niet-uniforme (focale kleuren en SCT) 
+kwantisatietechnieken uit \ref{sectie:kleurkwantisatie}. Figuur~\ref{fig:histogrammen_eerste_vb} bevat
+de pseudo-vage histogrammen die we zo bekomen voor het ``geel bootje'' voorbeeld
+uit onze testcollectie. In figuur~\ref{fig:alle_histn_geel_bootje} worden de pseudo-vage histogrammen
+getoond van alle beelden uit de testcollectie die relevant zijn ten opzichte van dat voorbeeld.
+
+\begin{figure}[!t]
+\begin{center}
+\begin{tabular}{c}
+\subfigure[] {
+\begin{minipage}[c]{0.3\textwidth}
+\begin{center}
+\includegraphics[height=2.7cm, width=\textwidth]{images/hist_hsv_obj3__0.eps}
+\end{center}
+\vspace{2pt}
+\end{minipage}
+}
+\subfigure[] {
+\begin{minipage}[c]{0.3\textwidth}
+\begin{center}
+\includegraphics[height=2.7cm, width=\textwidth]{images/hist_irb_obj3__0.eps}
+\end{center}
+\vspace{2pt}
+\end{minipage}
+}
+\subfigure[] {
+\begin{minipage}[c]{0.3\textwidth}
+\begin{center}
+\includegraphics[height=2.7cm, width=\textwidth]{images/hist_i1i2i3_obj3__0.eps}
+\end{center}
+\vspace{2pt}
+\end{minipage}
+}\\
+\subfigure[] {
+\begin{minipage}[c]{0.3\textwidth}
+\begin{center}
+\includegraphics[height=2.7cm, width=\textwidth]{images/hist_xyz_obj3__0.eps}
+\end{center}
+\vspace{2pt}
+\end{minipage}
+}
+\subfigure[] {
+\begin{minipage}[c]{0.3\textwidth}
+\begin{center}
+\includegraphics[height=2.7cm, width=\textwidth]{images/hist_yxy_obj3__0.eps}
+\end{center}
+\vspace{2pt}
+\end{minipage}
+}
+\subfigure[] {
+\begin{minipage}[c]{0.3\textwidth}
+\begin{center}
+\includegraphics[height=2.7cm, width=\textwidth]{images/hist_lab_obj3__0.eps}
+\end{center}
+\vspace{2pt}
+\end{minipage}
+}\\
+\subfigure[] {
+\begin{minipage}[c]{0.1\textwidth}
+\begin{center}
+\includegraphics[height=2.7cm, width=\textwidth]{images/hist_focal_obj3__0.eps}
+\end{center}
+\vspace{2pt}
+\end{minipage}
+}
+\subfigure[] {
+\begin{minipage}[c]{0.3\textwidth}
+\begin{center}
+\includegraphics[height=2.7cm, width=\textwidth]{images/hist_sct_obj3__0.eps}
+\end{center}
+\vspace{2pt}
+\end{minipage}
+}
+\subfigure[] {
+\begin{minipage}[c]{0.5\textwidth}
+\begin{center}
+\includegraphics[height=2.7cm, width=\textwidth]{images/hist_fuzzy_obj3__0.eps}
+\end{center}
+\vspace{2pt}
+\end{minipage}
+\label{fig:vaaghistogram_eerste_vb}
+}
+\end{tabular}
+\caption{\label{fig:histogrammen_eerste_vb}De verschillende histogrammen voor het ``geel bootje'' 
+voorbeeld (HSV (a), Irb (b), I1I2I3 (c), XYZ (d), Yxy (e) en L*a*b* (f), focale kleuren (g), SCT (h) 
+en het vaaghistogram voor $\lambda = 5$ (i)).}
+\end{center}
+\end{figure}
+
+\begin{figure}[tbp]
+\begin{center}
+\includegraphics[width=2.5cm]{coil/beeld-12.eps}
+\includegraphics[width=2.5cm]{coil/beeld-13.eps}
+\includegraphics[width=2.5cm]{coil/beeld-14.eps}
+\includegraphics[width=2.5cm]{coil/beeld-15.eps}
+\includegraphics[width=2.5cm]{coil/beeld-16.eps}
+\includegraphics[width=2.5cm]{coil/beeld-17.eps}\\[5pt]
+\includegraphics[width=2.5cm]{images/hist_hsv_obj3__0.eps}
+\includegraphics[width=2.5cm]{images/hist_hsv_obj3__45.eps}
+\includegraphics[width=2.5cm]{images/hist_hsv_obj3__90.eps}
+\includegraphics[width=2.5cm]{images/hist_hsv_obj3__180.eps}
+\includegraphics[width=2.5cm]{images/hist_hsv_obj3__270.eps}
+\includegraphics[width=2.5cm]{images/hist_hsv_obj3__315.eps}\\[5pt]
+\includegraphics[width=2.5cm]{images/hist_irb_obj3__0.eps}
+\includegraphics[width=2.5cm]{images/hist_irb_obj3__45.eps}
+\includegraphics[width=2.5cm]{images/hist_irb_obj3__90.eps}
+\includegraphics[width=2.5cm]{images/hist_irb_obj3__180.eps}
+\includegraphics[width=2.5cm]{images/hist_irb_obj3__270.eps}
+\includegraphics[width=2.5cm]{images/hist_irb_obj3__315.eps}\\[5pt]
+\includegraphics[width=2.5cm]{images/hist_i1i2i3_obj3__0.eps}
+\includegraphics[width=2.5cm]{images/hist_i1i2i3_obj3__45.eps}
+\includegraphics[width=2.5cm]{images/hist_i1i2i3_obj3__90.eps}
+\includegraphics[width=2.5cm]{images/hist_i1i2i3_obj3__180.eps}
+\includegraphics[width=2.5cm]{images/hist_i1i2i3_obj3__270.eps}
+\includegraphics[width=2.5cm]{images/hist_i1i2i3_obj3__315.eps}\\[5pt]
+\includegraphics[width=2.5cm]{images/hist_xyz_obj3__0.eps}
+\includegraphics[width=2.5cm]{images/hist_xyz_obj3__45.eps}
+\includegraphics[width=2.5cm]{images/hist_xyz_obj3__90.eps}
+\includegraphics[width=2.5cm]{images/hist_xyz_obj3__180.eps}
+\includegraphics[width=2.5cm]{images/hist_xyz_obj3__270.eps}
+\includegraphics[width=2.5cm]{images/hist_xyz_obj3__315.eps}\\[5pt]
+\includegraphics[width=2.5cm]{images/hist_yxy_obj3__0.eps}
+\includegraphics[width=2.5cm]{images/hist_yxy_obj3__45.eps}
+\includegraphics[width=2.5cm]{images/hist_yxy_obj3__90.eps}
+\includegraphics[width=2.5cm]{images/hist_yxy_obj3__180.eps}
+\includegraphics[width=2.5cm]{images/hist_yxy_obj3__270.eps}
+\includegraphics[width=2.5cm]{images/hist_yxy_obj3__315.eps}\\[5pt]
+\includegraphics[width=2.5cm]{images/hist_lab_obj3__0.eps}
+\includegraphics[width=2.5cm]{images/hist_lab_obj3__45.eps}
+\includegraphics[width=2.5cm]{images/hist_lab_obj3__90.eps}
+\includegraphics[width=2.5cm]{images/hist_lab_obj3__180.eps}
+\includegraphics[width=2.5cm]{images/hist_lab_obj3__270.eps}
+\includegraphics[width=2.5cm]{images/hist_lab_obj3__315.eps}\\
+\includegraphics[width=1cm,height=2.5cm,angle=-90]{images/hist_focal_obj3__0.eps}
+\includegraphics[width=1cm,height=2.5cm,angle=-90]{images/hist_focal_obj3__45.eps}
+\includegraphics[width=1cm,height=2.5cm,angle=-90]{images/hist_focal_obj3__90.eps}
+\includegraphics[width=1cm,height=2.5cm,angle=-90]{images/hist_focal_obj3__180.eps}
+\includegraphics[width=1cm,height=2.5cm,angle=-90]{images/hist_focal_obj3__270.eps}
+\includegraphics[width=1cm,height=2.5cm,angle=-90]{images/hist_focal_obj3__315.eps}\\[5pt]
+\includegraphics[width=2.5cm]{images/hist_sct_obj3__0.eps}
+\includegraphics[width=2.5cm]{images/hist_sct_obj3__45.eps}
+\includegraphics[width=2.5cm]{images/hist_sct_obj3__90.eps}
+\includegraphics[width=2.5cm]{images/hist_sct_obj3__180.eps}
+\includegraphics[width=2.5cm]{images/hist_sct_obj3__270.eps}
+\includegraphics[width=2.5cm]{images/hist_sct_obj3__315.eps}
+\caption{\label{fig:alle_histn_geel_bootje}De verschillende pseudo-vage histogrammen voor de beelden 
+van het geel bootje.}
+\end{center}
+\end{figure}
+
+\begin{figure}[tbp]
+\begin{center}
+\includegraphics[height=2cm]{coil/beeld-12.eps}
+\includegraphics[height=2cm]{images/hist_fuzzy_obj3__0.eps}\hspace{1cm}
+\includegraphics[height=2cm]{coil/beeld-13.eps}
+\includegraphics[height=2cm]{images/hist_fuzzy_obj3__45.eps}\\[5pt]
+\includegraphics[height=2cm]{coil/beeld-14.eps}
+\includegraphics[height=2cm]{images/hist_fuzzy_obj3__90.eps}\hspace{1cm}
+\includegraphics[height=2cm]{coil/beeld-15.eps}
+\includegraphics[height=2cm]{images/hist_fuzzy_obj3__180.eps}\\[5pt]
+\includegraphics[height=2cm]{coil/beeld-12.eps}
+\includegraphics[height=2cm]{images/hist_fuzzy_obj3__270.eps}\hspace{1cm}
+\includegraphics[height=2cm]{coil/beeld-12.eps}
+\includegraphics[height=2cm]{images/hist_fuzzy_obj3__315.eps}
+\caption{\label{fig:alle_vaaghistn_geel_bootje}De verschillende vaaghistogrammen voor de beelden 
+van het geel bootje.}
+\end{center}
+\end{figure}
 
 %Voor een RGB-beeld gebruikt men typisch 8 bits per kleurcomponent. Dit geeft een totaal van
 %24 bits per kleur, zodat men dus $2^{24}=2^4 \cdot 2^{20}=16 \cdot 2^{20} \approx 16 \cdot 10^6$
 %kleuren kan voorstellen. Een genormaliseerd histogram bestaat dan dus uit 16 miljoen waarden.
 %Similariteitsmaten op basis van dergelijke histogrammen zouden dus veel te veel rekentijd vragen.
 
-Om de rekentijd te beperken, maken we gebruik van kleurkwantisatie. 
-De karakteristieke afbeelding van de vaagverzameling $\mathit{BPFh}_A$, die
-correspondeert met het in $N$ bins onderverdeelde histogram van beeld $A$, wordt dan als volgt
-gedefinieerd:  
-$$
-\begin{array}{lrcl}
-\mathit{BPFh}_A: 	& \{1,2,\ldots,N\} 	& \to 		& [0,1] \\[5pt]
-		& n						& \mapsto	& \displaystyle\sum_{c \in C} \delta (n -  bin(c)),
-\quad\forall n \in \{1,2,\ldots,N\}
-\end{array}
-$$
-Hierbij is $bin$ de $C - \{1,2,\ldots,N\}$ afbeelding uit \ref{sectie:kleurkwantisatie}, die met 
-elke kleur het nummer van de corresponderende bin associeert. 
-
-
-\section{Vaaghistogrammen}
+\subsection{Vaaghistogrammen}
 
 Naast de bovenstaande vage interpretatie van het klassieke kleurhistogram, 
 beschouwen we ook nog een gelijkaardige kleurbeschrijving die we op een 
-``volledig vage'' manier opbouwen. Bij dit \emph{vaaghistogram} maken we 
-gebruik van het (niet genormaliseerde) L*a*b* kleurmodel en beschouwen we een 
-vaagverzameling voor elke kleur. De lidmaatschapsgraad van een kleur $c'$ in de 
-vaagverzameling $FC_c$, die correspondeert met kleur $c$, defini\"eren we als 
-volgt \cite{vertan:embedding_fuzzy_logic_in_cbir,vertan:fuzzy_histograms}: $$
+``volledig vage'' manier opbouwen. Bij dat \emph{vaaghistogram} maken we 
+gebruik van het L*a*b* kleurmodel en beschouwen we een 
+vaagverzameling voor elke kleur. Stel dat $lab$ de kleuren uit $C$ afbeeldt op de
+corresponderende niet-genormaliseerde L*a*b*-co\"ordinaten. De lidmaatschapsgraad van een 
+kleur $c' \in C$ in de vaagverzameling $\widetilde{C}_c$, die correspondeert met kleur $c \in C$, 
+defini\"eren we dan als volgt \cite{vertan:fuzzy_histograms}: $$
 \begin{array}{rcll}
-FC_c(c') & = & 1 & \textrm{als } d(c,c') \leq 2.3 \\ & = & \exp \left( - 
-\frac{\left((d(c,c') / 2.3) - 1\right)^2}{2 \cdot \lambda^2} \right) & 
+\widetilde{C}_c(c') 
+ & = & 1 & \textrm{als } d'_{c,c'} = \frac{d \left( lab(c), lab(c') \right)}{2.3} \leq 1 \\ 
+ & = & \exp \frac{- \left( d'_{c,c'} - 1 \right)^2}{2 \cdot \lambda^2} \right & 
 \textrm{anders}
 \end{array}
-$$ met $d$ de Euclidische afstand en $\lambda$ een vrij te kiezen parameter, 
-die we in deze scriptie voor de eenvoud steeds gelijk aan $1$ zullen kiezen. In 
-het geval van L*a*b* komt de afstand $2.3$ namelijk overeen met de zogenaamde 
+$$ met $d$ de Euclidische afstand en $\lambda$ een vrij te kiezen parameter. In 
+het geval van (niet-ge\-nor\-ma\-li\-seer\-de) L*a*b* komt de afstand $2.3$ namelijk 
+overeen met de zogenaamde 
 \emph{just noticeable difference} (JND) \cite{sharma:digital_color_imaging}. 
-Kleuren waarvan de onderlinge afstand kleiner dan of gelijk aan deze JND is, 
+Kleuren waarvan de onderlinge afstand kleiner dan of gelijk aan die JND is, 
 kunnen door de mens niet onderscheiden worden.
 
-Het eigenlijk vaaghistogram $Fh_A$, voor een kleurbeeld $A$, defini\"eren we 
-dan als de unie van alle kleuren die voorkomen in $A$: $$ Fh_A = 
-\displaystyle\bigcup_{c \in C_A} FC_c
+Het eigenlijk vaaghistogram $\widetilde{H}_A$, voor een kleurbeeld $A$, defini\"eren we 
+dan als de unie van alle kleuren die voorkomen in $A$: 
+$$ \widetilde{H}_A = 
+\displaystyle\bigcup_{c \in C_A} \widetilde{C}_c
 %\begin{array}{lrcl}
-%Fh_A: 	& C_A 	& \to 		& [0,1] \\[5pt]
-%		& c					& \mapsto	& \displaystyle\bigcup_{c \in C_A} FC_c,
+%Vh_A: 	& C_A 	& \to 		& [0,1] \\[5pt]
+%		& c					& \mapsto	& \displaystyle\bigcup_{c \in C_A} VC_c,
 %\quad\forall c \in C_A
 %\end{array}
-$$ waarbij de verzameling $C_A$ bestaat uit de in $A$ voorkomende kleuren. Alle 
+$$ waarbij de verzameling $C_A \subseteq C$ bestaat uit de in $A$ voorkomende kleuren. Alle 
 kleuren die (niet te onderscheiden zijn van kleuren die) voorkomen in het beeld 
 hebben dus lidmaatschapsgraad $1$. De overige kleuren hebben kleinere 
-lidmaatschapsgraden.
+lidmaatschapsgraden. 
 
+Ook bij de vaaghistogrammen moeten we in de praktijk het kleurenuniversum $C$ 
+kwantiseren om zo de complexiteit beperkt te houden. Vermits elke bin die een kleur
+bevat die voorkomt dan lidmaatschapsgraad $1$ krijgt, mogen we evenwel niet te
+ruw kwantiseren. Anders zou het discriminerend vermogen immers te laag worden. In deze
+scriptie gebruiken we uniforme kwantisatie (in het L*a*b*-model) met $N_1=N_2=N_3=10$.
+We reduceren $C$ dus tot 1000 kleuren. Voor het ``geel bootje'' voorbeeld uit de testcollectie
+leidt dat tot het vaaghistogram uit figuur~\ref{fig:vaaghistogram_eerste_vb}. De vaaghistogrammen 
+van alle beelden
+uit de testcollectie die relevant zijn ten opzichte van dat voorbeeld, kunnen met
+elkaar vergeleken worden in figuur~\ref{fig:alle_vaaghistn_geel_bootje}.
 
-\section{Experimentele observaties}
+\subsection{Experimentele observaties}
 
-%Het I1I2i3-model van Ohta is een goede benadering van de Karhunen-Loeve transformatie 
-%voor het decorreleren van de RGB-componenten, waardoor het zeer geschikt is 
-%voor beeldverwerking.
+We vergelijken in deze sectie enkele similariteitsmaten die gebaseerd zijn op de bovenstaande
+histogrammen. Voor de parameter $\lambda$ van het vaaghistogram gebruiken we daarbij
+de waarde $5$.
+
+Figuur~\ref{fig:histgeb_gggrs_en_cputimes} toont de bekomen meetresultaten. Het Irb-histogram
+en het XYZ-histogram geven, in combinatie met $M_{13}$, de laagste GGGR-waarde. Hoewel die
+waarde bij het Irb-histogram een fractie hoger is, merken we bij het vergelijken van 
+figuur~\ref{fig:results_irb_histgeb} en figuur~\ref{fig:results_xyz_histgeb} dat het 
+XYZ-histogram toch iets minder goede resultaten geeft. 
 
 \begin{figure}[tbp]
 \begin{center}
 \includegraphics[width=\textwidth]{/home/klbostee/Workspace/Thesis/plots/histgeb1_gggrs_en_cputimes_filled.eps} 
 \includegraphics[width=\textwidth]{/home/klbostee/Workspace/Thesis/plots/histgeb2_gggrs_en_cputimes_filled.eps}
-\caption{\label{fig:histgeb_gggrs_en_cputimes}De GGGR-waarde en de gebruikte rekentijd in ms voor elk van de similariteitsmaten op basis van histrogrammen.}
+\includegraphics[width=\textwidth]{/home/klbostee/Workspace/Thesis/plots/histgeb3_gggrs_en_cputimes_filled.eps}
+\caption{\label{fig:histgeb_gggrs_en_cputimes}De GGGR-waarde en de gebruikte rekentijd in ms voor elk 
+van de similariteitsmaten op basis van histrogrammen.}
 \end{center}
 \end{figure}
 
@@ -101,119 +296,140 @@ lidmaatschapsgraden.
 \begin{tabular}{m{11cm} | m{3cm} |}
 \textbf{Eerste tien resultaten:} & \textbf{GGR:} \\
 \vspace{4pt}
-\includegraphics[width=1cm]{coil/beeld-6.eps} 
-\includegraphics[width=1cm]{coil/beeld-7.eps} 
-\includegraphics[width=1cm]{coil/beeld-9.eps} 
-\includegraphics[width=1cm]{coil/beeld-10.eps} 
-\includegraphics[width=1cm]{coil/beeld-11.eps} 
-\includegraphics[width=1cm]{coil/beeld-8.eps} 
-\includegraphics[width=1cm]{coil/beeld-36.eps} 
-\includegraphics[width=1cm]{coil/beeld-39.eps} 
-\includegraphics[width=1cm]{coil/beeld-60.eps} 
-\includegraphics[width=1cm]{coil/beeld-64.eps} & {\scriptsize 0.0} \\ 
-\includegraphics[width=1cm]{coil/beeld-18.eps} 
-\includegraphics[width=1cm]{coil/beeld-19.eps} 
-\includegraphics[width=1cm]{coil/beeld-21.eps} 
-\includegraphics[width=1cm]{coil/beeld-22.eps} 
-\includegraphics[width=1cm]{coil/beeld-20.eps} 
-\includegraphics[width=1cm]{coil/beeld-23.eps} 
-\includegraphics[width=1cm]{coil/beeld-39.eps} 
-\includegraphics[width=1cm]{coil/beeld-44.eps} 
-\includegraphics[width=1cm]{coil/beeld-54.eps} 
-\includegraphics[width=1cm]{coil/beeld-55.eps} & {\scriptsize 0.0} \\ 
-\includegraphics[width=1cm]{coil/beeld-24.eps} 
-\includegraphics[width=1cm]{coil/beeld-25.eps} 
-\includegraphics[width=1cm]{coil/beeld-28.eps} 
-\includegraphics[width=1cm]{coil/beeld-27.eps} 
-\includegraphics[width=1cm]{coil/beeld-26.eps} 
-\includegraphics[width=1cm]{coil/beeld-29.eps} 
-\includegraphics[width=1cm]{coil/beeld-8.eps} 
-\includegraphics[width=1cm]{coil/beeld-11.eps} 
-\includegraphics[width=1cm]{coil/beeld-38.eps} 
-\includegraphics[width=1cm]{coil/beeld-41.eps} & {\scriptsize 0.0} \\ 
-\includegraphics[width=1cm]{coil/beeld-48.eps} 
-\includegraphics[width=1cm]{coil/beeld-50.eps} 
-\includegraphics[width=1cm]{coil/beeld-49.eps} 
-\includegraphics[width=1cm]{coil/beeld-51.eps} 
-\includegraphics[width=1cm]{coil/beeld-53.eps} 
-\includegraphics[width=1cm]{coil/beeld-52.eps} 
-\includegraphics[width=1cm]{coil/beeld-38.eps} 
-\includegraphics[width=1cm]{coil/beeld-41.eps} 
-\includegraphics[width=1cm]{coil/beeld-37.eps} 
-\includegraphics[width=1cm]{coil/beeld-40.eps} & {\scriptsize 0.0} \\ 
-\includegraphics[width=1cm]{coil/beeld-54.eps} 
-\includegraphics[width=1cm]{coil/beeld-55.eps} 
-\includegraphics[width=1cm]{coil/beeld-58.eps} 
-\includegraphics[width=1cm]{coil/beeld-57.eps} 
-\includegraphics[width=1cm]{coil/beeld-59.eps} 
-\includegraphics[width=1cm]{coil/beeld-56.eps} 
-\includegraphics[width=1cm]{coil/beeld-22.eps} 
-\includegraphics[width=1cm]{coil/beeld-60.eps} 
-\includegraphics[width=1cm]{coil/beeld-21.eps} 
-\includegraphics[width=1cm]{coil/beeld-63.eps} & {\scriptsize 0.0} \\ 
-\includegraphics[width=1cm]{coil/beeld-60.eps} 
-\includegraphics[width=1cm]{coil/beeld-61.eps} 
-\includegraphics[width=1cm]{coil/beeld-64.eps} 
-\includegraphics[width=1cm]{coil/beeld-63.eps} 
-\includegraphics[width=1cm]{coil/beeld-65.eps} 
-\includegraphics[width=1cm]{coil/beeld-62.eps} 
-\includegraphics[width=1cm]{coil/beeld-7.eps} 
-\includegraphics[width=1cm]{coil/beeld-9.eps} 
-\includegraphics[width=1cm]{coil/beeld-10.eps} 
-\includegraphics[width=1cm]{coil/beeld-8.eps} & {\scriptsize 0.0} \\ 
-\includegraphics[width=1cm]{coil/beeld-12.eps} 
-\includegraphics[width=1cm]{coil/beeld-13.eps} 
-\includegraphics[width=1cm]{coil/beeld-16.eps} 
-\includegraphics[width=1cm]{coil/beeld-15.eps} 
-\includegraphics[width=1cm]{coil/beeld-14.eps} 
-\includegraphics[width=1cm]{coil/beeld-62.eps} 
-\includegraphics[width=1cm]{coil/beeld-17.eps} 
-\includegraphics[width=1cm]{coil/beeld-65.eps} 
-\includegraphics[width=1cm]{coil/beeld-21.eps} 
-\includegraphics[width=1cm]{coil/beeld-57.eps} & {\scriptsize 
-0.002380952380952381} \\ \includegraphics[width=1cm]{coil/beeld-30.eps} 
-\includegraphics[width=1cm]{coil/beeld-31.eps} 
-\includegraphics[width=1cm]{coil/beeld-34.eps} 
-\includegraphics[width=1cm]{coil/beeld-33.eps} 
-\includegraphics[width=1cm]{coil/beeld-32.eps} 
-\includegraphics[width=1cm]{coil/beeld-61.eps} 
-\includegraphics[width=1cm]{coil/beeld-35.eps} 
-\includegraphics[width=1cm]{coil/beeld-64.eps} 
-\includegraphics[width=1cm]{coil/beeld-60.eps} 
-\includegraphics[width=1cm]{coil/beeld-40.eps} & {\scriptsize 
-0.002380952380952381} \\ \includegraphics[width=1cm]{coil/beeld-36.eps} 
-\includegraphics[width=1cm]{coil/beeld-40.eps} 
-\includegraphics[width=1cm]{coil/beeld-37.eps} 
-\includegraphics[width=1cm]{coil/beeld-39.eps} 
-\includegraphics[width=1cm]{coil/beeld-10.eps} 
-\includegraphics[width=1cm]{coil/beeld-9.eps} 
-\includegraphics[width=1cm]{coil/beeld-7.eps} 
-\includegraphics[width=1cm]{coil/beeld-38.eps} 
-\includegraphics[width=1cm]{coil/beeld-41.eps} 
-\includegraphics[width=1cm]{coil/beeld-6.eps} & {\scriptsize 
-0.014285714285714285} \\ \includegraphics[width=1cm]{coil/beeld-0.eps} 
-\includegraphics[width=1cm]{coil/beeld-1.eps} 
-\includegraphics[width=1cm]{coil/beeld-42.eps} 
-\includegraphics[width=1cm]{coil/beeld-4.eps} 
-\includegraphics[width=1cm]{coil/beeld-43.eps} 
-\includegraphics[width=1cm]{coil/beeld-3.eps} 
-\includegraphics[width=1cm]{coil/beeld-45.eps} 
-\includegraphics[width=1cm]{coil/beeld-46.eps} 
-\includegraphics[width=1cm]{coil/beeld-37.eps} 
-\includegraphics[width=1cm]{coil/beeld-62.eps} & {\scriptsize 
-0.11666666666666667} \\ \includegraphics[width=1cm]{coil/beeld-42.eps} 
-\includegraphics[width=1cm]{coil/beeld-0.eps} 
-\includegraphics[width=1cm]{coil/beeld-1.eps} 
-\includegraphics[width=1cm]{coil/beeld-4.eps} 
-\includegraphics[width=1cm]{coil/beeld-43.eps} 
-\includegraphics[width=1cm]{coil/beeld-3.eps} 
-\includegraphics[width=1cm]{coil/beeld-46.eps} 
-\includegraphics[width=1cm]{coil/beeld-45.eps} 
-\includegraphics[width=1cm]{coil/beeld-37.eps} 
-\includegraphics[width=1cm]{coil/beeld-62.eps} & {\scriptsize 
-0.2357142857142857}
+\includegraphics[width=1cm]{coil/beeld-12.eps}
+\includegraphics[width=1cm]{coil/beeld-13.eps}
+\includegraphics[width=1cm]{coil/beeld-15.eps}
+\includegraphics[width=1cm]{coil/beeld-16.eps}
+\includegraphics[width=1cm]{coil/beeld-17.eps}
+\includegraphics[width=1cm]{coil/beeld-14.eps}
+\includegraphics[width=1cm]{coil/beeld-44.eps}
+\includegraphics[width=1cm]{coil/beeld-47.eps}
+\includegraphics[width=1cm]{coil/beeld-5.eps}
+\includegraphics[width=1cm]{coil/beeld-2.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-6.eps}
+\includegraphics[width=1cm]{coil/beeld-7.eps}
+\includegraphics[width=1cm]{coil/beeld-8.eps}
+\includegraphics[width=1cm]{coil/beeld-9.eps}
+\includegraphics[width=1cm]{coil/beeld-11.eps}
+\includegraphics[width=1cm]{coil/beeld-10.eps}
+\includegraphics[width=1cm]{coil/beeld-65.eps}
+\includegraphics[width=1cm]{coil/beeld-41.eps}
+\includegraphics[width=1cm]{coil/beeld-64.eps}
+\includegraphics[width=1cm]{coil/beeld-36.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-18.eps}
+\includegraphics[width=1cm]{coil/beeld-19.eps}
+\includegraphics[width=1cm]{coil/beeld-21.eps}
+\includegraphics[width=1cm]{coil/beeld-22.eps}
+\includegraphics[width=1cm]{coil/beeld-20.eps}
+\includegraphics[width=1cm]{coil/beeld-23.eps}
+\includegraphics[width=1cm]{coil/beeld-32.eps}
+\includegraphics[width=1cm]{coil/beeld-36.eps}
+\includegraphics[width=1cm]{coil/beeld-33.eps}
+\includegraphics[width=1cm]{coil/beeld-39.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-24.eps}
+\includegraphics[width=1cm]{coil/beeld-25.eps}
+\includegraphics[width=1cm]{coil/beeld-28.eps}
+\includegraphics[width=1cm]{coil/beeld-27.eps}
+\includegraphics[width=1cm]{coil/beeld-26.eps}
+\includegraphics[width=1cm]{coil/beeld-29.eps}
+\includegraphics[width=1cm]{coil/beeld-39.eps}
+\includegraphics[width=1cm]{coil/beeld-38.eps}
+\includegraphics[width=1cm]{coil/beeld-7.eps}
+\includegraphics[width=1cm]{coil/beeld-6.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+\includegraphics[width=1cm]{coil/beeld-32.eps}
+\includegraphics[width=1cm]{coil/beeld-31.eps}
+\includegraphics[width=1cm]{coil/beeld-33.eps}
+\includegraphics[width=1cm]{coil/beeld-34.eps}
+\includegraphics[width=1cm]{coil/beeld-35.eps}
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-63.eps}
+\includegraphics[width=1cm]{coil/beeld-61.eps}
+\includegraphics[width=1cm]{coil/beeld-65.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-48.eps}
+\includegraphics[width=1cm]{coil/beeld-50.eps}
+\includegraphics[width=1cm]{coil/beeld-49.eps}
+\includegraphics[width=1cm]{coil/beeld-51.eps}
+\includegraphics[width=1cm]{coil/beeld-53.eps}
+\includegraphics[width=1cm]{coil/beeld-52.eps}
+\includegraphics[width=1cm]{coil/beeld-37.eps}
+\includegraphics[width=1cm]{coil/beeld-38.eps}
+\includegraphics[width=1cm]{coil/beeld-40.eps}
+\includegraphics[width=1cm]{coil/beeld-39.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-54.eps}
+\includegraphics[width=1cm]{coil/beeld-55.eps}
+\includegraphics[width=1cm]{coil/beeld-57.eps}
+\includegraphics[width=1cm]{coil/beeld-58.eps}
+\includegraphics[width=1cm]{coil/beeld-56.eps}
+\includegraphics[width=1cm]{coil/beeld-59.eps}
+\includegraphics[width=1cm]{coil/beeld-31.eps}
+\includegraphics[width=1cm]{coil/beeld-32.eps}
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+\includegraphics[width=1cm]{coil/beeld-34.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-61.eps}
+\includegraphics[width=1cm]{coil/beeld-62.eps}
+\includegraphics[width=1cm]{coil/beeld-63.eps}
+\includegraphics[width=1cm]{coil/beeld-64.eps}
+\includegraphics[width=1cm]{coil/beeld-65.eps}
+\includegraphics[width=1cm]{coil/beeld-7.eps}
+\includegraphics[width=1cm]{coil/beeld-6.eps}
+\includegraphics[width=1cm]{coil/beeld-8.eps}
+\includegraphics[width=1cm]{coil/beeld-9.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-36.eps}
+\includegraphics[width=1cm]{coil/beeld-39.eps}
+\includegraphics[width=1cm]{coil/beeld-41.eps}
+\includegraphics[width=1cm]{coil/beeld-40.eps}
+\includegraphics[width=1cm]{coil/beeld-38.eps}
+\includegraphics[width=1cm]{coil/beeld-11.eps}
+\includegraphics[width=1cm]{coil/beeld-10.eps}
+\includegraphics[width=1cm]{coil/beeld-6.eps}
+\includegraphics[width=1cm]{coil/beeld-7.eps}
+\includegraphics[width=1cm]{coil/beeld-37.eps}
+& {\scriptsize 0.009523809523809525}
+\\
+\includegraphics[width=1cm]{coil/beeld-0.eps}
+\includegraphics[width=1cm]{coil/beeld-1.eps}
+\includegraphics[width=1cm]{coil/beeld-42.eps}
+\includegraphics[width=1cm]{coil/beeld-46.eps}
+\includegraphics[width=1cm]{coil/beeld-4.eps}
+\includegraphics[width=1cm]{coil/beeld-5.eps}
+\includegraphics[width=1cm]{coil/beeld-47.eps}
+\includegraphics[width=1cm]{coil/beeld-3.eps}
+\includegraphics[width=1cm]{coil/beeld-2.eps}
+\includegraphics[width=1cm]{coil/beeld-43.eps}
+& {\scriptsize 0.023809523809523808}
+\\
+\includegraphics[width=1cm]{coil/beeld-42.eps}
+\includegraphics[width=1cm]{coil/beeld-0.eps}
+\includegraphics[width=1cm]{coil/beeld-1.eps}
+\includegraphics[width=1cm]{coil/beeld-46.eps}
+\includegraphics[width=1cm]{coil/beeld-4.eps}
+\includegraphics[width=1cm]{coil/beeld-3.eps}
+\includegraphics[width=1cm]{coil/beeld-5.eps}
+\includegraphics[width=1cm]{coil/beeld-2.eps}
+\includegraphics[width=1cm]{coil/beeld-47.eps}
+\includegraphics[width=1cm]{coil/beeld-44.eps}
+& {\scriptsize 0.07380952380952381}
+\\
 \end{tabular}
-\caption{\label{fig:results_i1i2i3_histgeb}De GGR-waarde en de eerste tien resultaten voor elk voorbeeld bij de beste similariteitsmaat op basis van het I1I2I3-histogram.}
+\caption{\label{fig:results_irb_histgeb}De GGR-waarde en de eerste tien resultaten voor elk voorbeeld bij de similariteitsmaat op basis van het Irb-histogram en $M_{I3}$.}
 \end{center}
 \end{figure}
 
@@ -222,239 +438,229 @@ lidmaatschapsgraden.
 \begin{tabular}{m{11cm} | m{3cm} |}
 \textbf{Eerste tien resultaten:} & \textbf{GGR:} \\
 \vspace{4pt}
-\includegraphics[width=1cm]{coil/beeld-12.eps} 
-\includegraphics[width=1cm]{coil/beeld-13.eps} 
-\includegraphics[width=1cm]{coil/beeld-15.eps} 
-\includegraphics[width=1cm]{coil/beeld-16.eps} 
-\includegraphics[width=1cm]{coil/beeld-17.eps} 
-\includegraphics[width=1cm]{coil/beeld-14.eps} 
-\includegraphics[width=1cm]{coil/beeld-44.eps} 
-\includegraphics[width=1cm]{coil/beeld-47.eps} 
-\includegraphics[width=1cm]{coil/beeld-5.eps} 
-\includegraphics[width=1cm]{coil/beeld-2.eps} & {\scriptsize 0.0} \\ 
-\includegraphics[width=1cm]{coil/beeld-6.eps} 
-\includegraphics[width=1cm]{coil/beeld-7.eps} 
-\includegraphics[width=1cm]{coil/beeld-8.eps} 
-\includegraphics[width=1cm]{coil/beeld-9.eps} 
-\includegraphics[width=1cm]{coil/beeld-11.eps} 
-\includegraphics[width=1cm]{coil/beeld-10.eps} 
-\includegraphics[width=1cm]{coil/beeld-65.eps} 
-\includegraphics[width=1cm]{coil/beeld-41.eps} 
-\includegraphics[width=1cm]{coil/beeld-64.eps} 
-\includegraphics[width=1cm]{coil/beeld-36.eps} & {\scriptsize 0.0} \\ 
-\includegraphics[width=1cm]{coil/beeld-18.eps} 
-\includegraphics[width=1cm]{coil/beeld-19.eps} 
-\includegraphics[width=1cm]{coil/beeld-21.eps} 
-\includegraphics[width=1cm]{coil/beeld-22.eps} 
-\includegraphics[width=1cm]{coil/beeld-20.eps} 
-\includegraphics[width=1cm]{coil/beeld-23.eps} 
-\includegraphics[width=1cm]{coil/beeld-32.eps} 
-\includegraphics[width=1cm]{coil/beeld-36.eps} 
-\includegraphics[width=1cm]{coil/beeld-33.eps} 
-\includegraphics[width=1cm]{coil/beeld-39.eps} & {\scriptsize 0.0} \\ 
-\includegraphics[width=1cm]{coil/beeld-24.eps} 
-\includegraphics[width=1cm]{coil/beeld-25.eps} 
-\includegraphics[width=1cm]{coil/beeld-28.eps} 
-\includegraphics[width=1cm]{coil/beeld-27.eps} 
-\includegraphics[width=1cm]{coil/beeld-26.eps} 
-\includegraphics[width=1cm]{coil/beeld-29.eps} 
-\includegraphics[width=1cm]{coil/beeld-39.eps} 
-\includegraphics[width=1cm]{coil/beeld-38.eps} 
-\includegraphics[width=1cm]{coil/beeld-7.eps} 
-\includegraphics[width=1cm]{coil/beeld-6.eps} & {\scriptsize 0.0} \\ 
-\includegraphics[width=1cm]{coil/beeld-30.eps} 
-\includegraphics[width=1cm]{coil/beeld-32.eps} 
-\includegraphics[width=1cm]{coil/beeld-31.eps} 
-\includegraphics[width=1cm]{coil/beeld-33.eps} 
-\includegraphics[width=1cm]{coil/beeld-34.eps} 
-\includegraphics[width=1cm]{coil/beeld-35.eps} 
-\includegraphics[width=1cm]{coil/beeld-60.eps} 
-\includegraphics[width=1cm]{coil/beeld-63.eps} 
-\includegraphics[width=1cm]{coil/beeld-61.eps} 
-\includegraphics[width=1cm]{coil/beeld-65.eps} & {\scriptsize 0.0} \\ 
-\includegraphics[width=1cm]{coil/beeld-48.eps} 
-\includegraphics[width=1cm]{coil/beeld-50.eps} 
-\includegraphics[width=1cm]{coil/beeld-49.eps} 
-\includegraphics[width=1cm]{coil/beeld-51.eps} 
-\includegraphics[width=1cm]{coil/beeld-53.eps} 
-\includegraphics[width=1cm]{coil/beeld-52.eps} 
-\includegraphics[width=1cm]{coil/beeld-37.eps} 
-\includegraphics[width=1cm]{coil/beeld-38.eps} 
-\includegraphics[width=1cm]{coil/beeld-40.eps} 
-\includegraphics[width=1cm]{coil/beeld-39.eps} & {\scriptsize 0.0} \\ 
-\includegraphics[width=1cm]{coil/beeld-54.eps} 
-\includegraphics[width=1cm]{coil/beeld-55.eps} 
-\includegraphics[width=1cm]{coil/beeld-57.eps} 
-\includegraphics[width=1cm]{coil/beeld-58.eps} 
-\includegraphics[width=1cm]{coil/beeld-56.eps} 
-\includegraphics[width=1cm]{coil/beeld-59.eps} 
-\includegraphics[width=1cm]{coil/beeld-31.eps} 
-\includegraphics[width=1cm]{coil/beeld-32.eps} 
-\includegraphics[width=1cm]{coil/beeld-30.eps} 
-\includegraphics[width=1cm]{coil/beeld-34.eps} & {\scriptsize 0.0} \\ 
-\includegraphics[width=1cm]{coil/beeld-60.eps} 
-\includegraphics[width=1cm]{coil/beeld-61.eps} 
-\includegraphics[width=1cm]{coil/beeld-62.eps} 
-\includegraphics[width=1cm]{coil/beeld-63.eps} 
-\includegraphics[width=1cm]{coil/beeld-64.eps} 
-\includegraphics[width=1cm]{coil/beeld-65.eps} 
-\includegraphics[width=1cm]{coil/beeld-7.eps} 
-\includegraphics[width=1cm]{coil/beeld-6.eps} 
-\includegraphics[width=1cm]{coil/beeld-8.eps} 
-\includegraphics[width=1cm]{coil/beeld-9.eps} & {\scriptsize 0.0} \\ 
-\includegraphics[width=1cm]{coil/beeld-36.eps} 
-\includegraphics[width=1cm]{coil/beeld-39.eps} 
-\includegraphics[width=1cm]{coil/beeld-41.eps} 
-\includegraphics[width=1cm]{coil/beeld-40.eps} 
-\includegraphics[width=1cm]{coil/beeld-38.eps} 
-\includegraphics[width=1cm]{coil/beeld-11.eps} 
-\includegraphics[width=1cm]{coil/beeld-10.eps} 
-\includegraphics[width=1cm]{coil/beeld-6.eps} 
-\includegraphics[width=1cm]{coil/beeld-7.eps} 
-\includegraphics[width=1cm]{coil/beeld-37.eps} & {\scriptsize 
-0.009523809523809525} \\ \includegraphics[width=1cm]{coil/beeld-0.eps} 
-\includegraphics[width=1cm]{coil/beeld-1.eps} 
-\includegraphics[width=1cm]{coil/beeld-42.eps} 
-\includegraphics[width=1cm]{coil/beeld-46.eps} 
-\includegraphics[width=1cm]{coil/beeld-4.eps} 
-\includegraphics[width=1cm]{coil/beeld-5.eps} 
-\includegraphics[width=1cm]{coil/beeld-47.eps} 
-\includegraphics[width=1cm]{coil/beeld-3.eps} 
-\includegraphics[width=1cm]{coil/beeld-2.eps} 
-\includegraphics[width=1cm]{coil/beeld-43.eps} & {\scriptsize 
-0.023809523809523808} \\ \includegraphics[width=1cm]{coil/beeld-42.eps} 
-\includegraphics[width=1cm]{coil/beeld-0.eps} 
-\includegraphics[width=1cm]{coil/beeld-1.eps} 
-\includegraphics[width=1cm]{coil/beeld-46.eps} 
-\includegraphics[width=1cm]{coil/beeld-4.eps} 
-\includegraphics[width=1cm]{coil/beeld-3.eps} 
-\includegraphics[width=1cm]{coil/beeld-5.eps} 
-\includegraphics[width=1cm]{coil/beeld-2.eps} 
-\includegraphics[width=1cm]{coil/beeld-47.eps} 
-\includegraphics[width=1cm]{coil/beeld-44.eps} & {\scriptsize 
-0.07380952380952381}
+\includegraphics[width=1cm]{coil/beeld-12.eps}
+\includegraphics[width=1cm]{coil/beeld-13.eps}
+\includegraphics[width=1cm]{coil/beeld-15.eps}
+\includegraphics[width=1cm]{coil/beeld-16.eps}
+\includegraphics[width=1cm]{coil/beeld-17.eps}
+\includegraphics[width=1cm]{coil/beeld-14.eps}
+\includegraphics[width=1cm]{coil/beeld-19.eps}
+\includegraphics[width=1cm]{coil/beeld-18.eps}
+\includegraphics[width=1cm]{coil/beeld-54.eps}
+\includegraphics[width=1cm]{coil/beeld-55.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-6.eps}
+\includegraphics[width=1cm]{coil/beeld-7.eps}
+\includegraphics[width=1cm]{coil/beeld-8.eps}
+\includegraphics[width=1cm]{coil/beeld-9.eps}
+\includegraphics[width=1cm]{coil/beeld-11.eps}
+\includegraphics[width=1cm]{coil/beeld-10.eps}
+\includegraphics[width=1cm]{coil/beeld-39.eps}
+\includegraphics[width=1cm]{coil/beeld-65.eps}
+\includegraphics[width=1cm]{coil/beeld-38.eps}
+\includegraphics[width=1cm]{coil/beeld-64.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-18.eps}
+\includegraphics[width=1cm]{coil/beeld-19.eps}
+\includegraphics[width=1cm]{coil/beeld-21.eps}
+\includegraphics[width=1cm]{coil/beeld-22.eps}
+\includegraphics[width=1cm]{coil/beeld-20.eps}
+\includegraphics[width=1cm]{coil/beeld-23.eps}
+\includegraphics[width=1cm]{coil/beeld-63.eps}
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-32.eps}
+\includegraphics[width=1cm]{coil/beeld-65.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+\includegraphics[width=1cm]{coil/beeld-32.eps}
+\includegraphics[width=1cm]{coil/beeld-33.eps}
+\includegraphics[width=1cm]{coil/beeld-35.eps}
+\includegraphics[width=1cm]{coil/beeld-34.eps}
+\includegraphics[width=1cm]{coil/beeld-31.eps}
+\includegraphics[width=1cm]{coil/beeld-56.eps}
+\includegraphics[width=1cm]{coil/beeld-59.eps}
+\includegraphics[width=1cm]{coil/beeld-63.eps}
+\includegraphics[width=1cm]{coil/beeld-65.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-48.eps}
+\includegraphics[width=1cm]{coil/beeld-51.eps}
+\includegraphics[width=1cm]{coil/beeld-52.eps}
+\includegraphics[width=1cm]{coil/beeld-49.eps}
+\includegraphics[width=1cm]{coil/beeld-53.eps}
+\includegraphics[width=1cm]{coil/beeld-50.eps}
+\includegraphics[width=1cm]{coil/beeld-26.eps}
+\includegraphics[width=1cm]{coil/beeld-29.eps}
+\includegraphics[width=1cm]{coil/beeld-41.eps}
+\includegraphics[width=1cm]{coil/beeld-36.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-54.eps}
+\includegraphics[width=1cm]{coil/beeld-55.eps}
+\includegraphics[width=1cm]{coil/beeld-57.eps}
+\includegraphics[width=1cm]{coil/beeld-58.eps}
+\includegraphics[width=1cm]{coil/beeld-59.eps}
+\includegraphics[width=1cm]{coil/beeld-56.eps}
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-32.eps}
+\includegraphics[width=1cm]{coil/beeld-61.eps}
+\includegraphics[width=1cm]{coil/beeld-30.eps}
+& {\scriptsize 0.0}
+\\
+\includegraphics[width=1cm]{coil/beeld-24.eps}
+\includegraphics[width=1cm]{coil/beeld-25.eps}
+\includegraphics[width=1cm]{coil/beeld-28.eps}
+\includegraphics[width=1cm]{coil/beeld-27.eps}
+\includegraphics[width=1cm]{coil/beeld-50.eps}
+\includegraphics[width=1cm]{coil/beeld-26.eps}
+\includegraphics[width=1cm]{coil/beeld-29.eps}
+\includegraphics[width=1cm]{coil/beeld-53.eps}
+\includegraphics[width=1cm]{coil/beeld-51.eps}
+\includegraphics[width=1cm]{coil/beeld-48.eps}
+& {\scriptsize 0.004761904761904762}
+\\
+\includegraphics[width=1cm]{coil/beeld-36.eps}
+\includegraphics[width=1cm]{coil/beeld-41.eps}
+\includegraphics[width=1cm]{coil/beeld-40.eps}
+\includegraphics[width=1cm]{coil/beeld-39.eps}
+\includegraphics[width=1cm]{coil/beeld-11.eps}
+\includegraphics[width=1cm]{coil/beeld-38.eps}
+\includegraphics[width=1cm]{coil/beeld-10.eps}
+\includegraphics[width=1cm]{coil/beeld-37.eps}
+\includegraphics[width=1cm]{coil/beeld-8.eps}
+\includegraphics[width=1cm]{coil/beeld-7.eps}
+& {\scriptsize 0.007142857142857143}
+\\
+\includegraphics[width=1cm]{coil/beeld-0.eps}
+\includegraphics[width=1cm]{coil/beeld-1.eps}
+\includegraphics[width=1cm]{coil/beeld-42.eps}
+\includegraphics[width=1cm]{coil/beeld-3.eps}
+\includegraphics[width=1cm]{coil/beeld-5.eps}
+\includegraphics[width=1cm]{coil/beeld-4.eps}
+\includegraphics[width=1cm]{coil/beeld-2.eps}
+\includegraphics[width=1cm]{coil/beeld-47.eps}
+\includegraphics[width=1cm]{coil/beeld-31.eps}
+\includegraphics[width=1cm]{coil/beeld-46.eps}
+& {\scriptsize 0.009523809523809525}
+\\
+\includegraphics[width=1cm]{coil/beeld-60.eps}
+\includegraphics[width=1cm]{coil/beeld-61.eps}
+\includegraphics[width=1cm]{coil/beeld-63.eps}
+\includegraphics[width=1cm]{coil/beeld-65.eps}
+\includegraphics[width=1cm]{coil/beeld-64.eps}
+\includegraphics[width=1cm]{coil/beeld-7.eps}
+\includegraphics[width=1cm]{coil/beeld-6.eps}
+\includegraphics[width=1cm]{coil/beeld-8.eps}
+\includegraphics[width=1cm]{coil/beeld-9.eps}
+\includegraphics[width=1cm]{coil/beeld-11.eps}
+& {\scriptsize 0.014285714285714285}
+\\
+\includegraphics[width=1cm]{coil/beeld-42.eps}
+\includegraphics[width=1cm]{coil/beeld-0.eps}
+\includegraphics[width=1cm]{coil/beeld-43.eps}
+\includegraphics[width=1cm]{coil/beeld-3.eps}
+\includegraphics[width=1cm]{coil/beeld-1.eps}
+\includegraphics[width=1cm]{coil/beeld-44.eps}
+\includegraphics[width=1cm]{coil/beeld-5.eps}
+\includegraphics[width=1cm]{coil/beeld-45.eps}
+\includegraphics[width=1cm]{coil/beeld-4.eps}
+\includegraphics[width=1cm]{coil/beeld-62.eps}
+& {\scriptsize 0.05238095238095238}
+\\
 \end{tabular}
-\caption{\label{fig:results_irb_histgeb}De GGR-waarde en de eerste tien resultaten voor elk voorbeeld bij de beste similariteitsmaat op basis van het Irb-histogram.}
+\caption{\label{fig:results_xyz_histgeb}De GGR-waarde en de eerste tien resultaten voor elk voorbeeld bij de similariteitsmaat op basis van het XYZ-histogram en $M_{I3}$.}
 \end{center}
 \end{figure}
 
+Uit de meetresultaten blijkt dat $M_5$, $M_{5c}$, $M_{11}$ en $M_{11c}$ in deze context
+beduidend slechter presteren dan de overige vaagsimilariteitsmaten. Dat is niet
+verwonderlijk, vermits die maten de enige zijn die de corresponderende bins van de histogrammen 
+niet rechstreeks met elkaar vergelijken. Beschouw bijvoorbeeld een beeld $A$ dat enkel bestaat
+uit rode beeldpunten en een beeld $B$ dat volledig groen is. In beide beelden komen alle
+pixels in dezelfde bin terecht. Ze geven dus aanleiding tot pseudo-vage histogrammen $H_A$ en $H_B$  
+die \'e\'en enkele piek bevatten, of tot vaaghistogrammen $\widetilde{H}_A$ en $\widetilde{H}_B$ 
+waarbij er ook nog een aantal ``naburige'' bins een waarde hebben die verschilt van nul 
+(zie figuur~\ref{fig:histogrammen_rood_en_groen}). Doordat rood en 
+groen steeds in verschillende bins gekwantiseerd worden, ligt de piek bij elk histogram op een 
+andere plaats. 
+Stel nu dat $(\mathcal{H}_A,\mathcal{H}_B) \in \{(H_A,H_B), (\widetilde{H}_A,\widetilde{H}_B)\}$.
+Er geldt dan
+$|\mathcal{H}_A|=|\mathcal{H}_B|$ en $|\mathcal{H}_{A}^c|=|\mathcal{H}_{B}^c|$, zodat
+$$
+|\mathcal{H}_A \setminus \mathcal{H}_B|=|\mathcal{H}_A \cap \mathcal{H}_{B}^c|=|\mathcal{H}_A|=|\mathcal{H}_B|=|\mathcal{H}_B \cap \mathcal{H}_{A}^c|=|\mathcal{H}_B \setminus \mathcal{H}_A|
+$$ 
+en ook
+$$
+|(\mathcal{H}_A  \setminus \mathcal{H}_B)^c|=|C'|-|\mathcal{H}_A \setminus \mathcal{H}_B|=|C'|-|\mathcal{H}_B \setminus \mathcal{H}_A|=|(\mathcal{H}_B  \setminus \mathcal{H}_A)^c|
+$$
+want voor een vaagverzameling $D$ in een universum $X$ is $|D^c|$ gelijk aan $|X|-|D|$ (zie \ref{sectie:beperken_rekentijd}). Bijgevolg geldt:
+$M_5(\mathcal{H}_A,\mathcal{H}_B)=M_{5c}(\mathcal{H}_A,\mathcal{H}_B)=M_{11}(\mathcal{H}_A,\mathcal{H}_B)=M_{11c}(\mathcal{H}_A,\mathcal{H}_B)=1$.
+Ook bij meer realistische beelden treden er valse positieven op. Zo bekomen 
+we bijvoorbeeld ook similariteit $1$ als we in $A$ en $B$ bij evenveel pixels de kleur vervangen door 
+een zelfde kleur. De voorbeelden ``rood bootje'' en ``groen bootje'' uit onze testcollectie zijn bij 
+benadering dergelijke beelden. 
+
+Bij de vaaghistogrammen geven ook $M_8$, $M_{8c}$, $M_{10}$, $M_{10c}$ en $M_{13}$ minder goede resultaten.
+De oorzaak daarvan is dezelfde als bij de pixelgebaseerde similariteitsmaten. Voor een beeld $A$ dat enkel
+kleuren bevat die ook in $B$ voorkomen, geldt immers $\widetilde{H}_A(c) \leq \widetilde{H}_B(c)$ voor 
+alle $c \in C'$. In de praktijk is het regelmatig zo dat de meeste kleuren van een beeld ook in een
+ander beeld voorkomen. Bijgevolg treden er ook hier valse positieven op.
+
+
 \begin{figure}[tbp]
 \begin{center}
-\begin{tabular}{m{11cm} | m{3cm} |}
-\textbf{Eerste tien resultaten:} & \textbf{GGR:} \\
-\vspace{4pt}
-\includegraphics[width=1cm]{coil/beeld-6.eps} 
-\includegraphics[width=1cm]{coil/beeld-8.eps} 
-\includegraphics[width=1cm]{coil/beeld-7.eps} 
-\includegraphics[width=1cm]{coil/beeld-9.eps} 
-\includegraphics[width=1cm]{coil/beeld-10.eps} 
-\includegraphics[width=1cm]{coil/beeld-11.eps} 
-\includegraphics[width=1cm]{coil/beeld-38.eps} 
-\includegraphics[width=1cm]{coil/beeld-65.eps} 
-\includegraphics[width=1cm]{coil/beeld-39.eps} 
-\includegraphics[width=1cm]{coil/beeld-64.eps} & {\scriptsize 0.0} \\ 
-\includegraphics[width=1cm]{coil/beeld-24.eps} 
-\includegraphics[width=1cm]{coil/beeld-25.eps} 
-\includegraphics[width=1cm]{coil/beeld-28.eps} 
-\includegraphics[width=1cm]{coil/beeld-27.eps} 
-\includegraphics[width=1cm]{coil/beeld-26.eps} 
-\includegraphics[width=1cm]{coil/beeld-29.eps} 
-\includegraphics[width=1cm]{coil/beeld-9.eps} 
-\includegraphics[width=1cm]{coil/beeld-7.eps} 
-\includegraphics[width=1cm]{coil/beeld-11.eps} 
-\includegraphics[width=1cm]{coil/beeld-8.eps} & {\scriptsize 0.0} \\ 
-\includegraphics[width=1cm]{coil/beeld-30.eps} 
-\includegraphics[width=1cm]{coil/beeld-31.eps} 
-\includegraphics[width=1cm]{coil/beeld-32.eps} 
-\includegraphics[width=1cm]{coil/beeld-33.eps} 
-\includegraphics[width=1cm]{coil/beeld-35.eps} 
-\includegraphics[width=1cm]{coil/beeld-34.eps} 
-\includegraphics[width=1cm]{coil/beeld-56.eps} 
-\includegraphics[width=1cm]{coil/beeld-59.eps} 
-\includegraphics[width=1cm]{coil/beeld-57.eps} 
-\includegraphics[width=1cm]{coil/beeld-58.eps} & {\scriptsize 0.0} \\ 
-\includegraphics[width=1cm]{coil/beeld-48.eps} 
-\includegraphics[width=1cm]{coil/beeld-50.eps} 
-\includegraphics[width=1cm]{coil/beeld-49.eps} 
-\includegraphics[width=1cm]{coil/beeld-51.eps} 
-\includegraphics[width=1cm]{coil/beeld-53.eps} 
-\includegraphics[width=1cm]{coil/beeld-52.eps} 
-\includegraphics[width=1cm]{coil/beeld-37.eps} 
-\includegraphics[width=1cm]{coil/beeld-38.eps} 
-\includegraphics[width=1cm]{coil/beeld-41.eps} 
-\includegraphics[width=1cm]{coil/beeld-40.eps} & {\scriptsize 0.0} \\ 
-\includegraphics[width=1cm]{coil/beeld-60.eps} 
-\includegraphics[width=1cm]{coil/beeld-63.eps} 
-\includegraphics[width=1cm]{coil/beeld-62.eps} 
-\includegraphics[width=1cm]{coil/beeld-61.eps} 
-\includegraphics[width=1cm]{coil/beeld-64.eps} 
-\includegraphics[width=1cm]{coil/beeld-65.eps} 
-\includegraphics[width=1cm]{coil/beeld-7.eps} 
-\includegraphics[width=1cm]{coil/beeld-6.eps} 
-\includegraphics[width=1cm]{coil/beeld-8.eps} 
-\includegraphics[width=1cm]{coil/beeld-36.eps} & {\scriptsize 0.0} \\ 
-\includegraphics[width=1cm]{coil/beeld-36.eps} 
-\includegraphics[width=1cm]{coil/beeld-40.eps} 
-\includegraphics[width=1cm]{coil/beeld-41.eps} 
-\includegraphics[width=1cm]{coil/beeld-38.eps} 
-\includegraphics[width=1cm]{coil/beeld-39.eps} 
-\includegraphics[width=1cm]{coil/beeld-10.eps} 
-\includegraphics[width=1cm]{coil/beeld-6.eps} 
-\includegraphics[width=1cm]{coil/beeld-7.eps} 
-\includegraphics[width=1cm]{coil/beeld-11.eps} 
-\includegraphics[width=1cm]{coil/beeld-8.eps} & {\scriptsize 
-0.011904761904761904} \\ \includegraphics[width=1cm]{coil/beeld-18.eps} 
-\includegraphics[width=1cm]{coil/beeld-19.eps} 
-\includegraphics[width=1cm]{coil/beeld-21.eps} 
-\includegraphics[width=1cm]{coil/beeld-22.eps} 
-\includegraphics[width=1cm]{coil/beeld-62.eps} 
-\includegraphics[width=1cm]{coil/beeld-63.eps} 
-\includegraphics[width=1cm]{coil/beeld-20.eps} 
-\includegraphics[width=1cm]{coil/beeld-61.eps} 
-\includegraphics[width=1cm]{coil/beeld-60.eps} 
-\includegraphics[width=1cm]{coil/beeld-64.eps} & {\scriptsize 
-0.016666666666666666} \\ \includegraphics[width=1cm]{coil/beeld-0.eps} 
-\includegraphics[width=1cm]{coil/beeld-4.eps} 
-\includegraphics[width=1cm]{coil/beeld-42.eps} 
-\includegraphics[width=1cm]{coil/beeld-46.eps} 
-\includegraphics[width=1cm]{coil/beeld-1.eps} 
-\includegraphics[width=1cm]{coil/beeld-5.eps} 
-\includegraphics[width=1cm]{coil/beeld-3.eps} 
-\includegraphics[width=1cm]{coil/beeld-2.eps} 
-\includegraphics[width=1cm]{coil/beeld-47.eps} 
-\includegraphics[width=1cm]{coil/beeld-57.eps} & {\scriptsize 
-0.01904761904761905} \\ \includegraphics[width=1cm]{coil/beeld-54.eps} 
-\includegraphics[width=1cm]{coil/beeld-55.eps} 
-\includegraphics[width=1cm]{coil/beeld-58.eps} 
-\includegraphics[width=1cm]{coil/beeld-57.eps} 
-\includegraphics[width=1cm]{coil/beeld-0.eps} 
-\includegraphics[width=1cm]{coil/beeld-42.eps} 
-\includegraphics[width=1cm]{coil/beeld-32.eps} 
-\includegraphics[width=1cm]{coil/beeld-1.eps} 
-\includegraphics[width=1cm]{coil/beeld-59.eps} 
-\includegraphics[width=1cm]{coil/beeld-4.eps} & {\scriptsize 
-0.02142857142857143} \\ \includegraphics[width=1cm]{coil/beeld-12.eps} 
-\includegraphics[width=1cm]{coil/beeld-13.eps} 
-\includegraphics[width=1cm]{coil/beeld-15.eps} 
-\includegraphics[width=1cm]{coil/beeld-16.eps} 
-\includegraphics[width=1cm]{coil/beeld-5.eps} 
-\includegraphics[width=1cm]{coil/beeld-44.eps} 
-\includegraphics[width=1cm]{coil/beeld-2.eps} 
-\includegraphics[width=1cm]{coil/beeld-47.eps} 
-\includegraphics[width=1cm]{coil/beeld-4.eps} 
-\includegraphics[width=1cm]{coil/beeld-42.eps} & {\scriptsize 
-0.0380952380952381} \\ \includegraphics[width=1cm]{coil/beeld-42.eps} 
-\includegraphics[width=1cm]{coil/beeld-0.eps} 
-\includegraphics[width=1cm]{coil/beeld-4.eps} 
-\includegraphics[width=1cm]{coil/beeld-3.eps} 
-\includegraphics[width=1cm]{coil/beeld-2.eps} 
-\includegraphics[width=1cm]{coil/beeld-5.eps} 
-\includegraphics[width=1cm]{coil/beeld-46.eps} 
-\includegraphics[width=1cm]{coil/beeld-1.eps} 
-\includegraphics[width=1cm]{coil/beeld-44.eps} 
-\includegraphics[width=1cm]{coil/beeld-47.eps} & {\scriptsize 
-0.06904761904761905}
-\end{tabular}
-\caption{\label{fig:results_yxy_histgeb}De GGR-waarde en de eerste tien resultaten voor elk voorbeeld bij de beste similariteitsmaat op basis van het Yxy-histogram.}
+\subfigure[] {
+\begin{minipage}{\textwidth}
+\begin{center}
+\includegraphics[height=2cm, width=2cm]{images/rood.eps}
+\includegraphics[height=2cm, width=3cm]{images/hist_hsv_rood.eps}
+\includegraphics[height=2cm, width=3cm]{images/hist_irb_rood.eps}
+\includegraphics[height=2cm, width=3cm]{images/hist_i1i2i3_rood.eps}
+\includegraphics[height=2cm, width=3cm]{images/hist_xyz_rood.eps}\\[5pt]
+\includegraphics[height=2cm, width=3cm]{images/hist_yxy_rood.eps}
+\includegraphics[height=2cm, width=3cm]{images/hist_lab_rood.eps}
+\includegraphics[height=2cm, width=1cm]{images/hist_focal_rood.eps}
+\includegraphics[height=2cm, width=3cm]{images/hist_sct_rood.eps}
+\includegraphics[height=2cm, width=4cm]{images/hist_fuzzy_rood.eps}\\
+\vspace{5pt}
+\end{center}
+\end{minipage}
+}
+\vspace{5pt}
+\subfigure[] {
+\begin{minipage}{\textwidth}
+\begin{center}
+\includegraphics[height=2cm, width=2cm]{images/groen.eps}
+\includegraphics[height=2cm, width=3cm]{images/hist_hsv_groen.eps}
+\includegraphics[height=2cm, width=3cm]{images/hist_irb_groen.eps}
+\includegraphics[height=2cm, width=3cm]{images/hist_i1i2i3_groen.eps}
+\includegraphics[height=2cm, width=3cm]{images/hist_xyz_groen.eps}\\[5pt]
+\includegraphics[height=2cm, width=3cm]{images/hist_yxy_groen.eps}
+\includegraphics[height=2cm, width=3cm]{images/hist_lab_groen.eps}
+\includegraphics[height=2cm, width=1cm]{images/hist_focal_groen.eps}
+\includegraphics[height=2cm, width=3cm]{images/hist_sct_groen.eps}
+\includegraphics[height=2cm, width=4cm]{images/hist_fuzzy_groen.eps}\\
+\vspace{5pt}
+\end{center}
+\end{minipage}
+}
+\caption{\label{fig:histogrammen_rood_en_groen}Een volledig (a) rood en (b) groen beeld samen met de corresponderende histogrammen.}
 \end{center}
 \end{figure}
+
+%Het I1I2i3-model van Ohta is een goede benadering van de Karhunen-Loeve transformatie 
+%voor het decorreleren van de RGB-componenten, waardoor het zeer geschikt is 
+%voor beeldverwerking.
+
+
+
+\section{Uitgebreide histgrammen}
+
+\subsection{Smoothed histogrammen}
+
+\subsection{Spatiale histogrammen}
+
+\subsection{Experimentele observaties}
