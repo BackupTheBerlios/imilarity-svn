@@ -491,12 +491,11 @@ public class WuQuantizer implements Quantizer {
 			System.out.println("usage: java Wu <input image> <output image>");
 		try {
 			Image image = ImageData.loadFile(args[0]).getRgbImage();
-			Quantizer quantizer = new WuQuantizer(256);
+			Quantizer quantizer = new WuQuantizer(8);
+			long millis = System.currentTimeMillis();
 			BufferedImage outImage = new BufferedImage(image.getWidth(), image.getHeight(), 
 					BufferedImage.TYPE_INT_RGB);
-			long millis = System.currentTimeMillis();
 			quantizer.quantize(image);
-			System.out.println("Time: " + (System.currentTimeMillis()-millis));
 			for (int x = 0; x < image.getWidth(); x++) {
 				for (int y = 0; y < image.getHeight(); y++) {
 					double[] rgb = 
@@ -508,6 +507,7 @@ public class WuQuantizer implements Quantizer {
 					outImage.setRGB(x,y,pixel);
 				}
 			}
+			System.out.println("Time: " + (System.currentTimeMillis()-millis));
 			ImageIO.write(outImage,"png",new File(args[1]));
 		} catch (IOException e) {
 			System.err.println("IO Error: " + e.getMessage());

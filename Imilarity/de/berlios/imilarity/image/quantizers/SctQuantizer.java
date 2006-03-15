@@ -56,7 +56,7 @@ public class SctQuantizer implements Quantizer {
 			return Math.min((int)(hsv[2]*gbc),gbc-1); 
 				// uniform quantized value
 		else
-			return (gbc + Math.min((int)(hsv[0]*cbc),cbc-1)); 
+			return (gbc + Math.min((int)(hsv[0]*cbc),cbc-1));
 				// uniform quantized hue
 	}
 
@@ -77,6 +77,7 @@ public class SctQuantizer implements Quantizer {
 			//Image image = new HsvImage(
 			//	(ImageData.loadFile("/home/klbostee/Thesis/Misc/hsv_constant_s.png")).getRgbImage());
 			Quantizer quantizer = new SctQuantizer();
+			long millis = System.currentTimeMillis();
 			quantizer.quantize(image);
 			BufferedImage bi = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
 			for (int x = 0; x < image.getWidth(); x++) {
@@ -86,6 +87,7 @@ public class SctQuantizer implements Quantizer {
 					bi.setRGB(x, y, (rgb[0] << 16) | (rgb[1] << 8) | rgb[2]);
 				}
 			}
+			System.out.println("Time: " + (System.currentTimeMillis()-millis));
 			//ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/sct_constant_s.png"));
 			ImageIO.write(bi,"png",new File(args[1]));
 			System.out.println("done.");

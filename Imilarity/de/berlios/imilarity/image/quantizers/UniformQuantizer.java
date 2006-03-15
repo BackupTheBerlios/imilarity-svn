@@ -85,6 +85,12 @@ public class UniformQuantizer implements Quantizer {
 	// TESTPROGRAMMA
 	
 	public static void main(String[] args) throws IOException {
+		//doMainTest();
+		//doSpeedTest();
+		doOptBinsTest();
+	}
+	
+	private static void doMainTest() throws IOException {
 		ColorSpace hsv = new Hsv();
 		ColorSpace i1i2i3 = new I1i2i3();
 		ColorSpace irb = new Irb();
@@ -96,62 +102,156 @@ public class UniformQuantizer implements Quantizer {
 		Image constS = (ImageData.loadFile("/home/klbostee/Thesis/Misc/hsv_constant_s.png")).getRgbImage();
 		Image constV = (ImageData.loadFile("/home/klbostee/Thesis/Misc/hsv_constant_v.png")).getRgbImage();
 		
-		doTest(hsv, new HsvImage(flowers), new int[] {16,4,4}, 
-				new File("/home/klbostee/Thesis/Misc/uniform_hsv_flowers.png"));
-		doTest(hsv, new HsvImage(autumn), new int[] {16,4,4}, 
-				new File("/home/klbostee/Thesis/Misc/uniform_hsv_autumn.png"));
-		doTest(hsv, new HsvImage(constS), new int[] {16,4,4}, 
-				new File("/home/klbostee/Thesis/Misc/uniform_hsv_constant_s.png"));
-		doTest(hsv, new HsvImage(constV), new int[] {16,4,4}, 
-				new File("/home/klbostee/Thesis/Misc/uniform_hsv_constant_v.png"));
+		long millis = System.currentTimeMillis();
+		BufferedImage bi = doTest(hsv, new HsvImage(flowers), new int[] {16,4,4});
+		System.out.println("HSV: " + (System.currentTimeMillis()-millis));
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_hsv_flowers.png"));
+		bi = doTest(hsv, new HsvImage(autumn), new int[] {16,4,4});
+		ImageIO.write(bi, "png",new File("/home/klbostee/Thesis/Misc/uniform_hsv_autumn.png"));
+		bi = doTest(hsv, new HsvImage(constS), new int[] {16,4,4}); 
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_hsv_constant_s.png"));
+		bi = doTest(hsv, new HsvImage(constV), new int[] {16,4,4}); 
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_hsv_constant_v.png"));
 		
-		doTest(i1i2i3, new I1i2i3Image(flowers), new int[] {4,8,8}, 
-				new File("/home/klbostee/Thesis/Misc/uniform_i1i2i3_flowers.png"));
-		doTest(i1i2i3, new I1i2i3Image(autumn), new int[] {4,8,8}, 
-				new File("/home/klbostee/Thesis/Misc/uniform_i1i2i3_autumn.png"));
-		doTest(i1i2i3, new I1i2i3Image(constS), new int[] {4,8,8}, 
-				new File("/home/klbostee/Thesis/Misc/uniform_i1i2i3_constant_s.png"));
-		doTest(i1i2i3, new I1i2i3Image(constV), new int[] {4,8,8}, 
-				new File("/home/klbostee/Thesis/Misc/uniform_i1i2i3_constant_v.png"));
+		millis = System.currentTimeMillis();
+		bi = doTest(i1i2i3, new I1i2i3Image(flowers), new int[] {4,8,8}); 
+		System.out.println("I1I2I3: " + (System.currentTimeMillis()-millis));
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_i1i2i3_flowers.png"));
+		bi = doTest(i1i2i3, new I1i2i3Image(autumn), new int[] {4,8,8}); 
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_i1i2i3_autumn.png"));
+		bi = doTest(i1i2i3, new I1i2i3Image(constS), new int[] {4,8,8}); 
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_i1i2i3_constant_s.png"));
+		bi = doTest(i1i2i3, new I1i2i3Image(constV), new int[] {4,8,8}); 
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_i1i2i3_constant_v.png"));
 		
-		doTest(irb, new IrbImage(flowers), new int[] {4,8,8}, 
-				new File("/home/klbostee/Thesis/Misc/uniform_irb_flowers.png"));
-		doTest(irb, new IrbImage(autumn), new int[] {4,8,8}, 
-				new File("/home/klbostee/Thesis/Misc/uniform_irb_autumn.png"));
-		doTest(irb, new IrbImage(constS), new int[] {4,8,8}, 
-				new File("/home/klbostee/Thesis/Misc/uniform_irb_constant_s.png"));
-		doTest(irb, new IrbImage(constV), new int[] {4,8,8}, 
-				new File("/home/klbostee/Thesis/Misc/uniform_irb_constant_v.png"));
+		millis = System.currentTimeMillis();
+		bi = doTest(irb, new IrbImage(flowers), new int[] {4,8,8}); 
+		System.out.println("Irb: " + (System.currentTimeMillis()-millis));
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_irb_flowers.png"));
+		bi = doTest(irb, new IrbImage(autumn), new int[] {4,8,8}); 
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_irb_autumn.png"));
+		bi = doTest(irb, new IrbImage(constS), new int[] {4,8,8}); 
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_irb_constant_s.png"));
+		bi = doTest(irb, new IrbImage(constV), new int[] {4,8,8}); 
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_irb_constant_v.png"));
 		
-		doTest(xyz, new XyzImage(flowers), new int[] {8,4,8}, 
-				new File("/home/klbostee/Thesis/Misc/uniform_xyz_flowers.png"));
-		doTest(xyz, new XyzImage(autumn), new int[] {8,4,8}, 
-				new File("/home/klbostee/Thesis/Misc/uniform_xyz_autumn.png"));
-		doTest(xyz, new XyzImage(constS), new int[] {8,4,8}, 
-				new File("/home/klbostee/Thesis/Misc/uniform_xyz_constant_s.png"));
-		doTest(xyz, new XyzImage(constV), new int[] {8,4,8}, 
-				new File("/home/klbostee/Thesis/Misc/uniform_xyz_constant_v.png"));
+		millis = System.currentTimeMillis();
+		bi = doTest(xyz, new XyzImage(flowers), new int[] {8,4,8}); 
+		System.out.println("XYZ: " + (System.currentTimeMillis()-millis));
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_xyz_flowers.png"));
+		bi = doTest(xyz, new XyzImage(autumn), new int[] {8,4,8}); 
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_xyz_autumn.png"));
+		bi = doTest(xyz, new XyzImage(constS), new int[] {8,4,8}); 
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_xyz_constant_s.png"));
+		bi = doTest(xyz, new XyzImage(constV), new int[] {8,4,8}); 
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_xyz_constant_v.png"));
 		
-		doTest(yxy, new YxyImage(flowers), new int[] {4,8,8}, 
-				new File("/home/klbostee/Thesis/Misc/uniform_yxy_flowers.png"));
-		doTest(yxy, new YxyImage(autumn), new int[] {4,8,8}, 
-				new File("/home/klbostee/Thesis/Misc/uniform_yxy_autumn.png"));
-		doTest(yxy, new YxyImage(constS), new int[] {4,8,8}, 
-				new File("/home/klbostee/Thesis/Misc/uniform_yxy_constant_s.png"));
-		doTest(yxy, new YxyImage(constV), new int[] {4,8,8}, 
-				new File("/home/klbostee/Thesis/Misc/uniform_yxy_constant_v.png"));
+		millis = System.currentTimeMillis();
+		bi = doTest(yxy, new YxyImage(flowers), new int[] {4,8,8}); 
+		System.out.println("Yxy: " + (System.currentTimeMillis()-millis));
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_yxy_flowers.png"));
+		bi = doTest(yxy, new YxyImage(autumn), new int[] {4,8,8}); 
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_yxy_autumn.png"));
+		bi = doTest(yxy, new YxyImage(constS), new int[] {4,8,8}); 
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_yxy_constant_s.png"));
+		bi = doTest(yxy, new YxyImage(constV), new int[] {4,8,8}); 
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_yxy_constant_v.png"));
 		
-		doTest(lab, new LabImage(flowers), new int[] {4,8,8}, 
-				new File("/home/klbostee/Thesis/Misc/uniform_lab_flowers.png"));
-		doTest(lab, new LabImage(autumn), new int[] {4,8,8}, 
-				new File("/home/klbostee/Thesis/Misc/uniform_lab_autumn.png"));
-		doTest(lab, new LabImage(constS), new int[] {4,8,8}, 
-				new File("/home/klbostee/Thesis/Misc/uniform_lab_constant_s.png"));
-		doTest(lab, new LabImage(constV), new int[] {4,8,8}, 
-				new File("/home/klbostee/Thesis/Misc/uniform_lab_constant_v.png"));
+		millis = System.currentTimeMillis();
+		bi = doTest(lab, new LabImage(flowers), new int[] {4,8,8}); 
+		System.out.println("Lab: " + (System.currentTimeMillis()-millis));
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_lab_flowers.png"));
+		bi = doTest(lab, new LabImage(autumn), new int[] {4,8,8}); 
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_lab_autumn.png"));
+		bi = doTest(lab, new LabImage(constS), new int[] {4,8,8}); 
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_lab_constant_s.png"));
+		bi = doTest(lab, new LabImage(constV), new int[] {4,8,8}); 
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_lab_constant_v.png"));
 	}
 	
-	public static void doTest(ColorSpace cs, Image image, int[] binsCounts, File file) throws IOException {
+	private static void doSpeedTest() throws IOException {
+		ColorSpace hsv = new Hsv();
+		ColorSpace i1i2i3 = new I1i2i3();
+		ColorSpace irb = new Irb();
+		ColorSpace xyz = new Xyz();
+		ColorSpace yxy = new Yxy();
+		ColorSpace lab = new Lab();
+		
+		Image big = (ImageData.loadFile("/home/klbostee/Thesis/Misc/rocky_woods.png")).getRgbImage();
+		
+		long millis = System.currentTimeMillis();
+		BufferedImage bi = doTest(hsv, new HsvImage(big), new int[] {16,4,4}); 
+		System.out.println("HSV: " + (System.currentTimeMillis()-millis));
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_hsv_rocky_woods.png"));
+		
+		millis = System.currentTimeMillis();
+		bi = doTest(i1i2i3, new I1i2i3Image(big), new int[] {4,8,8}); 
+		System.out.println("I1I2I3: " + (System.currentTimeMillis()-millis));
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_i1i2i3_rocky_woods.png"));
+		
+		millis = System.currentTimeMillis();
+		bi = doTest(irb, new IrbImage(big), new int[] {4,8,8}); 
+		System.out.println("Irb: " + (System.currentTimeMillis()-millis));
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_irb_rocky_woods.png"));
+		
+		millis = System.currentTimeMillis();
+		bi = doTest(xyz, new XyzImage(big), new int[] {8,4,8}); 
+		System.out.println("XYZ: " + (System.currentTimeMillis()-millis));
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_xyz_rocky_woods.png"));
+		
+		millis = System.currentTimeMillis();
+		bi = doTest(yxy, new YxyImage(big), new int[] {4,8,8}); 
+		System.out.println("Yxy: " + (System.currentTimeMillis()-millis));
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_yxy_rocky_woods.png"));
+		
+		millis = System.currentTimeMillis();
+		bi = doTest(lab, new LabImage(big), new int[] {4,8,8}); 
+		System.out.println("Lab: " + (System.currentTimeMillis()-millis));
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_lab_rocky_woods.png"));
+	}
+	
+	private static void doOptBinsTest() throws IOException {
+		ColorSpace hsv = new Hsv();
+		ColorSpace i1i2i3 = new I1i2i3();
+		ColorSpace irb = new Irb();
+		ColorSpace xyz = new Xyz();
+		ColorSpace yxy = new Yxy();
+		ColorSpace lab = new Lab();
+
+		Image im = (ImageData.loadFile("/home/klbostee/Thesis/Misc/flowers.png")).getRgbImage();
+		
+		long millis = System.currentTimeMillis();
+		BufferedImage bi = doTest(hsv, new HsvImage(im), new int[] {51,50,50}); 
+		System.out.println("HSV: " + (System.currentTimeMillis()-millis));
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_hsv_opt_flowers.png"));
+		
+		millis = System.currentTimeMillis();
+		bi = doTest(i1i2i3, new I1i2i3Image(im), new int[] {63,85,85}); 
+		System.out.println("I1I2I3: " + (System.currentTimeMillis()-millis));
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_i1i2i3_opt_flowers.png"));
+		
+		millis = System.currentTimeMillis();
+		bi = doTest(irb, new IrbImage(im), new int[] {63,85,255}); 
+		System.out.println("Irb: " + (System.currentTimeMillis()-millis));
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_irb_opt_flowers.png"));
+		
+		millis = System.currentTimeMillis();
+		bi = doTest(xyz, new XyzImage(im), new int[] {63,63,63}); 
+		System.out.println("XYZ: " + (System.currentTimeMillis()-millis));
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_xyz_opt_flowers.png"));
+		
+		millis = System.currentTimeMillis();
+		bi = doTest(yxy, new YxyImage(im), new int[] {63,255,255}); 
+		System.out.println("Yxy: " + (System.currentTimeMillis()-millis));
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_yxy_opt_flowers.png"));
+		
+		millis = System.currentTimeMillis();
+		bi = doTest(lab, new LabImage(im), new int[] {50,240,240}); 
+		System.out.println("Lab: " + (System.currentTimeMillis()-millis));
+		ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/uniform_lab_opt_flowers.png"));
+	}
+	
+	private static BufferedImage doTest(ColorSpace cs, Image image, int[] binsCounts) throws IOException {
 		Quantizer quantizer = new UniformQuantizer(binsCounts);
 		quantizer.quantize(image);
 		BufferedImage bi = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
@@ -162,7 +262,8 @@ public class UniformQuantizer implements Quantizer {
 				bi.setRGB(x, y, (rgb[0] << 16) | (rgb[1] << 8) | rgb[2]);
 			}
 		}
-		ImageIO.write(bi, "png", file);
-		System.out.println("done.");
+		return bi;
+		//ImageIO.write(bi, "png", file);
+		//System.out.println("done.");
 	}
 }

@@ -97,6 +97,7 @@ public class FocalQuantizer implements Quantizer {
 		try {
 			Image image = new LabImage(ImageData.loadFile(args[0]).getRgbImage());
 			Quantizer quantizer = new FocalQuantizer();
+			long millis = System.currentTimeMillis();
 			quantizer.quantize(image);
 			BufferedImage bi = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
 			for (int x = 0; x < image.getWidth(); x++) {
@@ -107,6 +108,7 @@ public class FocalQuantizer implements Quantizer {
 							((int)(comps[0]*255) << 16) | ((int)(comps[1]*255) << 8) | (int)(comps[2]*255));
 				}
 			}
+			System.out.println("Time: " + (System.currentTimeMillis()-millis));
 			//ImageIO.write(bi, "png", new File("/home/klbostee/Thesis/Misc/focal_constant_v.png"));
 			ImageIO.write(bi, "png", new File(args[1]));
 			System.out.println("done.");
