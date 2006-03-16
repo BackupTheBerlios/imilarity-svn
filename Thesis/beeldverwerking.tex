@@ -435,7 +435,7 @@ van naburige beeldpunten. In het geval van een \emph{lineair filter} is die nieu
 van de oude waarden. Het beeld $b'$ dat we bekomen door $b$ lineair te filteren, wordt gegeven door
 de volgende correlatie \cite{philips:beeldverwerking}:
 $$
-b'(x,y) = \sum_{(k,l) \in \Omega_m} b(x+k,y+l)m(k,l)
+b'(x,y) = \sum_{(k,l) \in \Omega_m} b(x+k,y+l) \cdot m(k,l)
 $$
 met $m$ een $\mathbb{N}^2 - \mathbb{R}$ afbeelding en $\Omega_m = \{ (k,l) \in \mathbb{N}^2 \mid m(k,l) \ne 0 \}$. 
 De functie $m$ wordt het \emph{filtermasker} genoemd.

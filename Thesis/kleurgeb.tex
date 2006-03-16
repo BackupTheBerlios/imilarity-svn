@@ -10,7 +10,7 @@ similariteitsmaten zal opleveren.
 
 \section{Histogrammen}
 
-Een histogram van een kleurbeeld is een voorstelling van de frequentieverdeling 
+Een \emph{histogram} van een kleurbeeld is een voorstelling van de frequentieverdeling 
 van de verschillende kleuren. De waarde van het histogram voor een kleurbeeld 
 $A$ in de kleur $c \in C$ is dus gelijk aan het totaal aantal pixels in het beeld met 
 kleur $c$. Om de complexiteit te beperken wordt er in de praktijk gebruik gemaakt
@@ -231,11 +231,10 @@ vaagverzameling voor elke kleur. Stel dat $lab$ de kleuren uit $C$ afbeeldt op d
 corresponderende niet-genormaliseerde L*a*b*-co\"ordinaten. De lidmaatschapsgraad van een 
 kleur $c' \in C$ in de vaagverzameling $\widetilde{C}_c$, die correspondeert met kleur $c \in C$, 
 defini\"eren we dan als volgt \cite{vertan:fuzzy_histograms}: $$
-\begin{array}{rcll}
-\widetilde{C}_c(c') 
- & = & 1 & \textrm{als } d'_{c,c'} = \frac{d \left( lab(c), lab(c') \right)}{2.3} \leq 1 \\ 
- & = & \exp \frac{- \left( d'_{c,c'} - 1 \right)^2}{2 \cdot \lambda^2} \right & 
-\textrm{anders}
+\widetilde{C}_c(c') =
+\left\{ \begin{array}{ll}
+1 & \textrm{als } d'_{c,c'} = \frac{d \left( lab(c), lab(c') \right)}{2.3} \leq 1 \\ 
+\exp \frac{- \left( d'_{c,c'} - 1 \right)^2}{2 \cdot \lambda^2} & \textrm{anders}
 \end{array}
 $$ met $d$ de Euclidische afstand en $\lambda$ een vrij te kiezen parameter. In 
 het geval van (niet-ge\-nor\-ma\-li\-seer\-de) L*a*b* komt de afstand $2.3$ namelijk 
@@ -270,6 +269,7 @@ uit de testcollectie die relevant zijn ten opzichte van dat voorbeeld, kunnen me
 elkaar vergeleken worden in figuur~\ref{fig:alle_vaaghistn_geel_bootje}.
 
 \subsection{Experimentele observaties}
+\label{sectie:histogrammen_experimentele_observaties}
 
 We vergelijken in deze sectie enkele similariteitsmaten die gebaseerd zijn op de bovenstaande
 histogrammen. Voor de parameter $\lambda$ van het vaaghistogram gebruiken we daarbij
@@ -609,6 +609,14 @@ kleuren bevat die ook in $B$ voorkomen, geldt immers $\widetilde{H}_A(c) \leq \w
 alle $c \in C'$. In de praktijk is het regelmatig zo dat de meeste kleuren van een beeld ook in een
 ander beeld voorkomen. Bijgevolg treden er ook hier valse positieven op.
 
+In de praktijk bevatten histogrammen vaak een groot aantal bins met waarde $0$. Uit 
+figuur~\ref{fig:alle_histn_geel_bootje} en figuur~\ref{fig:alle_vaaghistn_geel_bootje} blijkt 
+inderdaad dat dat het geval is bij de histogrammen voor de beelden uit onze testcollectie. 
+Doordat de vaagsimilariteitsmaten ge\"implementeerd werden op de manier die beschreven wordt in 
+\ref{sectie:beperken_rekentijd}, heeft dat als gevolg dat de rekentijd die nodig is voor het 
+vergelijken van de histogrammen beperkt blijft. De totale rekentijd wordt dus gedomineerd door 
+de tijd die nodig is voor het genereren van de histogrammen. Vandaar dat we voor alle 
+vaagsimilariteitsmaten nagenoeg dezelfde meetwaarden bekomen voor de rekentijd. 
 
 \begin{figure}[tbp]
 \begin{center}
@@ -659,8 +667,78 @@ ander beeld voorkomen. Bijgevolg treden er ook hier valse positieven op.
 
 \section{Uitgebreide histgrammen}
 
-\subsection{Smoothed histogrammen}
+Kleurkwantisatie brengt twee problemen met zich mee. Ten eerste kunnen perceptueel
+similaire kleuren in verschillende bins en perceptueel verschillende kleuren in
+dezelfde bin terecht komen. Het tweede probleem is dat een kleur maar tot
+\'e\'en enkele bin kan behoren, terwijl ze perceptueel similair kan zijn met
+de kleuren van meerdere bins. Vaagsimilariteitsmaten die de bins van de
+histogrammen rechtstreeks met elkaar vergelijken, zullen in bepaalde gevallen dus
+verkeerdelijk lage similariteiten als resultaat geven. De andere vaagsimilariteitsmaten ($M_5$, 
+$M_{5c}$, $M_{11}$ en $M_{11c}$) leiden niet tot dergelijke \emph{valse
+negatieven}, maar in \ref{sectie:histogrammen_experimentele_observaties} hebben
+we aangetoond dat die maten dan weer valse positieven veroorzaken.
+
+Verder zijn similariteitsmaten op basis van histogrammen ook volledig onafhankelijk van de 
+spatiale locaties van de beeldpunten. In
+de praktijk zijn echter niet alle pixels even belangrijk. Zo kan het
+bijvoorbeeld wenselijk zijn om minder belang te hechten aan de kleur van
+de achtergrondpixels. Doordat de spatiale informatie genegeerd wordt,
+kunnen er bovendien ook valse postieven optreden. Als we de pixels van een
+beeld op een willekeurig manier verplaatsen, dan zal er immers niets veranderen aan het
+geassocieerde histogram. Het beeld zelf zal er dan meestal wel totaal anders uitzien.  
+
+We kunnen tegemoet komen aan de bovenstaande problemen door \emph{uitgebreide
+histogrammen} te beschouwen. De uitgebreide versie $\mathcal{H}'_A$ van een histogram
+$\mathcal{H}_A \in \{H_A,\widetilde{H}_A\}$ geassocieerd met een beeld $A$ defini\"eren we
+als volgt:
+$$
+\mathcal{H}'_A(c) = \sum_{k \in \Omega_{s_A}} \mathcal{H}_A(kleur(bin(c)+k))
+\cdot w_{A,c}(k) $$ 
+voor alle $c \in C'$, met $w_{A,c}$ een $\mathbb{N} - \mathbb{R}$ afbeelding en 
+$\Omega_{s_{A,c}}=\{k \in \mathbb{N} \mid s_{A,c}(k) \ne 0\}$. Indien $s_{A,c}(k)=\delta(k)$,
+$\forall k \in \mathbb{N}$, voor elk beeld $A$ en elke kleur $c \in C'$,  dan
+geldt $\mathcal{H}'_A=\mathcal{H}_A$.
+
+\subsection{Gladde histogrammen}
+
+Swain en Ballard beschreven de kwantisatieproblemen reeds in \cite{swain:color_indexing}.
+Zij gingen echter uit van de veronderstelling dat de kleurvlakken in een beeld,
+omwille van schaduweffecten en ruis,
+kleuren uit meerdere bins omvatten. Op basis van die veronderstelling achtten ze
+het niet nodig om uitbreidingen van het ``gewone'' histogram te beschouwen.
+Desalniettemin stelden ze toch mogelijke oplossingen voor:
+\begin{quote}
+Histograms whose bins define overlapping bell-shaped (e.g., Gaussian) functions
+of color space would address some of the concerns of the previous paragraph, as
+would interpolation coding.
+\end{quote}
+De meeste uitbreidingen die beschreven worden in de literatuur 
+\cite{jawahar:fuzzy_statistics_of_digital_images,
+lu:perceptually_weighted_histograms_for_ir,
+sural:perceptually_smooth_histogram,
+vertan:embedding_fuzzy_logic_in_cbir, vertan:fuzzy_histograms} zijn
+te herleiden tot het eerste voorstel van Swain en Ballard. Dat voorstel komt
+neer op het glad (smooth) maken van de histogrammen door de waarden van de bins
+te vervangen door nieuwe waarden die ook afhangen van de waarden van ``naburige''
+bins met een perceptueel similaire kleur. Het SCT-histogram is daarvoor zeer
+geschikt, vermits de ``naburige'' bins van een bin daarbij ook letterlijk naast
+die bin liggen \cite{sural:perceptually_smooth_histogram}. De gladde versie van
+het SCT-histogram is dan het corresponderende uitgebreide histogram waarbij bijvoorbeeld $$
+s_{A,c}(k)=
+\left\{ \begin{array}{ll}
+\alpha^{-|k|} & \textrm{als } bin(c) \le 16 \textrm{ en } |k| \le R_1 \\
+\beta^{-|k|} & \textrm{als } bin(c) > 16 \textrm{ en } |k| \le R_2 \\ 
+0 & \textrm{anders}
+\end{array}
+$$
+voor alle $(A,c,k)$ uit $\mathcal{F}_L(P) \times C' \times \mathbb{N}$, met
+$\alpha$, $\beta$, $R_1$ en $R_2$ vrij te kiezen parameters.
+
+Figuur 99 illustreert \ldots
 
 \subsection{Spatiale histogrammen}
+
+In figuur 99 wordt er getoond hoe het negeren van spatiale informatie kan leiden
+tot het optreden van valse positieven.
 
 \subsection{Experimentele observaties}
