@@ -609,12 +609,12 @@ kleuren bevat die ook in $B$ voorkomen, geldt immers $\widetilde{H}_A(c) \leq \w
 alle $c \in C'$. In de praktijk is het regelmatig zo dat de meeste kleuren van een beeld ook in een
 ander beeld voorkomen. Bijgevolg treden er ook hier valse positieven op.
 
-In de praktijk bevatten histogrammen vaak een groot aantal bins met waarde $0$. Uit 
+Histogrammen bevatten vaak een groot aantal bins met waarde $0$. Uit 
 figuur~\ref{fig:alle_histn_geel_bootje} en figuur~\ref{fig:alle_vaaghistn_geel_bootje} blijkt 
 inderdaad dat dat het geval is bij de histogrammen voor de beelden uit onze testcollectie. 
 Doordat de vaagsimilariteitsmaten ge\"implementeerd werden op de manier die beschreven wordt in 
 \ref{sectie:beperken_rekentijd}, heeft dat als gevolg dat de rekentijd die nodig is voor het 
-vergelijken van de histogrammen beperkt blijft. De totale rekentijd wordt dus gedomineerd door 
+vergelijken van de histogrammen beperkt blijft. Daardoor wordt de totale rekentijd gedomineerd door 
 de tijd die nodig is voor het genereren van de histogrammen. Vandaar dat we voor alle 
 vaagsimilariteitsmaten nagenoeg dezelfde meetwaarden bekomen voor de rekentijd. 
 
@@ -663,20 +663,31 @@ vaagsimilariteitsmaten nagenoeg dezelfde meetwaarden bekomen voor de rekentijd.
 %voor het decorreleren van de RGB-componenten, waardoor het zeer geschikt is 
 %voor beeldverwerking.
 
-
-
 \section{Uitgebreide histgrammen}
 
-Kleurkwantisatie brengt twee problemen met zich mee. Ten eerste kunnen perceptueel
-similaire kleuren in verschillende bins en perceptueel verschillende kleuren in
-dezelfde bin terecht komen. Het tweede probleem is dat een kleur maar tot
-\'e\'en enkele bin kan behoren, terwijl ze perceptueel similair kan zijn met
-de kleuren van meerdere bins. Vaagsimilariteitsmaten die de bins van de
-histogrammen rechtstreeks met elkaar vergelijken, zullen in bepaalde gevallen dus
-verkeerdelijk lage similariteiten als resultaat geven. De andere vaagsimilariteitsmaten ($M_5$, 
-$M_{5c}$, $M_{11}$ en $M_{11c}$) leiden niet tot dergelijke \emph{valse
-negatieven}, maar in \ref{sectie:histogrammen_experimentele_observaties} hebben
-we aangetoond dat die maten dan weer valse positieven veroorzaken.
+Kleurkwantisatie brengt twee problemen met zich mee. Ten eerste kunnen 
+perceptueel similaire kleuren in verschillende bins en perceptueel 
+verschillende kleuren in dezelfde bin terecht komen. Het tweede probleem is dat 
+een kleur maar tot \'e\'en enkele bin kan behoren, terwijl ze perceptueel 
+similair kan zijn met de kleuren van meerdere bins. Similariteitsmaten waarbij 
+pseudo-vage histogrammen vergeleken worden met behulp van een 
+vaagsimilariteitsmaat die de bins rechtstreeks met elkaar vergelijkt, zullen 
+daardoor in bepaalde gevallen verkeerdelijk lage similariteiten als resultaat 
+geven. De andere vaagsimilariteitsmaten ($M_5$, $M_{5c}$, $M_{11}$ en 
+$M_{11c}$) leiden niet tot dergelijke \emph{valse negatieven}, maar in 
+\ref{sectie:histogrammen_experimentele_observaties} hebben we aangetoond dat 
+die maten dan weer valse positieven veroorzaken.
+Bij het vaaghistogram wordt het tweede kwantisatieprobleem opgelost
+door een kleur te laten bijdragen tot de waarde van meerdere bins. In feite kan een kleur
+bij een vaaghistogram dus wel tot meerdere bins behoren. Dat heeft
+bovendien als gevolg dat het eerste probleem minder doorweegt. Stel dat $c$ en $d$ twee perceptueel
+similaire kleuren zijn die in verschillende bins terecht komen. Het
+voorkomen van $c$ zal er dan voor zorgen dat de waarde van de bin van $d$ verschilt van nul.
+Omgekeerd zal het voorkomen van $d$ als gevolg hebben dat de waarde van de bin van $c$ groter is
+dan nul. Als $A$ een beeld is waarin $c$ voorkomt en $B$ een beeld waarin $d$ voorkomt, dan
+moeten de waarden van de bins van $c$ en van $d$ dus zowel in $\widetilde{H}_A$ als in 
+$\widetilde{H}_B$ beide verschillend zijn van nul. Bijgevolg zullen vaagsimilariteitsmaten
+die bin per bin vergelijken minder lage similariteiten als resultaat geven.
 
 Verder zijn similariteitsmaten op basis van histogrammen ook volledig onafhankelijk van de 
 spatiale locaties van de beeldpunten. In
@@ -684,36 +695,38 @@ de praktijk zijn echter niet alle pixels even belangrijk. Zo kan het
 bijvoorbeeld wenselijk zijn om minder belang te hechten aan de kleur van
 de achtergrondpixels. Doordat de spatiale informatie genegeerd wordt,
 kunnen er bovendien ook valse postieven optreden. Als we de pixels van een
-beeld op een willekeurig manier verplaatsen, dan zal er immers niets veranderen aan het
-geassocieerde histogram. Het beeld zelf zal er dan meestal wel totaal anders uitzien.  
+beeld op een willekeurig manier verplaatsen, dan zal er immers niets veranderen aan
+de geassocieerde histogrammen. Het beeld zelf zal er dan meestal wel totaal anders uitzien.  
 
 We kunnen tegemoet komen aan de bovenstaande problemen door \emph{uitgebreide
 histogrammen} te beschouwen. 
 %De uitgebreide versie $\mathcal{H}'_A$ van een histogram
 %$\mathcal{H}_A \in \{H_A,\widetilde{H}_A\}$ geassocieerd met een beeld $A$ defini\"eren we
 %als volgt:
-Zij $A$ een beeld, $\mathcal{H}_A \in \{H_A, \widetilde{H}_A\}$ 
-en $w_{A,c}$ een $\mathbb{C'} - \mathbb{R}$ afbeelding. Een functie van de vorm
+Zij $A$ een beeld, $\mathcal{H}_A$ een pseudo-vaag histogram of een vaaghistogram
+geassocieerd met $A$
+en $w_{A,c}$ een $C' - \mathbb{R}$ afbeelding. Een functie van de vorm
 $$
 \begin{array}{rrcll}
 \mathcal{H}'_A: 
- & C' & \to & [0,1] \\
+ & C' & \to & [0,1] \\[2pt]
  & c  & \mapsto & \displaystyle\sum_{c' \in C'} \mathcal{H}_A(c') \cdot w_{A,c}(c'), & \forall c \in C'
 \end{array}
 $$ 
-noemen we dan een uitgebreid histogram geassocieerd met $A$.
+noemen we dan een uitgebreid histogram.
 % Indien $w_{A,c}(k)=\delta(k)$,
 % $\forall k \in \mathbb{N}$, voor elk beeld $A$ en elke kleur $c \in C'$,  dan
 % geldt $\mathcal{H}'_A=\mathcal{H}_A$.
+
 
 \subsection{Gladde histogrammen}
 
 Swain en Ballard beschreven de kwantisatieproblemen reeds in \cite{swain:color_indexing}.
 Zij gingen echter uit van de veronderstelling dat de kleurvlakken in een beeld,
 omwille van schaduweffecten en ruis,
-kleuren uit meerdere bins omvatten. Op basis van die veronderstelling achtten ze
+steeds kleuren uit meerdere bins omvatten. Op basis van die veronderstelling achtten zij
 het niet nodig om uitbreidingen van het ``gewone'' histogram te beschouwen.
-Desalniettemin stelden ze toch mogelijke oplossingen voor:
+Desalniettemin stelden ze toch twee mogelijke oplossingen voor:
 \begin{quote}
 Histograms whose bins define overlapping bell-shaped (e.g., Gaussian) functions
 of color space would address some of the concerns of the previous paragraph, as
@@ -724,19 +737,24 @@ De meeste uitbreidingen die beschreven worden in de literatuur
 lu:perceptually_weighted_histograms_for_ir,
 sural:perceptually_smooth_histogram,
 vertan:embedding_fuzzy_logic_in_cbir, vertan:fuzzy_histograms} zijn
-te herleiden tot (varianten van) het eerste voorstel van Swain en Ballard. Dat voorstel komt
-neer op het glad (smooth) maken van de histogrammen door de waarden van de bins
-te vervangen door nieuwe waarden die ook afhangen van de waarden van ``naburige''
-bins met een perceptueel similaire kleur. 
+te herleiden tot (varianten van) het eerste voorstel van Swain en Ballard. Ook het
+vaaghistogram kan tot die groep van uitbreidingen gerekend worden. Daarvoor mag het
+begrip ``histogram'' wel niet te letterlijk ge\"interpreteerd worden. Een vaaghistogram
+bevat immers geen frequentie-informatie. Bij het merendeel van de uitbreidingen wordt
+er voor een iets conservatievere aanpak gekozen, waarbij de frequentie-informatie wel (gedeeltelijk)
+behouden blijft. Die uitbreidingen komen meestal neer op het glad (smooth) maken van 
+de histogrammen door de waarden van de bins te vervangen door nieuwe waarden die ook 
+afhangen van de waarden van ``naburige'' bins met een perceptueel similaire kleur. 
  
-In het SCT-histogram liggen de ``naburige'' bins van een bin ook letterlijk naast
-die bin \cite{sural:perceptually_smooth_histogram}. Het is bijgevolg zeer geschikt om
-\emph{smoothing} op toe te passen. De gladde versie van
-het SCT-histogram is dan een uitgebreid histogram waarbij bijvoorbeeld $$
+In het (pseudo-vaag) SCT-histogram liggen de ``naburige'' bins van een bin ook letterlijk naast
+die bin. Het is bijgevolg zeer geschikt om
+\emph{smoothing} op toe te passen \cite{sural:perceptually_smooth_histogram}. De gladde versie van
+een SCT-histogram is dan een uitgebreid histogram waarbij bijvoorbeeld 
+$$
 w_{A,c}(c')=
 \left\{ \begin{array}{ll}
 \alpha^{|bin(c)-bin(c')|} & \textrm{als } bin(c), bin(c') \le 16 \textrm{ en } |bin(c)-bin(c')| \le R_1 \\
-\beta^{cd(bin(c),bin'(c'))} & \textrm{als } bin(c), bin'(c') > 16 \textrm{ en } cd(bin(c),bin'(c')) \le R_2 \\ 
+\beta^{cd(bin(c),bin(c'))} & \textrm{als } bin(c), bin(c') > 16 \textrm{ en } cd(bin(c),bin(c')) \le R_2 \\ 
 0 & \textrm{anders}
 \end{array} \right.
 $$
@@ -750,25 +768,33 @@ cd(k,l) = \min\{|k-l|, (k+l) \bmod 272\}
 % bin(c) & \textrm{anders}
 % \end{array}
 $ 
-voor alle $(k,l)$ uit $\mathbb{N}^2$. In \ref{sectie:kleurkwantisatie} hebben we reeds vermeld dat
-SCT-kwantisatie eigenlijk een combinatie is van twee uniforme kwantisaties: \'e\'en voor de grijstinten 
-en een andere voor de kleurtinten. Het SCT-histogram kan dus beschouwd worden als de combinatie
-van een histogram voor grijstinten en een histogram voor kleurtinten. De bovenstaande formules
-genereren een uitgebreid SCT-histogram door op elk van de beide deelhistogrammen een transformatie
-toe te passen die te vergelijken is met een lineair filter voor een beeld (zie \ref{sectie:lineaire_filters}). 
-Zij $C'_{gr}=\{c \in C' \mid bin(c) \le 16\}$ en $\mathring{g}$ de met nullen uitgebreide versie van 
-de $C'_{gr} - [0,1]$ afbeelding $g$ die gegeven wordt door: 
-$g(k)=\mathcal{H}_A(kleur(k)), \forall k \in \{1,2,\ldots,16\}$.
+voor alle $(k,l)$ uit $\mathbb{N}^2$. In \ref{sectie:kleurkwantisatie} hebben 
+we reeds vermeld dat SCT-kwantisatie eigenlijk een combinatie is van twee 
+uniforme kwantisaties: \'e\'en voor de grijstinten en een andere voor de 
+kleurtinten. Een SCT-histogram $H_A$ kan dus beschouwd 
+worden als de combinatie van een histogram voor grijstinten en een histogram 
+voor kleurtinten. 
+Bij het construeren van het uitgebreid SCT-histogram $H_A'$, met behulp van de bovenstaande 
+definitie voor $w_{A,c}$, wordt op elk van de beide deelhistogrammen een 
+transformatie toegepast die te vergelijken is met een lineair filter voor 
+een beeld (zie \ref{sectie:lineaire_filters}). 
+
+Zij $g$ de restrictie van $H_A \circ kleur$ tot
+$\{1,2,\ldots,16\}$. Dat wil zeggen dat $g$ de $\{1,2,\ldots,16\} - [0,1]$ afbeelding is die 
+gegeven wordt door:
+$g(k)=H_A(kleur(k)), \forall k \in \{1,2,\ldots,16\}$.
 %$g = \mathcal{H}_A \circ kleur$ en $\mathring{g}$ 
 %de met nullen uitgebreide versie van $g$. 
-Voor $c \in C'_{gr}$ -- met
-andere woorden: voor \'e\'en van de grijstinten -- geldt dan:
+Indien $\mathring{g}$ de met nullen uitgebreide versie is van $g$ ($\mathring{g}(k)=g(k)$ voor
+alle $k \in \{1,2,\ldots,16\}$ en $\mathring{g}(k)=0$ voor alle andere $k$ uit $\mathbb{Z}$)
+en $c \in C'_{gr}=\{c \in C' \mid bin(c) \le 16\}$ -- met
+andere woorden: $c$ is \'e\'en van de grijstinten -- dan geldt:
 $$
 \begin{array}{r@{\quad=\quad}l}
-\mathcal{H}'_A(c) & \displaystyle\sum_{c' \in C'} \mathcal{H}_A(c') \cdot w_{A,c}(c') \\
- & \displaystyle\sum_{c' \in C'_{gr}} \mathcal{H}_A(c') \cdot w_{A,c}(c') + \sum_{c' \in C' \setminus C'_{gr}} \mathcal{H}_A(c') \cdot 0 \\
- & \displaystyle\sum_{c' \in C'_{gr}} g(bin(c')) \cdot w_{A,c}(c') \\
- & \displaystyle\sum_{c' \in C'_{gr}} \mathring{g}(bin(c')) \cdot \alpha^{|bin(c)-bin(c')|} \\
+H'_A(c) & \displaystyle\sum_{c' \in C'} H_A(c') \cdot w_{A,c}(c') \\[2pt]
+ & \displaystyle\sum_{c' \in C'_{gr}} H_A(c') \cdot w_{A,c}(c') + \sum_{c' \in C' \setminus C'_{gr}} H_A(c') \cdot 0 \\[2pt]
+ & \displaystyle\sum_{c' \in C'_{gr}} g(bin(c')) \cdot w_{A,c}(c') \\[2pt]
+ & \displaystyle\sum_{c' \in C'_{gr}} \mathring{g}(bin(c')) \cdot \alpha^{|bin(c)-bin(c')|} \\[2pt]
  & \displaystyle\sum_{k=-R_1}^{R_1} \mathring{g}(bin(c)+k) \cdot \alpha^{|k|}
 \end{array}
 $$
@@ -785,16 +811,55 @@ voor alle $k \in \mathbb{N}$. Dit is de corresponderende matrix:
 $
 \left[ \begin{array}{l@{\quad\ldots\quad}lllll@{\quad\ldots\quad}l} \alpha^{R_1} & \alpha^{2} & \alpha & 1 & \alpha & \alpha^{2} & \alpha^{R_1} \end{array} \right]
 $.
-Het deelhistogram voor de kleurtinten wordt op een analoge manier gefilterd. 
-De ``hue''-waarden van het HSV-model zijn echter circulair. Daarom gebruiken we daarbij
-periodieke uitbreiding in plaats van uitbreiding met nullen. Dat is meteen
-ook de reden voor de introductie van de extra functie $cd$ in de definitie van $w_{A,c}$.  
 
-Figuur 99 illustreert \ldots
+Het deelhistogram voor de kleurtinten wordt op een analoge manier gefilterd. 
+De ``hue''-waarden van het HSV-model zijn echter circulair. Daarom gebruiken we in dit geval
+periodieke uitbreiding in plaats van uitbreiding met nullen. Meer formeel geldt voor 
+elke $c \in C' \setminus C'_{gr}$:
+$$
+H'_A(c) = \sum_{k=-R_2}^{R_2} \mathring{g}'(bin(c)+k) \cdot \beta^{|k|}
+$$
+waarbij
+$$
+\mathring{g}'(k) = \left\{ \begin{array}{ll}
+g'(17  + ((k-17) \bmod 240)) & \textrm{als } k > 16 \\
+g'(256 - ((16-k) \bmod 240)) & \textrm{anders}
+\end{array} \right.
+$$
+voor alle $k \in \mathbb{Z}$, met $g'$ de restrictie van $H_A \circ kleur$
+tot $\{17,18,\ldots,256\}$. Het is duidelijk dat $\mathring{g}'(k)=g'(k)$ voor alle 
+$k \in \{17,18,\ldots,256\}$. De functie $\mathring{g}'$ is dus inderdaad een uitbreiding
+van $g'$. Voor $\mathring{g}'(16)$, $\mathring{g}'(15)$, $\mathring{g}'(14)$, \ldots en
+$\mathring{g}'(257)$, $\mathring{g}'(258)$, \ldots vinden we respectievelijk
+$g'(256)$, $g'(255)$, $g'(254)$, \ldots en $g'(17)$, $g'(18)$, \ldots . Buiten
+$\{17,18,\ldots,256\}$ herhaalt $\mathring{g}'$ zich dus periodiek. Die periodiciteit is
+de reden voor de introductie van de extra functie $cd$ in de definitie van $w_{A,c}$.  
+
+Figuur~\ref{fig:histogrammen_smoothed_sct} vergelijkt het gewone en het gladde SCT-histogram
+voor twee egaal groene beelden die perceptueel zeer similair zijn, maar waarbij de beide kleuren 
+toch in verschillende bins terecht komen.
+
+\begin{figure}[tbp]
+\begin{center}
+\subfigure[] {
+\includegraphics[height=2cm, width=2cm]{images/groen.eps}\quad
+\includegraphics[height=2cm, width=6cm]{images/sct_groen.eps}\quad
+\includegraphics[height=2cm, width=6cm]{images/smoothed_sct_groen.eps}
+}
+\subfigure[] {
+\includegraphics[height=2cm, width=2cm]{images/lichter_groen.eps}\quad
+\includegraphics[height=2cm, width=6cm]{images/sct_lichter_groen.eps}\quad
+\includegraphics[height=2cm, width=6cm]{images/smoothed_sct_lichter_groen.eps}
+}
+\caption{\label{fig:histogrammen_smoothed_sct}Twee volledig groene beelden die perceptueel 
+nagenoeg gelijk zijn, samen met het geassocieerde SCT-histogram en de gladde versie van dat 
+histogram ($\alpha=1/3$, $R_1=6$, $\beta=2/3$ en $R_2=14$).}
+\end{center}
+\end{figure}
 
 \subsection{Spatiale histogrammen}
 
-In figuur 99 wordt er getoond hoe het negeren van spatiale informatie kan leiden
-tot het optreden van valse positieven.
+%In figuur 99 wordt er getoond hoe het negeren van spatiale informatie kan leiden
+%tot het optreden van valse positieven.
 
 \subsection{Experimentele observaties}
