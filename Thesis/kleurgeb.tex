@@ -235,7 +235,7 @@ defini\"eren we dan als volgt \cite{vertan:fuzzy_histograms}: $$
 \left\{ \begin{array}{ll}
 1 & \textrm{als } d'_{c,c'} = \frac{d \left( lab(c), lab(c') \right)}{2.3} \leq 1 \\ 
 \exp \frac{- \left( d'_{c,c'} - 1 \right)^2}{2 \cdot \lambda^2} & \textrm{anders}
-\end{array}
+\end{array} \right.
 $$ met $d$ de Euclidische afstand en $\lambda$ een vrij te kiezen parameter. In 
 het geval van (niet-ge\-nor\-ma\-li\-seer\-de) L*a*b* komt de afstand $2.3$ namelijk 
 overeen met de zogenaamde 
@@ -688,13 +688,20 @@ beeld op een willekeurig manier verplaatsen, dan zal er immers niets veranderen 
 geassocieerde histogram. Het beeld zelf zal er dan meestal wel totaal anders uitzien.  
 
 We kunnen tegemoet komen aan de bovenstaande problemen door \emph{uitgebreide
-histogrammen} te beschouwen. De uitgebreide versie $\mathcal{H}'_A$ van een histogram
-$\mathcal{H}_A \in \{H_A,\widetilde{H}_A\}$ geassocieerd met een beeld $A$ defini\"eren we
-als volgt:
+histogrammen} te beschouwen. 
+%De uitgebreide versie $\mathcal{H}'_A$ van een histogram
+%$\mathcal{H}_A \in \{H_A,\widetilde{H}_A\}$ geassocieerd met een beeld $A$ defini\"eren we
+%als volgt:
+Zij $A$ een beeld, $\mathcal{H}_A \in \{H_A, \widetilde{H}_A\}$ 
+en $w_{A,c}$ een $\mathbb{C'} - \mathbb{R}$ afbeelding. Een functie van de vorm
 $$
-\mathcal{H}'_A(c) = \sum_{c' \in C'}} \mathcal{H}_A(c') \cdot w_{A,c}(c') 
+\begin{array}{rrcll}
+\mathcal{H}'_A: 
+ & C' & \to & [0,1] \\
+ & c  & \mapsto & \displaystyle\sum_{c' \in C'} \mathcal{H}_A(c') \cdot w_{A,c}(c'), & \forall c \in C'
+\end{array}
 $$ 
-voor alle $c \in C'$, met $w_{A,c}$ een $\mathbb{C'} - \mathbb{R}$. 
+noemen we dan een uitgebreid histogram geassocieerd met $A$.
 % Indien $w_{A,c}(k)=\delta(k)$,
 % $\forall k \in \mathbb{N}$, voor elk beeld $A$ en elke kleur $c \in C'$,  dan
 % geldt $\mathcal{H}'_A=\mathcal{H}_A$.
@@ -720,26 +727,68 @@ vertan:embedding_fuzzy_logic_in_cbir, vertan:fuzzy_histograms} zijn
 te herleiden tot (varianten van) het eerste voorstel van Swain en Ballard. Dat voorstel komt
 neer op het glad (smooth) maken van de histogrammen door de waarden van de bins
 te vervangen door nieuwe waarden die ook afhangen van de waarden van ``naburige''
-bins met een perceptueel similaire kleur. Het SCT-histogram is daarvoor zeer
-geschikt, vermits de ``naburige'' bins van een bin daarbij ook letterlijk naast
-die bin liggen \cite{sural:perceptually_smooth_histogram}. De gladde versie van
-het SCT-histogram is dan het corresponderende uitgebreide histogram waarbij bijvoorbeeld $$
+bins met een perceptueel similaire kleur. 
+ 
+In het SCT-histogram liggen de ``naburige'' bins van een bin ook letterlijk naast
+die bin \cite{sural:perceptually_smooth_histogram}. Het is bijgevolg zeer geschikt om
+\emph{smoothing} op toe te passen. De gladde versie van
+het SCT-histogram is dan een uitgebreid histogram waarbij bijvoorbeeld $$
 w_{A,c}(c')=
 \left\{ \begin{array}{ll}
 \alpha^{|bin(c)-bin(c')|} & \textrm{als } bin(c), bin(c') \le 16 \textrm{ en } |bin(c)-bin(c')| \le R_1 \\
-\beta^{|bin(c)-bin'(c')|} & \textrm{als } bin(c), bin'(c') > 16 \textrm{ en } |bin(c)-bin'(c')| \le R_2 \\ 
+\beta^{cd(bin(c),bin'(c'))} & \textrm{als } bin(c), bin'(c') > 16 \textrm{ en } cd(bin(c),bin'(c')) \le R_2 \\ 
 0 & \textrm{anders}
-\end{array}
+\end{array} \right.
 $$
 voor alle $(A,c,c')$ uit $\mathcal{F}_L(P) \times C' \times C'$, met
 $\alpha$, $\beta$, $R_1$ en $R_2$ vrij te kiezen parameters en 
+$
+cd(k,l) = \min\{|k-l|, (k+l) \bmod 272\}
+% bin'(c) = \left\{ 
+% \begin{array}{ll} bin(c)+240 & \textrm{als } bin(c) \le 16 \\ 
+% bin(c)-240 & \textrm{als } bin(c) > 256 \\
+% bin(c) & \textrm{anders}
+% \end{array}
+$ 
+voor alle $(k,l)$ uit $\mathbb{N}^2$. In \ref{sectie:kleurkwantisatie} hebben we reeds vermeld dat
+SCT-kwantisatie eigenlijk een combinatie is van twee uniforme kwantisaties: \'e\'en voor de grijstinten 
+en een andere voor de kleurtinten. Het SCT-histogram kan dus beschouwd worden als de combinatie
+van een histogram voor grijstinten en een histogram voor kleurtinten. De bovenstaande formules
+genereren een uitgebreid SCT-histogram door op elk van de beide deelhistogrammen een transformatie
+toe te passen die te vergelijken is met een lineair filter voor een beeld (zie \ref{sectie:lineaire_filters}). 
+Zij $C'_{gr}=\{c \in C' \mid bin(c) \le 16\}$ en $\mathring{g}$ de met nullen uitgebreide versie van 
+de $C'_{gr} - [0,1]$ afbeelding $g$ die gegeven wordt door: 
+$g(k)=\mathcal{H}_A(kleur(k)), \forall k \in \{1,2,\ldots,16\}$.
+%$g = \mathcal{H}_A \circ kleur$ en $\mathring{g}$ 
+%de met nullen uitgebreide versie van $g$. 
+Voor $c \in C'_{gr}$ -- met
+andere woorden: voor \'e\'en van de grijstinten -- geldt dan:
 $$
-bin'(c) = \left\{ 
-\begin{array}{ll} 240+bin(c) & \textrm{als } bin(c) \le 16 \\ 
-16 + \left( (bin(c)-16) \bmod 240 \right) & \textrm{anders}
+\begin{array}{r@{\quad=\quad}l}
+\mathcal{H}'_A(c) & \displaystyle\sum_{c' \in C'} \mathcal{H}_A(c') \cdot w_{A,c}(c') \\
+ & \displaystyle\sum_{c' \in C'_{gr}} \mathcal{H}_A(c') \cdot w_{A,c}(c') + \sum_{c' \in C' \setminus C'_{gr}} \mathcal{H}_A(c') \cdot 0 \\
+ & \displaystyle\sum_{c' \in C'_{gr}} g(bin(c')) \cdot w_{A,c}(c') \\
+ & \displaystyle\sum_{c' \in C'_{gr}} \mathring{g}(bin(c')) \cdot \alpha^{|bin(c)-bin(c')|} \\
+ & \displaystyle\sum_{k=-R_1}^{R_1} \mathring{g}(bin(c)+k) \cdot \alpha^{|k|}
 \end{array}
-$$ 
-voor alle $c$ uit $C$.
+$$
+De transformatie van het deelhistogram voor de grijstinten kan dus inderdaad beschouwd worden
+als een \'e\'endimensionaal lineair filter met filtermasker 
+$$
+m(k)= \left\{ 
+\begin{array}{ll} 
+\alpha^{|k|} & \textrm{als } |k| \le R_1 \\ 
+0 & \textrm{anders} 
+\end{array} \right.
+$$
+voor alle $k \in \mathbb{N}$. Dit is de corresponderende matrix: 
+$
+\left[ \begin{array}{l@{\quad\ldots\quad}lllll@{\quad\ldots\quad}l} \alpha^{R_1} & \alpha^{2} & \alpha & 1 & \alpha & \alpha^{2} & \alpha^{R_1} \end{array} \right]
+$.
+Het deelhistogram voor de kleurtinten wordt op een analoge manier gefilterd. 
+De ``hue''-waarden van het HSV-model zijn echter circulair. Daarom gebruiken we daarbij
+periodieke uitbreiding in plaats van uitbreiding met nullen. Dat is meteen
+ook de reden voor de introductie van de extra functie $cd$ in de definitie van $w_{A,c}$.  
 
 Figuur 99 illustreert \ldots
 
