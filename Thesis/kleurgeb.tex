@@ -609,7 +609,7 @@ kleuren bevat die ook in $B$ voorkomen, geldt immers $\widetilde{H}_A(c) \leq \w
 alle $c \in C'$. In de praktijk is het regelmatig zo dat de meeste kleuren van een beeld ook in een
 ander beeld voorkomen. Bijgevolg treden er ook hier valse positieven op.
 
-Histogrammen bevatten vaak een groot aantal bins met waarde $0$. Uit 
+Histogrammen bevatten vaak een groot aantal bins met waarde $0$ \cite{berens:compressed_colour_histograms}. Uit 
 figuur~\ref{fig:alle_histn_geel_bootje} en figuur~\ref{fig:alle_vaaghistn_geel_bootje} blijkt 
 inderdaad dat dat het geval is bij de histogrammen voor de beelden uit onze testcollectie. 
 Doordat de vaagsimilariteitsmaten ge\"implementeerd werden op de manier die beschreven wordt in 
@@ -663,7 +663,7 @@ vaagsimilariteitsmaten nagenoeg dezelfde meetwaarden bekomen voor de rekentijd.
 %voor het decorreleren van de RGB-componenten, waardoor het zeer geschikt is 
 %voor beeldverwerking.
 
-\section{Uitgebreide histgrammen}
+\section{Uitgebreide histogrammen}
 
 Kleurkwantisatie brengt twee problemen met zich mee. Ten eerste kunnen 
 perceptueel similaire kleuren in verschillende bins en perceptueel 
@@ -677,8 +677,9 @@ geven. De andere vaagsimilariteitsmaten ($M_5$, $M_{5c}$, $M_{11}$ en
 $M_{11c}$) leiden niet tot dergelijke \emph{valse negatieven}, maar in 
 \ref{sectie:histogrammen_experimentele_observaties} hebben we aangetoond dat 
 die maten dan weer valse positieven veroorzaken.
+
 Bij het vaaghistogram wordt het tweede kwantisatieprobleem opgelost
-door een kleur te laten bijdragen tot de waarde van meerdere bins. In feite kan een kleur
+door de kleur van een pixel te laten bijdragen tot de waarde van meerdere bins. In feite kan een kleur
 bij een vaaghistogram dus wel tot meerdere bins behoren. Dat heeft
 bovendien als gevolg dat het eerste probleem minder doorweegt. Stel dat $c$ en $d$ twee perceptueel
 similaire kleuren zijn die in verschillende bins terecht komen. Het
@@ -698,25 +699,46 @@ kunnen er bovendien ook valse postieven optreden. Als we de pixels van een
 beeld op een willekeurig manier verplaatsen, dan zal er immers niets veranderen aan
 de geassocieerde histogrammen. Het beeld zelf zal er dan meestal wel totaal anders uitzien.  
 
-We kunnen tegemoet komen aan de bovenstaande problemen door \emph{uitgebreide
-histogrammen} te beschouwen. 
+We kunnen pseudo-vage histogrammen construeren die minder gevoelig zijn voor de bovenstaande problemen,
+door \emph{uitgebreide histogrammen} te beschouwen. 
 %De uitgebreide versie $\mathcal{H}'_A$ van een histogram
 %$\mathcal{H}_A \in \{H_A,\widetilde{H}_A\}$ geassocieerd met een beeld $A$ defini\"eren we
 %als volgt:
-Zij $A$ een beeld, $\mathcal{H}_A$ een pseudo-vaag histogram of een vaaghistogram
-geassocieerd met $A$
-en $w_{A,c}$ een $C' - \mathbb{R}$ afbeelding. Een functie van de vorm
+Zij $A$ een beeld en $w_{A,c}$ een $P - \mathbb{R}$ afbeelding. Een functie van de vorm
 $$
 \begin{array}{rrcll}
-\mathcal{H}'_A: 
- & C' & \to & [0,1] \\[2pt]
- & c  & \mapsto & \displaystyle\sum_{c' \in C'} \mathcal{H}_A(c') \cdot w_{A,c}(c'), & \forall c \in C'
+\mathring{h}_A: 
+ & C' & \to & \mathbb{R} \\
+ & c  & \mapsto & \displaystyle\sum_{c' \in C'} \sum_{p \in P} \delta (bin(c')-bin(A(p))) \cdot w_{A,c}(p), & 
+ \forall c \in C'
 \end{array}
 $$ 
-noemen we dan een uitgebreid histogram.
+met $\delta$ de Dirac functie, noemen we dan een uitgebreid histogram geassocieerd met $A$. 
+Voor $w_{A,c}(p)=\delta(bin(c)-bin(A(p)))$, $\forall p \in P$, vinden we:
+$$
+\begin{array}{r@{\quad=\quad}l}
+\mathring{h}_A(c) 
+ & \displaystyle \sum_{c' \in C'} \sum_{p \in P} \delta (bin(c')-bin(A(p))) \cdot w_{A,c}(p) \\[2pt]
+ & \displaystyle \sum_{c' \in C'} \sum_{p \in P} \delta (bin(c')-bin(A(p))) \cdot \delta (bin(c)-bin(A(p))) \\[2pt]
+ & \displaystyle \sum_{c' \in C'} \sum_{p \in P} \delta (bin(c')-bin(A(p))) \cdot \delta (bin(c)-bin(c')) \\[2pt]
+% & \displaystyle \sum_{c' \in C'} \left( \begin{array}{c} \displaystyle \sum_{p \in P} \delta (bin(c')-bin(A(p))) \end{array} \right) \cdot \delta (bin(c)-bin(c')) \\[2pt]
+ & \displaystyle \sum_{c' \in C'} h_A(c') \cdot \delta (bin(c)-bin(c')) \\[2pt]
+ & h_A(c)
+\end{array}
+$$
+voor alle $c \in C'$. Het uitgebreid histogram $\mathring{h}_A$, geassocieerd met een beeld $A$, is 
+dus een meer algemene versie van het ``gewone'' histogram $h_A$. We noteren $\mathring{H}_A$ voor het 
+pseudo-vaag histogram op basis van $\mathring{h}_A$.
 % Indien $w_{A,c}(k)=\delta(k)$,
 % $\forall k \in \mathbb{N}$, voor elk beeld $A$ en elke kleur $c \in C'$,  dan
 % geldt $\mathcal{H}'_A=\mathcal{H}_A$.
+
+Bij een uitgebreid histogram kan de kleur van een pixel bijdragen tot de waarde van meerdere
+bins. Net zoals bij het vaaghistogram, kan een kleur dus als het ware tot verschillende 
+bins behoren. Bovendien kan de invloed van de kleur van een pixel ook afhankelijk gemaakt worden
+van de spatiale locatie van die pixel. Het uitgebreid histogram kan dus inderdaad gebruikt
+worden om een kleurrepresentatie te bekomen waarbij de bovenstaande problemen in mindere mate
+optreden.
 
 
 \subsection{Gladde histogrammen}
@@ -743,59 +765,59 @@ begrip ``histogram'' wel niet te letterlijk ge\"interpreteerd worden. Een vaaghi
 bevat immers geen frequentie-informatie. Bij het merendeel van de uitbreidingen wordt
 er voor een iets conservatievere aanpak gekozen, waarbij de frequentie-informatie wel (gedeeltelijk)
 behouden blijft. Die uitbreidingen komen meestal neer op het glad (smooth) maken van 
-de histogrammen door de waarden van de bins te vervangen door nieuwe waarden die ook 
+het histogram door de waarden van de bins te vervangen door nieuwe waarden die ook 
 afhangen van de waarden van ``naburige'' bins met een perceptueel similaire kleur. 
  
-In het (pseudo-vaag) SCT-histogram liggen de ``naburige'' bins van een bin ook letterlijk naast
+In het SCT-histogram liggen de ``naburige'' bins van een bin ook letterlijk naast
 die bin. Het is bijgevolg zeer geschikt om
 \emph{smoothing} op toe te passen \cite{sural:perceptually_smooth_histogram}. De gladde versie van
 een SCT-histogram is dan een uitgebreid histogram waarbij bijvoorbeeld 
+$w_{A,c}(p)=s(bin(c),bin(A(p)))$, $\forall p \in P$, en
 $$
-w_{A,c}(c')=
+s(m,n)=
 \left\{ \begin{array}{ll}
-\alpha^{|bin(c)-bin(c')|} & \textrm{als } bin(c), bin(c') \le 16 \textrm{ en } |bin(c)-bin(c')| \le R_1 \\
-\beta^{cd(bin(c),bin(c'))} & \textrm{als } bin(c), bin(c') > 16 \textrm{ en } cd(bin(c),bin(c')) \le R_2 \\ 
+\alpha^{|m-n|} & \textrm{als } m, n \le 16 \textrm{ en } |m-n| \le R_1 \\
+\beta^{\min\{|m-n|, (m+n) \bmod 272\}} & \textrm{als } m, n > 16 \textrm{ en } \min\{|m-n|, (m+n) \bmod 272\} \le R_2 \\ 
 0 & \textrm{anders}
 \end{array} \right.
 $$
-voor alle $(A,c,c')$ uit $\mathcal{F}_L(P) \times C' \times C'$, met
-$\alpha$, $\beta$, $R_1$ en $R_2$ vrij te kiezen parameters en 
-$
-cd(k,l) = \min\{|k-l|, (k+l) \bmod 272\}
-% bin'(c) = \left\{ 
-% \begin{array}{ll} bin(c)+240 & \textrm{als } bin(c) \le 16 \\ 
-% bin(c)-240 & \textrm{als } bin(c) > 256 \\
-% bin(c) & \textrm{anders}
-% \end{array}
-$ 
-voor alle $(k,l)$ uit $\mathbb{N}^2$. In \ref{sectie:kleurkwantisatie} hebben 
+voor alle $(m,n)$ uit $\mathbb{N}^2$. In \ref{sectie:kleurkwantisatie} hebben 
 we reeds vermeld dat SCT-kwantisatie eigenlijk een combinatie is van twee 
 uniforme kwantisaties: \'e\'en voor de grijstinten en een andere voor de 
-kleurtinten. Een SCT-histogram $H_A$ kan dus beschouwd 
+kleurtinten. Een SCT-histogram $h_A$ kan dus beschouwd 
 worden als de combinatie van een histogram voor grijstinten en een histogram 
 voor kleurtinten. 
-Bij het construeren van het uitgebreid SCT-histogram $H_A'$, met behulp van de bovenstaande 
+Bij het construeren van het uitgebreid SCT-histogram $h_A'$, met behulp van de bovenstaande 
 definitie voor $w_{A,c}$, wordt op elk van de beide deelhistogrammen een 
-transformatie toegepast die te vergelijken is met een lineair filter voor 
+transformatie toegepast die te vergelijken is met het lineair filteren van
 een beeld (zie \ref{sectie:lineaire_filters}). 
 
-Zij $g$ de restrictie van $H_A \circ kleur$ tot
+Zij $g$ de restrictie van $h_A \circ kleur$ tot
 $\{1,2,\ldots,16\}$. Dat wil zeggen dat $g$ de $\{1,2,\ldots,16\} - [0,1]$ afbeelding is die 
 gegeven wordt door:
-$g(k)=H_A(kleur(k)), \forall k \in \{1,2,\ldots,16\}$.
+$g(k)=h_A(kleur(k)), \forall k \in \{1,2,\ldots,16\}$.
 %$g = \mathcal{H}_A \circ kleur$ en $\mathring{g}$ 
 %de met nullen uitgebreide versie van $g$. 
 Indien $\mathring{g}$ de met nullen uitgebreide versie is van $g$ ($\mathring{g}(k)=g(k)$ voor
 alle $k \in \{1,2,\ldots,16\}$ en $\mathring{g}(k)=0$ voor alle andere $k$ uit $\mathbb{Z}$)
-en $c \in C'_{gr}=\{c \in C' \mid bin(c) \le 16\}$ -- met
-andere woorden: $c$ is \'e\'en van de grijstinten -- dan geldt:
+en $c \in C'_{gr}=\{c \in C' \mid bin(c) \le 16\}$ (met
+andere woorden: $c$ is \'e\'en van de grijstinten) dan geldt:
 $$
 \begin{array}{r@{\quad=\quad}l}
-H'_A(c) & \displaystyle\sum_{c' \in C'} H_A(c') \cdot w_{A,c}(c') \\[2pt]
- & \displaystyle\sum_{c' \in C'_{gr}} H_A(c') \cdot w_{A,c}(c') + \sum_{c' \in C' \setminus C'_{gr}} H_A(c') \cdot 0 \\[2pt]
- & \displaystyle\sum_{c' \in C'_{gr}} g(bin(c')) \cdot w_{A,c}(c') \\[2pt]
+\mathring{h}_A(c)
+ & \displaystyle \sum_{c' \in C'} \sum_{p \in P} \delta (bin(c')-bin(A(p))) \cdot w_{A,c}(p) \\[2pt]
+ & \displaystyle \sum_{c' \in C'} \sum_{p \in P} \delta (bin(c')-bin(A(p))) \cdot s(bin(c),bin(A(p))) \\[2pt]
+ & \displaystyle \sum_{c' \in C'} \sum_{p \in P} \delta (bin(c')-bin(A(p))) \cdot s(bin(c),bin(c')) \\[2pt]
+ & \displaystyle\sum_{c' \in C'} h_A(c') \cdot s(bin(c),bin(c')) \\[2pt]
+ & \displaystyle\sum_{c' \in C'_{gr}} h_A(c') \cdot s(bin(c),bin(c')) + \sum_{c' \in C' \setminus C'_{gr}} h_A(c') \cdot 0 \\[2pt]
+ & \displaystyle\sum_{c' \in C'_{gr}} h_A(c') \cdot s(bin(c),bin(c')) %\\[2pt]
+% 'hack' voor betere layout
+\end{array}
+$$
+$$
+\begin{array}{r@{\quad=\quad}l}
  & \displaystyle\sum_{c' \in C'_{gr}} \mathring{g}(bin(c')) \cdot \alpha^{|bin(c)-bin(c')|} \\[2pt]
- & \displaystyle\sum_{k=-R_1}^{R_1} \mathring{g}(bin(c)+k) \cdot \alpha^{|k|}
+ & \displaystyle\sum_{c' \in C'_{gr}} \mathring{g}(bin(c)+k) \cdot \alpha^{|k|}
 \end{array}
 $$
 De transformatie van het deelhistogram voor de grijstinten kan dus inderdaad beschouwd worden
@@ -817,7 +839,7 @@ De ``hue''-waarden van het HSV-model zijn echter circulair. Daarom gebruiken we 
 periodieke uitbreiding in plaats van uitbreiding met nullen. Meer formeel geldt voor 
 elke $c \in C' \setminus C'_{gr}$:
 $$
-H'_A(c) = \sum_{k=-R_2}^{R_2} \mathring{g}'(bin(c)+k) \cdot \beta^{|k|}
+\mathring{h}_A(c) = \sum_{k=-R_2}^{R_2} \mathring{g}'(bin(c)+k) \cdot \beta^{|k|}
 $$
 waarbij
 $$
@@ -826,18 +848,22 @@ g'(17  + ((k-17) \bmod 240)) & \textrm{als } k > 16 \\
 g'(256 - ((16-k) \bmod 240)) & \textrm{anders}
 \end{array} \right.
 $$
-voor alle $k \in \mathbb{Z}$, met $g'$ de restrictie van $H_A \circ kleur$
+voor alle $k \in \mathbb{Z}$, met $g'$ de restrictie van $h_A \circ kleur$
 tot $\{17,18,\ldots,256\}$. Het is duidelijk dat $\mathring{g}'(k)=g'(k)$ voor alle 
 $k \in \{17,18,\ldots,256\}$. De functie $\mathring{g}'$ is dus inderdaad een uitbreiding
 van $g'$. Voor $\mathring{g}'(16)$, $\mathring{g}'(15)$, $\mathring{g}'(14)$, \ldots en
 $\mathring{g}'(257)$, $\mathring{g}'(258)$, \ldots vinden we respectievelijk
 $g'(256)$, $g'(255)$, $g'(254)$, \ldots en $g'(17)$, $g'(18)$, \ldots . Buiten
-$\{17,18,\ldots,256\}$ herhaalt $\mathring{g}'$ zich dus periodiek. Die periodiciteit is
-de reden voor de introductie van de extra functie $cd$ in de definitie van $w_{A,c}$.  
+$\{17,18,\ldots,256\}$ herhaalt $\mathring{g}'$ zich dus periodiek. 
+%Die periodiciteit is
+%de reden voor de introductie van de extra functie $cd$ in de definitie van $w_{A,c}$.  
 
-Figuur~\ref{fig:histogrammen_smoothed_sct} vergelijkt het gewone en het gladde SCT-histogram
-voor twee egaal groene beelden die perceptueel zeer similair zijn, maar waarbij de beide kleuren 
-toch in verschillende bins terecht komen.
+In figuur~\ref{fig:histogrammen_smoothed_sct} vergelijken we het gewone en het gladde pseudo-vage 
+SCT-histogram voor twee egaal groene beelden die perceptueel zeer similair zijn, maar waarbij 
+de beide kleuren toch in verschillende bins terecht komen. 
+Figuur~\ref{fig:uitgebreide_sct-histogrammen_smoothed} toont de gladde histogrammen 
+geassocieerd aan de beelden uit figuur~\ref{fig:uitgebreide_sct-histogrammen_beelden}.
+
 
 \begin{figure}[tbp]
 \begin{center}
@@ -857,9 +883,178 @@ histogram ($\alpha=1/3$, $R_1=6$, $\beta=2/3$ en $R_2=14$).}
 \end{center}
 \end{figure}
 
+\begin{figure}[tbp]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=2.5cm]{coil/beeld-12.eps}
+\includegraphics[width=2.5cm]{coil/beeld-13.eps}
+\includegraphics[width=2.5cm]{coil/beeld-14.eps}
+\includegraphics[width=2.5cm]{coil/beeld-15.eps}
+\includegraphics[width=2.5cm]{coil/beeld-16.eps}
+\includegraphics[width=2.5cm]{coil/beeld-17.eps}
+\label{fig:uitgebreide_sct-histogrammen_beelden}
+}
+\vspace{3pt}
+\subfigure[]{
+\includegraphics[width=2.5cm]{images/hist_sct_obj3__0.eps}
+\includegraphics[width=2.5cm]{images/hist_sct_obj3__45.eps}
+\includegraphics[width=2.5cm]{images/hist_sct_obj3__90.eps}
+\includegraphics[width=2.5cm]{images/hist_sct_obj3__180.eps}
+\includegraphics[width=2.5cm]{images/hist_sct_obj3__270.eps}
+\includegraphics[width=2.5cm]{images/hist_sct_obj3__315.eps}
+\label{fig:uitgebreide_sct-histogrammen_normaal}
+}
+\vspace{3pt}
+\subfigure[]{
+\includegraphics[width=2.5cm]{images/hist_smoothed_sct_obj3__0.eps}
+\includegraphics[width=2.5cm]{images/hist_smoothed_sct_obj3__45.eps}
+\includegraphics[width=2.5cm]{images/hist_smoothed_sct_obj3__90.eps}
+\includegraphics[width=2.5cm]{images/hist_smoothed_sct_obj3__180.eps}
+\includegraphics[width=2.5cm]{images/hist_smoothed_sct_obj3__270.eps}
+\includegraphics[width=2.5cm]{images/hist_smoothed_sct_obj3__315.eps}
+\label{fig:uitgebreide_sct-histogrammen_smoothed}
+}
+\vspace{3pt}
+\subfigure[]{
+\includegraphics[width=2.5cm]{images/hist_spatial_sct_obj3__0.eps}
+\includegraphics[width=2.5cm]{images/hist_spatial_sct_obj3__45.eps}
+\includegraphics[width=2.5cm]{images/hist_spatial_sct_obj3__90.eps}
+\includegraphics[width=2.5cm]{images/hist_spatial_sct_obj3__180.eps}
+\includegraphics[width=2.5cm]{images/hist_spatial_sct_obj3__270.eps}
+\includegraphics[width=2.5cm]{images/hist_spatial_sct_obj3__315.eps}
+\label{fig:uitgebreide_sct-histogrammen_spatial}
+}
+\vspace{3pt}
+\subfigure[]{
+\includegraphics[width=2.5cm]{images/hist_smoothed_spatial_sct_obj3__0.eps}
+\includegraphics[width=2.5cm]{images/hist_smoothed_spatial_sct_obj3__45.eps}
+\includegraphics[width=2.5cm]{images/hist_smoothed_spatial_sct_obj3__90.eps}
+\includegraphics[width=2.5cm]{images/hist_smoothed_spatial_sct_obj3__180.eps}
+\includegraphics[width=2.5cm]{images/hist_smoothed_spatial_sct_obj3__270.eps}
+\includegraphics[width=2.5cm]{images/hist_smoothed_spatial_sct_obj3__315.eps}
+\label{fig:uitgebreide_sct-histogrammen_smooted_en_spatial}
+}
+\vspace{3pt}
+\subfigure[]{
+\includegraphics[width=2.5cm]{images/hist_edgy_sct_obj3__0.eps}
+\includegraphics[width=2.5cm]{images/hist_edgy_sct_obj3__45.eps}
+\includegraphics[width=2.5cm]{images/hist_edgy_sct_obj3__90.eps}
+\includegraphics[width=2.5cm]{images/hist_edgy_sct_obj3__180.eps}
+\includegraphics[width=2.5cm]{images/hist_edgy_sct_obj3__270.eps}
+\includegraphics[width=2.5cm]{images/hist_edgy_sct_obj3__315.eps}
+\label{fig:uitgebreide_sct-histogrammen_edgy}
+}
+\vspace{3pt}
+\subfigure[]{
+\includegraphics[width=2.5cm]{images/hist_smoothed_edgy_sct_obj3__0.eps}
+\includegraphics[width=2.5cm]{images/hist_smoothed_edgy_sct_obj3__45.eps}
+\includegraphics[width=2.5cm]{images/hist_smoothed_edgy_sct_obj3__90.eps}
+\includegraphics[width=2.5cm]{images/hist_smoothed_edgy_sct_obj3__180.eps}
+\includegraphics[width=2.5cm]{images/hist_smoothed_edgy_sct_obj3__270.eps}
+\includegraphics[width=2.5cm]{images/hist_smoothed_edgy_sct_obj3__315.eps}
+\label{fig:uitgebreide_sct-histogrammen_smooted_en_edgy}
+}
+\caption{\label{fig:uitgebreide_sct-histogrammen}De pseudo-vage SCT-histogrammen (b) voor de 
+beelden van het geel bootje (a), samen met de corresponderende pseudo-vage (c) gladde histogrammen, 
+(d) spatiale histogrammen, (e) zowel gladde als
+spatiale histogrammen, (f) randhistogrammen en (g) gladde randhistogrammen.}
+\end{center}
+\end{figure}
+
 \subsection{Spatiale histogrammen}
 
-%In figuur 99 wordt er getoond hoe het negeren van spatiale informatie kan leiden
-%tot het optreden van valse positieven.
+Hoewel de beelden uit figuur~\ref{fig:uitgebreide_sct-histogrammen_beelden} relevant zijn ten
+opzichte van elkaar, blijken hun gladde pseudo-vage SCT-histogrammen toch nog vrij verschillend 
+te zijn. De invloed van de achtergrondpixels is daar de oorzaak van. Als we veronderstellen dat
+de belangrijkste informatie zich steeds in het centrum van het beeld bevindt, dan kunnen we
+de invloed van minder belangrijke pixels beperken door het uitgebreid histogram te beschouwen waarbij
+$w_{A,c}=t \circ d_m$. In die gelijkheid is $d_m$ de functie die elk punt $p$ uit $P$ afbeeldt 
+op de Euclidische afstand tussen $p$ en het middelpunt van het beeld, en is
+$$
+t(x) = \left\{ \begin{array}{ll}
+1 & \textrm{als } x < \alpha \\
+1 - 2 \cdot \left( \frac{x-\alpha}{\gamma - \alpha} \right)^2 & \textrm{als } \alpha \le x < \beta \\[6pt]
+2 \cdot \left( \frac{x-\alpha}{\gamma - \alpha} \right)^2 & \textrm{als } \beta \le x < \gamma \\
+0 & \textrm{als } \gamma \le x
+\end{array} \right.
+$$
+voor alle $x$ uit $\mathbb{R}$, met $\alpha < \gamma$, $\beta=\frac{\alpha + \beta}{2}$. 
+Figuur~\ref{fig:kwadratische_interpolatie_grafiek} toont de grafiek van $l$. De uitgebreide
+histogrammen die we met $\alpha=\gamma / 10$, $\gamma = \min\{M/2, N/2\}$ bekomen voor de beelden 
+van het geel bootje, worden weergegeven in
+figuur~\ref{fig:uitgebreide_sct-histogrammen_spatial}. We noemen dergelijke histogrammen
+\emph{spatiale histogrammen}.
+
+\begin{figure}[tbp]
+\begin{center}
+\subfigure[]{
+%\begin{minipage}{0.5\textwidth}
+\includegraphics[height=3.8cm]{images/kwadratische_interpolatie.eps}
+%\vspace{3pt}
+%\end{minipage}
+\label{fig:kwadratische_interpolatie_grafiek}
+}
+\subfigure[]{
+%\begin{minipage}{0.2\textwidth}
+\includegraphics[height=3.8cm]{images/kwadratische_interpolatie_toegepast_1.eps}
+%\vspace{3pt}
+%\end{minipage}
+}
+\subfigure[]{
+%\begin{minipage}{0.2\textwidth}
+\includegraphics[height=3.8cm]{images/kwadratische_interpolatie_toegepast_2.eps}
+%\vspace{3pt}
+%\end{minipage}
+}
+\caption{\label{fig:kwadratische_interpolatie}De grafiek van $t$ en het resultaat dat
+$t \circ d_m$ oplevert voor een beeld van $M$ bij $N$ pixels, met
+(b) $\alpha=\gamma / 10$, $\gamma = \min\{M/2, N/2\}$ en 
+(c) $\alpha=2 \cdot \gamma / 5$, $\gamma = 6 \cdot \min\{M/2, N/2\} / 5$.}
+\end{center}
+\end{figure}
+
+We kunnen ook een histogram construeren dat zowel glad als spatiaal is. Dat doen we door
+$w_{A,c}(p)=s(bin(c),bin(A(c))) \cdot t(d_m(p))$, $\forall p \in P$, te kiezen. 
+Figuur~\ref{fig:uitgebreide_sct-histogrammen_smooted_en_spatial} toont de
+uitgebreide pseudo-vage SCT-histogrammen die we zo bekomen voor de beelden van het geel
+bootje. Die histogrammen zijn onderling duidelijk minder verschillend dan de oorspronkelijke
+pseudo-vage SCT-histogrammen. Similareitsmaten op basis van de gladde spatiale histogrammen
+zullen in dit geval dus grotere similariteiten teruggeven, wat beter in overeenstemming is met het 
+waargenomen verschil tussen de beelden.
+ 
+Een spatiaal histogram, geassocieerd met een beeld $A$, kan ge\"interpreteerd worden als het 
+histogram voor een \emph{vaag gebied} in $A$. Als we een beeld $B$ construeren door de pixels
+van $A$ op een willekeurig te verplaatsen, dan zullen de spatiale histogrammen van $A$ en $B$
+meestal niet gelijk zijn. Door gebruik te maken van vage gebieden kunnen we het aantal mogelijke
+valse positieven dus beperken. Eventueel kunnen er per beeld ook meerdere vage gebieden beschouwd
+worden \cite{stricker:fuzzy_regions_for_image_indexing}.
+ 
+\subsection{Randhistogrammen} 
+ 
+Vooral belang hechten aan de pixels in de omgeving van de randen, is een alternatieve
+manier om de invloed van minder belangrijke pixels te beperken 
+\cite{vertan:upgrading_color_distribution_for_ir}. Dat kan door 
+$w_{A,c}=r_{A}$ te kiezen, met $r_{A}(p)$ de randsterkte op positie $p \in P$ in $A$.
+Die randsterkte bepalen we op basis van de gradi\"ent, zoals uitgelegd in \ref{sectie:randdetectie}.  
+We noemen de histogrammen die we zo bekomen \emph{randhistogrammen}. 
+Figuur~\ref{fig:uitgebreide_sct-histogrammen_edgy} toont een aantal voorbeelden van
+pseudo-vage SCT-histogrammen die gebaseerd zijn op een randhistogram.
+
+De keuze $w_{A,c}(p)=s(bin(c),bin(A(c))) \cdot r(d_m(p))$, $\forall p \in P$, geeft
+aanleiding tot een een glad randhistogram. De gladde versies van de pseudo-vage
+randhistogrammen uit figuur~\ref{fig:uitgebreide_sct-histogrammen_edgy}, worden
+weergegeven in figuur~\ref{fig:uitgebreide_sct-histogrammen_smooted_en_edgy}. 
+%In 
+%figuur~\ref{fig:uitgebreide_sct-histogrammen} verschillen de gladde pseudo-vage 
+%randhistgrammen onderling iets meer dan de gladde pseudo-vage spatiale histogrammen,
+%maar ze lijken wel een stuk beter op elkaar dan de histogrammen uit 
+%figuur~\ref{fig:uitgebreide_sct-histogrammen_smoothed}. 
+Net zoals de gladde spatiale histogrammen, zullen de
+gladde randhistogrammen voor de beelden uit figuur~\ref{fig:uitgebreide_sct-histogrammen_beelden} 
+aanleiding geven tot similariteitsmaten die grotere similariteiten teruggeven.
+In vergelijking met spatiale histogrammen hebben randhistogrammen echter het
+voordeel dat ze ook tot goede resultaten kunnen leiden als de belangrijkste inhoud niet
+in het centrum van het beeld gelocaliseerd is. Daartegenover staat dan natuurlijk wel
+dat randhistogrammen minder valse positieven onderdrukken.
 
 \subsection{Experimentele observaties}

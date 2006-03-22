@@ -31,15 +31,18 @@ correspondeert met de kleurtint, terwijl de overige componenten de saturatie
 en de helderheid aangeven. Men kan een kleur $(r,g,b) \in [0,1]^3$ uit het RGB 
 model als volgt omzetten naar een kleur $(h,s,v) \in [0,1]^3$ in het HSV-model: 
 $$
-\begin{array}{rcll}
-h' & = & 60 \cdot \frac{g - b}{\max \{r,g,b\} - \min \{r,g,b\}}\quad & \textrm{ 
-als } \max \{r,g,b\} = r \\[4pt] & = & 60 \cdot \frac{b - r}{\max \{r,g,b\} - 
-\min \{r,g,b\}} + 120\quad & \textrm{ als } \max \{r,g,b\} = g \\[4pt] & = & 60 
-\cdot \frac{r - g}{\max \{r,g,b\} - \min \{r,g,b\}} + 240\quad & \textrm{ als } 
-\max \{r,g,b\} = b \\[6pt] h & = & \frac{h' \bmod 360}{360} & \textrm{ als } h' 
-\bmod 360 \geq 0 \\[4pt] & = & \frac{360 - (h' \bmod 360)}{360} & \textrm{ als 
-} h' \bmod 360 < 0 \\[6pt] s & = & \frac{\max \{r,g,b\} - \min \{r,g,b\}}{\max 
-\{r,g,b\}} & \\[6pt] v & = & \max \{r,g,b\}
+\begin{array}{rcl}
+h' & = & \left\{ \begin{array}{ll}
+60 \cdot \frac{g - b}{\max \{r,g,b\} - \min \{r,g,b\}}\quad & \textrm{ als } \max \{r,g,b\} = r \\[4pt]
+60 \cdot \frac{b - r}{\max \{r,g,b\} - \min \{r,g,b\}} + 120\quad & \textrm{ als } \max \{r,g,b\} = g \\[4pt]
+60 \cdot \frac{r - g}{\max \{r,g,b\} - \min \{r,g,b\}} + 240\quad & \textrm{ als } \max \{r,g,b\} = b
+\end{array} \right. \vspace{6pt} \\
+h & = & \left\{ \begin{array}{ll} 
+\frac{h' \bmod 360}{360} & \textrm{ als } h' \bmod 360 \geq 0 \\[4pt] 
+\frac{360 - (h' \bmod 360)}{360} & \textrm{ als } h' \bmod 360 < 0 
+\end{array} \right. \vspace{6pt} \\
+s & = & \frac{\max \{r,g,b\} - \min \{r,g,b\}}{\max \{r,g,b\}} \\[6pt] 
+v & = & \max \{r,g,b\}
 \end{array}
 $$ Als $s=0$ dan is $h$ niet gedefinieerd. Dat is logisch vermits we dan te 
 maken hebben met een grijswaarde. Indien $v=0$ dan zijn $s$ en $h$ niet gedefinieerd. We 
@@ -116,8 +119,18 @@ $\mathbb{R}^n$. Zoals hierboven reeds een aantal keer werd ge\"illustreerd, kunn
 $n$-tallen genormaliseerd worden tot $n$-tallen uit $[0,1]^n$. We kunnen een $m$-dimensionaal 
 kleurbeeld dus modelleren als een $\mathbb{R}^m - [0,1]^n$ afbeelding $b$. 
 In de praktijk wordt een beeld echter voorgesteld als een rooster bestaande uit een
-eindig aantal beeldpunten. Bijgevolg zal $b$ eerder een afbeelding van een deelverzameling van $\mathbb{N}^2$
-naar $[0,1]^n$ zijn.
+eindig aantal beeldpunten. Bijgevolg zal $b$ eerder een afbeelding van een deelverzameling van 
+$\mathbb{N}^2$ naar $[0,1]^n$ zijn. 
+
+Om geen rekening te moeten houden met ``randgevallen'', beschouwen voor elk beeld $b$ ook een
+met nullen uitgebreide versie $\mathring{b}$. Voor een beeld $b$ van $M$ bij $N$ beeldpunten
+defini\"eren we de $\mathbb{Z}^2 - [0,1]^n$ afbeelding $\mathring{b}$ als volgt:
+$$
+\mathring{b}(x,y) = \left\{ \begin{array}{ll}
+b(x,y) & \textrm{als } 0 \le x < M \textrm{ en } 0 \le y < N \\
+(0,0,\ldots,0) & \textrm{anders}
+\end{array} \right.
+$$
 
 \section{Kleurkwantisatie}
 \label{sectie:kleurkwantisatie}
@@ -308,23 +321,6 @@ toont de resultaten van de vier niet-uniforme kwantistatietechnieken.
 \end{center}
 \end{figure}
 
-De technieken met een variabel kleurenpalet doen het duidelijk beter dan diegene met een vast palet. 
-Anderzijds zijn de technieken met een vast kleurenpalet wel een stuk sneller. Bovendien is het soms niet
-gewenst dat voor alle beelden een andere verzameling van kleuren gebruikt wordt. In deze scriptie gebruiken
-we kwantisatie trouwens louter om meer performante similariteitsmaten te constueren. De visuele kwaliteit
-van de gekwantiseerde beelden is daarbij minder belangrijk. Similariteitsmaten op basis van kwantisatietechnieken 
-waarbij de gekwantiseerde beelden een lagere kwaliteit hebben, presteren immers niet noodzakelijk
-slechter dan maten die gebaseerd zijn op ``betere'' kwantisatietechnieken. Zo zouden we bijvoorbeeld 
-betere kwantisatie kunnen bekomen door extra luminantiedata te behouden, maar daardoor zullen
-de similariteitsmaten doorgaans minder goed werken vermits ze dan gevoeliger worden voor 
-belichtingsvariaties.
-%kunnen in bepaalde gevallen immers beter 
-%presteren dan maten die gebaseerd zijn op ``betere'' kwantisatietechnieken.
-
-Merk ook op dat uit figuur~\ref{fig:kwantistatie_klein_aantal_kleuren} inderdaad blijkt
-dat NeuQuant minder geschikt is dan Wu's techniek voor kwantisatie naar een zeer klein
-aantal kleuren. 
-
 \begin{figure}[tbp]
 \begin{center}
 \subfigure[]{
@@ -427,7 +423,25 @@ aantal kleuren.
 \end{center}
 \end{figure}
 
+De technieken met een variabel kleurenpalet doen het duidelijk beter dan diegene met een vast palet. 
+Anderzijds zijn de technieken met een vast kleurenpalet wel een stuk sneller. Bovendien is het soms niet
+gewenst dat voor alle beelden een andere verzameling van kleuren gebruikt wordt. In deze scriptie gebruiken
+we kwantisatie trouwens louter om meer performante similariteitsmaten te constueren. De visuele kwaliteit
+van de gekwantiseerde beelden is daarbij minder belangrijk. Similariteitsmaten op basis van kwantisatietechnieken 
+waarbij de gekwantiseerde beelden een lagere kwaliteit hebben, presteren immers niet noodzakelijk
+slechter dan maten die gebaseerd zijn op ``betere'' kwantisatietechnieken. Zo zouden we bijvoorbeeld 
+betere kwantisatie kunnen bekomen door extra luminantiedata te behouden, maar daardoor zullen
+de similariteitsmaten doorgaans minder goed werken vermits ze dan gevoeliger worden voor 
+belichtingsvariaties.
+%kunnen in bepaalde gevallen immers beter 
+%presteren dan maten die gebaseerd zijn op ``betere'' kwantisatietechnieken.
+
+Merk ook op dat uit figuur~\ref{fig:kwantistatie_klein_aantal_kleuren} inderdaad blijkt
+dat NeuQuant minder geschikt is voor kwantisatie naar een zeer klein
+aantal kleuren dan Wu's techniek. 
+
 \section{Lineaire filters}
+\label{sectie:lineaire_filters}
 
 Bij het \emph{filteren} van een 2-dimensionaal beeld $b$ wordt de waarde van elk beeldpunt $(x,y) \in \mathbb{N}^2$ 
 vervangen door een nieuwe waarde die afhangt van de originele waarde $b(x,y)$ van het beeldpunt en van de waarden 
@@ -435,7 +449,7 @@ van naburige beeldpunten. In het geval van een \emph{lineair filter} is die nieu
 van de oude waarden. Het beeld $b'$ dat we bekomen door $b$ lineair te filteren, wordt gegeven door
 de volgende correlatie \cite{philips:beeldverwerking}:
 $$
-b'(x,y) = \sum_{(k,l) \in \Omega_m} b(x+k,y+l) \cdot m(k,l)
+b'(x,y) = \sum_{(k,l) \in \Omega_m} \mathring{b}(x+k,y+l) \cdot m(k,l)
 $$
 met $m$ een $\mathbb{N}^2 - \mathbb{R}$ afbeelding en $\Omega_m = \{ (k,l) \in \mathbb{N}^2 \mid m(k,l) \ne 0 \}$. 
 De functie $m$ wordt het \emph{filtermasker} genoemd.
@@ -468,6 +482,7 @@ Zoals ge\"illustreerd in figuur~\ref{fig:indische_ruizig_en_binom}, kan een bino
 \end{figure}
 
 \section{Eenvoudige randdetectie}
+\label{sectie:randdetectie}
 
 Beeldranden in een 2-dimensionaal beeld $b$ zijn plaatsen waar de luminantiecomponent $l(x,y)$ van $b(x,y)$ 
 sterk varieert als functie van $x$ en/of $y$. Op die plaatsen zullen de partieel afgeleiden $D_1 l(x,y)$ en 

@@ -355,7 +355,21 @@ $
 \end{center}
 \end{table}
 
-Beschouw bijvoorbeeld $M_{5c}$. We herschrijven de oorspronkelijke formule als volgt:
+Beschouw bijvoorbeeld $M_{5}$:
+$$
+M_{5} = \frac{\min\{|A|,|B|\}}{\max\{|A|,|B|\}} = \frac{\min\{||A||,||B||\}}{\max\{||A||,||B||\}}
+$$
+Bij de oude formule zijn er eerst $2 \cdot (|X|-1)$ optellingen nodig
+om $|A|$ en $|B|$ te berekenen. Daarna moeten de zo bekomen getallen met elkaar vergeleken worden
+om $\min\{|A|,|B|\}$ en $\max\{|A|,|B|\}$ te bepalen en moet er tenslotte ook nog \'e\'en deling
+uitgevoerd worden. De herschreven vorm vereist $ 2 \cdot (|X'|-1)$ optellingen, \'e\'en vergelijking
+en \'e\'en deling. Vermits $|X'| \ll |X|$ impliceert 
+dat $2 \cdot (|X'|-1) + 2 \ll 2 \cdot (|X|-1) + 2$, zal de nieuwe formule inderdaad een stuk sneller kunnen 
+berekend worden dan de oude als $X'$ veel minder elementen bevat dan $X$. Bovendien zijn de rekentijden
+gelijk als $X'=X$. De nieuwe vorm is dus steeds minstens even snel als de oude.
+
+Bij de vaagsimilariteitsmaten die gebruik maken van het complement, boeken we nog meer winst.
+We bekijken $M_{5c}$ als voorbeeld. De oorspronkelijke vorm wordt als volgt herschreven:
 $$
 \begin{array}{rclcl}
 \displaystyle M_{5c}(A,B) & = & \displaystyle \frac{\min \{|A^c|,|B^c|\}}{\max \{|A^c|,|B^c|\}} 
@@ -364,12 +378,14 @@ $$
 & & & = & \displaystyle \frac{|X| - \max \{||A||,||B||\}}{|X| - \min \{||A||,||B||\}}
 \end{array}
 $$
-Bij de oude formule moeten er twee keer twee getallen met elkaar vergeleken worden en zijn er
-$4 \cdot (|X|-1)$ optellingen en \'e\'en deling nodig. De herschreven vorm vereist twee aftrekkingen, 
-twee vergelijkingen, $ 4 \cdot (|X'|-1)$ optellingen en \'e\'en deling. Vermits $|X'| << |X|$ impliceert 
-dat $4 \cdot (|X'|-1) + 5 << 4 \cdot (|X|-1) + 3$, zal de nieuwe formule dus inderdaad een stuk sneller kunnen 
-berekend worden dan de oude als $X'$ veel minder elementen bevat dan $X$. Bovendien is het verschil in 
-rekentijd verwaarloosbaar als $X'=X$. De nieuwe vorm is dus steeds minstens even snel als de oude.
+Voor de oude formule zijn er $2\cdot |X|$ aftrekkingen nodig om $A^c$ en $B^c$ te bepalen,
+bovenop de $2 \cdot (|X|-1) + 2$ bewerkingen die nodig zijn voor het berekenen van 
+%$\min\{|A|,|B|\} / \max\{|A|,|B|\}$. 
+de originele vorm van $M_5$. De nieuwe formule daarentegen vereist slechts twee bewerkingen
+meer dan de herschreven vorm van $M_5$. Zelfs voor $|X'| = |X|$ zal 
+$2 \cdot |X| + 2 \cdot (|X|-1) + 2 = 4 \cdot |X|$ doorgaans een stuk groter zijn dan
+$2 \cdot (|X'|-1) + 4 = 2 \cdot |X'| + 2$. Als $|X'| \ll |X|$ dan wordt het verschil in rekentijd
+uiteraard nog significanter.
 
 Merk op dat we in de bovenstaande redeneringen enkel gesteund hebben op $T_M(0,0)=T_M(0,1)=0$ en 
 $S_M(0,0)=0$. 
