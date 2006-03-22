@@ -87,13 +87,13 @@ $\mathcal{P}(X)$.
 \begin{definitie}
 Zij $X$ een universum. De karakteristieke afbeelding $\mu_A$ van een scherpe verzameling $A$ in $X$
 wordt gedefinieerd als de $X - \{0,1\}$ afbeelding:
-$$
+\begin{displaymath}
 \begin{array}{lllll}
 \mu_A: 	& X & \to 		& \{0,1\}	& \\
 		& x & \mapsto 	& 1,		& \textrm{ als } x \in A \\
 		& x & \mapsto 	& 0,		& \textrm{ als } x \notin A
 \end{array}
-$$
+\end{displaymath}
 \end{definitie}
 
 Bij een \emph{vaagverzameling} kunnen alle waarden tussen 0 en 1 als lidmaatschapsgraad 
@@ -101,12 +101,12 @@ voorkomen. De ``karakteristieke'' afbeelding is in dat geval dus een $X - [0,1]$
 \begin{definitie}
 Zij $X$ een universum. Een vaagverzameling $A$ in $X$ wordt gekarakteriseerd door een $X - [0,1]$
 afbeelding  $\mu_A$:
-$$
+\begin{displaymath}
 \begin{array}{lllll}
 \mu_A: 	& X & \to 		& [0,1]	& \\
 		& x & \mapsto 	& \mu_A(x),		& \forall x \in A
 \end{array}
-$$
+\end{displaymath}
 \end{definitie}
 \noindent
 Een element $x \in X$ behoort dus tot de vaagverzameling $A$ met lidmaatschapsgraad $\mu_A(x)$.
@@ -118,15 +118,15 @@ de notatie $\mathcal{F}(X)$.
 De \emph{drager} en de \emph{kern} van een vaagverzameling zijn twee belangrijke begrippen: 
 \begin{definitie}
 De drager van een vaagverzameling $A$ in $X$ wordt gedefinieerd als:
-$$
+\begin{displaymath}
 supp\ A = \{x \in X \mid A(x) > 0\} 
-$$
+\end{displaymath}
 \end{definitie}
 \begin{definitie}
 De kern van een vaagverzameling $A$ in $X$ wordt als volgt gedefinieerd:
-$$
+\begin{displaymath}
 ker\ A = \{x \in X \mid A(x) = 1\}
-$$
+\end{displaymath}
 \end{definitie}
 \noindent
 Ook het begrip \emph{cardinaliteit} speelt vaak een belangrijke rol. De cardinaliteit van een 
@@ -136,9 +136,9 @@ Dat concept kan uitgebreid worden naar vaagverzamelingen door gebruik te maken v
 \begin{definitie}
 De sigma count van een vaagverzameling $A$ met eindige drager in een universum $X$ wordt
 gedefinieerd door:
-$$
+\begin{displaymath}
 |A|=\sum_{x \in X} A(x)
-$$
+\end{displaymath}
 \end{definitie}
 
 \subsection{Bewerkingen op vaagverzamelingen}
@@ -170,15 +170,17 @@ De meest gebruikte negator is de standaardnegator $N_s$. Het minimum $T_M$ en he
 product $T_P$ zijn veelgebruikte t-normen. Bij de t-conormen zijn het maximum $S_M$ en de
 probabilistische som $S_P$ dan weer populaire mogelijkheden. Die operatoren worden als 
 volgt gedefinieerd:
-$$
-\begin{array}{r@{\quad=\quad}l}
-N_s(x) & 1 - x \\
-T_M(x,y) & \min \{x,y\} \\
-T_P(x,y) & x \cdot y \\
-S_M(x,y) & \max \{x,y\} \\
-S_P(x,y) & x +y - x \cdot y,
-\end{array}
-$$
+%\begin{displaymath}
+%\begin{array}{r@{\quad=\quad}l}
+\begin{align*}
+N_s(x) &= 1 - x \\
+T_M(x,y) &= \min \{x,y\} \\
+T_P(x,y) &= x \cdot y \\
+S_M(x,y) &= \max \{x,y\} \\
+S_P(x,y) &= x + y - x \cdot y
+\end{align*}
+%\end{array}
+%\end{displaymath}
 voor alle $(x,y)$ in $[0,1]^2$.
 
 We kunnen de bovenstaande operatoren nu gebruiken om de klassieke verzameltechnische bewerkingen 
@@ -187,40 +189,38 @@ veralgemenen tot bewerkingen op vaagverzamelingen.
 \begin{definitie}
 Het $\mathcal{N}$-complement $co_\mathcal{N} A$ van een vaagverzameling $A$ in $X$ wordt gedefinieerd
 door de volgende vaagverzameling in X:
-$$
+\begin{displaymath}
 (co_\mathcal{N} A)(x) = \mathcal{N}(A(x)),
-$$
+\end{displaymath}
 voor alle $x$ in $X$, met $\mathcal{N}$ een negator.
 \end{definitie}
 \begin{definitie}
 De $\mathcal{C}$-doorsnede $A \cap_\mathcal{C} B$ van twee vaagverzamelingen $A$ en $B$ in $X$
 wordt gedefinieerd door de volgende vaagverzameling in $X$:
-$$
+\begin{displaymath}
 (A \cap_\mathcal{C} B)(x) = \mathcal{C}(A(x),B(x)),
-$$
+\end{displaymath}
 voor alle $x$ in $X$, met $\mathcal{C}$ een conjunctor.
 \end{definitie}
 \begin{definitie}
 De $\mathcal{D}$-unie $A \cup_\mathcal{D} B$ van twee vaagverzamelingen $A$ en $B$ in $X$ wordt gedefinieerd door de
 volgende vaagverzameling in $X$:
-$$
+\begin{displaymath}
 (A \cup_\mathcal{D} B)(x) = \mathcal{D}(A(x),B(x)),
-$$
+\end{displaymath}
 voor alle $x$ in $X$, met $\mathcal{D}$ een disjunctor.
 \end{definitie}
 
 In het vervolg van deze scriptie zullen we steeds 
 $(\mathcal{N},\mathcal{C},\mathcal{D})=(N_s,T_M,S_M)$ kiezen. We voeren daarom de volgende
 verkorte notaties in:
-$$
-\begin{array}{r@{\quad=\quad}l}
-A^c 			& co_{N_s} A \\
-A \cap B 		& A \cap_{T_M} B \\
-A \cup B		& A \cup_{S_M} B \\
-A \setminus B  	& A \cap B^c \\
-A \triangle B 	& (A \setminus B) \cup (B \setminus A),
-\end{array}
-$$
+\begin{align*}
+A^c 			&= co_{N_s} A \\
+A \cap B 		&= A \cap_{T_M} B \\
+A \cup B		&= A \cup_{S_M} B \\
+A \setminus B  	&= A \cap B^c \\
+A \triangle B 	&= (A \setminus B) \cup (B \setminus A)
+\end{align*}
 waarbij $A$ en $B$ vaagverzamelingen in een zelfde universum zijn.
 
 
@@ -232,12 +232,12 @@ uit sectie~\ref{sectie:posets_en_tralies}.
 \begin{definitie}
 Zij $X$ een universum en $(L,\le)$ een complete tralie. Een L-vaagverzameling $A$ in $X$ wordt
 gekarakteriseerd door een $X - L$ afbeelding $\mu_A$:
-$$
+\begin{displaymath}
 \begin{array}{lllll}
 \mu_A: 	& X & \to 		& L	& \\
 		& x & \mapsto 	& \mu_A(x),		& \forall x \in A
 \end{array}
-$$
+\end{displaymath}
 \end{definitie}
 \noindent
 De klasse van L-vaagverzamelingen in een universum $X$ stellen we voor door 

@@ -165,14 +165,14 @@ rangnummer van het $i$-de relevante beeld voorstelt. De performantiemaat
 wordt dan als volgt gedefinieerd:
 \begin{definitie}
 De genormaliseerde gemiddelde rang wordt gegeven door de volgende afbeelding:
-$$
+\begin{displaymath}
 \begin{array}{lrcl}
 \textrm{GGR}: 	& \{1,2,\ldots,N\}^{N_R} & \to 	& [0,1] \\
 		& (r_1,r_2,\ldots,r_{N_R}) & \mapsto &
 	{\displaystyle\frac{1}{N \cdot N_R}\left[ \left(\sum_{i=1}^{N_R}r_i\right) - \frac{N_R \cdot (N_R + 1)}{2} \right]},\\[15pt]
 	& & & \qquad \quad \forall (r_1, r_2, ..., r_{N_R}) \in \{1,2,\ldots,N\}^{N_R}
 \end{array}
-$$
+\end{displaymath}
 \end{definitie}
 \noindent
 Deze maat nadert naar 1 naarmate de performantie slechter wordt.
@@ -225,75 +225,77 @@ Stel dat $A$ en $B$ twee vaagverzamelingen zijn in een zelfde universum $X$. Het
 $X'= supp\ A \cup supp\ B$ veel minder elementen bevat dan $X$. In dat geval kunnen we de rekentijd sterk
 reduceren door het bereik van de sommaties in de vaagsimilariteitsmaten te beperken tot $X'$. Doordat
 $A(x)=B(x)=0$ voor alle $x \in X \setminus X'$ geldt er dan immers zowel
-$$
-\begin{array}{r@{\quad = \quad}l}
-\displaystyle \sum_{x \in X} | A(x) - B(x) | & \displaystyle \sum_{x \in X \setminus X'} | A(x) - B(x) | + \displaystyle \sum_{x \in X'} | A(x) - B(x) | \\
-& \displaystyle \sum_{x \in X \setminus X'} | 0 - 0 | + \displaystyle \sum_{x \in X'} | A(x) - B(x) | \\
-& \displaystyle \sum_{x \in X'} | A(x) - B(x) |
-\end{array}
-$$
-als
-$$
-|A| = \sum_{x \in X} A(x) = \sum_{x \in X \setminus X'} A(x) + \sum_{x \in X'} A(x) 
-= \sum_{x \in X \setminus X'} 0 + \sum_{x \in X'} A(x) = \sum_{x \in X'} A(x)
-$$
+\begin{align*}
+\displaystyle \sum_{x \in X} | A(x) - B(x) | 
+&= \displaystyle \sum_{x \in X \setminus X'} | A(x) - B(x) | + \displaystyle \sum_{x \in X'} | A(x) - B(x) | \\
+&= \displaystyle \sum_{x \in X \setminus X'} | 0 - 0 | + \displaystyle \sum_{x \in X'} | A(x) - B(x) | \\
+&= \displaystyle \sum_{x \in X'} | A(x) - B(x) |
+\end{align*}
+als $|A| = \sum_{x \in X} A(x) = \sum_{x \in X \setminus X'} 0 + \sum_{x \in X'} A(x) 
+= \sum_{x \in X'} A(x)$.
+% \begin{displaymath}
+% |A| = \sum_{x \in X} A(x) = \sum_{x \in X \setminus X'} A(x) + \sum_{x \in X'} A(x) 
+% = \sum_{x \in X \setminus X'} 0 + \sum_{x \in X'} A(x) = \sum_{x \in X'} A(x)
+% \end{displaymath}
 Wanneer we $||A|| = \sum_{x \in X'} A(x)$ defini\"eren, dan geldt dus $|A| = ||A||$ en ook:
-$$
-\begin{array}{r@{\quad = \quad}l@{\qquad}l}
-| A \cap B | & \displaystyle \sum_{x \in X} T_M(A(x),B(x)) & \\
-& \displaystyle \sum_{x \in X'} T_M(A(x),B(x)) & (T_M(0,0)=0) \\
-& ||A \cap B|| & \\[5pt]
-| A \cup B | & \displaystyle \sum_{x \in X} S_M(A(x),B(x)) & \\
-& \displaystyle \sum_{x \in X'} S_M(A(x),B(x)) & (S_M(0,0)=0) \\
-& ||A \cup_{\mathcal{D}} B|| & \\[5pt]
-%\end{array}
-%$$
-%$$
-%\begin{array}{r@{\quad = \quad}l@{\qquad}l}
-| A \setminus B | = | A \cap B^c | & \displaystyle \sum_{x \in X} T_M(A(x),1-B(x)) & \\
-& \displaystyle \sum_{x \in X'} T_M(A(x),1-B(x)) & (T_M(0,1-0)=T_M(0,1)=0) \\
-& || A \cap B^c || = ||A \setminus B|| & %\\[5pt]
-\end{array}
-$$
-$$
-\begin{array}{r@{\quad = \quad}l@{\qquad}l}
-| A \triangle B | & | (A \setminus B) \cup (B \setminus A) | & \\
-& || (A \setminus B) \cup (B \setminus A) || & (T_M(0,1)=0 \textrm{ en } S_M(0,0)=0) \\
-& || A \triangle B || & \\
-\end{array}
-$$
-$$
-\begin{array}{r@{\quad = \quad}l@{\qquad}l}
-|(A \cap B) \cap (A^c \cap B^c)| & ||(A \cap B) \cap (A^c \cap B^c)|| & (T_M(0,1)=0)\\[5pt]
-|(A \cup B) \cap (A^c \cup B^c)| & ||(A \cup B) \cap (A^c \cup B^c)|| & (T_M(0,1)=0)
-\end{array}
-$$
+\begin{align*}
+| A \cap B | 
+&= \displaystyle \sum_{x \in X} T_M(A(x),B(x)) & & \\
+&= \displaystyle \sum_{x \in X'} T_M(A(x),B(x)) & & (T_M(0,0)=0) \\
+&= ||A \cap B|| & & \displaybreak[0] \\ %[5pt]
+| A \cup B | 
+&= \displaystyle \sum_{x \in X} S_M(A(x),B(x)) & & \\
+&= \displaystyle \sum_{x \in X'} S_M(A(x),B(x)) & & (S_M(0,0)=0) \\
+&=  ||A \cup B|| & & \displaybreak[0] \\ %[5pt]
+| A \setminus B | = | A \cap B^c | 
+&= \displaystyle \sum_{x \in X} T_M(A(x),1-B(x)) & & \\
+&= \displaystyle \sum_{x \in X'} T_M(A(x),1-B(x)) & & (T_M(0,1-0)=T_M(0,1)=0) \\
+&= || A \cap B^c || = ||A \setminus B|| & & %\\[5pt]
+\end{align*}
+Doordat $T_M(0,1)=0$ en $S_M(0,0)=0$ geldt eveneens
+% \begin{align*}
+% | A \triangle B | 
+% &= | (A \setminus B) \cup (B \setminus A) | & & \\
+% &= || (A \setminus B) \cup (B \setminus A) || & & (T_M(0,1)=0 \textrm{ en } S_M(0,0)=0) \\
+% &= || A \triangle B || & & \\
+% \end{align*}
+\begin{displaymath}
+| A \triangle B | = | (A \setminus B) \cup (B \setminus A) | = || (A \setminus B) \cup (B \setminus A) || = || A \triangle B ||
+\end{displaymath}
+% \end{align*}
+en uit $T_M(0,1)=0$ volgt dat 
+% \begin{align*}
+% |(A \cap B) \cap (A^c \cap B^c)| &= ||(A \cap B) \cap (A^c \cap B^c)|| & & (T_M(0,1)=0)\\ %[5pt]
+% |(A \cup B) \cap (A^c \cup B^c)| &= ||(A \cup B) \cap (A^c \cup B^c)|| & & (T_M(0,1)=0)
+% \end{align*}
+$|(A \cap B) \cap (A^c \cap B^c)| &= ||(A \cap B) \cap (A^c \cap B^c)||$ en
+$|(A \cup B) \cap (A^c \cup B^c)| &= ||(A \cup B) \cap (A^c \cup B^c)||$.
 Met behulp van de eigenschap
-$$
+\begin{displaymath}
 |A^c| = \sum_{x \in X} (1 - A(x)) = \sum_{x \in X} 1 - \sum_{x \in X} A(x) = |X| - |A|
-$$
+\end{displaymath}
 vinden we bovendien:
-$$
+\begin{displaymath}
 \begin{array}{l@{\ =\ }l@{\ =\ }l@{\ =\ }l}
-|A^c \cap B^c| & |(A \cup B)^c| & |X| - |A \cup B| & |X| - ||A \cup B|| \\[5pt]
+|A^c \cap B^c| & |(A \cup B)^c| & |X| - |A \cup B| & |X| - ||A \cup B|| \\[4pt]
 |A^c \cup B^c| & |(A \cap B)^c| & |X| - |A \cap B| & |X| - ||A \cap B||
 \end{array}
-$$
-$$
+\end{displaymath}
+\begin{displaymath}
 \begin{array}{l@{\ =\ }l@{\ =\ }l}
-| (A \setminus B)^c | & |X| - |A \setminus B| & |X| - ||A \setminus B|| \\[5pt]
+| (A \setminus B)^c | & |X| - |A \setminus B| & |X| - ||A \setminus B|| \\[4pt]
 | (A \triangle B)^c | & |X| - |A \triangle B| & |X| - ||A \triangle B||
 \end{array}
-$$
-$$
+\end{displaymath}
+\begin{displaymath}
 \begin{array}{l@{\ =\ }l@{\ =\ }l}
-|(A^c \cap B^c) \cup (A \cap B)| & |((A \cup B) \cap (A^c \cup B^c))^c| & |X| - ||(A \cup B) \cap (A^c \cup B^c)|| \\[5pt]
+|(A^c \cap B^c) \cup (A \cap B)| & |((A \cup B) \cap (A^c \cup B^c))^c| & |X| - ||(A \cup B) \cap (A^c \cup B^c)|| \\[4pt]
 |(A^c \cup B^c) \cup (A \cup B)| & |((A \cap B) \cap (A^c \cap B^c))^c| & |X| - ||(A \cap B) \cap (A^c \cap B^c)||
 \end{array}
-$$
+\end{displaymath}
 We kunnen tabel~\ref{tab:similatiteitsmaten} bijgevolg herschrijven tot tabel~\ref{tab:beperkte_similatiteitsmaten}.
 
-\begin{table}[tbp]
+\begin{table}[!t]
 \begin{center}
 \begin{tabular}{|l|}
 \hline
@@ -356,9 +358,9 @@ $
 \end{table}
 
 Beschouw bijvoorbeeld $M_{5}$:
-$$
+\begin{displaymath}
 M_{5} = \frac{\min\{|A|,|B|\}}{\max\{|A|,|B|\}} = \frac{\min\{||A||,||B||\}}{\max\{||A||,||B||\}}
-$$
+\end{displaymath}
 Bij de oude formule zijn er eerst $2 \cdot (|X|-1)$ optellingen nodig
 om $|A|$ en $|B|$ te berekenen. Daarna moeten de zo bekomen getallen met elkaar vergeleken worden
 om $\min\{|A|,|B|\}$ en $\max\{|A|,|B|\}$ te bepalen en moet er tenslotte ook nog \'e\'en deling
@@ -370,14 +372,12 @@ gelijk als $X'=X$. De nieuwe vorm is dus steeds minstens even snel als de oude.
 
 Bij de vaagsimilariteitsmaten die gebruik maken van het complement, boeken we nog meer winst.
 We bekijken $M_{5c}$ als voorbeeld. De oorspronkelijke vorm wordt als volgt herschreven:
-$$
-\begin{array}{rclcl}
-\displaystyle M_{5c}(A,B) & = & \displaystyle \frac{\min \{|A^c|,|B^c|\}}{\max \{|A^c|,|B^c|\}} 
-& = & \displaystyle \frac{\min \{|X|-||A||,|X|-||B||\}}{\max \{|X|-||A||,|X|-||B||\}} \\[10pt]
-& & & = & \displaystyle \frac{|X| + \min \{-||A||,-||B||\}}{|X| + \max \{-||A||,-||B||\}} \\[10pt]
-& & & = & \displaystyle \frac{|X| - \max \{||A||,||B||\}}{|X| - \min \{||A||,||B||\}}
-\end{array}
-$$
+\begin{align*}
+\displaystyle M_{5c}(A,B) = \displaystyle \frac{\min \{|A^c|,|B^c|\}}{\max \{|A^c|,|B^c|\}} 
+& = \displaystyle \frac{\min \{|X|-||A||,|X|-||B||\}}{\max \{|X|-||A||,|X|-||B||\}} \\
+& = \displaystyle \frac{|X| + \min \{-||A||,-||B||\}}{|X| + \max \{-||A||,-||B||\}} \\
+& = \displaystyle \frac{|X| - \max \{||A||,||B||\}}{|X| - \min \{||A||,||B||\}}
+\end{align*}
 Voor de oude formule zijn er $2\cdot |X|$ aftrekkingen nodig om $A^c$ en $B^c$ te bepalen,
 bovenop de $2 \cdot (|X|-1) + 2$ bewerkingen die nodig zijn voor het berekenen van 
 %$\min\{|A|,|B|\} / \max\{|A|,|B|\}$. 

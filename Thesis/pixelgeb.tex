@@ -12,12 +12,12 @@ Vandaar dat we spreken van \emph{pixelgebaseerde} maten.
 
 Een \emph{binair beeld} is een beeld dat enkel witte en zwarte beeldpunten bevat. We kunnen een 
 $n$-dimensionaal binair beeld dus modelleren als een scherpe verzameling $A$ in $\mathbb{R}^n$, met:
-$$
+\begin{displaymath}
 \begin{array}{rcl}
 p \in A & \iff & p \textrm{ is een wit punt in het beeld} \\
 p \notin A & \iff & p \textrm{ is een zwart punt in het beeld}
 \end{array}
-$$ 
+\end{displaymath}
 Vermits een binair beeld in de praktijk voorgesteld wordt als een rooster bestaande uit een
 eindig aantal beeldpunten, zal het universum doorgaans eerder een deelverzameling van $\mathbb{N}^2$ zijn.
 
@@ -25,13 +25,13 @@ Behalve wit en zwart, kan een \emph{grijswaardebeeld} ook grijstinten bevatten. 
 kunnen voorgesteld worden aan de hand van waarden uit het open eenheidsinterval $]0,1[$, waarbij
 geldt: hoe groter de grijswaarde, hoe lichter de grijstint. Een $n$-dimensionaal grijswaardebeeld
 kan dus gemodelleerd worden als een vaagverzameling $A$ in $\mathbb{R}^n$ bepaald door:
-$$
+\begin{displaymath}
 \begin{array}{rcl}
 A(p) = 1 & \iff & p \textrm{ is een wit punt in het beeld} \\
 A(p) = 0 & \iff & p \textrm{ is een zwart punt in het beeld} \\
 A(p) \in\ ]0,1[ & \iff & p \textrm{ is een beeldpunt met een grijstint}
 \end{array}
-$$
+\end{displaymath}
 Ook bij grijswaardebeelden is het universum in de praktijk eerder een deelverzameling van $\mathbb{N}^2$.
 
 \subsection{Similariteitsmaten}
@@ -51,33 +51,38 @@ meeste beelden op internet kleurbeelden zijn.
 We beperken ons tot het RGB-model en we beschouwen de ordening $\leq_{RGB,lex}$, die
 gebaseerd is op de lexicografische ordening $\leq_{lex}$ en op de ordening voor kleuren in het 
 RGB-model uit \cite{dewitte:vect_morph_ops}:
-$$
-\begin{array}{rcl}
-c <_{RGB} c' & \iff & d(c,Bl) < d(c',Bl)\ \lor \\
-			   &	  & \quad(d(c,Bl) = d(c',Bl) \land d(c,Wh) > d(c',Wh)) \\[5pt]
-c >_{RGB} c' & \iff & d(c,Wh) < d(c',Wh)\ \lor \\
-			   &	  & \quad(d(c,Wh) = d(c',Wh) \land d(c,Bl) > d(c',Bl)) \\[5pt]
-c =_{RGB} c'   & \iff & (d(c,Bl) = d(c',Bl) \land d(c,Wh) = d(c',Wh)) \\[10pt]
-c \leq_{lex} c' & \iff & r < r' \lor (r = r' \land g < g') \lor (r = r' \land g = g' \land b \leq b') \\[10pt]
-c \leq_{RGB,lex} c' & \iff & c <_{RGB} c' \lor (c =_{RGB} c' \land c \leq_{lex} c')
-\end{array}
-$$
+% \begin{displaymath}
+% \begin{array}{rcl}
+% c <_{RGB} c' & \iff & d(c,Bl) < d(c',Bl)\ \lor \\
+% 			   &	  & \quad(d(c,Bl) = d(c',Bl) \land d(c,Wh) > d(c',Wh)) \\[5pt]
+% c >_{RGB} c' & \iff & d(c,Wh) < d(c',Wh)\ \lor \\
+% 			   &	  & \quad(d(c,Wh) = d(c',Wh) \land d(c,Bl) > d(c',Bl)) \\[5pt]
+% c =_{RGB} c'   & \iff & (d(c,Bl) = d(c',Bl) \land d(c,Wh) = d(c',Wh)) \\[10pt]
+% c \leq_{lex} c' & \iff & r < r' \lor (r = r' \land g < g') \lor (r = r' \land g = g' \land b \leq b') \\[10pt]
+% c \leq_{RGB,lex} c' & \iff & c <_{RGB} c' \lor (c =_{RGB} c' \land c \leq_{lex} c')
+% \end{array}
+% \end{displaymath}
+\begin{align*}
+c <_{RGB} c' & \iff d(c,Bl) < d(c',Bl)\ \lor \\
+			 & \qquad (d(c,Bl) = d(c',Bl) \land d(c,Wh) > d(c',Wh)) \\
+c >_{RGB} c' & \iff d(c,Wh) < d(c',Wh)\ \lor \\
+			 & \qquad(d(c,Wh) = d(c',Wh) \land d(c,Bl) > d(c',Bl)) \\
+c =_{RGB} c' & \iff (d(c,Bl) = d(c',Bl) \land d(c,Wh) = d(c',Wh)) \\
+c \leq_{lex} c' & \iff r < r' \lor (r = r' \land g < g') \lor (r = r' \land g = g' \land b \leq b') \\
+c \leq_{RGB,lex} c' & \iff c <_{RGB} c' \lor (c =_{RGB} c' \land c \leq_{lex} c')
+\end{align*}
 waarbij $Bl = (0,0,0)$, $Wh = (1,1,1)$ en $d$ de Euclidische afstand.
 Het koppel $([0,1]^3,\leq_{RGB,lex})$ is een complete tralie, met:
-$$
-\begin{array}{@{}c@{}}
-\begin{array}{rcrcll}
-\inf \{c,c'\} & = & \min \{c,c'\} & = & c & \textrm{als } c <_{RGB} c' \\
-		  	& & & = & c' & \textrm{als } c >_{RGB} c' \\
-		  	& & & = & c & \textrm{als } c =_{RGB} c' \textrm{ en } c \leq_{lex} c' \\
-		  	& & & = & c' & \textrm{anders} \\[10pt]
-\sup \{c,c'\} & = & \max \{c,c'\} & = & c' & \textrm{als } c <_{RGB} c' \\
-		  	& & & = & c & \textrm{als } c >_{RGB} c' \\
-		  	& & & = & c' & \textrm{als } c =_{RGB} c' \textrm{ en } c \leq_{lex} c' \\
-		  	& & & = & c & \textrm{anders}
-\end{array}
-\end{array}
-$$
+\begin{align*}
+\inf \{c,c'\} = \min \{c,c'\} &= \begin{cases}
+c & \textrm{als } c <_{RGB} c' \textrm{ of } c =_{RGB} c' \textrm{ en } c \leq_{lex} c' \\
+c' & \textrm{anders}
+\end{cases} \\
+\sup \{c,c'\} = \max \{c,c'\} & = \begin{cases}
+c' & \textrm{als } c <_{RGB} c' \textrm{ of } c =_{RGB} c' \textrm{ en } c \leq_{lex} c' \\
+c & \textrm{anders}
+\end{cases}
+\end{align*}
 Een $n$-dimensionaal RGB-kleurbeeld kan dus gemodelleerd worden als een L-vaagverzameling in 
 $\mathbb{R}^n$, waarbij $L=[0,1]^3$. Net zoals bij grijswaardebeelden, is 
 het universum in de praktijk echter eerder een deelverzameling van $\mathbb{N}^2$.
@@ -112,14 +117,14 @@ $[0,1]$ naar $[0,1]^3$.
 Voor de vaagsimilariteitsmaten $M_1$ tot $M_3$ betekent dat concreet dat we een zinvolle betekenis 
 moeten geven aan $c - c'$ en $|c|$, voor alle $c(r,g,b),c'(r',g',b') \in [0,1]^3$. We gebruiken
 daarvoor 
-$$
+\begin{displaymath}
 c - c' = (r-r',g-g',b-b') \quad \textrm{ en } \quad |c| = \frac{1}{\sqrt{3}} \cdot \sqrt{r^2 + g^2 + b^2}.
-$$
+\end{displaymath}
 Om de overige vaagsimilariteitsmaten te veralgemenen, hebben we een uitbreiding van het
 begrip sigma count nodig. Dat kan door
-$$
+\begin{displaymath}
 |A|=\frac{1}{\sqrt{3}}\sum_{p \in P}\sqrt{(A_1(p))^2+(A_2(p))^2+(A_3(p))^2}
-$$
+\end{displaymath}
 te defini\"eren, waarbij $A(p)=(A_1(p),A_2(p),A_3(p))$ voor alle $p$ uit $P$. Die overige maten maken 
 bovendien ook gebruik van de bewerkingen $co$ (complement), 
 $\cap$ (doorsnede) en $\cup$ (unie). Doordat we 
@@ -183,10 +188,10 @@ Figuur\ref{fig:moments} illustreert een derde optie, waarbij \emph{kleurmomenten
 worden om nieuwe intermediaire beelden te construeren. Het \emph{moment van de $k$-de orde rond $a$} ($a
 \in \mathbb{R}$) van een discrete toevalsveranderlijke $T$ met
 probabilitietsfunctie $prob_T$ wordt als volgt gedefinieerd
-\cite{demeyder:statistiek}: 
-$$
+\cite{demeyer:statistiek}: 
+\begin{displaymath}
 \mu_k(a) = \sum_{t \in W} (t-a)^k prob_T(t)
-$$
+\end{displaymath}
 met $W$ de aftelbare verzameling van re\"ele waarden die $T$ kan aannemen. Het
 moment
 van de eerste orde rond $0$ is de \emph{verwachtingswaarde} en wordt doorgaans kortweg als
@@ -195,15 +200,17 @@ momenten van de tweede en derde orde zijn beter bekend als respectievelijk de
 \emph{variantie} en de \emph{scheefheid}. We construeren het intermediair beeld
 voor een beeld $A$ dan als volgt. Zij $A(p)=(A_1(p),A_2(p),A_3(p))$ voor
 alle $p \in P$. Voor de componenten $c_{1,i}$, $i \in \{1,2,3\}$, van de
-kleur $c_1 \in [0,1]^3$ van de eerste pixel gebruiken we de verwachtingswaarde $$
+kleur $c_1 \in [0,1]^3$ van de eerste pixel gebruiken we de verwachtingswaarde
+\begin{displaymath}
 c_{1,i} = \frac{1}{|P|} \sum_{p \in P} A_i(p)  
-$$
+\end{displaymath}
 die in dit geval overeenkomt met de gemiddelde kleur van de pixels.
 De componenten $c_{j,i}$, $i \in \{1,2,3\}$, van de kleuren $c_j$, $j \in
 \{2,\ldots,M-1\}$, van de overige pixels worden gegeven door de $j$-de
-machtswortel van het centrale moment van de $j$-de orde: $$
+machtswortel van het centrale moment van de $j$-de orde:
+\begin{displaymath}
 c_{j,i} = \left( \frac{1}{|P|} \sum_{p \in P} (A_i(p) - c_{1,i})^j \right)^{1/j}
-$$  
+\end{displaymath}
 Op die manier construeren we een intermediair beeld dat de
 belangrijkste informatie uit de distributie van de kleuren van het origineel
 destilleert. Net zoals in \cite{stricker:similarity_of_color_images} kiezen we 
@@ -409,23 +416,21 @@ kwaliteitsmaten voor beelden \cite{debaets:similariteitsmaten_voor_kleurbeelden}
 Beschouw bijvoorbeeld twee beelden $A$ en $B$ die elk uit \'e\'en enkele pixel bestaan. De pixel 
 van $A$ is rood en die van $B$ is groen, met andere woorden: $A(0,0)=(1,0,0)$ en 
 $B(0,0)=(0,1,0)$. Er geldt dan: 
-$$
+\begin{displaymath}
 |A_1|=1 \quad |A_2|=0 \quad |A_3|=0 \qquad |B_1|=0 \quad |B_2|=1 \quad |B_3|=0 \qquad |A|=|B|=\frac{\sqrt{1}}{\sqrt{3}}
-$$
+\end{displaymath}
 met $A(p)=(A_1(p),A_2(p),A_3(p))$ en $B(p)=(B_1(p),B_2(p),B_3(p))$ voor elke $p$ uit het universum. Als we
 $\frac{0}{0} = 0$ veronderstellen, dan geeft rechtstreekse component-gebaseerde toepassing van 
 $M_5$ dus
-$$
-\begin{array}{r@{\ =\ }l}
-\displaystyle\frac{M_5(A_1,B_1)+M_5(A_2,B_2)+M_5(A_3,B_3)}{3} &
-\displaystyle\frac{\frac{\min\{|A_1|,|B_1|\}}{\max\{|A_1|,|B_1|\}}+\frac{\min\{|A_2|,|B_2|\}}{\max\{|A_2|,|B_2|\}}+\frac{\min\{|A_3|,|B_3|\}}{\max\{|A_3|,|B_3|\}}}{3} \\[5pt]
- & \displaystyle\frac{\frac{0}{1}+\frac{0}{1}+0}{3} = 0
-\end{array}
-$$
+\begin{align*}
+\displaystyle\frac{M_5(A_1,B_1)+M_5(A_2,B_2)+M_5(A_3,B_3)}{3} 
+&= \displaystyle\frac{\frac{\min\{|A_1|,|B_1|\}}{\max\{|A_1|,|B_1|\}}+\frac{\min\{|A_2|,|B_2|\}}{\max\{|A_2|,|B_2|\}}+\frac{\min\{|A_3|,|B_3|\}}{\max\{|A_3|,|B_3|\}}}{3} \\
+&= \displaystyle\frac{\frac{0}{1}+\frac{0}{1}+0}{3} = 0
+\end{align*}
 terwijl we via de tralie-gebaseerde aanpak
-$$
+\begin{displaymath}
 M_5(A,B) = \frac{\min\{|A|,|B|\}}{\max\{|A|,|B|\}} = \frac{\scriptstyle \sqrt{1} / \sqrt{3}}{\scriptstyle \sqrt{1} / \sqrt{3}} = 1
-$$
+\end{displaymath}
 bekomen. Als $A$ en $B$ meerdere respectievelijk rode en groene pixels bevatten, dan moeten de cardinaliteiten
 vermenigvuldigd worden met het aantal pixels. We bekomen in dat geval dus dezelfde similariteiten. Zoals
 ge\"illustreerd wordt in figuur~\ref{fig:valse_positieven_M5}, manifesteert dit probleem zich ook als de 
@@ -482,9 +487,9 @@ We stellen ook vast dat $M_8$, $M_{8c}$, $M_{10}$, $M_{10c}$ en $M_{13}$ systema
 geven tot de minst performante maten. Dat kunnen we als volgt verklaren. Stel dat $A$ en $B$
 twee beelden zijn, waarvoor $A(p) \le B(p)$ voor alle
 $p \in P$. Er geldt dan $A \cap B$ = A en ook $\min\{|A|,|B|\}=|A|$ zodat
-$$
+\begin{displaymath}
 M_8(A,B)= \frac{|A \cap B|}{\min\{|A|,|B|\}} = \frac{|A|}{|A|} = 1
-$$
+\end{displaymath}
 als $|A| \ne 0$. Hoewel $A(p) \le B(p)$ in de praktijk zelden zal gelden voor alle $p$ uit $P$, 
 is het niet uitzonderlijk dat die ongelijkheid geldt voor de meeste $p \in P$. In dergelijke 
 gevallen zal $M_8(A,B) \approx 1$, terwijl $A$ en $B$ toch 
