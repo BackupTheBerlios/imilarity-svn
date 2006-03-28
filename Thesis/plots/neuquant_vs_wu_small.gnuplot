@@ -3,7 +3,7 @@ set data style boxes
 set size 0.7,0.7
 set grid
 
-set yrange [0:1700]
+set yrange [0:2000]
 set ylabel "rekentijd in ms" 1,0
 
 set xrange [0:7]

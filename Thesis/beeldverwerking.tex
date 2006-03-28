@@ -7,12 +7,13 @@ technieken.
 
 \section{Modellering van kleuren en beelden}
 
-\subsection{kleurmodellen}
+\subsection{Kleurmodellen}
 
 Een \emph{kleurmodel} is een abstract mathematisch model dat beschrijft hoe kleuren gerepresenteerd 
 kunnen worden als $n$-tallen uit $\mathbb{R}^n$. RGB is het meest gebruikte kleurmodel. In dat model is elke kleur
 een gewogen som van drie hoofdkleuren: rood, groen en blauw. De gewichten van die som
-worden gebruikt als componenten van het drietal dat de kleur voorstelt. 
+worden gebruikt als componenten van het drietal dat de kleur voorstelt. Figuur~\ref{fig:rgb}
+toont de grafische voorstelling van het RGB-model.
 %Naast RGB zijn ook
 %HSV en L*a*b* populaire kleurmodellen \cite{philips:beeldverwerking}.
 
@@ -23,6 +24,26 @@ op basis van het RGB-model zijn sRGB en Adobe RGB.
 Hoewel het strikt gezien niet correct is, wordt de term ``kleurruimte'' vaak ook voor het
 kleurmodel gebruikt. Men heeft het dus dikwijls over \emph{de} RGB kleurruimte, terwijl er eigenlijk meerdere
 kleurruimtes bestaan die gebaseerd zijn op RGB. 
+
+\begin{figure}[tp]
+\begin{center}
+\subfigure[]{
+\includegraphics[height=4cm]{images/rgb.eps}
+\label{fig:rgb}
+}
+\qquad
+\subfigure[]{
+\includegraphics[height=4cm]{images/hsv.eps}
+\label{fig:hsv}
+}
+\qquad
+\subfigure[]{
+\includegraphics[height=4cm]{images/lab.eps}
+\label{fig:lab}
+}
+\caption{\label{fig:kleurmodellen}Grafische voorstelling van (a) het RGB-model, (b) het HSV-model en (c) het L*a*b*-model.}
+\end{center}
+\end{figure}
 
 Ook in het HSV kleurmodel \cite{tkalcic:colour_spaces} wordt elke kleur voorgesteld 
 door een drietal. Men noemt de componenten van zo'n drietal respectievelijk 
@@ -47,7 +68,8 @@ Als $s=0$ dan is $h$ niet gedefinieerd. Dat is logisch vermits we dan te
 maken hebben met een grijswaarde. Indien $v=0$ dan zijn $s$ en $h$ niet gedefinieerd. We 
 hebben het in dat geval dan ook over puur zwart, waarvoor er geen kleurtint of 
 saturatie kan gespecificeerd worden. In de praktische implementatie geven we 
-niet gedefinieerde componenten de waarde $0$.
+niet gedefinieerde componenten de waarde $0$. Uit figuur~\ref{fig:hsv} blijkt dat
+het HSV-model de vorm van een kegel heeft.
 
 Een kleur in het Irb-model bestaat uit een intensiteit en een genormaliseerde $r$ en $b$ 
 \cite{ohta:color_info_for_region_segm}:
@@ -94,11 +116,12 @@ we als volgt:
 x' = \frac{x}{x+y+z} \qquad y' = \frac{y}{x+y+z}
 \end{displaymath}
 
-Een kleurruimte op basis van het L*a*b*-model is \emph{perceptueel uniform} 
+In figuur~\ref{fig:lab} wordt de grafische voorstelling van het L*a*b*-model weergegeven. 
+Een kleurruimte op basis van dat model is \emph{perceptueel uniform} 
 \cite{sharma:digital_color_imaging}. Dat wil zeggen dat, in een dergelijke 
 ruimte, de Euclidische afstand een goede maat is voor het waargenomen verschil 
 tussen twee kleuren. De co\"ordinaten $(l,a,b)$ van een kleur in het 
-L*a*b*-model kunnen als volgt benaderd worden 
+L*a*b*-model kunnen als volgt benaderd worden
 \cite{debaets:similariteitsmaten_voor_kleurbeelden, philips:beeldverwerking}:
 \begin{align*}
 l & = 116 \cdot f({\scriptstyle\frac{100 \cdot y}{255 \cdot y_0}}) - 16 \\[2pt] 
@@ -267,9 +290,13 @@ door op zoek te gaan naar de focale kleur die in het L*a*b*-model het dichtst bi
 \emph{Neural Image Quantization} (NeuQuant) \cite{dekker:neuquant} en de \emph{Wu quantizer} 
 \cite{wu:color_quantization_by_dynamic_programming_and_principal_analysis} zijn twee
 populaire kwantisatietechnieken die, in tegenstelling tot de technieken die we 
-tot nu toe bekeken hebben, een variabel kleurenpalet gebruiken. De eerste techniek is gebaseerd op
-Kohonen neurale netwerken, terwijl de tweede gebruik maakt van dynamisch programmeren
-en ``principal analysis''. NeuQuant geeft doorgaans iets betere resultaten, maar Wu's techniek is
+tot nu toe bekeken hebben, een variabel kleurenpalet gebruiken. De eerste techniek gebruikt een
+zogenaamd \emph{Kohonen neuraal netwerk} om clusters van kleuren te vormen. Vervolgens worden 
+alle kleuren uit een cluster dan naar dezelfde kleur gekwantiseerd. Bij de tweede techniek 
+wordt er gebruik gemaakt van \emph{dynamisch programmeren} en van een statistische techniek voor 
+het reduceren van de dimensionaliteit van data, 
+die \emph{principal component analysis} (PCA) genoemd wordt. 
+NeuQuant geeft doorgaans iets betere resultaten, maar Wu's techniek is
 sneller. Uit figuur~\ref{fig:rekentijden_quant} blijkt echter dat het verschil in rekentijd zich
 enkel manifesteert als er naar een relatief groot aantal kleuren gekwantiseerd wordt. Voor een
 klein aantal kleuren is NeuQuant zelfs iets sneller. Anderzijds is Wu's techniek wel meer
@@ -445,7 +472,9 @@ toont de resultaten van de vier niet-uniforme kwantistatietechnieken.
 \end{figure}
 
 De technieken met een variabel kleurenpalet doen het duidelijk beter dan diegene met een vast palet. 
-Anderzijds zijn de technieken met een vast kleurenpalet wel een stuk sneller. Bovendien is het soms niet
+In figuur~\ref{fig:rekentijden_quant} merken we echter dat kwantisatie met een vast kleurenpalet 
+vaak een stuk sneller is. Zo gaat het uniform kwantiseren op basis van Irb bijvoorbeeld
+twee keer zo snel als Wu kwantisatie naar hetzelfde aantal kleuren. Bovendien is het soms niet
 gewenst dat voor alle beelden een andere verzameling van kleuren gebruikt wordt. In deze scriptie gebruiken
 we kwantisatie trouwens louter om meer performante similariteitsmaten te constueren. De visuele kwaliteit
 van de gekwantiseerde beelden is daarbij minder belangrijk. Similariteitsmaten op basis van kwantisatietechnieken 
@@ -464,15 +493,16 @@ aantal kleuren dan Wu's techniek.
 \section{Lineaire filters}
 \label{sectie:lineaire_filters}
 
-Bij het \emph{filteren} van een 2-dimensionaal beeld $b$ wordt de waarde van elk beeldpunt $(x,y) \in \mathbb{N}^2$ 
-vervangen door een nieuwe waarde die afhangt van de originele waarde $b(x,y)$ van het beeldpunt en van de waarden 
-van naburige beeldpunten. In het geval van een \emph{lineair filter} is die nieuwe waarde een lineaire combinatie 
+Bij het \emph{filteren} van een 2-dimensionaal beeld $b$ wordt de waarde $b(x,y)$ van een 
+beeldpunt $(x,y) \in \mathbb{N}^2$ vervangen door een nieuwe waarde die afhangt van $b(x,y)$ 
+en van de waarden van naburige beeldpunten. In het geval van een \emph{lineair filter} is die nieuwe waarde een lineaire combinatie 
 van de oude waarden. Het beeld $b'$ dat we bekomen door $b$ lineair te filteren, wordt gegeven door
 de volgende correlatie \cite{philips:beeldverwerking}:
 \begin{displaymath}
 b'(x,y) = \sum_{(k,l) \in \Omega_m} \mathring{b}(x+k,y+l) \cdot m(k,l)
 \end{displaymath}
-met $m$ een $\mathbb{N}^2 - \mathbb{R}$ afbeelding en $\Omega_m = \{ (k,l) \in \mathbb{N}^2 \mid m(k,l) \ne 0 \}$. 
+met $\mathring{b}$ de nuluitbreiding van $b$, $m$ een $\mathbb{N}^2 - \mathbb{R}$ afbeelding 
+en $\Omega_m = \{ (k,l) \in \mathbb{N}^2 \mid m(k,l) \ne 0 \}$. 
 De functie $m$ wordt het \emph{filtermasker} genoemd.
 
 Het \emph{3x3 binomiaalfilter} is een voorbeeld van een lineair filter. Voor het filtermasker 

@@ -75,11 +75,11 @@ waarbij $Bl = (0,0,0)$, $Wh = (1,1,1)$ en $d$ de Euclidische afstand.
 Het koppel $([0,1]^3,\leq_{RGB,lex})$ is een complete tralie, met:
 \begin{align*}
 \inf \{c,c'\} = \min \{c,c'\} &= \begin{cases}
-c & \textrm{als } c <_{RGB} c' \textrm{ of } c =_{RGB} c' \textrm{ en } c \leq_{lex} c' \\
+c & \textrm{als } c <_{RGB} c' \lor (c =_{RGB} c' \land c \leq_{lex} c') \\
 c' & \textrm{anders}
 \end{cases} \\
 \sup \{c,c'\} = \max \{c,c'\} & = \begin{cases}
-c' & \textrm{als } c <_{RGB} c' \textrm{ of } c =_{RGB} c' \textrm{ en } c \leq_{lex} c' \\
+c' & \textrm{als } c <_{RGB} c' \lor (c =_{RGB} c' \land c \leq_{lex} c') \\
 c & \textrm{anders}
 \end{cases}
 \end{align*}
@@ -101,9 +101,14 @@ kan bijvoorbeeld aan de hand van de formule $y = 0.3 \cdot r + 0.59 \cdot g + 0.
 Bij de klassieke manier om kleurbeelden te vergelijken, wordt een similariteitsmaat 
 voor grijswaardebeelden toegepast op elk van de kleurcomponenten. De resultaten voor de
 verschillende componenten worden daarna samengevoegd. Een kleurbeeld in het RGB-model wordt daarbij
-dus ge\"interpreteerd als een combinatie van drie grijswaardebeelden. In deze scriptie beperken we ons tot
-het rekenkundig gemiddelde om de similariteiten van de componenten samen te voegen,
-maar er kunnen uiteraard ook andere aggregatieoperatoren gebruikt worden.
+dus ge\"interpreteerd als een combinatie van drie grijswaardebeelden. Meestal wordt
+het rekenkundig gemiddelde gebruikt om de similariteiten van de componenten samen te voegen,
+maar er kunnen uiteraard ook andere aggregatieoperatoren aangewend worden. Door het minimum
+te gebruiken, kan er afgedwongen worden dat beelden enkel similair kunnen
+zijn indien \emph{alle} kleurcomponenten goed op elkaar lijken. Aggregatieoperatoren
+die toelaten om bepaalde componenten meer te laten doorwegen, kunnen ook nuttig
+kunnen zijn. Als er in het HSV-model gewerkt wordt, dan kan er op die manier 
+bijvoorbeeld meer belang gehecht worden aan de kleurtint-component.
 
 In het RGB-model zijn de componenten van een kleur echter sterk gecorreleerd 
 \cite{sharma:digital_color_imaging}, waardoor er
@@ -125,7 +130,8 @@ begrip sigma count nodig. Dat kan door
 \begin{displaymath}
 |A|=\frac{1}{\sqrt{3}}\sum_{p \in P}\sqrt{(A_1(p))^2+(A_2(p))^2+(A_3(p))^2}
 \end{displaymath}
-te defini\"eren, waarbij $A(p)=(A_1(p),A_2(p),A_3(p))$ voor alle $p$ uit $P$. Die overige maten maken 
+te defini\"eren, waarbij $A(p)=(A_1(p),A_2(p),A_3(p))$ voor alle $p$ uit het
+universum der beeldpunten $P$. Die overige maten maken 
 bovendien ook gebruik van de bewerkingen $co$ (complement), 
 $\cap$ (doorsnede) en $\cup$ (unie). Doordat we 
 $(\mathcal{N},\mathcal{C},\mathcal{D})=(N_s,T_M,S_M)$ gekozen hebben, moeten we
@@ -180,14 +186,14 @@ telkens de nog niet gebruikte kleur die het meest voorkomt in het gekwantiseerde
 %Voor een 
 %intermediair beeld van $M$ bij $N$ pixels krijgt het beeldpunt $(0,0)$ dus de kleur die het meest
 %voorkomt in het gekwantiseerde beeld, terwijl we voor positie $(M,N)$ de minst voorkomende kleur gebruiken.
-De pixel in de rechter bovenhoek van een intermediair beeld krijgt dus de kleur die het meest voorkomt
+De pixel in de linker bovenhoek van een intermediair beeld krijgt dus de kleur die het meest voorkomt
 in het gekwantiseerde beeld, terwijl we voor het beeldpunt rechts onderaan de minst voorkomende kleur
 gebruiken. 
 
 Figuur\ref{fig:moments} illustreert een derde optie, waarbij \emph{kleurmomenten} gebruikt
 worden om nieuwe intermediaire beelden te construeren. Het \emph{moment van de $k$-de orde rond $a$} ($a
 \in \mathbb{R}$) van een discrete toevalsveranderlijke $T$ met
-probabilitietsfunctie $prob_T$ wordt als volgt gedefinieerd
+probabiliteitsfunctie $prob_T$ wordt als volgt gedefinieerd
 \cite{demeyer:statistiek}: 
 \begin{displaymath}
 \mu_k(a) = \sum_{t \in W} (t-a)^k prob_T(t)
