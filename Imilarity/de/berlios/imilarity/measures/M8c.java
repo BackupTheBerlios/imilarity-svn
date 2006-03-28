@@ -9,6 +9,7 @@ public class M8c extends FuzzyMeasureBase {
 		FuzzySet b = getTarget();
 		int count = a.getElementsCount();
 		double d = count - Math.max(a.abs(),b.abs());
+		
 		if (d == 0)
 			return 0;
 		else

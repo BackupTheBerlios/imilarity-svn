@@ -42,11 +42,19 @@ public class DominantColorsImageMeasure extends ImageMeasureBase {
 	}
 	
 	
-	public double getSimilarity() {
-		Image queryColors = calculateIntermediateImage(getQuery());
-		Image targetColors = calculateIntermediateImage(getTarget());
+	public void setQuery(Image image) {
+		Image queryColors = calculateIntermediateImage(image);
 		measure.setQuery(queryColors);
+		super.setQuery(queryColors);
+	}
+	
+	public void setTarget(Image image) {
+		Image targetColors = calculateIntermediateImage(image);
 		measure.setTarget(targetColors);
+		super.setTarget(targetColors);
+	}
+	
+	public double getSimilarity() {
 		return measure.getSimilarity();
 	}
 	

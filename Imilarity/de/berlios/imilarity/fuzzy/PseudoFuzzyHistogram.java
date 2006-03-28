@@ -43,14 +43,14 @@ public class PseudoFuzzyHistogram extends FuzzySetBase {
 			int intIndex = 
 				Math.min((int)(image.getColor(i).getComponents()[0]*binsCounts[i]),binsCounts[i]-1);
 			Integer index = new Integer(intIndex);
-			Integer prev = (Integer)histogram.get(index);
+			Double prev = (Double)histogram.get(index);
 			if (prev == null) {
 				elements.add(index);
-				prev = new Integer(0);
+				prev = new Double(0);
 			}
 			
-			int newValue = prev.intValue()+1;
-			histogram.put(index, new Integer(newValue));
+			double newValue = prev.doubleValue()+1;
+			histogram.put(index, new Double(newValue));
 			if (newValue > max) max = newValue;
 		}
 	}
@@ -71,17 +71,18 @@ public class PseudoFuzzyHistogram extends FuzzySetBase {
 		//for (int j = 0; j < elementsCount; j++) {
 		while (it.hasNext()) {
 			Integer jj = (Integer)it.next();
-			elements.add(jj);
+			//elements.add(jj);
 			int j = jj.intValue();
 			int n = smoother.getRange();
 			double avg = 0.0;
 			for (int i = -n; i <= n; i++) {
-				int index = smoother.getIndex(j, i);
-				if (index >= 0) {
-					Integer value = (Integer) histogram.get(new Integer(j+i));
+				Integer index = new Integer(smoother.getIndex(j, i));
+				elements.add(index);
+				if (index.intValue() >= 0) {
+					Double value = (Double) histogram.get(index);
 					if (value == null) 
-						value = new Integer(0);
-					avg += smoother.getIncrement(j, i, value.intValue());
+						value = new Double(0);
+					avg += smoother.getIncrement(j, i, value.doubleValue());
 				}
 			}
 			double v = avg/(2*n+1);
@@ -116,10 +117,10 @@ public class PseudoFuzzyHistogram extends FuzzySetBase {
 		for (int i = -n; i <= n; i++) {
 			int index = smoother.getIndex(element, i);
 			if (index >= 0) {
-				Integer value = (Integer) histogram.get(new Integer(element+i));
+				Double value = (Double) histogram.get(new Integer(index));
 				if (value == null)
-					value = new Integer(0);
-				avg += smoother.getIncrement(element, i, (value.intValue())); // / max));
+					value = new Double(0);
+				avg += smoother.getIncrement(element, i, (value.doubleValue())); // / max));
 			}
 		}
 		return new SimpleMembership((avg/(2*n+1)) / max);

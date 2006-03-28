@@ -15,7 +15,7 @@ public class FuzzyHistogramImageMeasure extends ImageMeasureBase {
 		if (measure == null)
 			throw new NullPointerException("measure == null");
 		this.measure = measure;
-		this.quantizer = new UniformQuantizer(new int[] {10,10,10}); // reduceren tot 512 kleuren
+		this.quantizer = new UniformQuantizer(new int[] {10,10,10}); // reduceren tot 1000 kleuren
 	}
 	
 	public void setQuery(Image query) {

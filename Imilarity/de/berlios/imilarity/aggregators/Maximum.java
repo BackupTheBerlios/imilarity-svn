@@ -2,19 +2,23 @@ package de.berlios.imilarity.aggregators;
 
 public class Maximum extends AggregatorBase {
 
-	private Double max = null; 
+	private boolean valueAdded = false;
+	private double max = 0.0; 
 	
 	public void addValue(double value) {
-		if (max == null || value > max.doubleValue())
-			max = new Double(value);
+		if (!valueAdded || value > max) {
+			valueAdded = true;
+			max = value;
+		}
 	}
 
 	public void clearValues() {
-		max = null;
+		max = 0.0;
+		valueAdded = false;
 	}
 	
 	public double getAggregatedValue() {
-		return max.doubleValue();
+		return max;
 	}
 
 	

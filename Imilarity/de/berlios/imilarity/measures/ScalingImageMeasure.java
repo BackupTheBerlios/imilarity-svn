@@ -20,13 +20,17 @@ public class ScalingImageMeasure extends ImageMeasureBase {
 	}
 	
 	public void setQuery(Image image) {
+		Image target = getTarget();
+		if (target != null)
+			image = image.getScaledInstance(target.getWidth(),target.getHeight());
 		super.setQuery(image);
 		measure.setQuery(image);
 	}
 	
 	public void setTarget(Image image) {
 		Image query = getQuery();
-		image = image.getScaledInstance(query.getWidth(),query.getHeight());
+		if (query != null)
+			image = image.getScaledInstance(query.getWidth(),query.getHeight());
 		super.setTarget(image);
 		measure.setTarget(image);
 	}

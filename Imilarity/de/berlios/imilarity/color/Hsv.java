@@ -48,5 +48,20 @@ public class Hsv implements ColorSpace {
 	public int getComponentsCount() {
 		return 3;
 	}
+	
+	
+	// TESTPROGRAMMA
+	public static void main(String[] args) {
+		System.out.print("rood: ");
+		double[] comps = ((new Hsv()).fromRgb(new int[] {255,0,0})).getComponents();
+		for (int i = 0; i < comps.length; i++)
+			System.out.print(" "+i+": "+comps[i]);
+		System.out.println();
+		System.out.print("groen: ");
+		comps = ((new Hsv()).fromRgb(new int[] {0,255,0})).getComponents();
+		for (int i = 0; i < comps.length; i++)
+			System.out.print(" "+i+": "+comps[i]);
+		System.out.println();
+	}
 
 }

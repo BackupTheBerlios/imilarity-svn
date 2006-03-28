@@ -6,6 +6,8 @@ public class Lab extends Xyz {
 	//private static final double Y_REF = 100.0;
 	private static final double Z_REF = 108.9; 
 	
+	private static final double A_RANGE = 120.0, B_RANGE = 120.0;
+	
 	public Color fromRgb(int[] rgb) {
 		double xyz[] = super.fromRgb(rgb).getComponents();
 		double l = 116.0 * f(xyz[1]) - 16;
@@ -13,11 +15,11 @@ public class Lab extends Xyz {
 		double b = 200.0 * (f(xyz[1]) - f(100*xyz[2]/Z_REF));
 		if (l > 100.0) l = 100.0;
 		else if (l < 0.0) l = 0.0;
-		if (a > 120.0) a = 120.0;
-		else if (a < -120.0) a = -120.0;
-		if (b > 120.0) b = 120.0;
-		else if (b < -120.0) b = -120.0;
-		return new Color(l/100.0, (120+a)/240.0, (120+b)/240.0);
+		if (a > A_RANGE) a = A_RANGE;
+		else if (a < -A_RANGE) a = -A_RANGE;
+		if (b > B_RANGE) b = B_RANGE;
+		else if (b < -B_RANGE) b = -B_RANGE;
+		return new Color(l/100.0, (A_RANGE+a)/(2*A_RANGE), (B_RANGE+b)/(2*B_RANGE));
 	}
 	
 	private static final double f(double t) {
@@ -43,5 +45,20 @@ public class Lab extends Xyz {
 		if (fz > d) z = Z_REF*fz*fz*fz/100.0;
 		else		z = (fz - 16.0/116.0)*3*d*d*Z_REF/100.0;
 		return super.toRgb(new Color(x,y,z));
+	}
+
+
+	
+	// TESTPROGRAMMA
+	
+	public static void main(String[] args) {
+		int[] comps = (new Lab()).toRgb(new Color(1, 0.0625, 1));
+		for (int i = 0; i < comps.length; i++)
+			System.out.print(""+i+": "+comps[i]+" ");
+		System.out.println();
+		comps = (new Lab()).toRgb(new Color(1, 0.1875, 1));
+		for (int i = 0; i < comps.length; i++)
+			System.out.print(""+i+": "+comps[i]+" ");
+		System.out.println();
 	}
 }

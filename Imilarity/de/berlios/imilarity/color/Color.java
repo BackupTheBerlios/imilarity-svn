@@ -24,6 +24,10 @@ public class Color implements Comparable {
 	}
 
 	
+	public boolean equals(Object obj) {
+		return compareTo(obj) == 0;
+	}
+	
 	public int compareTo(Object obj) {
 		Color c = (Color) obj;
 		for (int i = 0; i < components.length; i++)
@@ -32,5 +36,15 @@ public class Color implements Comparable {
 			else if (components[i] > c.components[i])
 				return 1;
 		return 0;
+	}
+	
+	public int hashCode() {
+		int code = 0;
+		int factor = 1;
+		for (int i = 0; i < components.length; i++) {
+			code += (int) (factor * components[i]);
+			factor *= 1000;
+		}
+		return code;
 	}
 }

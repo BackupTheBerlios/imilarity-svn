@@ -13,11 +13,16 @@ public class Xyz implements ColorSpace {
 				0.020*r+0.130*g+0.939*b
 			});
 			*/
-		return new Color(new double[] { 
-				0.4124*r + 0.3576*g + 0.1805*b,
-				0.2126*r + 0.7152*g + 0.0722*b,
-				0.0193*r + 0.1192*g + 0.9505*b
-			});
+		double x = 0.4124*r + 0.3576*g + 0.1805*b;
+		double y = 0.2126*r + 0.7152*g + 0.0722*b;
+		double z = 0.0193*r + 0.1192*g + 0.9505*b;
+		if (x < 0) x = 0;
+		else if (x > 1) x = 1;
+		if (y < 0) y = 0;
+		else if (y > 1) y = 1;
+		if (z < 0) z = 0;
+		else if (z > 1) z = 1;
+		return new Color(new double[] { x, y, z	});
 	}
 
 	public int[] toRgb(Color color) {

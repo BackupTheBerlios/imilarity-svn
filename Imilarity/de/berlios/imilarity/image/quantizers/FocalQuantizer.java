@@ -7,6 +7,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import de.berlios.imilarity.color.Color;
+import de.berlios.imilarity.color.ColorSpace;
+import de.berlios.imilarity.color.Lab;
 import de.berlios.imilarity.image.Image;
 import de.berlios.imilarity.image.ImageData;
 import de.berlios.imilarity.image.LabImage;
@@ -27,20 +29,32 @@ public class FocalQuantizer implements Quantizer {
 		new int[] {255, 255, 255} 	// white	255 255 255
 	};
 	
-	private static final double[][] LAB_COLORS = {
-		new double[] {0.0, 0.5, 0.5},													// black
-		new double[] {0.32033485893305097, 0.5742204289459502, 0.29164200916660354},	// blue
-		new double[] {0.8733904898896725, 0.40423259756177077, 0.5963696819039991},		// green
-		new double[] {0.5423856777952881, 0.5749319939245413, 0.7419635604203512},		// red
-		new double[] {0.560453645849854, 0.5249153739617732, 0.5499862119390915},		// brown
-		new double[] {0.8056536608960891, 0.5061110640984988, 0.7022800690844268},		// orange
-		new double[] {0.9718700296534624, 0.4710022111493074, 0.6932125816353195},		// yellow
-		new double[] {0.6120635895385, 0.5589394040639345, 0.40673350251395035},		// purple
-		new double[] {0.8953058330600423, 0.4924456389121535, 0.47933271439168756},		// grey
-		new double[] {0.9216954542254809, 0.5036809970983391, 0.4934516431636776},		// pink
-		new double[] {1.0, 0.4916961902536898, 0.4772823663486011}						// white
+	private static double[][] LAB_COLORS = {
+		new double[] {0.0, 0.5, 0.5}, 													// black
+		new double[] {0.32302586667249483, 0.8299734921350065, 0.05060944061530292}, 	// blue
+		new double[] {0.8773703347354421, 0.14088152460783507, 0.8466089314376535}, 	// green
+		new double[] {0.5323288178584246, 0.8337721962091744, 0.780094924772651}, 		// red
+		new double[] {0.557261723746466, 0.6233578811169929, 0.5530186827583052}, 		// brown
+		new double[] {0.8026963499063499, 0.5500816497625353, 0.8438452539453778}, 		// orange
+		new double[] {0.9713824698129728, 0.4101632824356011, 0.8936988317916194}, 		// yellow
+		new double[] {0.6087855220809812, 0.7708109719328161, 0.26403510996680807}, 	// purple
+		new double[] {0.8953058330600423, 0.5, 0.5}, 									// grey
+		new double[] {0.9206848365087755, 0.546672405826394, 0.5043804130638659}, 		// pink
+		new double[] {1.0, 0.5, 0.5233499166677206}, 									// white
 	};
 	
+	
+//	public FocalQuantizer() {
+//		// berekent de lab-coordinaten van de focale kleuren:
+//		ColorSpace lab = new Lab();
+//		for (int i = 0; i < COLORS.length; i++) {
+//			double[] comps = lab.fromRgb(COLORS[i]).getComponents();
+//			LAB_COLORS[i] = comps;
+//			for (int j = 0; j < comps.length; j++)
+//				System.out.print(""+comps[j]+", ");
+//			System.out.println();
+//		}
+//	}
 	
 	private Image image;
 	
@@ -116,6 +130,7 @@ public class FocalQuantizer implements Quantizer {
 			System.err.println("IO Error: " + e.getMessage());
 			e.printStackTrace();
 		}
+	
 	}
 	
 	
