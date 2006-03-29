@@ -68,7 +68,9 @@ Onze testcollectie bestaat uit foto's van elf objecten. Van elk object zijn
 er zes momentopnames, wat een totaal van $11 \cdot 6 = 66$ beelden geeft.
 
 \begin{figure}[p]
-\begin{center}
+\caption{\label{fig:testcollectie}De gebruikte collectie van beelden.}
+\vspace{5pt}
+\centering
 
 \begin{tabular}{cccccc}
 
@@ -150,8 +152,7 @@ er zes momentopnames, wat een totaal van $11 \cdot 6 = 66$ beelden geeft.
 \includegraphics[width=2cm]{coil/beeld-65.eps} \\
 
 \end{tabular}
-\caption{\label{fig:testcollectie}De gebruikte collectie van beelden.}
-\end{center}
+\vspace{5pt}
 \end{figure}
 
 Voor het beoordelen van een rangschikking, gebruiken we de \emph{genormaliseerde gemiddelde rang} 
@@ -237,7 +238,11 @@ als $|A| = \sum_{x \in X} A(x) = \sum_{x \in X \setminus X'} 0 + \sum_{x \in X'}
 % |A| = \sum_{x \in X} A(x) = \sum_{x \in X \setminus X'} A(x) + \sum_{x \in X'} A(x) 
 % = \sum_{x \in X \setminus X'} 0 + \sum_{x \in X'} A(x) = \sum_{x \in X'} A(x)
 % \end{displaymath}
-Wanneer we $||A|| = \sum_{x \in X'} A(x)$ defini\"eren, dan geldt dus $|A| = ||A||$ en ook:
+Wanneer we 
+\begin{displaymath}
+||A|| = \sum_{x \in X'} A(x)
+\end{displaymath} 
+defini\"eren, dan geldt dus $|A| = ||A||$ en ook:
 \begin{align*}
 | A \cap B | 
 &= \displaystyle \sum_{x \in X} T_M(A(x),B(x)) & & \\
@@ -294,11 +299,14 @@ vinden we bovendien:
 \end{array}
 \end{displaymath}
 We kunnen tabel~\ref{tab:similatiteitsmaten} bijgevolg herschrijven tot tabel~\ref{tab:beperkte_similatiteitsmaten}.
-\begin{table}[!t]
-\begin{center}
-\begin{tabular}{|l|}
-\hline
-\\[1pt]
+\begin{table}[bp]
+\caption{\label{tab:beperkte_similatiteitsmaten}De vaagsimilariteitsmaten geschreven met 
+sommaties waarvan het bereik beperkt is.}
+\vspace{10pt}
+\centering
+\begin{tabular}{l}
+%\hline
+%\\[1pt]
 $
 \begin{array}{r@{\ }c@{\ }l}
 \displaystyle M_{1a}(A,B) & = & \displaystyle 1-\frac{1}{|X|}\sum_{x \in X'} | A(x) - B(x) | \\
@@ -348,12 +356,11 @@ $
 \displaystyle M_{I_{3c}}(A,B) & = & \displaystyle \frac{|X| - ||(A \cup B) \cap (A^c \cup B^c)||}{|X|-||(A \cap B) \cap (A^c \cap B^c)||}
 \end{array}
 $
-\\
-\\[1pt]
-\hline
+%\\
+%\\[1pt]
+%\hline
 \end{tabular}
-\caption{\label{tab:beperkte_similatiteitsmaten}De vaagsimilariteitsmaten geschreven met sommaties waarvan het bereik beperkt is.}
-\end{center}
+\vspace{10pt}
 \end{table}
 % beter geen nieuwe paragraaf volgens Valerie
 Beschouw bijvoorbeeld $M_{5}$:

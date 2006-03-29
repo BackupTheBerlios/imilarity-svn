@@ -25,8 +25,10 @@ Hoewel het strikt gezien niet correct is, wordt de term ``kleurruimte'' vaak ook
 kleurmodel gebruikt. Men heeft het dus dikwijls over \emph{de} RGB kleurruimte, terwijl er eigenlijk meerdere
 kleurruimtes bestaan die gebaseerd zijn op RGB. 
 
-\begin{figure}[tp]
-\begin{center}
+\begin{figure}[bp]
+\caption{\label{fig:kleurmodellen}Grafische voorstelling van (a) het RGB-model, (b) het HSV-model en (c) het L*a*b*-model.}
+\vspace{10pt}
+\centering
 \subfigure[]{
 \includegraphics[height=4cm]{images/rgb.eps}
 \label{fig:rgb}
@@ -41,8 +43,6 @@ kleurruimtes bestaan die gebaseerd zijn op RGB.
 \includegraphics[height=4cm]{images/lab.eps}
 \label{fig:lab}
 }
-\caption{\label{fig:kleurmodellen}Grafische voorstelling van (a) het RGB-model, (b) het HSV-model en (c) het L*a*b*-model.}
-\end{center}
 \end{figure}
 
 Ook in het HSV kleurmodel \cite{tkalcic:colour_spaces} wordt elke kleur voorgesteld 
@@ -243,19 +243,21 @@ Via analoge redeneringen voor de andere kleurmodellen, bekomen we de zes maniere
 uit tabel~\ref{tab:uniforme_kwantisatie} om uniform te kwantiseren met een vast kleurenpalet.
 Elk van die manieren gebruikt $256$ bins.
 
-\begin{table}[tbp]
-\begin{center}
-\begin{tabular}{|c|cccccc|}
-\hline
+\begin{table}[bp]
+\caption{\label{tab:uniforme_kwantisatie}Zes manieren om uniform te kwantiseren met een vast 
+kleurenpalet.}
+\vspace{5pt}
+\centering
+\begin{tabular}{c|cccccc}
+%\hline
  		& HSV & Irb & I1I2I3 & XYZ & Yxy & L*a*b* \\
 \hline
 $N_1$ 	& 16 & 4 & 4 & 8 & 4 & 4 \\
 $N_2$	& 4  & 8 & 8 & 4 & 8 & 8 \\
 $N_3$	& 4  & 8 & 8 & 8 & 8 & 8 \\
-\hline
+%\hline
 \end{tabular}
-\caption{\label{tab:uniforme_kwantisatie}Zes manieren om uniform te kwantiseren met een vast kleurenpalet.}
-\end{center}
+\vspace{5pt}
 \end{table}
 
 
@@ -303,8 +305,10 @@ klein aantal kleuren is NeuQuant zelfs iets sneller. Anderzijds is Wu's techniek
 geschikt voor kwantisatie naar een zeer klein aantal kleuren.
  
 
-\begin{figure}[tbp]
-\begin{center}
+\begin{figure}[bp]
+\caption{\label{fig:rekentijden_quant}Vergelijking van de rekentijden bij kwantisatie van (a) een klein en (b) een groot beeld.}
+\vspace{10pt}
+\centering
 \subfigure[]{
 \begin{minipage}[t]{0.4\textwidth}
 \vspace{0pt}
@@ -331,8 +335,6 @@ geschikt voor kwantisatie naar een zeer klein aantal kleuren.
 \end{minipage}
 \label{fig:rekentijden_quant_big}
 }
-\caption{\label{fig:rekentijden_quant}Vergelijking van de rekentijden bij kwantisatie van (a) een klein en (b) een groot beeld.}
-\end{center}
 \end{figure}
 
 \subsection{Enkele voorbeelden}
@@ -347,8 +349,10 @@ De beelden die we bekomen door toepassing van de zes manieren om uniform te kwan
 worden weergegeven in figuur~\ref{fig:kwantistatie_uniform}. Figuur~\ref{fig:kwantistatie_niet-uniform}
 toont de resultaten van de vier niet-uniforme kwantistatietechnieken.
 
-\begin{figure}[tbp]
-\begin{center}
+\begin{figure}[bp]
+\caption{\label{fig:kwantistatie_originelen}De beelden waarvan we de kleuren gaan kwantiseren op een aantal verschillende manieren.}
+\vspace{10pt}
+\centering
 \subfigure[]{
 \includegraphics[height=2.8cm]{images/hsv_constant_s.eps}
 \label{fig:hsv_constant_s}
@@ -365,12 +369,12 @@ toont de resultaten van de vier niet-uniforme kwantistatietechnieken.
 \includegraphics[height=2.8cm]{images/autumn.eps}
 \label{fig:autumn}
 }
-\caption{\label{fig:kwantistatie_originelen}De beelden waarvan we de kleuren gaan kwantiseren op een aantal verschillende manieren.}
-\end{center}
 \end{figure}
 
-\begin{figure}[tbp]
-\begin{center}
+\begin{figure}[bp]
+\caption{\label{fig:kwantistatie_uniform}De resultaten na uniforme kwantisatie op basis van (a) HSV, (b) Irb, (c) I1I2I3, (d) XYZ, (e) Yxy en (f) L*a*b*.}
+\vspace{10pt}
+\centering
 \subfigure[]{
 \includegraphics[height=2.8cm]{images/uniform_hsv_constant_s.eps}
 \includegraphics[height=2.8cm]{images/uniform_hsv_constant_v.eps}
@@ -413,12 +417,12 @@ toont de resultaten van de vier niet-uniforme kwantistatietechnieken.
 \includegraphics[height=2.8cm]{images/uniform_lab_autumn.eps}
 \label{fig:uniform_lab}
 }
-\caption{\label{fig:kwantistatie_uniform}De resultaten na uniforme kwantisatie op basis van (a) HSV, (b) Irb, (c) I1I2I3, (d) XYZ, (e) Yxy en (f) L*a*b*.}
-\end{center}
 \end{figure}
 
-\begin{figure}[tbp]
-\begin{center}
+\begin{figure}[bp]
+\caption{\label{fig:kwantistatie_niet-uniform}De resultaten na niet-uniforme kwantisatie op basis van (a) SCT, (b) focale kleuren, (c) NeuQuant en (d) de Wu quantizer.}
+\vspace{10pt}
+\centering
 \subfigure[]{
 \includegraphics[height=2.8cm]{images/sct_constant_s.eps}
 \includegraphics[height=2.8cm]{images/sct_constant_v.eps}
@@ -447,12 +451,12 @@ toont de resultaten van de vier niet-uniforme kwantistatietechnieken.
 \includegraphics[height=2.8cm]{images/wu_autumn.eps}
 \label{fig:wu}
 }
-\caption{\label{fig:kwantistatie_niet-uniform}De resultaten na niet-uniforme kwantisatie op basis van (a) SCT, (b) focale kleuren, (c) NeuQuant en (d) de Wu quantizer.}
-\end{center}
 \end{figure}
 
-\begin{figure}[tbp]
-\begin{center}
+\begin{figure}[bp]
+\caption{\label{fig:kwantistatie_klein_aantal_kleuren}De resultaten na kwantisatie naar slechts 8 kleuren op basis van (a) NeuQuant en (b) de Wu quantizer.}
+\vspace{10pt}
+\centering
 \subfigure[]{
 \includegraphics[height=2.8cm]{images/neuquant_constant_s_8.eps}
 \includegraphics[height=2.8cm]{images/neuquant_constant_v_8.eps}
@@ -467,8 +471,6 @@ toont de resultaten van de vier niet-uniforme kwantistatietechnieken.
 \includegraphics[height=2.8cm]{images/wu_autumn_8.eps}
 \label{fig:wu_8}
 }
-\caption{\label{fig:kwantistatie_klein_aantal_kleuren}De resultaten na kwantisatie naar slechts 8 kleuren op basis van (a) NeuQuant en (b) de Wu quantizer.}
-\end{center}
 \end{figure}
 
 De technieken met een variabel kleurenpalet doen het duidelijk beter dan diegene met een vast palet. 
@@ -517,8 +519,10 @@ posities $(k,l)$ die niet weergegeven worden, dan kunnen we dat masker noteren a
 \end{displaymath}
 Zoals ge\"illustreerd in figuur~\ref{fig:indische_ruizig_en_binom}, kan een binomiaalfilter gebruikt worden om ruis te onderdrukken.
 
-\begin{figure}[tb]
-\begin{center}
+\begin{figure}[bp]
+\caption{\label{fig:indische_ruizig_en_binom}Een ruizig beeld (a) en het resultaat na filteren met een binomiaalfilter (b).}
+\vspace{10pt}
+\centering
 \subfigure[]{
 \includegraphics[width=0.3\textwidth]{images/indische_ruizig.eps}
 \label{fig:indische_ruizig}
@@ -528,8 +532,6 @@ Zoals ge\"illustreerd in figuur~\ref{fig:indische_ruizig_en_binom}, kan een bino
 \includegraphics[width=0.3\textwidth]{images/indische_binom.eps}
 \label{fig:indische_binom}
 }
-\caption{\label{fig:indische_ruizig_en_binom}Een ruizig beeld (a) en het resultaat na filteren met een binomiaalfilter (b).}
-\end{center}
 \end{figure}
 
 \section{Eenvoudige randdetectie}
@@ -573,8 +575,10 @@ D_1 lum(x,y)\textrm{: }\quad \frac{1}{8} \left[ \begin{array}{c} 1 \\ 2 \\ 1 \en
 Uit figuur~\ref{fig:randdetectie} blijkt echter dat beide technieken geen spectaculair verschillende 
 resultaten geven.
 
-\begin{figure}[tbp]
-\begin{center}
+\begin{figure}[!b]
+\caption{\label{fig:randdetectie}Het origineel luminantiebeeld (a) en het resultaat na filteren met een gradi\"ent-filter (b) en met een Sobel-filter (c).}
+\vspace{10pt}
+\centering
 \subfigure[]{
 \begin{tabular}{@{}c@{}}
 \includegraphics[width=0.3\textwidth]{images/lena.eps}\\
@@ -598,12 +602,10 @@ resultaten geven.
 \end{tabular}
 \label{fig:lena_sobel}
 }
-\caption{\label{fig:randdetectie}Het origineel luminantiebeeld (a) en het resultaat na filteren met een gradi\"ent-filter (b) en met een Sobel-filter (c).}
-\end{center}
 \end{figure}
 
 
-% \begin{figure}[tbp]
+% \begin{figure}[bp]
 % \begin{center}
 % \subfigure[]{
 % \includegraphics[width=0.25\textwidth]{images/lena_met_ruis.eps}

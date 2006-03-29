@@ -24,6 +24,7 @@
 \usepackage{pstricks}
 \usepackage{pst-grad}
 \usepackage{pst-node}
+\usepackage{float}
 
 \newcommand{\defin}[2][]{%
         \ifthenelse{\equal{#1}{}}
@@ -212,3 +213,10 @@
                                       {\boldmath\normalfont\normalsize\bfseries}}
 
 \makeatother
+
+
+% floats:
+
+\floatstyle{ruled}
+\restylefloat{figure}
+\restylefloat{table}

@@ -184,8 +184,10 @@ S_P(x,y) &= x + y - x \cdot y
 voor alle $(x,y)$ in $[0,1]^2$. Figuur~\ref{fig:grafieken_normen} toont de corresponderende
 grafieken.
 
-\begin{figure}[tp]
-\begin{center}
+\begin{figure}[bp]
+\caption{\label{fig:grafieken_normen}De grafiek voor (a) $T_M$, (b) $S_M$, (c) $T_P$ en (d) $S_P$.}
+\vspace{5pt}
+\centering
 \subfigure[]{
 \includegraphics[width=0.48\textwidth]{images/t_m.eps}
 }
@@ -198,8 +200,7 @@ grafieken.
 \subfigure[]{
 \includegraphics[width=0.48\textwidth]{images/s_p.eps}
 }
-\caption{\label{fig:grafieken_normen}De grafiek voor (a) $T_M$, (b) $S_M$, (c) $T_P$ en (d) $S_P$.}
-\end{center}
+\vspace{5pt}
 \end{figure}
 
 We kunnen de bovenstaande operatoren nu gebruiken om de klassieke verzameltechnische bewerkingen 
@@ -321,11 +322,13 @@ de similariteitsmaten die worden weergegeven in tabel~\ref{tab:similatiteitsmate
 Alle vaagsimilariteitsmaten uit die tabel zijn reflexief en symmetrisch. Dat wil zeggen dat 
 voor elke maat $M$ geldt: $M(A,A)=1$ en $M(A,B)=M(B,A)$. 
 
-\begin{table}[tbp]
-\begin{center}
-\begin{tabular}{|l|}
-\hline
-\\[1pt]
+\begin{table}[bp]
+\caption{\label{tab:similatiteitsmaten}De vaagsimilariteitsmaten die we gaan gebruiken.}
+\vspace{10pt}
+\centering
+\begin{tabular}{l}
+%\hline
+%\\[1pt]
 $
 \begin{array}{r@{\ }c@{\ }l}
 \displaystyle M_{1a}(A,B) & = & \displaystyle 1-\frac{1}{|X|}\sum_{x \in X} | A(x) - B(x) | \\
@@ -375,12 +378,12 @@ $
 \displaystyle M_{I_{3c}}(A,B) & = & \displaystyle \frac{|(A^c \cap B^c) \cup (A \cap B)|}{|(A^c \cup B^c) \cup (A \cup B)|}
 \end{array}
 $
-\\
-\\[1pt]
-\hline
+%\\
+%\\[1pt]
+%\hline
 \end{tabular}
-\caption{\label{tab:similatiteitsmaten}De vaagsimilariteitsmaten die we gaan gebruiken.}
-\end{center}
+\vspace{10pt}
+%\end{center}
 \end{table}
 
 
