@@ -1527,3 +1527,40 @@ gevolg hebben dat de rekentijd gedomineerd wordt door de tijd die nodig is om di
 intermediaire beelden te genereren.
 
 \subsection{Conclusie}
+
+Tabel \ref{tab:stat_gegevens_pixelgeb_maten} bevat een minimale en een gemiddelde GGGR-waarde voor elk van de vaagsimilariteitsmaten.
+Die gegevens werden berekend uit de GGGRs van alle pixelgebaseerde similariteitsmaten
+die we beschouwd hebben, behalve de component-gebaseerde die het minimum of 
+het product gebruiken om te aggregeren. We merken dat $M_3$ gemiddeld het best presteert.
+De laagste GGGR-waarde bekomen we door moment-gebaseerde intermediaire beelden componentsgewijs
+te vergelijken met $M_9$. Figuur~\ref{fig:results_beste_moments_pixelgeb} toont de resultaten
+van die similariteitsmaat. Die resultaten kunnen nog verbeterd worden door te aggregeren
+met behulp van het minimum in plaats van het gemiddelde. Hoewel de resulterende rangschikkingen
+bijna identiek zijn, bekomen we in dat geval voor $M_3$, $M_6$, 
+$M_7$ en $M_{I3}$ een GGGR-waarde die nog een fractie lager is dan diegene die correspondeert
+met $M_9$. In figuur~\ref{fig:results_beste_moments_comps_pixelgeb} worden de resultaten
+van $M_7$ weergegeven.
+
+\begin{table}[!b]
+\caption{\label{tab:stat_gegevens_pixelgeb_maten}De minimale en gemiddelde GGGR-waarde voor 
+de verschillende vaagsimilariteitsmaten, bij toepassing in de beschouwde pixelgebaseerde 
+similariteitsmaten.}
+\vspace{5pt}
+\centering
+\small
+\begin{tabular}{r|cccccccc}
+& $M_{1a}$ & $M_{1b}$ & $M_{1c}$ & $M_{2}$ & $M_{3}$ & $M_{5}$ & $M_{5c}$ & $M_{6}$ \\
+\hline
+minimale GGGR & 0.0147 & 0.0245 & 0.0323 & 0.0355 & 0.0093 & 0.0128 & 0.0219 & 0.0102 \\
+gemiddelde GGGR & 0.0818 & 0.0951 & 0.1115 & 0.1428 & 0.0802 & 0.0922 & 0.0971 & 0.1024\vspace{8pt}\\
+& $M_{6c}$ & $M_{7}$ & $M_{7c}$ & $M_{8}$ & $M_{8c}$ & $M_{9}$ & $M_{9c}$ & $M_{10}$ \\
+\hline
+minimale GGGR & 0.0212 & 0.0089 & 0.0203 & 0.2024 & 0.1985 & 0.0084 & 0.0201 & 0.2212 \\
+gemiddelde GGGR & 0.1145 & 0.0873 & 0.0922 & 0.3604 & 0.3688 & 0.0806 & 0.0868 & 0.3895\vspace{8pt}\\
+& $M_{10c}$ & $M_{11}$ & $M_{11c}$ & $M_{12}$ & $M_{13}$ & $M_{I3}$ & $M_{I3c}$ \\
+\hline
+minimale GGGR & 0.2106 & 0.0128 & 0.0219 & 0.0203 & 0.1985 & 0.0102 & 0.0212 \\
+gemiddelde GGGR & 0.3850 & 0.0922 & 0.0971 & 0.0922 & 0.3696 & 0.1035 & 0.1038
+\end{tabular}
+\vspace{5pt}
+\end{table}
