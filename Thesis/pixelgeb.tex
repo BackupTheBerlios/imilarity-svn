@@ -151,7 +151,6 @@ We kunnen dit oplossen door ofwel intermediaire beelden ofwel beeldonderdelen te
 \subsection{Intermediaire beelden}
 
 \begin{figure}[bp]
-\caption{\label{fig:intermediaire_beelden}Constructie van een resolutie-onafhankelijke similariteitsmaat door gebruik van intermediaire beelden op basis van (a) herschaling, (b) kleurkwantisatie en (c) kleurmomenten.}
 \vspace{10pt}
 \centering
 \subfigure[]{
@@ -168,6 +167,9 @@ We kunnen dit oplossen door ofwel intermediaire beelden ofwel beeldonderdelen te
 \includegraphics[height=3cm]{images/moments.eps}
 \label{fig:moments}
 }
+\caption{\label{fig:intermediaire_beelden}Constructie van een resolutie-onafhankelijke 
+similariteitsmaat door gebruik van intermediaire beelden op basis van (a) herschaling, 
+(b) kleurkwantisatie en (c) kleurmomenten.}
 \end{figure}
 
 De meest voor de hand liggende manier om het probleem met betrekking tot de resolutie van de beelden
@@ -304,15 +306,14 @@ die waarden.
 %toegevoegd worden aan $S$ staan in het vet. 
 
 \begin{figure}[bp]
-\caption{\label{fig:multires}Constructie van een resolutie-onafhankelijke similariteitsmaat door gebruik van beeldonderdelen.}
 \vspace{10pt}
 \centering
 \includegraphics[width=10cm]{images/multires.eps}
+\caption{\label{fig:multires}Constructie van een resolutie-onafhankelijke similariteitsmaat 
+door gebruik van beeldonderdelen.}
 \end{figure}
 
 \begin{figure}[!bp]
-\caption{\label{fig:multires_sim-matrices}Het pad in de similariteitsmatrix van de beelden uit 
-figuur~\ref{fig:multires} voor (a) $M(A,B)$, (b) $M(B,A)$ en (c) beide.}
 \vspace{10pt}
 \centering
 \subfigure[]{
@@ -327,6 +328,8 @@ figuur~\ref{fig:multires} voor (a) $M(A,B)$, (b) $M(B,A)$ en (c) beide.}
 \includegraphics[width=0.3\textwidth]{images/multires_sim-matrix_beide.eps}
 \label{fig:multires_sim-matrix_beide}
 }
+\caption{\label{fig:multires_sim-matrices}Het pad in de similariteitsmatrix van de beelden uit 
+figuur~\ref{fig:multires} voor (a) $M(A,B)$, (b) $M(B,A)$ en (c) beide.}
 \end{figure}
 
 %\begin{table}
@@ -432,17 +435,14 @@ figuur~\ref{fig:results_beste_moments_pixelgeb}.
 %\clearpage
 
 \afterpage{\begin{figure}[p]
-\caption{\label{fig:scaling_gggrs_en_cputimes}De GGGR-waarde en de rekentijd in ms 
-voor elk van de similariteitsmaten op basis van herschaalde beelden.}
 \centering
 \includegraphics[width=\textwidth]{plots/scaling_gggrs_en_cputimes_filled.eps}
 \vspace{1pt}
+\caption{\label{fig:scaling_gggrs_en_cputimes}De GGGR-waarde en de rekentijd in ms 
+voor elk van de similariteitsmaten op basis van herschaalde beelden.}
 \end{figure}
 
 \begin{figure}[p]
-\caption{\label{fig:results_beste_scaling}De GGR-waarde en de eerste tien resultaten voor elk 
-voorbeeld bij de similariteitsmaat die we bekomen door herschaalde beelden componentsgewijs 
-te vergelijken met behulp van $M_7$ en het gemiddelde.}
 \vspace{5pt}
 \centering
 \begin{tabular}{m{11cm} | m{3cm} |}
@@ -582,12 +582,12 @@ te vergelijken met behulp van $M_7$ en het gemiddelde.}
 \\
 \end{tabular}
 \vspace{5pt}
+\caption{\label{fig:results_beste_scaling}De GGR-waarde en de eerste tien resultaten voor elk 
+voorbeeld bij de similariteitsmaat die we bekomen door herschaalde beelden componentsgewijs 
+te vergelijken met behulp van $M_7$ en het gemiddelde.}
 \end{figure}
 
 \begin{figure}[p]
-\caption{\label{fig:dom_colors_gggrs_en_cputimes}De GGGR-waarde en de rekentijd in ms 
-voor elk van de similariteitsmaten die gebruik maken 
-van op basis van (a) NeuQuant en (b) Wu kwantisatie geconstrueerde intermediaire beelden.}
 \vspace{5pt}
 \centering
 \subfigure[]{
@@ -604,13 +604,12 @@ van op basis van (a) NeuQuant en (b) Wu kwantisatie geconstrueerde intermediaire
 \end{minipage}
 \label{fig:dom_colors_wu_gggrs_en_cputimes}
 }
+\caption{\label{fig:dom_colors_gggrs_en_cputimes}De GGGR-waarde en de rekentijd in ms 
+voor elk van de similariteitsmaten die gebruik maken 
+van op basis van (a) NeuQuant en (b) Wu kwantisatie geconstrueerde intermediaire beelden.}
 \end{figure}
 
 \begin{figure}[p]
-\caption{\label{fig:results_beste_dom_colors}De GGR-waarde en de eerste tien resultaten voor elk 
-voorbeeld bij de similariteitsmaat die we bekomen door op basis van Wu 
-kwantisatie geconstrueerde intermediaire beelden componentsgewijs te vergelijken met behulp van 
-$M_5$ en het gemiddelde.}
 \vspace{5pt}
 \centering
 \begin{tabular}{m{11cm} | m{3cm} |}
@@ -750,6 +749,10 @@ $M_5$ en het gemiddelde.}
 \\
 \end{tabular}
 \vspace{5pt}
+\caption{\label{fig:results_beste_dom_colors}De GGR-waarde en de eerste tien resultaten voor elk 
+voorbeeld bij de similariteitsmaat die we bekomen door op basis van Wu 
+kwantisatie geconstrueerde intermediaire beelden componentsgewijs te vergelijken met behulp van 
+$M_5$ en het gemiddelde.}
 \end{figure}
 
 \clearpage
@@ -758,19 +761,15 @@ $M_5$ en het gemiddelde.}
 % \caption{\label{fig:moments_gggrs_en_cputimes}De GGGR-waarde en de gebruikte rekentijd in ms 
 % voor elk van de resolutie-onafhankelijke pixelgebaseerde similariteitsmaten die gebruik maken 
 % van op basis van kleurmomenten geconstrueerde intermediaire beelden.}
-\caption{\label{fig:moments_gggrs_en_cputimes}De GGGR-waarde en de rekentijd in ms
-voor elk van de similariteitsmaten die gebruik maken
-van op basis van kleurmomenten geconstrueerde intermediaire beelden.}
 \centering
 \includegraphics[width=\textwidth]{plots/moments_gggrs_en_cputimes_filled.eps}
 \vspace{1pt}
+\caption{\label{fig:moments_gggrs_en_cputimes}De GGGR-waarde en de rekentijd in ms
+voor elk van de similariteitsmaten die gebruik maken
+van op basis van kleurmomenten geconstrueerde intermediaire beelden.}
 \end{figure}
 
 \begin{figure}[p]
-\caption{\label{fig:results_beste_moments_pixelgeb}De GGR-waarde en de eerste tien resultaten 
-voor elk voorbeeld bij de similariteitsmaat die we bekomen door op 
-basis van kleurmomenten geconstrueerde intermediaire beelden componentsgewijs te vergelijken 
-met behulp van $M_{9}$ en het gemiddelde.}
 \vspace{5pt}
 \centering
 \begin{tabular}{m{11cm} | m{3cm} |}
@@ -910,23 +909,24 @@ met behulp van $M_{9}$ en het gemiddelde.}
 \\
 \end{tabular}
 \vspace{5pt}
+\caption{\label{fig:results_beste_moments_pixelgeb}De GGR-waarde en de eerste tien resultaten 
+voor elk voorbeeld bij de similariteitsmaat die we bekomen door op 
+basis van kleurmomenten geconstrueerde intermediaire beelden componentsgewijs te vergelijken 
+met behulp van $M_{9}$ en het gemiddelde.}
 \end{figure}
 
 %\clearpage
 
 \begin{figure}[p]
-\caption{\label{fig:multires_gggrs_en_cputimes}De GGGR-waarde en de rekentijd in ms 
-voor elk van de similariteitsmaten op basis van 
-beeldonderdelen.}
 \centering
 \includegraphics[width=\textwidth]{plots/multires_gggrs_en_cputimes_filled.eps}
 \vspace{1pt}
+\caption{\label{fig:multires_gggrs_en_cputimes}De GGGR-waarde en de rekentijd in ms 
+voor elk van de similariteitsmaten op basis van 
+beeldonderdelen.}
 \end{figure}
 
 \begin{figure}[p]
-\caption{\label{fig:results_beste_multires_pixelgeb}De GGR-waarde en de eerste tien resultaten 
-voor elk voorbeeld bij de similariteitsmaat die we bekomen door 
-beeldonderdelen componentsgewijs te vergelijken met behulp van $M_{I3c}$ en het gemiddelde.}
 \vspace{5pt}
 \centering
 \begin{tabular}{m{11cm} | m{3cm} |}
@@ -1066,22 +1066,21 @@ beeldonderdelen componentsgewijs te vergelijken met behulp van $M_{I3c}$ en het 
 \\
 \end{tabular}
 \vspace{5pt}
+\caption{\label{fig:results_beste_multires_pixelgeb}De GGR-waarde en de eerste tien resultaten 
+voor elk voorbeeld bij de similariteitsmaat die we bekomen door 
+beeldonderdelen componentsgewijs te vergelijken met behulp van $M_{I3c}$ en het gemiddelde.}
 \end{figure}
 
 \begin{figure}[p]
-\caption{\label{fig:dom_colors_wu_comps_gggrs_en_cputimes}De GGGR-waarde en de rekentijd in ms 
-voor enkele similariteitsmaten die
-op basis van Wu kwantisatie geconstrueerde intermediaire beelden componentsgewijs vergelijken.}
 \centering
 \includegraphics[width=\textwidth]{plots/dom_colors_wu_comps_gggrs_en_cputimes_filled.eps}
 \vspace{1pt}
+\caption{\label{fig:dom_colors_wu_comps_gggrs_en_cputimes}De GGGR-waarde en de rekentijd in ms 
+voor enkele similariteitsmaten die
+op basis van Wu kwantisatie geconstrueerde intermediaire beelden componentsgewijs vergelijken.}
 \end{figure}
 
 \begin{figure}[p]
-\caption{\label{fig:results_beste_dom_colors_wu_comps_pixelgeb}De GGR-waarde en de eerste tien 
-resultaten voor elk voorbeeld bij de similariteitsmaat die we 
-bekomen door op basis van Wu kwantisatie geconstrueerde intermediaire beelden componentsgewijs 
-te vergelijken met behulp van $M_{5}$ en het minimum.}
 \vspace{5pt}
 \centering
 \begin{tabular}{m{11cm} | m{3cm} |}
@@ -1221,22 +1220,22 @@ te vergelijken met behulp van $M_{5}$ en het minimum.}
 \\
 \end{tabular}
 \vspace{5pt}
+\caption{\label{fig:results_beste_dom_colors_wu_comps_pixelgeb}De GGR-waarde en de eerste tien 
+resultaten voor elk voorbeeld bij de similariteitsmaat die we 
+bekomen door op basis van Wu kwantisatie geconstrueerde intermediaire beelden componentsgewijs 
+te vergelijken met behulp van $M_{5}$ en het minimum.}
 \end{figure}
 
 \begin{figure}[p]
-\caption{\label{fig:moments_comps_gggrs_en_cputimes}De GGGR-waarde en de rekentijd in ms voor 
-enkele similariteitsmaten die
-op basis van kleurmomenten geconstrueerde intermediaire beelden componentsgewijs vergelijken.}
 \centering
 \includegraphics[width=\textwidth]{plots/moments_comps_gggrs_en_cputimes_filled.eps}
 \vspace{1pt}
+\caption{\label{fig:moments_comps_gggrs_en_cputimes}De GGGR-waarde en de rekentijd in ms voor 
+enkele similariteitsmaten die
+op basis van kleurmomenten geconstrueerde intermediaire beelden componentsgewijs vergelijken.}
 \end{figure}
 
 \begin{figure}[p]
-\caption{\label{fig:results_beste_moments_comps_pixelgeb}De GGR-waarde en de eerste tien 
-resultaten voor elk voorbeeld bij de similariteitsmaat die we 
-bekomen door op basis van kleurmomenten geconstrueerde intermediaire beelden componentsgewijs 
-te vergelijken met behulp van $M_{6}$ en het minimum.}
 \vspace{5pt}
 \centering
 \begin{tabular}{m{11cm} | m{3cm} |}
@@ -1376,6 +1375,10 @@ te vergelijken met behulp van $M_{6}$ en het minimum.}
 \\
 \end{tabular}
 \vspace{5pt}
+\caption{\label{fig:results_beste_moments_comps_pixelgeb}De GGR-waarde en de eerste tien 
+resultaten voor elk voorbeeld bij de similariteitsmaat die we 
+bekomen door op basis van kleurmomenten geconstrueerde intermediaire beelden componentsgewijs 
+te vergelijken met behulp van $M_{6}$ en het minimum.}
 \end{figure}
 
 \clearpage}
@@ -1418,9 +1421,6 @@ bekomen. Als $A$ en $B$ meerdere respectievelijk rode en groene pixels bevatten,
 vermenigvuldigd worden met het aantal pixels. We bekomen in dat geval dus dezelfde similariteiten. Zoals
 ge\"illustreerd wordt in figuur~\ref{fig:valse_positieven_M5}, 
 \begin{figure}[!bp]
-\caption{\label{fig:valse_positieven}Valse positieven bij het rangschikken volgens similariteit met 
-het ``rood bootje'' voorbeeld door herschaalde intermediaire beelden te vergelijken met behulp van 
-(a) $M_5$ en (b) $M_8$.}
 \vspace{10pt}
 \centering
 \subfigure[]{
@@ -1458,6 +1458,9 @@ het ``rood bootje'' voorbeeld door herschaalde intermediaire beelden te vergelij
 \end{tabular}
 \label{fig:valse_positieven_M8}
 }
+\caption{\label{fig:valse_positieven}Valse positieven bij het rangschikken volgens similariteit met 
+het ``rood bootje'' voorbeeld door herschaalde intermediaire beelden te vergelijken met behulp van 
+(a) $M_5$ en (b) $M_8$.}
 \end{figure}
 manifesteert dit probleem zich ook als de 
 beelden naast de groene of rode pixels ook nog (ongeveer) evenveel beeldpunten van een zelfde kleur bevatten. 
@@ -1530,21 +1533,18 @@ intermediaire beelden te genereren.
 
 Tabel \ref{tab:stat_gegevens_pixelgeb_maten} bevat een minimale en een gemiddelde GGGR-waarde voor elk van de vaagsimilariteitsmaten.
 Die gegevens werden berekend uit de GGGRs van alle pixelgebaseerde similariteitsmaten
-die we beschouwd hebben, behalve de component-gebaseerde die het minimum of 
-het product gebruiken om te aggregeren. We merken dat $M_3$ gemiddeld het best presteert.
-De laagste GGGR-waarde bekomen we door moment-gebaseerde intermediaire beelden componentsgewijs
-te vergelijken met $M_9$. Figuur~\ref{fig:results_beste_moments_pixelgeb} toont de resultaten
-van die similariteitsmaat. Die resultaten kunnen nog verbeterd worden door te aggregeren
-met behulp van het minimum in plaats van het gemiddelde. Hoewel de resulterende rangschikkingen
-bijna identiek zijn, bekomen we in dat geval voor $M_3$, $M_6$, 
+die we beschouwd hebben, behalve diegene die componentsgewijs vergelijken en vervolgens het 
+minimum of het product gebruiken om te aggregeren. We merken dat $M_3$ gemiddeld het best 
+presteert. De laagste GGGR-waarde bekomen we door moment-gebaseerde intermediaire beelden 
+componentsgewijs te vergelijken met $M_9$. Figuur~\ref{fig:results_beste_moments_pixelgeb} 
+toont de resultaten van die similariteitsmaat. Die resultaten kunnen nog verbeterd worden 
+door te aggregeren met behulp van het minimum in plaats van het gemiddelde. Hoewel de 
+resulterende rangschikkingen bijna identiek zijn, bekomen we in dat geval voor $M_3$, $M_6$, 
 $M_7$ en $M_{I3}$ een GGGR-waarde die nog een fractie lager is dan diegene die correspondeert
 met $M_9$. In figuur~\ref{fig:results_beste_moments_comps_pixelgeb} worden de resultaten
 van $M_7$ weergegeven.
 
 \begin{table}[!b]
-\caption{\label{tab:stat_gegevens_pixelgeb_maten}De minimale en gemiddelde GGGR-waarde voor 
-de verschillende vaagsimilariteitsmaten, bij toepassing in de beschouwde pixelgebaseerde 
-similariteitsmaten.}
 \vspace{5pt}
 \centering
 \small
@@ -1563,4 +1563,7 @@ minimale GGGR & 0.2106 & 0.0128 & 0.0219 & 0.0203 & 0.1985 & 0.0102 & 0.0212 \\
 gemiddelde GGGR & 0.3850 & 0.0922 & 0.0971 & 0.0922 & 0.3696 & 0.1035 & 0.1038
 \end{tabular}
 \vspace{5pt}
+\caption{\label{tab:stat_gegevens_pixelgeb_maten}De minimale en gemiddelde GGGR-waarde voor 
+de verschillende vaagsimilariteitsmaten, bij toepassing in de beschouwde pixelgebaseerde 
+similariteitsmaten.}
 \end{table}

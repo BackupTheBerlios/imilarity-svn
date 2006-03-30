@@ -24,7 +24,8 @@ $A$. We noteren de waarde in $c$ van het histogram van een beeld $A$ met $h_A(c)
 \begin{displaymath}
 h_A(c) = \sum_{p \in P} \delta (bin(c) - bin(A(p))) 
 \end{displaymath} 
-waarbij $\delta$ de Diracfuntie is en $P$ het universum der beelpunten 
+waarbij $\delta$ de Diracfuntie is ($\delta (0)=1$ en $\delta (x)=0$ voor alle 
+$x \in \mathbb{Z} \setminus \{0\}$) en $P$ het universum der beeldpunten 
 voorstelt. De functie $bin$ is uiteraard de $C - \{1,2,\ldots,N\}$ afbeelding 
 uit \ref{sectie:kleurkwantisatie}, die met 
 elke kleur het nummer van \'e\'en van de $N$ bins associeert. 
@@ -54,9 +55,6 @@ uit onze testcollectie. In figuur~\ref{fig:alle_histn_geel_bootje} worden de pse
 getoond van alle beelden uit de testcollectie die relevant zijn ten opzichte van dat voorbeeld.
 
 \begin{figure}[!bp]
-\caption{\label{fig:histogrammen_eerste_vb}De verschillende histogrammen voor het ``geel bootje'' 
-voorbeeld (HSV (a), Irb (b), I1I2I3 (c), XYZ (d), Yxy (e) en L*a*b* (f), focale kleuren (g), SCT (h) 
-en het vaaghistogram voor $\lambda = 5$ (i)).}
 \vspace{2pt}
 \centering
 \begin{tabular}{c}
@@ -134,11 +132,12 @@ en het vaaghistogram voor $\lambda = 5$ (i)).}
 \label{fig:vaaghistogram_eerste_vb}
 }
 \end{tabular}
+\caption{\label{fig:histogrammen_eerste_vb}De verschillende histogrammen voor het ``geel bootje'' 
+voorbeeld (HSV (a), Irb (b), I1I2I3 (c), XYZ (d), Yxy (e) en L*a*b* (f), focale kleuren (g), SCT (h) 
+en het vaaghistogram voor $\lambda = 5$ (i)).}
 \end{figure}
 
 \begin{figure}[bp]
-\caption{\label{fig:alle_histn_geel_bootje}De verschillende pseudo-vage histogrammen voor de beelden 
-van het geel bootje (HSV (a), Irb (b), I1I2I3 (c), XYZ (d), Yxy (e) en L*a*b* (f), focale kleuren (g) en SCT (h)).}
 \vspace{5pt}
 \centering
 %\subfigure[] {
@@ -214,11 +213,11 @@ van het geel bootje (HSV (a), Irb (b), I1I2I3 (c), XYZ (d), Yxy (e) en L*a*b* (f
 \includegraphics[width=2.5cm]{images/hist_sct_obj3__270.eps}
 \includegraphics[width=2.5cm]{images/hist_sct_obj3__315.eps}
 }
+\caption{\label{fig:alle_histn_geel_bootje}De verschillende pseudo-vage histogrammen voor de beelden 
+van het geel bootje (HSV (a), Irb (b), I1I2I3 (c), XYZ (d), Yxy (e) en L*a*b* (f), focale kleuren (g) en SCT (h)).}
 \end{figure}
 
 \begin{figure}[bp]
-\caption{\label{fig:alle_vaaghistn_geel_bootje}De verschillende vaaghistogrammen voor de beelden 
-van het geel bootje.}
 \vspace{5pt}
 \centering
 \includegraphics[height=2cm]{coil/beeld-12.eps}
@@ -234,6 +233,8 @@ van het geel bootje.}
 \includegraphics[height=2cm]{coil/beeld-12.eps}
 \includegraphics[height=2cm]{images/hist_fuzzy_obj3__315.eps}
 \vspace{5pt}
+\caption{\label{fig:alle_vaaghistn_geel_bootje}De verschillende vaaghistogrammen voor de beelden 
+van het geel bootje.}
 \end{figure}
 
 %Voor een RGB-beeld gebruikt men typisch 8 bits per kleurcomponent. Dit geeft een totaal van
@@ -298,24 +299,35 @@ We vergelijken in deze sectie enkele similariteitsmaten die gebaseerd zijn op de
 histogrammen. Voor de parameter $\lambda$ van het vaaghistogram gebruiken we daarbij
 de waarde $5$.
 
-Figuur~\ref{fig:histgeb_gggrs_en_cputimes} toont de bekomen meetresultaten. Het Irb-histogram
+Figuur~\ref{fig:histgeb_gggrs_en_cputimes} toont de bekomen meetresultaten. 
+De corresponderende minimale en gemiddelde GGGR-waarden voor elk van de
+vaagsimilariteitsmaten, worden weergegeven in 
+tabel~\ref{tab:stat_gegevens_pseudo-vaag_histogram_maten}. Het Irb-histogram
 en het XYZ-histogram geven, in combinatie met $M_{I3}$, de laagste GGGR-waarde. Hoewel die
 waarde bij het Irb-histogram een fractie hoger is, merken we bij het vergelijken van 
 figuur~\ref{fig:results_irb_histgeb} en figuur~\ref{fig:results_xyz_histgeb} dat het 
 XYZ-histogram toch iets minder goede resultaten geeft. 
 
-\begin{figure}[bp]
-\caption{\label{fig:histgeb_gggrs_en_cputimes}De GGGR-waarde en de gebruikte rekentijd in ms voor elk 
-van de similariteitsmaten op basis van histrogrammen.}
+Uit de meetresultaten blijkt dat $M_5$, $M_{5c}$, $M_{11}$ en $M_{11c}$ in deze context
+beduidend slechter presteren dan de overige vaagsimilariteitsmaten. Dat is niet
+verwonderlijk, vermits die maten de enige zijn die de corresponderende bins van de histogrammen 
+niet rechstreeks met elkaar vergelijken. Beschouw bijvoorbeeld een beeld $A$ dat enkel bestaat
+uit rode beeldpunten en een beeld $B$ dat volledig groen is. In beide beelden komen alle
+pixels in dezelfde bin terecht. Ze geven dus aanleiding tot pseudo-vage histogrammen $H_A$ en $H_B$  
+die \'e\'en enkele piek bevatten, of tot vaaghistogrammen $\widetilde{H}_A$ en $\widetilde{H}_B$ 
+waarbij er ook nog een aantal ``naburige'' bins een waarde hebben die verschilt van nul 
+(zie figuur~\ref{fig:histogrammen_rood_en_groen}). 
+\afterpage{\begin{figure}[bp]
 \centering
 \includegraphics[width=\textwidth]{/home/klbostee/Workspace/Thesis/plots/histgeb1_gggrs_en_cputimes_filled.eps} 
 \includegraphics[width=\textwidth]{/home/klbostee/Workspace/Thesis/plots/histgeb2_gggrs_en_cputimes_filled.eps}
 \includegraphics[width=\textwidth]{/home/klbostee/Workspace/Thesis/plots/histgeb3_gggrs_en_cputimes_filled.eps}
 \vspace{1pt}
+\caption{\label{fig:histgeb_gggrs_en_cputimes}De GGGR-waarde en de gebruikte rekentijd in ms voor elk 
+van de similariteitsmaten op basis van histrogrammen.}
 \end{figure}
-
+%
 \begin{figure}[bp]
-\caption{\label{fig:results_irb_histgeb}De GGR-waarde en de eerste tien resultaten voor elk voorbeeld bij de similariteitsmaat op basis van het Irb-histogram en $M_{I3}$.}
 \vspace{5pt}
 \centering
 \begin{tabular}{m{11cm} | m{3cm} |}
@@ -455,10 +467,11 @@ van de similariteitsmaten op basis van histrogrammen.}
 \\
 \end{tabular}
 \vspace{5pt}
+\caption{\label{fig:results_irb_histgeb}De GGR-waarde en de eerste tien resultaten voor elk 
+voorbeeld bij de similariteitsmaat op basis van het Irb-histogram en $M_{I3}$.}
 \end{figure}
-
+%
 \begin{figure}[tbp]
-\caption{\label{fig:results_xyz_histgeb}De GGR-waarde en de eerste tien resultaten voor elk voorbeeld bij de similariteitsmaat op basis van het XYZ-histogram en $M_{I3}$.}
 \vspace{5pt}
 \centering
 \begin{tabular}{m{11cm} | m{3cm} |}
@@ -598,53 +611,38 @@ van de similariteitsmaten op basis van histrogrammen.}
 \\
 \end{tabular}
 \vspace{5pt}
+\caption{\label{fig:results_xyz_histgeb}De GGR-waarde en de eerste tien resultaten 
+voor elk voorbeeld bij de similariteitsmaat op basis van het XYZ-histogram en $M_{I3}$.}
 \end{figure}
 
-Uit de meetresultaten blijkt dat $M_5$, $M_{5c}$, $M_{11}$ en $M_{11c}$ in deze context
-beduidend slechter presteren dan de overige vaagsimilariteitsmaten. Dat is niet
-verwonderlijk, vermits die maten de enige zijn die de corresponderende bins van de histogrammen 
-niet rechstreeks met elkaar vergelijken. Beschouw bijvoorbeeld een beeld $A$ dat enkel bestaat
-uit rode beeldpunten en een beeld $B$ dat volledig groen is. In beide beelden komen alle
-pixels in dezelfde bin terecht. Ze geven dus aanleiding tot pseudo-vage histogrammen $H_A$ en $H_B$  
-die \'e\'en enkele piek bevatten, of tot vaaghistogrammen $\widetilde{H}_A$ en $\widetilde{H}_B$ 
-waarbij er ook nog een aantal ``naburige'' bins een waarde hebben die verschilt van nul 
-(zie figuur~\ref{fig:histogrammen_rood_en_groen}). Doordat rood en 
-groen steeds in verschillende bins gekwantiseerd worden, ligt de piek bij elk histogram op een 
-andere plaats. 
-Stel nu dat $(\mathcal{H}_A,\mathcal{H}_B) \in \{(H_A,H_B), (\widetilde{H}_A,\widetilde{H}_B)\}$.
-Er geldt dan
-$|\mathcal{H}_A|=|\mathcal{H}_B|$ en $|\mathcal{H}_{A}^c|=|\mathcal{H}_{B}^c|$, zodat
-\begin{displaymath}
-|\mathcal{H}_A \setminus \mathcal{H}_B|=|\mathcal{H}_A \cap \mathcal{H}_{B}^c|=|\mathcal{H}_A|=|\mathcal{H}_B|=|\mathcal{H}_B \cap \mathcal{H}_{A}^c|=|\mathcal{H}_B \setminus \mathcal{H}_A|
-\end{displaymath}
-en ook
-\begin{displaymath}
-|(\mathcal{H}_A  \setminus \mathcal{H}_B)^c|=|C'|-|\mathcal{H}_A \setminus \mathcal{H}_B|=|C'|-|\mathcal{H}_B \setminus \mathcal{H}_A|=|(\mathcal{H}_B  \setminus \mathcal{H}_A)^c|
-\end{displaymath}
-want voor een vaagverzameling $D$ in een universum $X$ is $|D^c|$ gelijk aan $|X|-|D|$ (zie \ref{sectie:beperken_rekentijd}). Bijgevolg geldt:
-$M_5(\mathcal{H}_A,\mathcal{H}_B)=M_{5c}(\mathcal{H}_A,\mathcal{H}_B)=M_{11}(\mathcal{H}_A,\mathcal{H}_B)=M_{11c}(\mathcal{H}_A,\mathcal{H}_B)=1$.
-Ook bij meer realistische beelden treden er valse positieven op. Zo bekomen 
-we bijvoorbeeld ook similariteit $1$ als we in $A$ en $B$ bij evenveel pixels de kleur vervangen door 
-een zelfde kleur. De voorbeelden ``rood bootje'' en ``groen bootje'' uit onze testcollectie zijn bij 
-benadering dergelijke beelden. 
+\clearpage
 
-Bij de vaaghistogrammen geven ook $M_8$, $M_{8c}$, $M_{10}$, $M_{10c}$ en $M_{13}$ minder goede resultaten.
-De oorzaak daarvan is dezelfde als bij de pixelgebaseerde similariteitsmaten. Voor een beeld $A$ dat enkel
-kleuren bevat die ook in $B$ voorkomen, geldt immers $\widetilde{H}_A(c) \leq \widetilde{H}_B(c)$ voor 
-alle $c \in C'$. In de praktijk is het regelmatig zo dat de meeste kleuren van een beeld ook in een
-ander beeld voorkomen. Bijgevolg treden er ook hier valse positieven op.
-
-Histogrammen bevatten vaak een groot aantal bins met waarde $0$ \cite{berens:compressed_colour_histograms}. Uit 
-figuur~\ref{fig:alle_histn_geel_bootje} en figuur~\ref{fig:alle_vaaghistn_geel_bootje} blijkt 
-inderdaad dat dat het geval is bij de histogrammen voor de beelden uit onze testcollectie. 
-Doordat de vaagsimilariteitsmaten ge\"implementeerd werden op de manier die beschreven wordt in 
-\ref{sectie:beperken_rekentijd}, heeft dat als gevolg dat de rekentijd die nodig is voor het 
-vergelijken van de histogrammen beperkt blijft. Daardoor wordt de totale rekentijd gedomineerd door 
-de tijd die nodig is voor het genereren van de histogrammen. Vandaar dat we voor alle 
-vaagsimilariteitsmaten nagenoeg dezelfde meetwaarden bekomen voor de rekentijd. 
-
-\begin{figure}[bp]
-\caption{\label{fig:histogrammen_rood_en_groen}Een volledig (a) rood en (b) groen beeld samen met de corresponderende histogrammen.}
+\begin{table}[p]
+\vspace{5pt}
+\centering
+\small
+\begin{tabular}{r|cccccccc}
+& $M_{1a}$ & $M_{1b}$ & $M_{1c}$ & $M_{2}$ & $M_{3}$ & $M_{5}$ & $M_{5c}$ & $M_{6}$ \\
+\hline
+minimale GGGR & 0.0147 & 0.0245 & 0.0323 & 0.0355 & 0.0093 & 0.0128 & 0.0219 & 0.0102 \\
+gemiddelde GGGR & 0.0818 & 0.0951 & 0.1115 & 0.1428 & 0.0802 & 0.0922 & 0.0971 & 0.1024\vspace{8pt}\\
+& $M_{6c}$ & $M_{7}$ & $M_{7c}$ & $M_{8}$ & $M_{8c}$ & $M_{9}$ & $M_{9c}$ & $M_{10}$ \\
+\hline
+minimale GGGR & 0.0212 & 0.0089 & 0.0203 & 0.2024 & 0.1985 & 0.0084 & 0.0201 & 0.2212 \\
+gemiddelde GGGR & 0.1145 & 0.0873 & 0.0922 & 0.3604 & 0.3688 & 0.0806 & 0.0868 & 0.3895\vspace{8pt}\\
+& $M_{10c}$ & $M_{11}$ & $M_{11c}$ & $M_{12}$ & $M_{13}$ & $M_{I3}$ & $M_{I3c}$ \\
+\hline
+minimale GGGR & 0.2106 & 0.0128 & 0.0219 & 0.0203 & 0.1985 & 0.0102 & 0.0212 \\
+gemiddelde GGGR & 0.3850 & 0.0922 & 0.0971 & 0.0922 & 0.3696 & 0.1035 & 0.1038
+\end{tabular}
+\vspace{5pt}
+\caption{\label{tab:stat_gegevens_pseudo-vaag_histogram_maten}De minimale en gemiddelde 
+GGGR-waarde voor 
+de verschillende vaagsimilariteitsmaten, bij toepassing in de beschouwde  
+similariteitsmaten op basis van pseudo-vage histogrammen.}
+\end{table}
+%
+\begin{figure}[p]
 \vspace{10pt}
 \centering
 \subfigure[] {
@@ -682,7 +680,45 @@ vaagsimilariteitsmaten nagenoeg dezelfde meetwaarden bekomen voor de rekentijd.
 \end{center}
 \end{minipage}
 }
+\caption{\label{fig:histogrammen_rood_en_groen}Een volledig (a) rood en (b) groen beeld samen 
+met de corresponderende histogrammen.}
 \end{figure}
+
+\clearpage}
+Doordat rood en 
+groen steeds in verschillende bins gekwantiseerd worden, ligt de piek bij elk histogram op een 
+andere plaats. 
+Stel nu dat $(\mathcal{H}_A,\mathcal{H}_B) \in \{(H_A,H_B), (\widetilde{H}_A,\widetilde{H}_B)\}$.
+Er geldt dan
+$|\mathcal{H}_A|=|\mathcal{H}_B|$ en $|\mathcal{H}_{A}^c|=|\mathcal{H}_{B}^c|$, zodat
+\begin{displaymath}
+|\mathcal{H}_A \setminus \mathcal{H}_B|=|\mathcal{H}_A \cap \mathcal{H}_{B}^c|=|\mathcal{H}_A|=|\mathcal{H}_B|=|\mathcal{H}_B \cap \mathcal{H}_{A}^c|=|\mathcal{H}_B \setminus \mathcal{H}_A|
+\end{displaymath}
+en ook
+\begin{displaymath}
+|(\mathcal{H}_A  \setminus \mathcal{H}_B)^c|=|C'|-|\mathcal{H}_A \setminus \mathcal{H}_B|=|C'|-|\mathcal{H}_B \setminus \mathcal{H}_A|=|(\mathcal{H}_B  \setminus \mathcal{H}_A)^c|
+\end{displaymath}
+want voor een vaagverzameling $D$ in een universum $X$ is $|D^c|$ gelijk aan $|X|-|D|$ (zie \ref{sectie:beperken_rekentijd}). Bijgevolg geldt:
+$M_5(\mathcal{H}_A,\mathcal{H}_B)=M_{5c}(\mathcal{H}_A,\mathcal{H}_B)=M_{11}(\mathcal{H}_A,\mathcal{H}_B)=M_{11c}(\mathcal{H}_A,\mathcal{H}_B)=1$.
+Ook bij meer realistische beelden treden er valse positieven op. Zo bekomen 
+we bijvoorbeeld ook similariteit $1$ als we in $A$ en $B$ bij evenveel pixels de kleur vervangen door 
+een zelfde kleur. De voorbeelden ``rood bootje'' en ``groen bootje'' uit onze testcollectie zijn bij 
+benadering dergelijke beelden. 
+
+Bij de vaaghistogrammen geven ook $M_8$, $M_{8c}$, $M_{10}$, $M_{10c}$ en $M_{13}$ minder goede resultaten.
+De oorzaak daarvan is dezelfde als bij de pixelgebaseerde similariteitsmaten. Voor een beeld $A$ dat enkel
+kleuren bevat die ook in $B$ voorkomen, geldt immers $\widetilde{H}_A(c) \leq \widetilde{H}_B(c)$ voor 
+alle $c \in C'$. In de praktijk is het regelmatig zo dat de meeste kleuren van een beeld ook in een
+ander beeld voorkomen. Bijgevolg treden er ook hier valse positieven op.
+
+Histogrammen bevatten vaak een groot aantal bins met waarde $0$ \cite{berens:compressed_colour_histograms}. Uit 
+figuur~\ref{fig:alle_histn_geel_bootje} en figuur~\ref{fig:alle_vaaghistn_geel_bootje} blijkt 
+inderdaad dat dat het geval is bij de histogrammen voor de beelden uit onze testcollectie. 
+Doordat de vaagsimilariteitsmaten ge\"implementeerd werden op de manier die beschreven wordt in 
+\ref{sectie:beperken_rekentijd}, heeft dat als gevolg dat de rekentijd die nodig is voor het 
+vergelijken van de histogrammen beperkt blijft. Daardoor wordt de totale rekentijd gedomineerd door 
+de tijd die nodig is voor het genereren van de histogrammen. Vandaar dat we voor alle 
+vaagsimilariteitsmaten nagenoeg dezelfde meetwaarden bekomen voor de rekentijd. 
 
 %Het I1I2i3-model van Ohta is een goede benadering van de Karhunen-Loeve transformatie 
 %voor het decorreleren van de RGB-componenten, waardoor het zeer geschikt is 
@@ -894,36 +930,13 @@ $\{17,18,\ldots,256\}$ herhaalt $\mathring{g}'$ zich dus periodiek.
 %Die periodiciteit is
 %de reden voor de introductie van de extra functie $cd$ in de definitie van $w_{A,c}$.  
 
+Figuur~\ref{fig:uitgebreide_sct-histogrammen_smoothed} toont de pseudo-vage gladde SCT-histogrammen 
+geassocieerd aan de beelden van het geel bootje.
 In figuur~\ref{fig:histogrammen_smoothed_sct} vergelijken we het gewone en het gladde pseudo-vage 
 SCT-histogram voor twee egaal groene beelden die perceptueel zeer similair zijn, maar waarbij 
 de beide kleuren toch in verschillende bins terecht komen. 
-Figuur~\ref{fig:uitgebreide_sct-histogrammen_smoothed} toont de pseudo-vage gladde SCT-histogrammen 
-geassocieerd aan de beelden van het geel bootje.
-
 
 \begin{figure}[bp]
-\caption{\label{fig:histogrammen_smoothed_sct}Twee volledig groene beelden die perceptueel 
-nagenoeg gelijk zijn, samen met het geassocieerde pseudo-vage SCT-histogram en de gladde 
-versie van dat histogram ($\alpha=1/3$, $R_1=6$, $\beta=2/3$ en $R_2=14$).}
-\vspace{5pt}
-\centering
-\subfigure[] {
-\includegraphics[height=2cm, width=2cm]{images/groen.eps}\quad
-\includegraphics[height=2cm, width=6cm]{images/sct_groen.eps}\quad
-\includegraphics[height=2cm, width=6cm]{images/smoothed_sct_groen.eps}
-}
-\subfigure[] {
-\includegraphics[height=2cm, width=2cm]{images/lichter_groen.eps}\quad
-\includegraphics[height=2cm, width=6cm]{images/sct_lichter_groen.eps}\quad
-\includegraphics[height=2cm, width=6cm]{images/smoothed_sct_lichter_groen.eps}
-}
-\end{figure}
-
-\begin{figure}[bp]
-\caption{\label{fig:uitgebreide_sct-histogrammen}De pseudo-vage SCT-histogrammen (a) voor de 
-beelden van het geel bootje, samen met de corresponderende pseudo-vage (b) gladde histogrammen, 
-(c) spatiale histogrammen, (d) zowel gladde als
-spatiale histogrammen, (e) randhistogrammen en (f) gladde randhistogrammen.}
 \vspace{5pt}
 \centering
 %\subfigure[]{
@@ -995,6 +1008,30 @@ spatiale histogrammen, (e) randhistogrammen en (f) gladde randhistogrammen.}
 \includegraphics[width=2.5cm]{images/hist_smoothed_edgy_sct_obj3__315.eps}
 \label{fig:uitgebreide_sct-histogrammen_smooted_en_edgy}
 }
+\caption{\label{fig:uitgebreide_sct-histogrammen}De pseudo-vage SCT-histogrammen (a) voor de 
+beelden van het geel bootje, samen met de corresponderende pseudo-vage (b) gladde histogrammen, 
+(c) spatiale histogrammen, (d) zowel gladde als
+spatiale histogrammen, (e) randhistogrammen en (f) gladde randhistogrammen.}
+\end{figure}
+
+\begin{figure}[bp]
+\vspace{5pt}
+\centering
+\subfigure[] {
+\includegraphics[height=2cm, width=2cm]{images/groen.eps}\quad
+\includegraphics[height=2cm, width=6cm]{images/sct_groen.eps}\quad
+\includegraphics[height=2cm, width=6cm]{images/smoothed_sct_groen.eps}
+\label{fig:histogrammen_smoothed_sct_groen}
+}
+\subfigure[] {
+\includegraphics[height=2cm, width=2cm]{images/lichter_groen.eps}\quad
+\includegraphics[height=2cm, width=6cm]{images/sct_lichter_groen.eps}\quad
+\includegraphics[height=2cm, width=6cm]{images/smoothed_sct_lichter_groen.eps}
+\label{fig:histogrammen_smoothed_sct_lichter_groen}
+}
+\caption{\label{fig:histogrammen_smoothed_sct}Twee volledig groene beelden die perceptueel 
+nagenoeg gelijk zijn, samen met het geassocieerde pseudo-vage SCT-histogram en de gladde 
+versie van dat histogram ($\alpha=1/3$, $R_1=6$, $\beta=2/3$ en $R_2=14$).}
 \end{figure}
 
 \subsection{Spatiale histogrammen}
@@ -1031,10 +1068,6 @@ figuur~\ref{fig:uitgebreide_sct-histogrammen_spatial}. We noemen dergelijke hist
 \emph{spatiale histogrammen}.
 
 \begin{figure}[bp]
-\caption{\label{fig:kwadratische_interpolatie}De grafiek van $t$ en het resultaat dat
-$t \circ d_m$ oplevert voor een beeld van $M$ bij $N$ pixels, met
-(b) $\alpha=\gamma / 10$, $\gamma = \min\{M/2, N/2\}$ en 
-(c) $\alpha=2 \cdot \gamma / 5$, $\gamma = 6 \cdot \min\{M/2, N/2\} / 5$.}
 \vspace{5pt}
 \centering
 \subfigure[]{
@@ -1056,6 +1089,10 @@ $t \circ d_m$ oplevert voor een beeld van $M$ bij $N$ pixels, met
 %\vspace{3pt}
 %\end{minipage}
 }
+\caption{\label{fig:kwadratische_interpolatie}De grafiek van $t$ en het resultaat dat
+$t \circ d_m$ oplevert voor een beeld van $M$ bij $N$ pixels, met
+(b) $\alpha=\gamma / 10$, $\gamma = \min\{M/2, N/2\}$ en 
+(c) $\alpha=2 \cdot \gamma / 5$, $\gamma = 6 \cdot \min\{M/2, N/2\} / 5$.}
 \end{figure}
 
 We kunnen ook een histogram construeren dat zowel glad als spatiaal is. Dat doen we door

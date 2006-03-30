@@ -68,7 +68,6 @@ Onze testcollectie bestaat uit foto's van elf objecten. Van elk object zijn
 er zes momentopnames, wat een totaal van $11 \cdot 6 = 66$ beelden geeft.
 
 \begin{figure}[p]
-\caption{\label{fig:testcollectie}De gebruikte collectie van beelden.}
 \vspace{5pt}
 \centering
 
@@ -153,6 +152,7 @@ er zes momentopnames, wat een totaal van $11 \cdot 6 = 66$ beelden geeft.
 
 \end{tabular}
 \vspace{5pt}
+\caption{\label{fig:testcollectie}De gebruikte collectie van beelden.}
 \end{figure}
 
 Voor het beoordelen van een rangschikking, gebruiken we de \emph{genormaliseerde gemiddelde rang} 
@@ -273,8 +273,8 @@ en uit $T_M(0,1)=0$ volgt dat
 % |(A \cap B) \cap (A^c \cap B^c)| &= ||(A \cap B) \cap (A^c \cap B^c)|| & & (T_M(0,1)=0)\\ %[5pt]
 % |(A \cup B) \cap (A^c \cup B^c)| &= ||(A \cup B) \cap (A^c \cup B^c)|| & & (T_M(0,1)=0)
 % \end{align*}
-$|(A \cap B) \cap (A^c \cap B^c)| &= ||(A \cap B) \cap (A^c \cap B^c)||$ en
-$|(A \cup B) \cap (A^c \cup B^c)| &= ||(A \cup B) \cap (A^c \cup B^c)||$.
+$|(A \cap B) \cap (A^c \cap B^c)| = ||(A \cap B) \cap (A^c \cap B^c)||$ en
+$|(A \cup B) \cap (A^c \cup B^c)| = ||(A \cup B) \cap (A^c \cup B^c)||$.
 Met behulp van de eigenschap
 \begin{displaymath}
 |A^c| = \sum_{x \in X} (1 - A(x)) = \sum_{x \in X} 1 - \sum_{x \in X} A(x) = |X| - |A|
@@ -300,8 +300,6 @@ vinden we bovendien:
 \end{displaymath}
 We kunnen tabel~\ref{tab:similatiteitsmaten} bijgevolg herschrijven tot tabel~\ref{tab:beperkte_similatiteitsmaten}.
 \begin{table}[bp]
-\caption{\label{tab:beperkte_similatiteitsmaten}De vaagsimilariteitsmaten geschreven met 
-sommaties waarvan het bereik beperkt is.}
 \vspace{10pt}
 \centering
 \begin{tabular}{l}
@@ -361,6 +359,8 @@ $
 %\hline
 \end{tabular}
 \vspace{10pt}
+\caption{\label{tab:beperkte_similatiteitsmaten}De vaagsimilariteitsmaten geschreven met 
+sommaties waarvan het bereik beperkt is.}
 \end{table}
 % beter geen nieuwe paragraaf volgens Valerie
 Beschouw bijvoorbeeld $M_{5}$:
