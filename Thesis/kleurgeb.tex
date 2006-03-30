@@ -53,6 +53,9 @@ kwantisatietechnieken uit \ref{sectie:kleurkwantisatie}. Figuur~\ref{fig:histogr
 de pseudo-vage histogrammen die we zo bekomen voor het ``geel bootje'' voorbeeld
 uit onze testcollectie. In figuur~\ref{fig:alle_histn_geel_bootje} worden de pseudo-vage histogrammen
 getoond van alle beelden uit de testcollectie die relevant zijn ten opzichte van dat voorbeeld.
+Zoals ge\"illustreerd in figuur~\ref{fig:constr_sim_op_basis_van_pseudo-vaag_hist}, kunnen we 
+dan similariteitsmaten construeren door een vaagsimilariteitsmaat toe te passen op 
+pseudo-vage histogrammen ge\"associeerd met de beelden in kwestie.
 
 \begin{figure}[!bp]
 \vspace{2pt}
@@ -220,21 +223,10 @@ van het geel bootje (HSV (a), Irb (b), I1I2I3 (c), XYZ (d), Yxy (e) en L*a*b* (f
 \begin{figure}[bp]
 \vspace{5pt}
 \centering
-\includegraphics[height=2cm]{coil/beeld-12.eps}
-\includegraphics[height=2cm]{images/hist_fuzzy_obj3__0.eps}\hspace{1cm}
-\includegraphics[height=2cm]{coil/beeld-13.eps}
-\includegraphics[height=2cm]{images/hist_fuzzy_obj3__45.eps}\\[5pt]
-\includegraphics[height=2cm]{coil/beeld-14.eps}
-\includegraphics[height=2cm]{images/hist_fuzzy_obj3__90.eps}\hspace{1cm}
-\includegraphics[height=2cm]{coil/beeld-15.eps}
-\includegraphics[height=2cm]{images/hist_fuzzy_obj3__180.eps}\\[5pt]
-\includegraphics[height=2cm]{coil/beeld-12.eps}
-\includegraphics[height=2cm]{images/hist_fuzzy_obj3__270.eps}\hspace{1cm}
-\includegraphics[height=2cm]{coil/beeld-12.eps}
-\includegraphics[height=2cm]{images/hist_fuzzy_obj3__315.eps}
-\vspace{5pt}
-\caption{\label{fig:alle_vaaghistn_geel_bootje}De verschillende vaaghistogrammen voor de beelden 
-van het geel bootje.}
+\includegraphics[height=2cm]{images/histograms2.eps}
+%\vspace{2pt}
+\caption{\label{fig:constr_sim_op_basis_van_pseudo-vaag_hist}Constructie van een 
+similariteitsmaat op basis van een pseudo-vaag histogram.}
 \end{figure}
 
 %Voor een RGB-beeld gebruikt men typisch 8 bits per kleurcomponent. Dit geeft een totaal van
@@ -287,10 +279,30 @@ bevat die voorkomt dan lidmaatschapsgraad $1$ krijgt, mogen we evenwel niet te
 ruw kwantiseren. Anders zou het discriminerend vermogen immers te laag worden. In deze
 scriptie gebruiken we uniforme kwantisatie (in het L*a*b*-model) met $N_1=N_2=N_3=10$.
 We reduceren $C$ dus tot 1000 kleuren. Voor het ``geel bootje'' voorbeeld uit de testcollectie
-leidt dat tot het vaaghistogram uit figuur~\ref{fig:vaaghistogram_eerste_vb}. De vaaghistogrammen 
-van alle beelden
+leidt dat tot het vaaghistogram uit figuur~\ref{fig:vaaghistogram_eerste_vb}. 
+De vaaghistogrammen van alle beelden
 uit de testcollectie die relevant zijn ten opzichte van dat voorbeeld, kunnen met
-elkaar vergeleken worden in figuur~\ref{fig:alle_vaaghistn_geel_bootje}.
+elkaar vergeleken worden in figuur~\ref{fig:alle_vaaghistn_geel_bootje}. Net zoals
+pseudo-vage histogrammen, kunnen vaaghistogrammen gebruikt worden om
+similariteitsmaten voor beelden te construeren.
+
+\begin{figure}[!bp]
+\centering
+\vspace{5pt}\includegraphics[height=2cm]{coil/beeld-12.eps}
+\includegraphics[height=2cm]{images/hist_fuzzy_obj3__0.eps}\hspace{1cm}
+\includegraphics[height=2cm]{coil/beeld-13.eps}
+\includegraphics[height=2cm]{images/hist_fuzzy_obj3__45.eps}\\[5pt]
+\includegraphics[height=2cm]{coil/beeld-14.eps}
+\includegraphics[height=2cm]{images/hist_fuzzy_obj3__90.eps}\hspace{1cm}
+\includegraphics[height=2cm]{coil/beeld-15.eps}
+\includegraphics[height=2cm]{images/hist_fuzzy_obj3__180.eps}\\[5pt]
+\includegraphics[height=2cm]{coil/beeld-12.eps}
+\includegraphics[height=2cm]{images/hist_fuzzy_obj3__270.eps}\hspace{1cm}
+\includegraphics[height=2cm]{coil/beeld-12.eps}
+\includegraphics[height=2cm]{images/hist_fuzzy_obj3__315.eps}\\\vspace{5pt}
+\caption{\label{fig:alle_vaaghistn_geel_bootje}De verschillende vaaghistogrammen voor de beelden 
+van het geel bootje.}
+\end{figure}
 
 \subsection{Experimentele observaties}
 \label{sectie:histogrammen_experimentele_observaties}
@@ -618,24 +630,24 @@ voor elk voorbeeld bij de similariteitsmaat op basis van het XYZ-histogram en $M
 \clearpage
 
 \begin{table}[p]
-\vspace{5pt}
+\vspace{10pt}
 \centering
 \small
 \begin{tabular}{r|cccccccc}
 & $M_{1a}$ & $M_{1b}$ & $M_{1c}$ & $M_{2}$ & $M_{3}$ & $M_{5}$ & $M_{5c}$ & $M_{6}$ \\
 \hline
-minimale GGGR & 0.0147 & 0.0245 & 0.0323 & 0.0355 & 0.0093 & 0.0128 & 0.0219 & 0.0102 \\
-gemiddelde GGGR & 0.0818 & 0.0951 & 0.1115 & 0.1428 & 0.0802 & 0.0922 & 0.0971 & 0.1024\vspace{8pt}\\
+minimale GGGR & 0.0177 & 0.0190 & 0.0221 & 0.0409 & 0.0221 & 0.1234 & 0.1216 & 0.0221 \\
+gemiddelde GGGR & 0.0464 & 0.0627 & 0.0679 & 0.0709 & 0.0408 & 0.1869 & 0.1871 & 0.0408\vspace{8pt}\\
 & $M_{6c}$ & $M_{7}$ & $M_{7c}$ & $M_{8}$ & $M_{8c}$ & $M_{9}$ & $M_{9c}$ & $M_{10}$ \\
 \hline
-minimale GGGR & 0.0212 & 0.0089 & 0.0203 & 0.2024 & 0.1985 & 0.0084 & 0.0201 & 0.2212 \\
-gemiddelde GGGR & 0.1145 & 0.0873 & 0.0922 & 0.3604 & 0.3688 & 0.0806 & 0.0868 & 0.3895\vspace{8pt}\\
+minimale GGGR & 0.0165 & 0.0242 & 0.0236 & 0.0126 & 0.0236 & 0.0353 & 0.0238 & 0.0240 \\
+gemiddelde GGGR & 0.0468 & 0.0468 & 0.0642 & 0.0502 & 0.0602 & 0.0751 & 0.0647 & 0.0655\vspace{8pt}\\
 & $M_{10c}$ & $M_{11}$ & $M_{11c}$ & $M_{12}$ & $M_{13}$ & $M_{I3}$ & $M_{I3c}$ \\
 \hline
-minimale GGGR & 0.2106 & 0.0128 & 0.0219 & 0.0203 & 0.1985 & 0.0102 & 0.0212 \\
-gemiddelde GGGR & 0.3850 & 0.0922 & 0.0971 & 0.0922 & 0.3696 & 0.1035 & 0.1038
+minimale GGGR & 0.0240 & 0.1234 & 0.1216 & 0.0236 & 0.0236 & 0.0080 & 0.0177 \\
+gemiddelde GGGR & 0.0610 & 0.1851 & 0.1871 & 0.0642 & 0.0603 & 0.0238 & 0.0467
 \end{tabular}
-\vspace{5pt}
+\vspace{10pt}
 \caption{\label{tab:stat_gegevens_pseudo-vaag_histogram_maten}De minimale en gemiddelde 
 GGGR-waarde voor 
 de verschillende vaagsimilariteitsmaten, bij toepassing in de beschouwde  
