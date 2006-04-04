@@ -289,6 +289,23 @@ Een andere niet-uniforme manier om te kwantiseren, is het mappen van de kleuren 
 Experimenten hebben aangetoond dat de mens geneigd is om enkel die kleurcategorie\"en te gebruiken bij 
 het beredeneren, onthouden en waarnemen van kleuren. We kunnen voor elke kleur de juiste mapping bepalen
 door op zoek te gaan naar de focale kleur die in het L*a*b*-model het dichtst bij die gegeven kleur ligt.
+Daarbij kiezen we de RGB-co\"ordinaten uit tabel~\ref{tab:coords_focale_kleuren} voor de focale kleuren.
+
+\begin{table}[bp]
+\vspace{10pt}
+\centering
+\begin{tabular}{c|c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c}
+kleur & zwart & blauw & groen & rood & bruin & oranje\\	
+\hline
+$(r,g,b)$ & $(0, 0, 0)$ & $(0,   0, 255)$ & $(0, 255,   0)$ & $(255,   0,   0)$ &
+$(128,  42,  42)$ & $(255, 128,   0)$\vspace{8pt}\\
+kleur & geel & paars & grijs & roze & wit\\	
+\hline
+$(r,g,b)$ & $(255, 255,   0)$ & $(160,  32, 240)$ & $(192, 192, 192)$ & $(255, 192, 203)$ & $(255, 255, 255)$
+\end{tabular}
+\vspace{10pt}
+\caption{\label{tab:coords_focale_kleuren}De RGB-co\"ordinaten van de focale kleuren.}
+\end{table}
 
 \emph{Neural Image Quantization} (NeuQuant) \cite{dekker:neuquant} en de \emph{Wu quantizer} 
 \cite{wu:color_quantization_by_dynamic_programming_and_principal_analysis} zijn twee
@@ -372,6 +389,14 @@ toont de resultaten van de vier niet-uniforme kwantistatietechnieken.
 }
 \caption{\label{fig:kwantistatie_originelen}De beelden waarvan we de kleuren gaan kwantiseren 
 op een aantal verschillende manieren.}
+\end{figure}
+
+\begin{figure}[!bp]
+\vspace{5pt}
+\centering
+\includegraphics[height=4cm]{images/probleem_focale_kwantisatie.eps}
+%\vspace{2pt}
+\caption{\label{fig:probleem_focale_kwantisatie}Onverwachte mapping bij focale kwantisatie.}
 \end{figure}
 
 \begin{figure}[bp]
@@ -479,6 +504,17 @@ op basis van (a) SCT, (b) focale kleuren, (c) NeuQuant en (d) de Wu quantizer.}
 slechts 8 kleuren op basis van (a) NeuQuant en (b) de Wu quantizer.}
 \end{figure}
 
+%Het valt op dat uniforme kwantisatie in L*a*b* geen goede resultaten geeft. 
+Het is duidelijk dat de L*a*b*-ruimte niet zo geschikt is voor uniforme kwantisatie. 
+Daarnaast valt het ook op
+dat de mapping naar focale kleuren vrij slecht werkt. Zo zouden we bijvoorbeeld verwachten
+dat de achtergrondpixels van het ``bloemen'' beeld vervangen worden door blauwe of
+paarse pixels, in plaats van bruine. In figuur~\ref{fig:probleem_focale_kwantisatie} zien
+we echter dat bruin effectief de meeste nabije focale kleur is. Dergelijke problemen
+kunnen vermeden worden door een meer geavanceerde mapping te gebruiken 
+\cite{van_den_broek:human_color_categorization_for_cbir}, maar omwille van de eenvoud 
+beperken we ons toch tot de mapping op basis van de Euclidische afstand in L*a*b*.
+
 De technieken met een variabel kleurenpalet doen het duidelijk beter dan diegene met een vast palet. 
 In figuur~\ref{fig:rekentijden_quant} merken we echter dat kwantisatie met een vast kleurenpalet 
 vaak een stuk sneller is. Zo gaat het uniform kwantiseren op basis van Irb bijvoorbeeld
@@ -501,7 +537,7 @@ aantal kleuren dan Wu's techniek.
 \section{Lineaire filters}
 \label{sectie:lineaire_filters}
 
-Bij het \emph{filteren} van een 2-dimensionaal beeld $b$ wordt de waarde $b(x,y)$ van een 
+Bij het \emph{filteren} van een tweedimensionaal beeld $b$ wordt de waarde $b(x,y)$ van een 
 beeldpunt $(x,y) \in \mathbb{N}^2$ vervangen door een nieuwe waarde die afhangt van $b(x,y)$ 
 en van de waarden van naburige beeldpunten. In het geval van een \emph{lineair filter} is die nieuwe waarde een lineaire combinatie 
 van de oude waarden. Het beeld $b'$ dat we bekomen door $b$ lineair te filteren, wordt gegeven door
@@ -551,7 +587,7 @@ filteren met een binomiaalfilter (b).}
 \section{Eenvoudige randdetectie}
 \label{sectie:randdetectie}
 
-Beeldranden in een 2-dimensionaal beeld $b$ zijn plaatsen waar de luminantiecomponent $lum(x,y)$ van $b(x,y)$ 
+Beeldranden in een tweedimensionaal beeld $b$ zijn plaatsen waar de luminantiecomponent $lum(x,y)$ van $b(x,y)$ 
 sterk varieert als functie van $x$ en/of $y$. Op die plaatsen zullen de partieel afgeleiden $D_1 lum(x,y)$ en 
 $D_2 lum(x,y)$ dus groot zijn. Bijgevolg zal de \emph{gradi\"ent} $\nabla lum$ daar ook groot zijn. We kunnen 
 dus de volgende formule gebruiken om randen te detecteren in $b$: 
@@ -589,7 +625,7 @@ D_1 lum(x,y)\textrm{: }\quad \frac{1}{8} \left[ \begin{array}{c} 1 \\ 2 \\ 1 \en
 Uit figuur~\ref{fig:randdetectie} blijkt echter dat beide technieken geen spectaculair verschillende 
 resultaten geven.
 
-\begin{figure}[!b]
+\begin{figure}[!bp]
 \vspace{10pt}
 \centering
 \subfigure[]{

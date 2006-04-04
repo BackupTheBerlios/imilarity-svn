@@ -497,7 +497,7 @@ pixels in dezelfde bin terecht. Ze geven dus aanleiding tot pseudo-vage histogra
 die \'e\'en enkele piek bevatten, of tot vaaghistogrammen $\widetilde{H}_A$ en $\widetilde{H}_B$ 
 waarbij er ook nog een aantal ``naburige'' bins een waarde hebben die verschilt van nul 
 (zie figuur~\ref{fig:histogrammen_rood_en_groen}). 
-\afterpage{\begin{figure}[bp]
+\begin{figure}[p]
 \centering
 \includegraphics[width=\textwidth]{/home/klbostee/Workspace/Thesis/plots/histgeb1_gggrs_en_cputimes_filled.eps} 
 \includegraphics[width=\textwidth]{/home/klbostee/Workspace/Thesis/plots/histgeb2_gggrs_en_cputimes_filled.eps}
@@ -507,7 +507,7 @@ waarbij er ook nog een aantal ``naburige'' bins een waarde hebben die verschilt 
 van de similariteitsmaten op basis van histrogrammen.}
 \end{figure}
 %
-\begin{figure}[bp]
+\begin{figure}[!bp]
 \vspace{5pt}
 \centering
 \begin{tabular}{m{11cm} | m{3cm} |}
@@ -651,7 +651,7 @@ van de similariteitsmaten op basis van histrogrammen.}
 voorbeeld bij de similariteitsmaat op basis van het Irb-histogram en $M_{I3}$.}
 \end{figure}
 %
-\begin{figure}[tbp]
+\begin{figure}[!bp]
 \vspace{5pt}
 \centering
 \begin{tabular}{m{11cm} | m{3cm} |}
@@ -794,10 +794,10 @@ voorbeeld bij de similariteitsmaat op basis van het Irb-histogram en $M_{I3}$.}
 \caption{\label{fig:results_xyz_histgeb}De GGR-waarde en de eerste tien resultaten 
 voor elk voorbeeld bij de similariteitsmaat op basis van het XYZ-histogram en $M_{I3}$.}
 \end{figure}
-
-\clearpage
-
-\begin{table}[p]
+%
+%\clearpage
+%
+\begin{table}[bp]
 \vspace{10pt}
 \centering
 \small
@@ -822,7 +822,7 @@ de verschillende vaagsimilariteitsmaten, bij toepassing in de beschouwde
 similariteitsmaten op basis van pseudo-vage histogrammen.}
 \end{table}
 %
-\begin{figure}[p]
+\begin{figure}[!bp]
 \vspace{10pt}
 \centering
 \subfigure[] {
@@ -863,8 +863,8 @@ similariteitsmaten op basis van pseudo-vage histogrammen.}
 \caption{\label{fig:histogrammen_rood_en_groen}Een volledig (a) rood en (b) groen beeld samen 
 met de corresponderende histogrammen.}
 \end{figure}
-
-\clearpage}
+%
+%\clearpage}
 Doordat rood en 
 groen steeds in verschillende bins gekwantiseerd worden, ligt de piek bij elk histogram op een 
 andere plaats. 
@@ -1340,8 +1340,8 @@ $w_{A,c}(p)=s(bin(c),bin(A(p))) \cdot t(d_m(p))$, $\forall p \in P$, te kiezen.
 Vermits er voor elke $c \in C'$ dan geldt dat
 \begin{align*}
 \mathring{h}_A(c) 
- &= \displaystyle \sum_{c' \in C'} \sum_{p \in P} \delta (bin(c')-bin(A(p))) \cdot w_{A,c}(p) \displaybreak[0] \\
- &= \displaystyle \sum_{c' \in C'} \sum_{p \in P} \delta (bin(c')-bin(A(p))) \cdot s(bin(c),bin(A(p))) \cdot t(d_m(p)) \displaybreak[0] \\
+ &= \displaystyle \sum_{c' \in C'} \sum_{p \in P} \delta (bin(c')-bin(A(p))) \cdot w_{A,c}(p) \\
+ &= \displaystyle \sum_{c' \in C'} \sum_{p \in P} \delta (bin(c')-bin(A(p))) \cdot s(bin(c),bin(A(p))) \cdot t(d_m(p)) \\
  &= \displaystyle \sum_{c' \in C'} \mathring{h}'_A(c') \cdot s(bin(c),bin(A(p)))
 \end{align*}
 met $\mathring{h}'_A(c')=\sum_{p \in P} \delta (bin(c')-bin(A(p))) \cdot t(d_m(p))$, $\forall c' \in C'$, 
@@ -1398,11 +1398,51 @@ figuur~\ref{fig:uitgebreide_sct-histogrammen_smooted_en_edgy}.
 
 \subsection{Experimentele observaties}
 
+Figuur~\ref{fig:histgeb_sct_gggrs_en_cputimes} toont de meetresultaten voor enkele
+similariteitsmaten die gebaseerd zijn op uitgebreide SCT-histogrammen. We stellen
+vast dat gladde versies van de histogrammen vaak beter presteren. Ook spatiale 
+uitbreidingen leiden tot betere resultaten, in tegenstelling tot de randhistogrammen
+die meestal geen winst opleveren.
+
+We merken ook hier dat $M_5$, $M_{5c}$, $M_{11}$ en $M_{11c}$ significant slechter
+presteren dan de overige vaagsimilariteitsmaten. De reden daarvoor is dezelfde als bij
+de ``gewone'' histogrammen. In het geval van de randhistogrammen geven ook $M_{8c}$, $M_{10}$, 
+$M_{10c}$, $M_{13}$ en (in mindere mate) $M_{8}$ aanleiding tot minder goede resultaten.
+De reden daarvoor is analoog aan de oorzaak voor de slechtere perfomantie van die 
+vaagsimilariteitsmaten bij de pixelgebaseerde maten.
+
+Tabel~\ref{tab:stat_gegevens_pseudo-vaag_uitgebreid_histogram_maten} bevat \ldots
+
 \begin{figure}[bp]
 \centering
 \includegraphics[width=\textwidth]{/home/klbostee/Workspace/Thesis/plots/histgeb_sct1_gggrs_en_cputimes_filled.eps} 
 \includegraphics[width=\textwidth]{/home/klbostee/Workspace/Thesis/plots/histgeb_sct2_gggrs_en_cputimes_filled.eps}
 \vspace{1pt}
-\caption{\label{fig:histgeb_gggrs_en_cputimes}De GGGR-waarde en de gebruikte rekentijd in ms voor elk 
+\caption{\label{fig:histgeb_sct_gggrs_en_cputimes}De GGGR-waarde en de gebruikte rekentijd in ms voor elk 
 van de similariteitsmaten op basis van uitgebreide SCT-histrogrammen.}
 \end{figure}
+
+\begin{table}[bp]
+\vspace{10pt}
+\centering
+\small
+\begin{tabular}{r|cccccccc}
+& $M_{1a}$ & $M_{1b}$ & $M_{1c}$ & $M_{2}$ & $M_{3}$ & $M_{5}$ & $M_{5c}$ & $M_{6}$ \\
+\hline
+minimale GGGR & 0.0223 & 0.0368 & 0.0468 & 0.0682 & 0.0247 & 0.1656 & 0.1667 & 0.0247 \\
+gemiddelde GGGR & 0.0438 & 0.0641 & 0.0780 & 0.1079 & 0.0315 & 0.2165 & 0.2174 & 0.0315\vspace{8pt}\\
+& $M_{6c}$ & $M_{7}$ & $M_{7c}$ & $M_{8}$ & $M_{8c}$ & $M_{9}$ & $M_{9c}$ & $M_{10}$ \\
+\hline
+minimale GGGR & 0.0232 & 0.0279 & 0.0351 & 0.0361 & 0.0519 & 0.0591 & 0.0370 & 0.0541 \\
+gemiddelde GGGR & 0.0446 & 0.0368 & 0.0561 & 0.0512 & 0.0893 & 0.0746 & 0.0569 & 0.1098\vspace{8pt}\\
+& $M_{10c}$ & $M_{11}$ & $M_{11c}$ & $M_{12}$ & $M_{13}$ & $M_{I3}$ & $M_{I3c}$ \\
+\hline
+minimale GGGR & 0.0524 & 0.1656 & 0.1667 & 0.0351 & 0.0519 & 0.0158 & 0.0229 \\
+gemiddelde GGGR & 0.0903 & 0.2165 & 0.2174 & 0.0561 & 0.0893 & 0.0273 & 0.0444
+\end{tabular}
+\vspace{10pt}
+\caption{\label{tab:stat_gegevens_pseudo-vaag_uitgebreid_histogram_maten}De minimale en gemiddelde 
+GGGR-waarde voor 
+de verschillende vaagsimilariteitsmaten, bij toepassing in de beschouwde  
+similariteitsmaten op basis van pseudo-vage uitgebreide histogrammen.}
+\end{table}
