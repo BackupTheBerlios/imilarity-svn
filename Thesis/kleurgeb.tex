@@ -140,93 +140,180 @@ voorbeeld (HSV (a), Irb (b), I1I2I3 (c), XYZ (d), Yxy (e) en L*a*b* (f), focale 
 en het vaaghistogram voor $\lambda = 5$ (i)).}
 \end{figure}
 
-\begin{figure}[bp]
-\vspace{5pt}
-\centering
-%\subfigure[] {
-\includegraphics[width=2.5cm]{coil/beeld-12.eps}
-\includegraphics[width=2.5cm]{coil/beeld-13.eps}
-\includegraphics[width=2.5cm]{coil/beeld-14.eps}
-\includegraphics[width=2.5cm]{coil/beeld-15.eps}
-\includegraphics[width=2.5cm]{coil/beeld-16.eps}
-\includegraphics[width=2.5cm]{coil/beeld-17.eps}\\[4pt]
-%}
-\vspace{3pt}
-\subfigure[] {
-\includegraphics[width=2.5cm]{images/hist_hsv_obj3__0.eps}
-\includegraphics[width=2.5cm]{images/hist_hsv_obj3__45.eps}
-\includegraphics[width=2.5cm]{images/hist_hsv_obj3__90.eps}
-\includegraphics[width=2.5cm]{images/hist_hsv_obj3__180.eps}
-\includegraphics[width=2.5cm]{images/hist_hsv_obj3__270.eps}
-\includegraphics[width=2.5cm]{images/hist_hsv_obj3__315.eps}
-}
-\subfigure[] {
-\includegraphics[width=2.5cm]{images/hist_irb_obj3__0.eps}
-\includegraphics[width=2.5cm]{images/hist_irb_obj3__45.eps}
-\includegraphics[width=2.5cm]{images/hist_irb_obj3__90.eps}
-\includegraphics[width=2.5cm]{images/hist_irb_obj3__180.eps}
-\includegraphics[width=2.5cm]{images/hist_irb_obj3__270.eps}
-\includegraphics[width=2.5cm]{images/hist_irb_obj3__315.eps}
-}
-\subfigure[] {
-\includegraphics[width=2.5cm]{images/hist_i1i2i3_obj3__0.eps}
-\includegraphics[width=2.5cm]{images/hist_i1i2i3_obj3__45.eps}
-\includegraphics[width=2.5cm]{images/hist_i1i2i3_obj3__90.eps}
-\includegraphics[width=2.5cm]{images/hist_i1i2i3_obj3__180.eps}
-\includegraphics[width=2.5cm]{images/hist_i1i2i3_obj3__270.eps}
-\includegraphics[width=2.5cm]{images/hist_i1i2i3_obj3__315.eps}
-}
-\subfigure[] {
-\includegraphics[width=2.5cm]{images/hist_xyz_obj3__0.eps}
-\includegraphics[width=2.5cm]{images/hist_xyz_obj3__45.eps}
-\includegraphics[width=2.5cm]{images/hist_xyz_obj3__90.eps}
-\includegraphics[width=2.5cm]{images/hist_xyz_obj3__180.eps}
-\includegraphics[width=2.5cm]{images/hist_xyz_obj3__270.eps}
-\includegraphics[width=2.5cm]{images/hist_xyz_obj3__315.eps}
-}
-\subfigure[] {
-\includegraphics[width=2.5cm]{images/hist_yxy_obj3__0.eps}
-\includegraphics[width=2.5cm]{images/hist_yxy_obj3__45.eps}
-\includegraphics[width=2.5cm]{images/hist_yxy_obj3__90.eps}
-\includegraphics[width=2.5cm]{images/hist_yxy_obj3__180.eps}
-\includegraphics[width=2.5cm]{images/hist_yxy_obj3__270.eps}
-\includegraphics[width=2.5cm]{images/hist_yxy_obj3__315.eps}
-}
-\subfigure[] {
-\includegraphics[width=2.5cm]{images/hist_lab_obj3__0.eps}
-\includegraphics[width=2.5cm]{images/hist_lab_obj3__45.eps}
-\includegraphics[width=2.5cm]{images/hist_lab_obj3__90.eps}
-\includegraphics[width=2.5cm]{images/hist_lab_obj3__180.eps}
-\includegraphics[width=2.5cm]{images/hist_lab_obj3__270.eps}
-\includegraphics[width=2.5cm]{images/hist_lab_obj3__315.eps}
-}
-\subfigure[] {
-\includegraphics[width=1cm,height=2.5cm,angle=-90]{images/hist_focal_obj3__0.eps}
-\includegraphics[width=1cm,height=2.5cm,angle=-90]{images/hist_focal_obj3__45.eps}
-\includegraphics[width=1cm,height=2.5cm,angle=-90]{images/hist_focal_obj3__90.eps}
-\includegraphics[width=1cm,height=2.5cm,angle=-90]{images/hist_focal_obj3__180.eps}
-\includegraphics[width=1cm,height=2.5cm,angle=-90]{images/hist_focal_obj3__270.eps}
-\includegraphics[width=1cm,height=2.5cm,angle=-90]{images/hist_focal_obj3__315.eps}
-}
-\subfigure[] {
-\includegraphics[width=2.5cm]{images/hist_sct_obj3__0.eps}
-\includegraphics[width=2.5cm]{images/hist_sct_obj3__45.eps}
-\includegraphics[width=2.5cm]{images/hist_sct_obj3__90.eps}
-\includegraphics[width=2.5cm]{images/hist_sct_obj3__180.eps}
-\includegraphics[width=2.5cm]{images/hist_sct_obj3__270.eps}
-\includegraphics[width=2.5cm]{images/hist_sct_obj3__315.eps}
-}
-\caption{\label{fig:alle_histn_geel_bootje}De verschillende pseudo-vage histogrammen voor de beelden 
-van het geel bootje (HSV (a), Irb (b), I1I2I3 (c), XYZ (d), Yxy (e) en L*a*b* (f), focale kleuren (g) en SCT (h)).}
-\end{figure}
-
-\begin{figure}[bp]
+\begin{figure}[!bp]
 \vspace{5pt}
 \centering
 \includegraphics[height=2cm]{images/histograms2.eps}
 %\vspace{2pt}
 \caption{\label{fig:constr_sim_op_basis_van_pseudo-vaag_hist}Constructie van een 
 similariteitsmaat op basis van een pseudo-vaag histogram.}
+\end{figure}
+
+\begin{figure}[bp]
+\vspace{5pt}
+
+\centering
+\begin{tabular}{@{}c@{}}
+
+\begin{tabular}{@{}c@{}}
+\begin{minipage}{15.5cm}%
+%\hfill
+\includegraphics[width=2.5cm]{images/hist_obj3__0.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_obj3__45.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_obj3__90.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_obj3__180.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_obj3__270.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_obj3__315.eps}
+\end{minipage}\vspace{8pt}
+\end{tabular}\\
+%}
+\subfigure[] {
+\begin{tabular}{@{}c@{}}
+\begin{minipage}{15.5cm}%
+\includegraphics[width=2.5cm]{images/hist_hsv_obj3__0.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_hsv_obj3__45.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_hsv_obj3__90.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_hsv_obj3__180.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_hsv_obj3__270.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_hsv_obj3__315.eps}
+%\vspace{4pt}
+\end{minipage}\vspace{4pt}
+\end{tabular}
+}\\
+\subfigure[] {
+\begin{tabular}{@{}c@{}}
+\begin{minipage}{15.5cm}%
+\includegraphics[width=2.5cm]{images/hist_irb_obj3__0.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_irb_obj3__45.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_irb_obj3__90.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_irb_obj3__180.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_irb_obj3__270.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_irb_obj3__315.eps}
+\end{minipage}\vspace{4pt}
+\end{tabular}
+}\\
+\subfigure[] {
+\begin{tabular}{@{}c@{}}
+\begin{minipage}{15.5cm}%
+\includegraphics[width=2.5cm]{images/hist_i1i2i3_obj3__0.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_i1i2i3_obj3__45.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_i1i2i3_obj3__90.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_i1i2i3_obj3__180.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_i1i2i3_obj3__270.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_i1i2i3_obj3__315.eps}
+\end{minipage}\vspace{4pt}
+\end{tabular}
+}\\
+\subfigure[] {
+\begin{tabular}{@{}c@{}}
+\begin{minipage}{15.5cm}%
+\includegraphics[width=2.5cm]{images/hist_xyz_obj3__0.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_xyz_obj3__45.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_xyz_obj3__90.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_xyz_obj3__180.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_xyz_obj3__270.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_xyz_obj3__315.eps}
+\end{minipage}\vspace{4pt}
+\end{tabular}
+}\\
+\subfigure[] {
+\begin{tabular}{@{}c@{}}
+\begin{minipage}{15.5cm}%
+\includegraphics[width=2.5cm]{images/hist_yxy_obj3__0.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_yxy_obj3__45.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_yxy_obj3__90.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_yxy_obj3__180.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_yxy_obj3__270.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_yxy_obj3__315.eps}
+\end{minipage}\vspace{4pt}
+\end{tabular}
+}\\
+\subfigure[] {
+\begin{tabular}{@{}c@{}}
+\begin{minipage}{15.5cm}%
+\includegraphics[width=2.5cm]{images/hist_lab_obj3__0.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_lab_obj3__45.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_lab_obj3__90.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_lab_obj3__180.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_lab_obj3__270.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_lab_obj3__315.eps}
+\end{minipage}\vspace{4pt}
+\end{tabular}
+}\\
+\subfigure[] {
+\begin{tabular}{@{}c@{}}
+\begin{minipage}{15.5cm}%
+\includegraphics[width=1cm,height=2.5cm,angle=-90]{images/hist_focal_obj3__0.eps}
+\hfill
+\includegraphics[width=1cm,height=2.5cm,angle=-90]{images/hist_focal_obj3__45.eps}
+\hfill
+\includegraphics[width=1cm,height=2.5cm,angle=-90]{images/hist_focal_obj3__90.eps}
+\hfill
+\includegraphics[width=1cm,height=2.5cm,angle=-90]{images/hist_focal_obj3__180.eps}
+\hfill
+\includegraphics[width=1cm,height=2.5cm,angle=-90]{images/hist_focal_obj3__270.eps}
+\hfill
+\includegraphics[width=1cm,height=2.5cm,angle=-90]{images/hist_focal_obj3__315.eps}
+\end{minipage}\vspace{4pt}
+\end{tabular}
+}\\
+\subfigure[] {
+\begin{tabular}{@{}c@{}}
+\begin{minipage}{15.5cm}%
+\includegraphics[width=2.5cm]{images/hist_sct_obj3__0.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_sct_obj3__45.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_sct_obj3__90.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_sct_obj3__180.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_sct_obj3__270.eps}
+\hfill
+\includegraphics[width=2.5cm]{images/hist_sct_obj3__315.eps}
+\end{minipage}\vspace{4pt}
+\end{tabular}
+}
+
+\end{tabular}
+
+\caption{\label{fig:alle_histn_geel_bootje}De verschillende pseudo-vage histogrammen voor de beelden 
+van het geel bootje (HSV (a), Irb (b), I1I2I3 (c), XYZ (d), Yxy (e) en L*a*b* (f), focale kleuren (g) en SCT (h)).}
 \end{figure}
 
 %Voor een RGB-beeld gebruikt men typisch 8 bits per kleurcomponent. Dit geeft een totaal van
@@ -278,7 +365,16 @@ kwantiseren om zo de complexiteit beperkt te houden. Vermits elke bin die een kl
 bevat die voorkomt dan lidmaatschapsgraad $1$ krijgt, mogen we evenwel niet te
 ruw kwantiseren. Anders zou het discriminerend vermogen immers te laag worden. In deze
 scriptie gebruiken we uniforme kwantisatie (in het L*a*b*-model) met $N_1=N_2=N_3=10$.
-We reduceren $C$ dus tot 1000 kleuren. Voor het ``geel bootje'' voorbeeld uit de testcollectie
+We reduceren $C$ dus tot 1000 kleuren. 
+
+Figuur~\ref{fig:verschillende_lambdas} toont enkele vaaghistogrammen met 
+verschillende $\lambda$-waarden, voor een
+egaal rood beeld. We zien dat het aantal bins die be\"invloed worden door een
+kleur, toeneemt naarmate we grotere waarden voor $\lambda$ gebruiken. Hoe groter
+$\lambda$ genomen wordt, hoe lager het discriminerend vermogen zal worden. Daartegenover
+zal een te kleine $\lambda$ er dan weer voor zorgen dat perceptueel zeer gelijkende
+kleuren als volledig verschillend beschouwd worden. In deze scriptie kiezen we steeds 
+$\lambda=5$. Voor het ``geel bootje'' voorbeeld uit de testcollectie
 leidt dat tot het vaaghistogram uit figuur~\ref{fig:vaaghistogram_eerste_vb}. 
 De vaaghistogrammen van alle beelden
 uit de testcollectie die relevant zijn ten opzichte van dat voorbeeld, kunnen met
@@ -288,18 +384,90 @@ similariteitsmaten voor beelden te construeren.
 
 \begin{figure}[!bp]
 \centering
-\vspace{5pt}\includegraphics[height=2cm]{coil/beeld-12.eps}
-\includegraphics[height=2cm]{images/hist_fuzzy_obj3__0.eps}\hspace{1cm}
-\includegraphics[height=2cm]{coil/beeld-13.eps}
-\includegraphics[height=2cm]{images/hist_fuzzy_obj3__45.eps}\\[5pt]
-\includegraphics[height=2cm]{coil/beeld-14.eps}
-\includegraphics[height=2cm]{images/hist_fuzzy_obj3__90.eps}\hspace{1cm}
-\includegraphics[height=2cm]{coil/beeld-15.eps}
-\includegraphics[height=2cm]{images/hist_fuzzy_obj3__180.eps}\\[5pt]
-\includegraphics[height=2cm]{coil/beeld-12.eps}
-\includegraphics[height=2cm]{images/hist_fuzzy_obj3__270.eps}\hspace{1cm}
-\includegraphics[height=2cm]{coil/beeld-12.eps}
-\includegraphics[height=2cm]{images/hist_fuzzy_obj3__315.eps}\\\vspace{5pt}
+\begin{tabular}{@{}c@{}c@{}}
+\subfigure[]{
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{images/hist_fuzzy_l3_rood.eps}
+\vspace{4pt}
+\end{minipage}
+}
+&
+\subfigure[]{
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{images/hist_fuzzy_l4_rood.eps}
+\vspace{4pt}
+\end{minipage}
+}\\
+\subfigure[]{
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{images/hist_fuzzy_l5_rood.eps}
+\vspace{4pt}
+\end{minipage}
+}
+&
+\subfigure[]{
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{images/hist_fuzzy_l6_rood.eps}
+\vspace{4pt}
+\end{minipage}
+}\\
+\subfigure[]{
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{images/hist_fuzzy_l7_rood.eps}
+\vspace{4pt}
+\end{minipage}
+}
+&
+\subfigure[]{
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{images/hist_fuzzy_l8_rood.eps}
+\vspace{4pt}
+\end{minipage}
+}
+\end{tabular}
+\caption{\label{fig:verschillende_lambdas}Het vaaghistogram voor een egaal rood beeld met 
+(a) $\lambda=3$, (b) $\lambda=4$, (c) $\lambda=5$, (d) $\lambda=6$, (e) $\lambda=7$
+en (f) $\lambda=8$.}
+\end{figure}
+
+% \begin{figure}[!bp]
+% \centering
+% \vspace{5pt}\includegraphics[height=1.2cm]{coil/beeld-12.eps}
+% \includegraphics[height=1.2cm]{images/hist_fuzzy_obj3__0.eps}\hspace{1cm}
+% \includegraphics[height=1.2cm]{coil/beeld-13.eps}
+% \includegraphics[height=1.2cm]{images/hist_fuzzy_obj3__45.eps}\\[5pt]
+% \includegraphics[height=1.2cm]{coil/beeld-14.eps}
+% \includegraphics[height=1.2cm]{images/hist_fuzzy_obj3__90.eps}\hspace{1cm}
+% \includegraphics[height=1.2cm]{coil/beeld-15.eps}
+% \includegraphics[height=1.2cm]{images/hist_fuzzy_obj3__180.eps}\\[5pt]
+% \includegraphics[height=1.2cm]{coil/beeld-12.eps}
+% \includegraphics[height=1.2cm]{images/hist_fuzzy_obj3__270.eps}\hspace{1cm}
+% \includegraphics[height=1.2cm]{coil/beeld-12.eps}
+% \includegraphics[height=1.2cm]{images/hist_fuzzy_obj3__315.eps}\\\vspace{5pt}
+% \caption{\label{fig:alle_vaaghistn_geel_bootje}De verschillende vaaghistogrammen voor de beelden 
+% van het geel bootje.}
+% \end{figure}
+
+\begin{figure}[!bp]
+\centering
+\vspace{10pt}\includegraphics[height=2cm]{images/hist_obj3__0.eps}
+\includegraphics[height=2cm,width=0.8\textwidth]{images/hist_fuzzy_obj3__0.eps}\\[5pt] %\hspace{1cm}
+\includegraphics[height=2cm]{images/hist_obj3__45.eps}
+\includegraphics[height=2cm,width=0.8\textwidth]{images/hist_fuzzy_obj3__45.eps}\\[5pt]
+\includegraphics[height=2cm]{images/hist_obj3__90.eps}
+\includegraphics[height=2cm,width=0.8\textwidth]{images/hist_fuzzy_obj3__90.eps}\\[5pt] %\hspace{1cm}
+\includegraphics[height=2cm]{images/hist_obj3__180.eps}
+\includegraphics[height=2cm,width=0.8\textwidth]{images/hist_fuzzy_obj3__180.eps}\\[5pt] %\\[5pt]
+\includegraphics[height=2cm]{images/hist_obj3__270.eps}
+\includegraphics[height=2cm,width=0.8\textwidth]{images/hist_fuzzy_obj3__270.eps}\\[5pt] %\hspace{1cm}
+\includegraphics[height=2cm]{images/hist_obj3__315.eps}
+\includegraphics[height=2cm,width=0.8\textwidth]{images/hist_fuzzy_obj3__315.eps}\\[10pt] %\\\vspace{5pt}
 \caption{\label{fig:alle_vaaghistn_geel_bootje}De verschillende vaaghistogrammen voor de beelden 
 van het geel bootje.}
 \end{figure}
@@ -308,9 +476,9 @@ van het geel bootje.}
 \label{sectie:histogrammen_experimentele_observaties}
 
 We vergelijken in deze sectie enkele similariteitsmaten die gebaseerd zijn op de bovenstaande
-histogrammen. Voor de parameter $\lambda$ van het vaaghistogram gebruiken we daarbij
-de waarde $5$.
-
+histogrammen. 
+%Voor de parameter $\lambda$ van het vaaghistogram gebruiken we daarbij
+%de waarde $5$.
 Figuur~\ref{fig:histgeb_gggrs_en_cputimes} toont de bekomen meetresultaten. 
 De corresponderende minimale en gemiddelde GGGR-waarden voor elk van de
 vaagsimilariteitsmaten, worden weergegeven in 
@@ -637,15 +805,15 @@ voor elk voorbeeld bij de similariteitsmaat op basis van het XYZ-histogram en $M
 & $M_{1a}$ & $M_{1b}$ & $M_{1c}$ & $M_{2}$ & $M_{3}$ & $M_{5}$ & $M_{5c}$ & $M_{6}$ \\
 \hline
 minimale GGGR & 0.0177 & 0.0190 & 0.0221 & 0.0409 & 0.0221 & 0.1234 & 0.1216 & 0.0221 \\
-gemiddelde GGGR & 0.0464 & 0.0627 & 0.0679 & 0.0709 & 0.0408 & 0.1869 & 0.1871 & 0.0408\vspace{8pt}\\
+gemiddelde GGGR & 0.0538 & 0.0686 & 0.0730 & 0.0755 & 0.0484 & 0.1872 & 0.1876 & 0.0484\vspace{8pt}\\
 & $M_{6c}$ & $M_{7}$ & $M_{7c}$ & $M_{8}$ & $M_{8c}$ & $M_{9}$ & $M_{9c}$ & $M_{10}$ \\
 \hline
 minimale GGGR & 0.0165 & 0.0242 & 0.0236 & 0.0126 & 0.0236 & 0.0353 & 0.0238 & 0.0240 \\
-gemiddelde GGGR & 0.0468 & 0.0468 & 0.0642 & 0.0502 & 0.0602 & 0.0751 & 0.0647 & 0.0655\vspace{8pt}\\
+gemiddelde GGGR & 0.0540 & 0.0536 & 0.0706 & 0.0640 & 0.0729 & 0.0798 & 0.0711 & 0.0789\vspace{8pt}\\
 & $M_{10c}$ & $M_{11}$ & $M_{11c}$ & $M_{12}$ & $M_{13}$ & $M_{I3}$ & $M_{I3c}$ \\
 \hline
 minimale GGGR & 0.0240 & 0.1234 & 0.1216 & 0.0236 & 0.0236 & 0.0080 & 0.0177 \\
-gemiddelde GGGR & 0.0610 & 0.1851 & 0.1871 & 0.0642 & 0.0603 & 0.0238 & 0.0467
+gemiddelde GGGR & 0.0739 & 0.1854 & 0.1876 & 0.0706 & 0.0729 & 0.0347 & 0.0540
 \end{tabular}
 \vspace{10pt}
 \caption{\label{tab:stat_gegevens_pseudo-vaag_histogram_maten}De minimale en gemiddelde 
@@ -848,12 +1016,13 @@ $w_{A,c}(p)=s(bin(c),bin(A(p)))$, $\forall p \in P$, en
 s(m,n)=
 %\left\{ \begin{array}{ll}
 \begin{cases}
-\alpha^{|m-n|} & \textrm{als } m, n \le 16 \textrm{ en } |m-n| \le R_1 \\
-\beta^{\min\{|m-n|, (m+n) \bmod 272\}} & \textrm{als } m, n > 16 \textrm{ en } \min\{|m-n|, (m+n) \bmod 272\} \le R_2 \\ 
+2^{-2 \cdot R_1} \cdot \binom{2 \cdot R_1}{R_1 + d_1(m,n)} & \textrm{als } m, n \le 16 \textrm{ en } d_1(m,n) \le R_1 \\[4pt]
+2^{-2 \cdot R_2} \cdot \binom{2 \cdot R_2}{R_2 + d_2(m,n)} & \textrm{als } m, n > 16 \textrm{ en } d_2(m,n) \le R_2 \\[4pt]
 0 & \textrm{anders}
 %\end{array} \right.
 \end{cases}
 \end{displaymath}
+met $d_1(m,n)=|m-n|$ en $d_2(m,n)=\min\{|m-n|, (m+n) \bmod 272\}$,
 voor alle $(m,n)$ uit $\mathbb{N}^2$. In \ref{sectie:kleurkwantisatie} hebben 
 we reeds vermeld dat SCT-kwantisatie eigenlijk een combinatie is van twee 
 uniforme kwantisaties: \'e\'en voor de grijstinten en een andere voor de 
@@ -902,28 +1071,33 @@ andere woorden: $c$ is \'e\'en van de grijstinten) dan geldt:
  & = \displaystyle\sum_{c' \in C'} h_A(c') \cdot s(bin(c),bin(c')) \displaybreak[0] \\
  & = \displaystyle\sum_{c' \in C'_{gr}} h_A(c') \cdot s(bin(c),bin(c')) + \sum_{c' \in C' \setminus C'_{gr}} h_A(c') \cdot 0 \displaybreak[0] \\
  & = \displaystyle\sum_{c' \in C'_{gr}} h_A(c') \cdot s(bin(c),bin(c')) \displaybreak[0] \\
- & = \displaystyle\sum_{c' \in C'_{gr}} \mathring{g}(bin(c')) \cdot \alpha^{|bin(c)-bin(c')|} \displaybreak[0] \\
- & = \displaystyle\sum_{k=-R_1}^{R_1} \mathring{g}(bin(c)+k) \cdot \alpha^{|k|}
+ & = \displaystyle\sum_{c' \in C'_{gr}} \mathring{g}(bin(c')) \cdot 2^{-2 \cdot R_1} \cdot \binom{2 \cdot R_1}{R_1+|bin(c)-bin(c')|} \displaybreak[0] \\
+ & = \displaystyle\sum_{k=-R_1}^{R_1} \mathring{g}(bin(c)+k) \cdot 2^{-2 \cdot R_1} \cdot \binom{2 \cdot R_1}{|k|}
 \end{align*}
 De transformatie van het deelhistogram voor de grijstinten kan dus inderdaad beschouwd worden
 als een \'e\'endimensionaal lineair filter met filtermasker 
 \begin{displaymath}
 m(k)= \begin{cases}
-\alpha^{|k|} & \textrm{als } |k| \le R_1 \\ 
+2^{-2 \cdot R_1} \cdot \binom{2 \cdot R_1}{|k|} & \textrm{als } |k| \le R_1 \\ 
 0 & \textrm{anders} 
 \end{cases}
 \end{displaymath}
 voor alle $k \in \mathbb{N}$. Dit is de corresponderende matrix: 
-$
-\left[ \begin{array}{l@{\quad\ldots\quad}lllll@{\quad\ldots\quad}l} \alpha^{R_1} & \alpha^{2} & \alpha & 1 & \alpha & \alpha^{2} & \alpha^{R_1} \end{array} \right]
-$.
+\begin{displaymath}
+2^{-2 \cdot R_1} \cdot \left[ \begin{array}{cccc} \binom{2 \cdot R_1}{0} & \binom{2 \cdot R_1}{1} & 
+\ldots & \binom{2\cdot R_1}{N-1} \end{array} \right]
+\end{displaymath}
+Er wordt dus eigenlijk een \'e\'endimensionaal binomiaalfilter toegepast.
+% $
+% \left[ \begin{array}{l@{\quad\ldots\quad}lllll@{\quad\ldots\quad}l} \alpha^{R_1} & \alpha^{2} & \alpha & 1 & \alpha & \alpha^{2} & \alpha^{R_1} \end{array} \right]
+% $.
 
 Het deelhistogram voor de kleurtinten wordt op een analoge manier gefilterd. 
 De ``hue''-waarden van het HSV-model zijn echter circulair. Daarom gebruiken we in dit geval
 periodieke uitbreiding in plaats van uitbreiding met nullen. Meer formeel geldt voor 
 elke $c \in C' \setminus C'_{gr}$:
 \begin{displaymath}
-\mathring{h}_A(c) = \sum_{k=-R_2}^{R_2} \mathring{g}'(bin(c)+k) \cdot \beta^{|k|}
+\mathring{h}_A(c) = \sum_{k=-R_2}^{R_2} \mathring{g}'(bin(c)+k) \cdot 2^{-2 \cdot R_2} \cdot \binom{2 \cdot R_2}{|k|}
 \end{displaymath}
 waarbij
 \begin{displaymath}
@@ -942,8 +1116,9 @@ $\{17,18,\ldots,256\}$ herhaalt $\mathring{g}'$ zich dus periodiek.
 %Die periodiciteit is
 %de reden voor de introductie van de extra functie $cd$ in de definitie van $w_{A,c}$.  
 
-Figuur~\ref{fig:uitgebreide_sct-histogrammen_smoothed} toont de pseudo-vage gladde SCT-histogrammen 
-geassocieerd aan de beelden van het geel bootje.
+In deze scriptie kiezen we steeds $R_1=1$ en $R_2=14$. Voor de beelden van het geel bootje
+bekomen we dan de pseudo-vage gladde 
+SCT-histogrammen uit figuur~\ref{fig:uitgebreide_sct-histogrammen_smoothed}.
 In figuur~\ref{fig:histogrammen_smoothed_sct} vergelijken we het gewone en het gladde pseudo-vage 
 SCT-histogram voor twee egaal groene beelden die perceptueel zeer similair zijn, maar waarbij 
 de beide kleuren toch in verschillende bins terecht komen. 
@@ -951,75 +1126,99 @@ de beide kleuren toch in verschillende bins terecht komen.
 \begin{figure}[bp]
 \vspace{5pt}
 \centering
+\begin{tabular}{@{}c@{}}
 %\subfigure[]{
+\begin{minipage}{\textwidth}
+\centering
 \includegraphics[width=2.5cm]{coil/beeld-12.eps}
+\includegraphics[width=2.5cm]{coil/beeld-16.eps}
+\includegraphics[width=2.5cm]{coil/beeld-17.eps}
 \includegraphics[width=2.5cm]{coil/beeld-13.eps}
 \includegraphics[width=2.5cm]{coil/beeld-14.eps}
 \includegraphics[width=2.5cm]{coil/beeld-15.eps}
-\includegraphics[width=2.5cm]{coil/beeld-16.eps}
-\includegraphics[width=2.5cm]{coil/beeld-17.eps}\\[5pt]
+\vspace{6pt}
+\end{minipage}\vspace{4pt}\\
 %\label{fig:uitgebreide_sct-histogrammen_beelden}
 %}
-\vspace{3pt}
 \subfigure[]{
+\begin{minipage}{\textwidth}
+\centering
 \includegraphics[width=2.5cm]{images/hist_sct_obj3__0.eps}
 \includegraphics[width=2.5cm]{images/hist_sct_obj3__45.eps}
 \includegraphics[width=2.5cm]{images/hist_sct_obj3__90.eps}
 \includegraphics[width=2.5cm]{images/hist_sct_obj3__180.eps}
 \includegraphics[width=2.5cm]{images/hist_sct_obj3__270.eps}
 \includegraphics[width=2.5cm]{images/hist_sct_obj3__315.eps}
+\vspace{6pt}
+\end{minipage}
 \label{fig:uitgebreide_sct-histogrammen_normaal}
-}
-\vspace{3pt}
+}\\
 \subfigure[]{
+\begin{minipage}{\textwidth}
+\centering
 \includegraphics[width=2.5cm]{images/hist_smoothed_sct_obj3__0.eps}
 \includegraphics[width=2.5cm]{images/hist_smoothed_sct_obj3__45.eps}
 \includegraphics[width=2.5cm]{images/hist_smoothed_sct_obj3__90.eps}
 \includegraphics[width=2.5cm]{images/hist_smoothed_sct_obj3__180.eps}
 \includegraphics[width=2.5cm]{images/hist_smoothed_sct_obj3__270.eps}
 \includegraphics[width=2.5cm]{images/hist_smoothed_sct_obj3__315.eps}
+\vspace{6pt}
+\end{minipage}
 \label{fig:uitgebreide_sct-histogrammen_smoothed}
-}
-\vspace{3pt}
+}\\
 \subfigure[]{
+\begin{minipage}{\textwidth}
+\centering
 \includegraphics[width=2.5cm]{images/hist_spatial_sct_obj3__0.eps}
 \includegraphics[width=2.5cm]{images/hist_spatial_sct_obj3__45.eps}
 \includegraphics[width=2.5cm]{images/hist_spatial_sct_obj3__90.eps}
 \includegraphics[width=2.5cm]{images/hist_spatial_sct_obj3__180.eps}
 \includegraphics[width=2.5cm]{images/hist_spatial_sct_obj3__270.eps}
 \includegraphics[width=2.5cm]{images/hist_spatial_sct_obj3__315.eps}
+\vspace{6pt}
+\end{minipage}
 \label{fig:uitgebreide_sct-histogrammen_spatial}
-}
-\vspace{3pt}
+}\\
 \subfigure[]{
+\begin{minipage}{\textwidth}
+\centering
 \includegraphics[width=2.5cm]{images/hist_smoothed_spatial_sct_obj3__0.eps}
 \includegraphics[width=2.5cm]{images/hist_smoothed_spatial_sct_obj3__45.eps}
 \includegraphics[width=2.5cm]{images/hist_smoothed_spatial_sct_obj3__90.eps}
 \includegraphics[width=2.5cm]{images/hist_smoothed_spatial_sct_obj3__180.eps}
 \includegraphics[width=2.5cm]{images/hist_smoothed_spatial_sct_obj3__270.eps}
 \includegraphics[width=2.5cm]{images/hist_smoothed_spatial_sct_obj3__315.eps}
+\vspace{6pt}
+\end{minipage}
 \label{fig:uitgebreide_sct-histogrammen_smooted_en_spatial}
-}
-\vspace{3pt}
+}\\
 \subfigure[]{
+\begin{minipage}{\textwidth}
+\centering
 \includegraphics[width=2.5cm]{images/hist_edgy_sct_obj3__0.eps}
 \includegraphics[width=2.5cm]{images/hist_edgy_sct_obj3__45.eps}
 \includegraphics[width=2.5cm]{images/hist_edgy_sct_obj3__90.eps}
 \includegraphics[width=2.5cm]{images/hist_edgy_sct_obj3__180.eps}
 \includegraphics[width=2.5cm]{images/hist_edgy_sct_obj3__270.eps}
 \includegraphics[width=2.5cm]{images/hist_edgy_sct_obj3__315.eps}
+\vspace{6pt}
+\end{minipage}
 \label{fig:uitgebreide_sct-histogrammen_edgy}
-}
-\vspace{3pt}
+}\\
 \subfigure[]{
+\begin{minipage}{\textwidth}
+\centering
 \includegraphics[width=2.5cm]{images/hist_smoothed_edgy_sct_obj3__0.eps}
 \includegraphics[width=2.5cm]{images/hist_smoothed_edgy_sct_obj3__45.eps}
 \includegraphics[width=2.5cm]{images/hist_smoothed_edgy_sct_obj3__90.eps}
 \includegraphics[width=2.5cm]{images/hist_smoothed_edgy_sct_obj3__180.eps}
 \includegraphics[width=2.5cm]{images/hist_smoothed_edgy_sct_obj3__270.eps}
 \includegraphics[width=2.5cm]{images/hist_smoothed_edgy_sct_obj3__315.eps}
+\vspace{6pt}
+\end{minipage}
 \label{fig:uitgebreide_sct-histogrammen_smooted_en_edgy}
 }
+\end{tabular}
 \caption{\label{fig:uitgebreide_sct-histogrammen}De pseudo-vage SCT-histogrammen (a) voor de 
 beelden van het geel bootje, samen met de corresponderende pseudo-vage (b) gladde histogrammen, 
 (c) spatiale histogrammen, (d) zowel gladde als
@@ -1029,28 +1228,39 @@ spatiale histogrammen, (e) randhistogrammen en (f) gladde randhistogrammen.}
 \begin{figure}[bp]
 \vspace{5pt}
 \centering
+\begin{tabular}{@{}c@{}}
 \subfigure[] {
+\begin{minipage}{\textwidth}
+\centering
 \includegraphics[height=2cm, width=2cm]{images/groen.eps}\quad
-\includegraphics[height=2cm, width=6cm]{images/sct_groen.eps}\quad
-\includegraphics[height=2cm, width=6cm]{images/smoothed_sct_groen.eps}
+\includegraphics[height=2cm, width=6cm]{images/hist_sct_groen.eps}\quad
+\includegraphics[height=2cm, width=6cm]{images/hist_smoothed_sct_groen.eps}
+\vspace{6pt}
+\end{minipage}
 \label{fig:histogrammen_smoothed_sct_groen}
-}
+}\\
 \subfigure[] {
+\begin{minipage}{\textwidth}
+\centering
 \includegraphics[height=2cm, width=2cm]{images/lichter_groen.eps}\quad
-\includegraphics[height=2cm, width=6cm]{images/sct_lichter_groen.eps}\quad
-\includegraphics[height=2cm, width=6cm]{images/smoothed_sct_lichter_groen.eps}
+\includegraphics[height=2cm, width=6cm]{images/hist_sct_lichter_groen.eps}\quad
+\includegraphics[height=2cm, width=6cm]{images/hist_smoothed_sct_lichter_groen.eps}
+\vspace{6pt}
+\end{minipage}
 \label{fig:histogrammen_smoothed_sct_lichter_groen}
 }
+\end{tabular}
 \caption{\label{fig:histogrammen_smoothed_sct}Twee volledig groene beelden die perceptueel 
-nagenoeg gelijk zijn, samen met het geassocieerde pseudo-vage SCT-histogram en de gladde 
-versie van dat histogram ($\alpha=1/3$, $R_1=6$, $\beta=2/3$ en $R_2=14$).}
+nagenoeg identiek zijn, samen met het geassocieerde pseudo-vage SCT-histogram en de gladde 
+versie van dat histogram.}
 \end{figure}
 
 \subsection{Spatiale histogrammen}
 
-Hoewel de beelden van het gele bootje uiteraard relevant zijn ten
-opzichte van elkaar, blijken hun gladde pseudo-vage SCT-histogrammen toch nog vrij verschillend 
-te zijn. De invloed van de achtergrondpixels is daar de oorzaak van. Als we veronderstellen dat
+%Hoewel de beelden van het gele bootje uiteraard relevant zijn ten
+%opzichte van elkaar, blijken hun gladde pseudo-vage SCT-histogrammen toch nog vrij verschillend 
+%te zijn. De invloed van de achtergrondpixels is daar de oorzaak van. 
+Als we veronderstellen dat
 de belangrijkste informatie zich steeds in het centrum van het beeld bevindt, dan kunnen we
 de invloed van minder belangrijke pixels beperken door het uitgebreid histogram te beschouwen waarbij
 $w_{A,c}(p)=\delta(bin(c)-bin(A(p))) \cdot t(d_m(p))$. In die gelijkheid is $d_m$ de functie die 
@@ -1074,10 +1284,12 @@ die keuze voor $w_{A,c}$ kan de formule voor $\mathring{h}_A$ als volgt vereenvo
  & = \displaystyle \sum_{p \in P} \delta (bin(c)-bin(A(p))) \cdot t(d_m(p))
 \end{align*}
 voor alle $c \in C'$. De pseudo-vage uitgebreide
-histogrammen die we met $\alpha=\gamma / 10$ en $\gamma = \min\{M/2, N/2\}$ bekomen voor de beelden 
-van het geel bootje, worden weergegeven in
+histogrammen die we met $\alpha=3 \cdot \gamma / 5$ en $\gamma = \min\{M/2, N/2\}$ bekomen voor 
+de beelden van het geel bootje, worden weergegeven in
 figuur~\ref{fig:uitgebreide_sct-histogrammen_spatial}. We noemen dergelijke histogrammen
-\emph{spatiale histogrammen}.
+\emph{spatiale histogrammen}. Figuur~\ref{fig:constructie_spatiale_histogrammen} illustreert
+de constructie van een kleurgebaseerde similariteitsmaat op basis van het pseudo-vaag 
+spatiaal SCT-histogram.
 
 \begin{figure}[bp]
 \vspace{5pt}
@@ -1107,6 +1319,22 @@ $t \circ d_m$ oplevert voor een beeld van $M$ bij $N$ pixels, met
 (c) $\alpha=2 \cdot \gamma / 5$, $\gamma = 6 \cdot \min\{M/2, N/2\} / 5$.}
 \end{figure}
 
+\begin{figure}[!bp]
+\vspace{10pt}
+\centering
+\subfigure[]{
+\includegraphics[height=3cm]{images/spatial_histograms.eps}
+\label{fig:constructie_spatiale_histogrammen}
+}
+\qquad
+\subfigure[]{
+\includegraphics[height=3cm]{images/edgy_histograms.eps}
+\label{fig:constructie_randhistogrammen}
+}
+\caption{\label{fig:constructie_uitgebreide_histogrammen}Constructie van een kleurgebaseerde 
+similariteitsmaat op basis van (a) spatiale histogrammen en (b) randhistogrammen.}
+\end{figure}
+
 We kunnen ook een histogram construeren dat zowel glad als spatiaal is. Dat doen we door
 $w_{A,c}(p)=s(bin(c),bin(A(p))) \cdot t(d_m(p))$, $\forall p \in P$, te kiezen. 
 Vermits er voor elke $c \in C'$ dan geldt dat
@@ -1122,10 +1350,11 @@ genereren we het uitgebreid histogram $\mathring{h}'_A$, waarbij de invloed van 
 afhankelijk is van zijn spatiale locatie. Daarna maken we dat histogram glad door lineair te 
 filteren. Figuur~\ref{fig:uitgebreide_sct-histogrammen_smooted_en_spatial} toont de
 pseudo-vage uitgebreide SCT-histogrammen die we zo bekomen voor de beelden van het geel
-bootje. Die histogrammen zijn onderling duidelijk minder verschillend dan de oorspronkelijke
-pseudo-vage SCT-histogrammen. Similareitsmaten op basis van de gladde spatiale histogrammen
-zullen in dit geval dus grotere similariteiten teruggeven, wat beter in overeenstemming is met het 
-waargenomen verschil tussen de beelden.
+bootje. 
+% Die histogrammen zijn onderling duidelijk minder verschillend dan de oorspronkelijke
+% pseudo-vage SCT-histogrammen. Similareitsmaten op basis van de gladde spatiale histogrammen
+% zullen in dit geval dus grotere similariteiten teruggeven, wat beter in overeenstemming is met het 
+% waargenomen verschil tussen de beelden.
  
 Een spatiaal histogram, geassocieerd met een beeld $A$, kan ge\"interpreteerd worden als het 
 histogram voor een \emph{vaag gebied} in $A$. Als we een beeld $B$ construeren door de pixels
@@ -1145,22 +1374,35 @@ Die randsterkte bepalen we op basis van de gradi\"ent, zoals uitgelegd in \ref{s
 We noemen de histogrammen die we zo bekomen \emph{randhistogrammen}. 
 Figuur~\ref{fig:uitgebreide_sct-histogrammen_edgy} toont een aantal voorbeelden van
 pseudo-vage SCT-histogrammen die gebaseerd zijn op een randhistogram.
+Via de keuze $w_{A,c}(p)=s(bin(c),bin(A(c))) \cdot r(d_m(p))$, $\forall p \in P$, 
+bekomen we de gladde versies uit
+figuur~\ref{fig:uitgebreide_sct-histogrammen_smooted_en_edgy}. 
 
-Via de keuze $w_{A,c}(p)=s(bin(c),bin(A(c))) \cdot r(d_m(p))$, $\forall p \in P$, komen
-we tot een een glad randhistogram. De gladde versies van de pseudo-vage
-randhistogrammen uit figuur~\ref{fig:uitgebreide_sct-histogrammen_edgy}, worden
-weergegeven in figuur~\ref{fig:uitgebreide_sct-histogrammen_smooted_en_edgy}. 
+% Via de keuze $w_{A,c}(p)=s(bin(c),bin(A(c))) \cdot r(d_m(p))$, $\forall p \in P$, komen
+% we tot een een glad randhistogram. De gladde versies van de pseudo-vage
+% randhistogrammen uit figuur~\ref{fig:uitgebreide_sct-histogrammen_edgy}, worden
+% weergegeven in figuur~\ref{fig:uitgebreide_sct-histogrammen_smooted_en_edgy}. 
 %In 
 %figuur~\ref{fig:uitgebreide_sct-histogrammen} verschillen de gladde pseudo-vage 
 %randhistgrammen onderling iets meer dan de gladde pseudo-vage spatiale histogrammen,
 %maar ze lijken wel een stuk beter op elkaar dan de histogrammen uit 
 %figuur~\ref{fig:uitgebreide_sct-histogrammen_smoothed}. 
-Net zoals de gladde spatiale histogrammen, zullen de
-gladde randhistogrammen aanleiding geven tot grotere similariteiten
-voor de beelden van het geel bootje.
-In vergelijking met spatiale histogrammen hebben randhistogrammen echter het
-voordeel dat ze ook tot goede resultaten kunnen leiden als de belangrijkste inhoud niet
-in het centrum van het beeld gelocaliseerd is. Daartegenover staat dan natuurlijk wel
-dat randhistogrammen minder valse positieven onderdrukken.
+
+% Net zoals de gladde spatiale histogrammen, zullen de
+% gladde randhistogrammen aanleiding geven tot grotere similariteiten
+% voor de beelden van het geel bootje.
+% In vergelijking met spatiale histogrammen hebben randhistogrammen echter het
+% voordeel dat ze ook tot goede resultaten kunnen leiden als de belangrijkste inhoud niet
+% in het centrum van het beeld gelocaliseerd is. Daartegenover staat dan natuurlijk wel
+% dat randhistogrammen minder valse positieven onderdrukken.
 
 \subsection{Experimentele observaties}
+
+\begin{figure}[bp]
+\centering
+\includegraphics[width=\textwidth]{/home/klbostee/Workspace/Thesis/plots/histgeb_sct1_gggrs_en_cputimes_filled.eps} 
+\includegraphics[width=\textwidth]{/home/klbostee/Workspace/Thesis/plots/histgeb_sct2_gggrs_en_cputimes_filled.eps}
+\vspace{1pt}
+\caption{\label{fig:histgeb_gggrs_en_cputimes}De GGGR-waarde en de gebruikte rekentijd in ms voor elk 
+van de similariteitsmaten op basis van uitgebreide SCT-histrogrammen.}
+\end{figure}

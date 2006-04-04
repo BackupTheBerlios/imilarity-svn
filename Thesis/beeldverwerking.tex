@@ -523,7 +523,14 @@ posities $(k,l)$ die niet weergegeven worden, dan kunnen we dat masker noteren a
 = \frac{1}{16}\left[ \begin{array}{c} 1\\ 2\\ 1 \end{array} \right] \cdot 
 \left[ \begin{array}{ccc} 1 & 2 & 1 \end{array} \right]
 \end{displaymath}
-Zoals ge\"illustreerd in figuur~\ref{fig:indische_ruizig_en_binom}, kan een binomiaalfilter gebruikt worden om ruis te onderdrukken.
+Meer algemeen kan het $N$x$N$ binomiaalfilter geschreven worden als de matrix $R^T \cdot R$,
+waarbij: 
+\begin{displaymath}
+R=2^{-N+1} \cdot \left[ \begin{array}{cccc} \binom{N-1}{0} & \binom{N-1}{1} & 
+\ldots & \binom{N-1}{N-1} \end{array} \right]
+\end{displaymath}
+Zoals ge\"illustreerd in figuur~\ref{fig:indische_ruizig_en_binom}, kan een binomiaalfilter 
+gebruikt worden om ruis te onderdrukken.
 
 \begin{figure}[bp]
 \vspace{10pt}

@@ -1,0 +1,69 @@
+Moments (2) using Components with Fuzzy using M3 and Minimum	30161	0.006277056277056278
+Moments (2) using Components with Fuzzy using M6 and Minimum	30312	0.006277056277056278
+Moments (2) using Components with Fuzzy using M7 and Minimum	30165	0.006277056277056278
+Moments (2) using Components with Fuzzy using MI3 and Minimum	29950	0.006277056277056278
+Moments (2) using Components with Fuzzy using M9 and Minimum	29729	0.006493506493506493
+Moments (2) using Components with Fuzzy using M5 and Minimum	30143	0.00735930735930736
+Moments (2) using Components with Fuzzy using M11 and Minimum	29847	0.00735930735930736
+Moments (2) using Components with Fuzzy using M9 and Product	29781	0.008225108225108226
+Moments (2) using Components with Fuzzy using M9 and Arithmetic Mean	29815	0.008441558441558441
+Moments (2) using Components with Fuzzy using M7 and Product	29719	0.008441558441558443
+Moments (2) using Components with Fuzzy using M3 and Product	29769	0.008874458874458873
+Moments (2) using Components with Fuzzy using M7 and Arithmetic Mean	29805	0.008874458874458875
+Moments (2) using Components with Fuzzy using M3 and Arithmetic Mean	29809	0.009307359307359308
+Moments (2) using Components with Fuzzy using M6 and Product	29762	0.009307359307359308
+Moments (2) using Components with Fuzzy using MI3 and Product	29885	0.009307359307359308
+Moments (2) using Components with Fuzzy using M6 and Arithmetic Mean	29984	0.010173160173160174
+Moments (2) using Components with Fuzzy using MI3 and Arithmetic Mean	30248	0.010173160173160174
+Moments (2) using Components with Fuzzy using M5 and Product	29758	0.011471861471861473
+Moments (2) using Components with Fuzzy using M11 and Product	29838	0.011471861471861473
+Moments (2) using Components with Fuzzy using M5 and Arithmetic Mean	29744	0.012770562770562773
+Moments (2) using Components with Fuzzy using M11 and Arithmetic Mean	29905	0.012770562770562773
+Moments (2) using Components with Fuzzy using M1a and Arithmetic Mean	30551	0.015584415584415584
+Moments (2) using Components with Fuzzy using M1a and Product	29693	0.0158008658008658
+Moments (2) using Components with Fuzzy using M1a and Minimum	30098	0.016017316017316017
+Moments (2) using Components with Fuzzy using M5c and Minimum	30284	0.02012987012987013
+Moments (2) using Components with Fuzzy using M11c and Minimum	29764	0.02012987012987013
+Moments (2) using Components with Fuzzy using M9c and Arithmetic Mean	29925	0.020129870129870133
+Moments (2) using Components with Fuzzy using M7c and Arithmetic Mean	29909	0.02034632034632035
+Moments (2) using Components with Fuzzy using M12 and Arithmetic Mean	30220	0.02034632034632035
+Moments (2) using Components with Fuzzy using M9c and Product	29808	0.02034632034632035
+Moments (2) using Components with Fuzzy using M7c and Product	29749	0.020562770562770564
+Moments (2) using Components with Fuzzy using M12 and Product	30045	0.020562770562770564
+Moments (2) using Components with Fuzzy using M6c and Arithmetic Mean	29809	0.021212121212121213
+Moments (2) using Components with Fuzzy using MI3c and Arithmetic Mean	30269	0.021212121212121213
+Moments (2) using Components with Fuzzy using M6c and Product	29770	0.021645021645021648
+Moments (2) using Components with Fuzzy using MI3c and Product	29847	0.021645021645021648
+Moments (2) using Components with Fuzzy using M9c and Minimum	29719	0.02207792207792208
+Moments (2) using Components with Fuzzy using M7c and Minimum	30316	0.02251082251082251
+Moments (2) using Components with Fuzzy using M12 and Minimum	29808	0.02251082251082251
+Moments (2) using Components with Fuzzy using M1b and Product	29725	0.02640692640692641
+Moments (2) using Components with Fuzzy using M1b and Arithmetic Mean	29845	0.02683982683982684
+Moments (2) using Components with Fuzzy using M5c and Arithmetic Mean	29783	0.027922077922077918
+Moments (2) using Components with Fuzzy using M11c and Arithmetic Mean	29927	0.027922077922077918
+Moments (2) using Components with Fuzzy using M5c and Product	29750	0.027922077922077918
+Moments (2) using Components with Fuzzy using M11c and Product	29832	0.027922077922077918
+Moments (2) using Components with Fuzzy using M6c and Minimum	30180	0.02813852813852814
+Moments (2) using Components with Fuzzy using MI3c and Minimum	29813	0.02813852813852814
+Moments (2) using Components with Fuzzy using M1b and Minimum	30115	0.030086580086580092
+Moments (2) using Components with Fuzzy using M1c and Product	29740	0.032251082251082246
+Moments (2) using Components with Fuzzy using M1c and Arithmetic Mean	29817	0.03225108225108225
+Moments (2) using Components with Fuzzy using M2 and Arithmetic Mean	29760	0.0354978354978355
+Moments (2) using Components with Fuzzy using M2 and Product	29717	0.03593073593073593
+Moments (2) using Components with Fuzzy using M1c and Minimum	30138	0.04004329004329004
+Moments (2) using Components with Fuzzy using M2 and Minimum	30093	0.049134199134199134
+Moments (2) using Components with Fuzzy using M10c and Minimum	29743	0.2616883116883117
+Moments (2) using Components with Fuzzy using M8c and Minimum	29731	0.26277056277056277
+Moments (2) using Components with Fuzzy using M13 and Minimum	29819	0.2632034632034632
+Moments (2) using Components with Fuzzy using M8 and Minimum	29768	0.2683982683982684
+Moments (2) using Components with Fuzzy using M10 and Minimum	29730	0.2748917748917749
+Moments (2) using Components with Fuzzy using M8c and Product	29875	0.2785714285714285
+Moments (2) using Components with Fuzzy using M8c and Arithmetic Mean	29833	0.27943722943722943
+Moments (2) using Components with Fuzzy using M13 and Product	29908	0.28008658008658005
+Moments (2) using Components with Fuzzy using M13 and Arithmetic Mean	30257	0.2809523809523809
+Moments (2) using Components with Fuzzy using M10c and Product	29763	0.28225108225108225
+Moments (2) using Components with Fuzzy using M10c and Arithmetic Mean	29857	0.2826839826839827
+Moments (2) using Components with Fuzzy using M8 and Product	29759	0.29069264069264067
+Moments (2) using Components with Fuzzy using M8 and Arithmetic Mean	29838	0.2911255411255411
+Moments (2) using Components with Fuzzy using M10 and Product	29798	0.2924242424242424
+Moments (2) using Components with Fuzzy using M10 and Arithmetic Mean	29873	0.29285714285714287
