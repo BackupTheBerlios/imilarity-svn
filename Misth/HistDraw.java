@@ -19,7 +19,6 @@ import de.berlios.imilarity.color.Yxy;
 import de.berlios.imilarity.fuzzy.FuzzyHistogram;
 import de.berlios.imilarity.fuzzy.FuzzySet;
 import de.berlios.imilarity.fuzzy.PseudoFuzzyHistogram;
-import de.berlios.imilarity.image.FocalImage;
 import de.berlios.imilarity.image.GrayscaleImage;
 import de.berlios.imilarity.image.HsvImage;
 import de.berlios.imilarity.image.Image;
@@ -29,10 +28,12 @@ import de.berlios.imilarity.image.LabImage;
 import de.berlios.imilarity.image.I1i2i3Image;
 import de.berlios.imilarity.image.XyzImage;
 import de.berlios.imilarity.image.YxyImage;
+import de.berlios.imilarity.image.quantizers.FocalQuantizer;
 import de.berlios.imilarity.image.quantizers.Quantizer;
 import de.berlios.imilarity.image.quantizers.SctQuantizer;
 import de.berlios.imilarity.image.quantizers.UniformQuantizer;
 import de.berlios.imilarity.scales.DefaultScale;
+import de.berlios.imilarity.scales.EdgeScale;
 import de.berlios.imilarity.scales.Scale;
 import de.berlios.imilarity.scales.SpatialScale;
 import de.berlios.imilarity.smoothers.DefaultSmoother;
@@ -95,7 +96,7 @@ public class HistDraw {
 		BufferedImage histImage = 
 			new BufferedImage(count,HIST_HEIGHT+SPACING+BAR_HEIGHT,BufferedImage.TYPE_INT_RGB);
 		Graphics g = histImage.getGraphics();
-		g.setColor(Color.WHITE);
+		g.setColor(new Color(220,220,220));
 		g.fillRect(0,0,count,HIST_HEIGHT+SPACING+BAR_HEIGHT);
 		g.setColor(Color.BLACK);
 		
@@ -188,6 +189,7 @@ public class HistDraw {
 		}
 	}
 	
+	/*
 	private static class FocalFactory implements ColorFactory {
 		private Quantizer quantizer;
 		public FocalFactory(Quantizer quantizer) {
@@ -213,7 +215,6 @@ public class HistDraw {
 		}
 	}
 	
-	/*
 	private static class HsvFactory implements ColorFactory {
 		public Color createColor(double[] comps) {
 			double h = comps[0]*6;
@@ -395,19 +396,20 @@ public class HistDraw {
 				"png", new File(OUTPUT_DIR+"/yxy_"+name));
 		System.out.println("yxy done.");
 
-		FocalImage fi = new FocalImage(new LabImage(image));
-		ImageIO.write(drawHistogram(fi, new int[] {11}, 
-				new FocalFactory(fi.getQuantizer())), 
+		//FocalImage fi = new FocalImage(new LabImage(image));
+		ImageIO.write(drawHistogram(new LabImage(image), new FocalQuantizer(), 
+				//new FocalFactory(fi.getQuantizer())),
+				new RgbFactory()),
 				"png", new File(OUTPUT_DIR+"/focal_"+name));
 		System.out.println("focal done.");
 		
 		HsvImage nhi = new HsvImage(image);
-		Quantizer sctQuant = new SctQuantizer(6,250);
+		Quantizer sctQuant = new SctQuantizer(16, 240);
 		ImageIO.write(
 				drawHistogram(
 						nhi, 
 						sctQuant, 
-						new SctFactory(sctQuant)
+						new ColorSpaceFactory(new Hsv())
 					), 
 				"png", new File(OUTPUT_DIR+"/sct_"+name));
 		System.out.println("sct done.");
@@ -415,8 +417,8 @@ public class HistDraw {
 				drawHistogram(
 						nhi, 
 						sctQuant, 
-						new SctFactory(sctQuant),
-						new SctSmoother(6, 250)
+						new ColorSpaceFactory(new Hsv()),
+						new SctSmoother(16, 240)
 					), 
 				"png", new File(OUTPUT_DIR+"/smoothed_sct_"+name));
 		System.out.println("smoothed sct done.");
@@ -424,7 +426,7 @@ public class HistDraw {
 				drawHistogram(
 						nhi, 
 						sctQuant, 
-						new SctFactory(sctQuant),
+						new ColorSpaceFactory(new Hsv()),
 						new DefaultSmoother(),
 						new SpatialScale()
 					), 
@@ -434,12 +436,32 @@ public class HistDraw {
 				drawHistogram(
 						nhi, 
 						sctQuant, 
-						new SctFactory(sctQuant),
-						new SctSmoother(6, 250),
+						new ColorSpaceFactory(new Hsv()),
+						new SctSmoother(16, 240),
 						new SpatialScale()
 					), 
 				"png", new File(OUTPUT_DIR+"/smoothed_spatial_sct_"+name));
 		System.out.println("smoothed spatial sct done.");
+		ImageIO.write(
+				drawHistogram(
+						nhi, 
+						sctQuant, 
+						new ColorSpaceFactory(new Hsv()),
+						new DefaultSmoother(),
+						new EdgeScale()
+					), 
+				"png", new File(OUTPUT_DIR+"/edgy_sct_"+name));
+		System.out.println("edgy sct done.");
+		ImageIO.write(
+				drawHistogram(
+						nhi, 
+						sctQuant, 
+						new ColorSpaceFactory(new Hsv()),
+						new SctSmoother(16, 240),
+						new EdgeScale()
+					), 
+				"png", new File(OUTPUT_DIR+"/smoothed_edgy_sct_"+name));
+		System.out.println("smoothed edgy sct done.");
 		
 		ImageIO.write(drawHistogram(new XyzImage(image), new int[] {8,4,8}, 
 				new ColorSpaceFactory(new Xyz())), 
@@ -447,35 +469,35 @@ public class HistDraw {
 		System.out.println("xyz done.");
 		
 		
-		Quantizer quantizer = new UniformQuantizer(new int[] {8,8,8});
+		Quantizer quantizer = new UniformQuantizer(new int[] {10,10,10});
 		FuzzyHistogram fh = new FuzzyHistogram(new LabImage(image), quantizer);
-		ColorFactory cf = new ColorSpaceFactory(new Lab());
-		ImageIO.write(drawHistogram(fh, new UniformQuantizer(new int[] {7,7,7}), 
+		//ColorFactory cf = new ColorSpaceFactory(new Lab());
+		ImageIO.write(drawHistogram(fh, quantizer, 
 				new ColorSpaceFactory(new Lab())), "png", new File(OUTPUT_DIR+"/fuzzy_"+name));
 		
 		
-		int count = fh.getElementsCount();
-		BufferedImage histImage = 
-			new BufferedImage(count,HIST_HEIGHT+SPACING+BAR_HEIGHT,BufferedImage.TYPE_INT_RGB);
-		Graphics g = histImage.getGraphics();
-		g.setColor(Color.WHITE);
-		g.fillRect(0,0,count,HIST_HEIGHT+SPACING+BAR_HEIGHT);
-		g.setColor(Color.BLACK);
-		
-		for (int i = 0; i < fh.getElementsCount(); i++) {
-			
-			g.setColor(cf.createColor(quantizer.getBinColor(i).getComponents()));
-			
-			double m = fh.getMembership(i).abs();
-			if (m > 0)
-				g.drawLine(i, HIST_HEIGHT-((int)(m*HIST_HEIGHT)), i, HIST_HEIGHT);
-			
-			g.drawLine(i, HIST_HEIGHT+SPACING, i, HIST_HEIGHT+SPACING+BAR_HEIGHT);
-		}
-		
-		g.dispose();
-		ImageIO.write(histImage, "png", new File(OUTPUT_DIR+"/fuzzy_"+name));
-		System.out.println("fuzzy done");
+//		int count = fh.getElementsCount();
+//		BufferedImage histImage = 
+//			new BufferedImage(count,HIST_HEIGHT+SPACING+BAR_HEIGHT,BufferedImage.TYPE_INT_RGB);
+//		Graphics g = histImage.getGraphics();
+//		g.setColor(Color.WHITE);
+//		g.fillRect(0,0,count,HIST_HEIGHT+SPACING+BAR_HEIGHT);
+//		g.setColor(Color.BLACK);
+//		
+//		for (int i = 0; i < fh.getElementsCount(); i++) {
+//			
+//			g.setColor(cf.createColor(quantizer.getBinColor(i).getComponents()));
+//			
+//			double m = fh.getMembership(i).abs();
+//			if (m > 0)
+//				g.drawLine(i, HIST_HEIGHT-((int)(m*HIST_HEIGHT)), i, HIST_HEIGHT);
+//			
+//			g.drawLine(i, HIST_HEIGHT+SPACING, i, HIST_HEIGHT+SPACING+BAR_HEIGHT);
+//		}
+//		
+//		g.dispose();
+//		ImageIO.write(histImage, "png", new File(OUTPUT_DIR+"/fuzzy_"+name));
+		System.out.println("fuzzy done.");
 		
 	}
 
@@ -491,6 +513,13 @@ public class HistDraw {
 		drawHistograms("/home/klbostee/Thesis/Histograms/"+objname+"__270.png");
 		drawHistograms("/home/klbostee/Thesis/Histograms/"+objname+"__315.png");
 		
-		//drawHistograms("/home/klbostee/Thesis/Misc/flowers.png");
+//		drawHistograms("/home/klbostee/Thesis/Misc/flowers.png");
+//		
+//		drawHistograms("/home/klbostee/Thesis/Histograms/rood.png");
+//		drawHistograms("/home/klbostee/Thesis/Histograms/groen.png");
+//		drawHistograms("/home/klbostee/Thesis/Histograms/lichter_groen.png");
+		
+		drawHistograms("/home/klbostee/Thesis/Histograms/beeld_A.png");
+		drawHistograms("/home/klbostee/Thesis/Histograms/beeld_B.png");
 	}
 }

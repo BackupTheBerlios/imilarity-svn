@@ -11,10 +11,13 @@ import de.berlios.imilarity.image.ImageData;
 import de.berlios.imilarity.image.quantizers.NeuQuant;
 import de.berlios.imilarity.image.quantizers.Quantizer;
 import de.berlios.imilarity.image.quantizers.WuQuantizer;
+import de.berlios.imilarity.measures.ComponentsImageMeasure;
 import de.berlios.imilarity.measures.FuzzyImageMeasure;
 import de.berlios.imilarity.measures.FuzzyMeasure;
+import de.berlios.imilarity.measures.ImageMeasure;
 import de.berlios.imilarity.measures.ImageMeasureBase;
 import de.berlios.imilarity.measures.M1a;
+import de.berlios.imilarity.measures.M5;
 
 
 public class DominantPrint extends ImageMeasureBase {
@@ -48,20 +51,35 @@ public class DominantPrint extends ImageMeasureBase {
 		FuzzySet targetColors = calculateColors(getTarget());
 		
 		System.out.println("Querycolors:");
+		double sum = 0, sum1 = 0, sum2 = 0, sum3 = 0;
 		for (int i = 0; i < queryColors.getElementsCount(); i++) {
 			double[] comps = queryColors.getMembership(i).getComponents();
 			for (int j = 0; j < comps.length; j++)
-				System.out.print((int)(comps[j]*255) + " ");
+				System.out.print((int)(comps[j]*255) + "\t(" + comps[j] + ")\t");
 			System.out.println();
+			
+			sum += queryColors.getMembership(i).abs();
+			System.out.println("+ "+queryColors.getMembership(i).abs());
+			sum1 += comps[0];
+			sum2 += comps[1];
+			sum3 += comps[2];
 		}
+		System.out.println("tralie: "+sum+" c1: " +sum1+" c2: "+sum2+" c3: "+sum3);
 		
 		System.out.println("TargetColors:");
+		sum = 0; sum1 = 0; sum2 = 0; sum3 = 0;
 		for (int i = 0; i < targetColors.getElementsCount(); i++) {
 			double[] comps = targetColors.getMembership(i).getComponents();
 			for (int j = 0; j < comps.length; j++)
-				System.out.print((int)(comps[j]*255) + " ");
+				System.out.print((int)(comps[j]*255) + "\t(" + comps[j] + ")\t");
 			System.out.println();
+			
+			sum += queryColors.getMembership(i).abs();
+			sum1 += comps[0];
+			sum2 += comps[1];
+			sum3 += comps[2];
 		}
+		System.out.println("tralie: "+sum+" c1: " +sum1+" c2: "+sum2+" c3: "+sum3);
 		
 		fuzzyMeasure.setQuery(queryColors);
 		fuzzyMeasure.setTarget(targetColors);
@@ -122,11 +140,13 @@ public class DominantPrint extends ImageMeasureBase {
 	
 	
 	public static void main(String[] args) throws IOException {
-		DominantPrint dp = new DominantPrint(
+		ImageMeasure dp = new DominantPrint(
 //		MultiresImageMeasure mp = new MultiresImageMeasure(		
-				new M1a(), new WuQuantizer(8), 8);
+				new M5(), new WuQuantizer(8), 8);
 		dp.setQuery(ImageData.loadFile("/home/klbostee/Workspace/Thesis/images/beeld_A.png").getRgbImage());
+		//dp.setQuery(ImageData.loadFile("/home/klbostee/Images/coil5/obj3__0.png").getRgbImage());
 		dp.setTarget(ImageData.loadFile("/home/klbostee/Workspace/Thesis/images/beeld_B.png").getRgbImage());
+		//dp.setTarget(ImageData.loadFile("/home/klbostee/Images/coil5/obj3__90.png").getRgbImage());
 		double sim = dp.getSimilarity();
 		System.out.println("Global sim: " + sim);
 	}
