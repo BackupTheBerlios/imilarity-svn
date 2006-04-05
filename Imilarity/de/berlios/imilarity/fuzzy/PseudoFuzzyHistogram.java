@@ -77,6 +77,7 @@ public class PseudoFuzzyHistogram extends FuzzySetBase {
 			double avg = 0.0;
 			for (int i = -n; i <= n; i++) {
 				Integer index = new Integer(smoother.getIndex(j, i));
+				//Integer index = new Integer(j+i);
 				elements.add(index);
 				if (index.intValue() >= 0) {
 					Double value = (Double) histogram.get(index);
@@ -85,7 +86,8 @@ public class PseudoFuzzyHistogram extends FuzzySetBase {
 					avg += smoother.getIncrement(j, i, value.doubleValue());
 				}
 			}
-			double v = avg/(2*n+1);
+			//double v = avg/(2*n+1);
+			double v = avg;
 			if (v > max) max = v;
 		}
 		//System.out.println("narrowElementsCount: " + elements.size());
@@ -116,6 +118,7 @@ public class PseudoFuzzyHistogram extends FuzzySetBase {
 		double avg = 0.0;
 		for (int i = -n; i <= n; i++) {
 			int index = smoother.getIndex(element, i);
+			//int index = element+i;
 			if (index >= 0) {
 				Double value = (Double) histogram.get(new Integer(index));
 				if (value == null)
@@ -123,7 +126,8 @@ public class PseudoFuzzyHistogram extends FuzzySetBase {
 				avg += smoother.getIncrement(element, i, (value.doubleValue())); // / max));
 			}
 		}
-		return new SimpleMembership((avg/(2*n+1)) / max);
+		//return new SimpleMembership((avg/(2*n+1)) / max);
+		return new SimpleMembership(avg / max);
 	}
 
 	public FuzzySet intersection(FuzzySet set) {

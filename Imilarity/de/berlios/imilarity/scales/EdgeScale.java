@@ -22,9 +22,10 @@ public class EdgeScale implements Scale {
 		double a = y > 0 ? gray(image.getColor(x,y-1).getComponents()) : 0;
 		double b = y < h-1 ? gray(image.getColor(x,y+1).getComponents()) : 0;
 		double v1 = (r-l)/2.0, v2 = (b-a)/2.0;
-		return Math.pow(Math.sqrt(v1*v1+v2*v2)/Math.sqrt(2),2);
-		//if (value > 1) value = 1;
-		//return value;
+		//double value = Math.pow(Math.sqrt(v1*v1+v2*v2)/Math.sqrt(2),2);
+		double value = 3*Math.sqrt(v1*v1+v2*v2)/Math.sqrt(2);
+		if (value > 1) value = 1;
+		return value;
 	}
 	
 	private static double gray(double[] comps) {

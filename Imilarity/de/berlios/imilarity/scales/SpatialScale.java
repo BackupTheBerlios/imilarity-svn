@@ -14,7 +14,7 @@ public class SpatialScale implements Scale {
 		h = image.getHeight();
 		//gamma = Math.sqrt(w*w/4 + h*h/4); 
 		gamma = Math.min(w/2, h/2);
-		alpha = 0.1*gamma;
+		alpha = 0.6*gamma;
 		beta = (gamma+alpha)/2.0;
 	}
 

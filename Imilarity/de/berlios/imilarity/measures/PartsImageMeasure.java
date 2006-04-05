@@ -11,7 +11,7 @@ import de.berlios.imilarity.fuzzy.ColorMembership;
 import de.berlios.imilarity.image.Image;
 import de.berlios.imilarity.image.PartOfImage;
 
-public class MultiresImageMeasure extends ImageMeasureBase {
+public class PartsImageMeasure extends ImageMeasureBase {
 
 	private ImageMeasure measure;
 	private Aggregator aggregator;
@@ -20,7 +20,7 @@ public class MultiresImageMeasure extends ImageMeasureBase {
 	private static final int PART_W = 8, PART_H = 8;
 	
 	
-	public MultiresImageMeasure(ImageMeasure measure, Aggregator aggregator) {
+	public PartsImageMeasure(ImageMeasure measure, Aggregator aggregator) {
 		if (measure == null)
 			throw new NullPointerException("measure == null");
 		this.measure = measure;
@@ -29,7 +29,7 @@ public class MultiresImageMeasure extends ImageMeasureBase {
 		this.aggregator = aggregator;
 	}
 	
-	public MultiresImageMeasure(ImageMeasure measure) {
+	public PartsImageMeasure(ImageMeasure measure) {
 		this(measure, new ArithmeticMean());
 	}
 	
@@ -84,7 +84,7 @@ public class MultiresImageMeasure extends ImageMeasureBase {
 	}
 
 	public String getDescription() {
-		return "Multiresolution " + measure.getDescription();
+		return "Parts using " + measure.getDescription();
 	}
 
 	

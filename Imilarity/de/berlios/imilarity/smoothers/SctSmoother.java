@@ -3,19 +3,19 @@ package de.berlios.imilarity.smoothers;
 
 public class SctSmoother implements Smoother {
 
-	private static final int RANGE = 14;
+	private static final int RANGE = 8;
 	
-	private static final double[] GRAY_WEIGHTS = {
-		1.0, 0.3333333333333333, 0.1111111111111111, 0.037037037037037035, 0.012345679012345678,
-		0.00411522633744856, 0.0013717421124828531
+	
+	private static final double[] GRAY_WEIGHTS = { 
+		0.5, 0.25 
 	};
 	
 	private static final double[] COLOR_WEIGHTS = {
-		1.0, 0.6666666666666666, 0.4444444444444444, 0.2962962962962963, 0.19753086419753085,
-		0.13168724279835392, 0.0877914951989026, 0.05852766346593507, 0.03901844231062338,
-		0.02601229487374892, 0.017341529915832612, 0.011561019943888409, 0.0077073466292589396,
-		0.005138231086172626, 0.0034254873907817508
+		0.14944598078727722, 0.13948291540145874, 0.11332986876368523, 
+		0.07999755442142487, 0.04888739436864853, 0.025730207562446594, 
+		0.011578593403100967, 0.004410892724990845, 0.0014034658670425415
 	};
+	
 	
 	private int gbc, cbc; // gbc = gray bins count, cbc = color bins count
 
@@ -66,14 +66,49 @@ public class SctSmoother implements Smoother {
 	// PROGRAMMA DAT GEWICHTEN PRINT:
 	
 	public static void main(String[] args) {
-		for (int i = 0; i <= RANGE; i++)
-			System.out.println("GRAY "+i+": "+(1.0/Math.pow(3, Math.abs(i))));
-		for (int i = 0; i <= RANGE; i++) 
-			System.out.println("COLOR "+i+": "+(1.0/Math.pow(1.5, Math.abs(i))));
+//		for (int i = 0; i <= RANGE; i++)
+//			System.out.println("GRAY "+i+": "+(1.0/Math.pow(4, Math.abs(i))));
+//		for (int i = 0; i <= RANGE; i++) 
+//			System.out.println("COLOR "+i+": "+(1.0/Math.pow(1.5, Math.abs(i))));
 		
-//		TEST:
+		int[] c1 = binoms(2);
+		double sum1 = 0.0;
+		for (int i = 0; i < c1.length; i++)
+			sum1 += c1[i];
+		for (int i = c1.length/2; i < c1.length; i++)
+			System.out.println("GRAY "+i+": "+(c1[i]/sum1));
+		
+		int[] c2 = binoms(28);
+		double sum2 = 0.0;
+		for (int i = 0; i < c2.length; i++)
+			sum2 += c2[i];
+		for (int i = c2.length/2; i < c2.length; i++) 
+			System.out.println("COLOR "+i+": "+(c2[i]/sum2));
+		
+		//TEST:
 //		SctSmoother ss = new SctSmoother(16,240);
-//		for (int i = -6; i <= 6; i++)
-//			System.out.println("index: " + ss.getIndex(255,i));
+//		for (int i = -14; i <= 14; i++) {
+//			System.out.println("index: " + ss.getIndex(16,i));
+//			System.out.println("weight: " + ss.getIncrement(16, i, 1));
+//		}
+	}
+	
+	
+	private static int[] binoms(int n) {
+		if (n == 1)
+			return new int[] { 1, 1 };
+		else {
+			int[] tmp = binoms(n-1);
+			int[] res = new int[n+1];
+			res[0] = 1;
+			res[n] = 1;
+			for (int i = 0; i < tmp.length-1; i++)
+				res[i+1] = tmp[i] + tmp[i+1];
+			return res;
+		}
+	}
+	
+	private static int binom(int n, int k) {
+		return binoms(n)[k];
 	}
 }
