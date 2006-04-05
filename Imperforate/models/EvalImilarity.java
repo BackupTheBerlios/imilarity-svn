@@ -244,8 +244,10 @@ public class EvalImilarity extends Imilarity implements Comparable {
 		ImageMeasure[] measures = new ImageMeasure[] {
 				new FuzzyImageMeasure(new M1a()),
 				new ComponentsImageMeasure(new FuzzyImageMeasure(new M1a())),
+				/*
 				new FuzzyQuantizedImageMeasure(new M1a(), new NeuQuant(30,4)),
 				new FuzzyQuantizedImageMeasure(new M1a(), new WuQuantizer(8))
+				*/
 		};
 		Aggregator[] aggregators = new Aggregator[] {
 				new ArithmeticMean()
