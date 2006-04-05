@@ -42,7 +42,9 @@ public class SettingsDialog extends JDialog {
 	private static final long serialVersionUID = 5534949425380832459L;
 
 	private DescriptiveChooser measure, aggregator;
-
+	private JDialog measuresDialog;
+	private JPanel measuresPanel; 
+	
 	private static final ImageMeasure[] MEASURES = new ImageMeasure[] {
 		new GrayscaledImageMeasure(new FuzzyImageMeasure(new M1a())),
 		new GrayscaledImageMeasure(new FuzzyImageMeasure(new M1b())),
@@ -238,79 +240,7 @@ public class SettingsDialog extends JDialog {
 		new DominantColorsImageMeasure(new FuzzyImageMeasure(new MI3()), new NeuQuant(30, 8)),
 		new DominantColorsImageMeasure(new FuzzyImageMeasure(new MI3c()), new NeuQuant(30, 8)),
 		
-		
-		new DominantColorsImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M1a())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M1b())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M1c())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M2())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M3())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M5())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M5c())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M6())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M6c())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M7())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M7c())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M8())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M8c())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M9())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M9c())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M10())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M10c())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M11())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M11c())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M12())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M13())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new MI3())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new MI3c())), new NeuQuant(30, 16)),
-		
-		new DominantColorsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M1a())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M1b())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M1c())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M2())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M3())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M5())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M5c())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M6())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M6c())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M7())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M7c())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M8())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M8c())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M9())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M9c())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M10())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M10c())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M11())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M11c())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M12())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M13())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new MI3())), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new MI3c())), new NeuQuant(30, 16)),
-		
-		new DominantColorsImageMeasure(new FuzzyImageMeasure(new M1a()), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new FuzzyImageMeasure(new M1b()), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new FuzzyImageMeasure(new M1c()), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new FuzzyImageMeasure(new M2()), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new FuzzyImageMeasure(new M3()), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new FuzzyImageMeasure(new M5()), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new FuzzyImageMeasure(new M5c()), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new FuzzyImageMeasure(new M6()), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new FuzzyImageMeasure(new M6c()), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new FuzzyImageMeasure(new M7()), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new FuzzyImageMeasure(new M7c()), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new FuzzyImageMeasure(new M8()), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new FuzzyImageMeasure(new M8c()), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new FuzzyImageMeasure(new M9()), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new FuzzyImageMeasure(new M9c()), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new FuzzyImageMeasure(new M10()), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new FuzzyImageMeasure(new M10c()), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new FuzzyImageMeasure(new M11()), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new FuzzyImageMeasure(new M11c()), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new FuzzyImageMeasure(new M12()), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new FuzzyImageMeasure(new M13()), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new FuzzyImageMeasure(new MI3()), new NeuQuant(30, 16)),
-		new DominantColorsImageMeasure(new FuzzyImageMeasure(new MI3c()), new NeuQuant(30, 16)),
-		
+
 		new DominantColorsImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M1a())), new WuQuantizer(8)),
 		new DominantColorsImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M1b())), new WuQuantizer(8)),
 		new DominantColorsImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M1c())), new WuQuantizer(8)),
@@ -624,55 +554,6 @@ public class SettingsDialog extends JDialog {
 		new PartsImageMeasure(new FuzzyImageMeasure(new M13())),
 		new PartsImageMeasure(new FuzzyImageMeasure(new MI3())),
 		new PartsImageMeasure(new FuzzyImageMeasure(new MI3c())),
-		
-		new HsvImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M1a())))),
-		new HsvImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M1b())))),
-		new HsvImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M1c())))),
-		new HsvImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M2())))),
-		new HsvImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M3())))),
-		new HsvImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M5())))),
-		new HsvImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M5c())))),
-		new HsvImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M6())))),
-		new HsvImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M6c())))),
-		new HsvImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M7())))),
-		new HsvImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M7c())))),
-		new HsvImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M8())))),
-		new HsvImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M8c())))),
-		new HsvImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M9())))),
-		new HsvImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M9c())))),
-		new HsvImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M10())))),
-		new HsvImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M10c())))),
-		new HsvImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M11())))),
-		new HsvImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M11c())))),
-		new HsvImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M12())))),
-		new HsvImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M13())))),
-		new HsvImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new MI3())))),
-		new HsvImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new MI3c())))),
-		
-		new I1i2i3ImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M1a())))),
-		new I1i2i3ImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M1b())))),
-		new I1i2i3ImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M1c())))),
-		new I1i2i3ImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M2())))),
-		new I1i2i3ImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M3())))),
-		new I1i2i3ImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M5())))),
-		new I1i2i3ImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M5c())))),
-		new I1i2i3ImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M6())))),
-		new I1i2i3ImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M6c())))),
-		new I1i2i3ImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M7())))),
-		new I1i2i3ImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M7c())))),
-		new I1i2i3ImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M8())))),
-		new I1i2i3ImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M8c())))),
-		new I1i2i3ImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M9())))),
-		new I1i2i3ImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M9c())))),
-		new I1i2i3ImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M10())))),
-		new I1i2i3ImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M10c())))),
-		new I1i2i3ImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M11())))),
-		new I1i2i3ImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M11c())))),
-		new I1i2i3ImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M12())))),
-		new I1i2i3ImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new M13())))),
-		new I1i2i3ImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new MI3())))),
-		new I1i2i3ImageMeasure(new MomentsImageMeasure(new ComponentsImageMeasure(new FuzzyImageMeasure(new MI3c())))),
-		
 		
 		
 		new HsvImageMeasure(new PseudoFuzzyHistogramImageMeasure(new M1a(), new int[] {16, 4, 4})),
@@ -1140,6 +1021,28 @@ public class SettingsDialog extends JDialog {
 	public SettingsDialog(Frame owner) {
 		super(owner, "Settings");
 		
+		measuresDialog = new JDialog(this, "Measures");
+		measuresDialog.setLayout(new BorderLayout());
+		
+		measuresPanel = new JPanel();
+		JScrollPane scrollPane = new JScrollPane(measuresPanel);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(10);
+		measuresDialog.getContentPane().add(scrollPane);
+		
+		JButton cancel = new JButton("Cancel");
+		cancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				measuresDialog.setVisible(false);
+			}
+		});
+		JPanel panel = new JPanel();
+		panel.add(cancel);
+		measuresDialog.getContentPane().add(panel, BorderLayout.SOUTH);
+		
+		measuresDialog.setPreferredSize(new Dimension(300, 400));
+		measuresDialog.pack();
+		
+		
 		JPanel content = new JPanel(new GridBagLayout());
 		content.setBorder(BorderFactory.createEmptyBorder(10,10,20,10));
 		
@@ -1163,26 +1066,7 @@ public class SettingsDialog extends JDialog {
 		content.add(addMeasure, c);
 		addMeasure.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				final JDialog measuresDialog = new JDialog();
-				measuresDialog.setLayout(new BorderLayout());
 				
-				final JPanel measuresPanel = new JPanel();
-				JScrollPane scrollPane = new JScrollPane(measuresPanel);
-				scrollPane.getVerticalScrollBar().setUnitIncrement(10);
-				measuresDialog.getContentPane().add(scrollPane);
-				
-				JButton cancel = new JButton("Cancel");
-				cancel.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						measuresDialog.setVisible(false);
-					}
-				});
-				JPanel panel = new JPanel();
-				panel.add(cancel);
-				measuresDialog.getContentPane().add(panel, BorderLayout.SOUTH);
-				
-				measuresDialog.setPreferredSize(new Dimension(300, 400));
-				measuresDialog.pack();
 				measuresDialog.setVisible(true);
 				
 				new Thread(new Runnable() {
@@ -1257,6 +1141,7 @@ public class SettingsDialog extends JDialog {
 		close.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SettingsDialog.this.setVisible(false);	
+				SettingsDialog.this.measuresDialog.setVisible(false);
 			}
 		});
 		buttons.add(close);

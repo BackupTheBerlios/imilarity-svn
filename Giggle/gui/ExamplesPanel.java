@@ -89,10 +89,12 @@ public class ExamplesPanel extends JPanel implements Observer, ActionListener {
 		firstButton.setActionCommand("useFirst");
 		firstButton.addActionListener(this);
 		firstButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
+		firstButton.setEnabled(false);
 		reorderButton = new JButton("Reorder results");
 		reorderButton.setActionCommand("reorder");
 		reorderButton.addActionListener(this);
 		reorderButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
+		reorderButton.setEnabled(false);
 		clearButton = new JButton("Clear examples");
 		clearButton.setActionCommand("clear");
 		clearButton.addActionListener(this);
