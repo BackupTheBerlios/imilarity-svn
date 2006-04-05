@@ -1167,7 +1167,9 @@ public class SettingsDialog extends JDialog {
 				measuresDialog.setLayout(new BorderLayout());
 				
 				final JPanel measuresPanel = new JPanel();
-				measuresDialog.getContentPane().add(new JScrollPane(measuresPanel));
+				JScrollPane scrollPane = new JScrollPane(measuresPanel);
+				scrollPane.getVerticalScrollBar().setUnitIncrement(10);
+				measuresDialog.getContentPane().add(scrollPane);
 				
 				JButton cancel = new JButton("Cancel");
 				cancel.addActionListener(new ActionListener() {
@@ -1195,7 +1197,6 @@ public class SettingsDialog extends JDialog {
 							text.setWrapStyleWord(true);
 							text.setOpaque(false);
 							text.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-							
 							
 							text.append(MEASURES[i].getDescription());
 							measurePanel.add(text);
