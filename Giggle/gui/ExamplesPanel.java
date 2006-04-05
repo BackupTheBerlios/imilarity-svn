@@ -174,6 +174,7 @@ public class ExamplesPanel extends JPanel implements Observer, ActionListener {
 			new Thread(new Runnable() {
 				public void run() {
 					searchModel.setMeasure(settingsDialog.getMeasure());
+					searchModel.setAggregator(settingsDialog.getAggregator());
 					for (int i = 1; i <= searchModel.getPageCount(); i++) {
 						searchModel.reorderPage(i);
 						EventQueue.invokeLater(new Runnable() {

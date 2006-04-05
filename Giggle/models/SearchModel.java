@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Observable;
 
 import de.berlios.imilarity.Imilarity;
+import de.berlios.imilarity.aggregators.Aggregator;
 import de.berlios.imilarity.image.ImageData;
 import de.berlios.imilarity.measures.ImageMeasure;
 import de.berlios.imilarity.providors.Providor;
@@ -37,6 +38,10 @@ public class SearchModel extends Observable {
 	
 	public void setMeasure(ImageMeasure measure) {
 		imilarity.setMeasure(measure);
+	}
+	
+	public void setAggregator(Aggregator aggregator) {
+		imilarity.setAggregator(aggregator);
 	}
 	
 	
