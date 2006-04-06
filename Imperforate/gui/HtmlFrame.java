@@ -1,20 +1,19 @@
 package gui;
 
 import java.awt.Dimension;
-import java.awt.Frame;
 
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
-public class HtmlDialog extends JFrame {
+public class HtmlFrame extends JFrame {
 
 	private static final long serialVersionUID = -7130968580432750113L;
 
 	private JEditorPane editorPane;
 	private JScrollPane scrollPane;
 	
-	public HtmlDialog(Frame owner, String title) {
+	public HtmlFrame(String title) {
 		super(title);
 		editorPane = new JEditorPane();
 		editorPane.setContentType("text/html");
@@ -26,8 +25,8 @@ public class HtmlDialog extends JFrame {
 		setVisible(true);
 	}
 	
-	public HtmlDialog(Frame owner, String title, String html) {
-		this(owner, title);
+	public HtmlFrame(String title, String html) {
+		this(title);
 		setHtml(html);
 	}
 	

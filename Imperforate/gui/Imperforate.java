@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -25,8 +26,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import com.jgoodies.looks.FontSizeHints;
+import com.jgoodies.looks.Options;
+import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
 
 
 import models.EvaluationsModel;
@@ -46,8 +52,24 @@ public class Imperforate extends JFrame {
 	private List imageCollections;
 
 	
+	private void configureUI() {
+        UIManager.put(Options.USE_SYSTEM_FONTS_APP_KEY, Boolean.TRUE);
+        Options.setGlobalFontSizeHints(FontSizeHints.MIXED);
+        Options.setDefaultIconSize(new Dimension(18, 18));                                                                                                                     
+                
+        try {
+            UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
+        	//UIManager.setLookAndFeel(new GTKLookAndFeel());
+        } catch (Exception e) {
+            System.err.println("Can't set look & feel:" + e);
+        }
+    }
+	
+	
 	public Imperforate() {
 		super("Imperforate");
+		
+		configureUI();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -59,17 +81,18 @@ public class Imperforate extends JFrame {
 		final TableSorter sorter = new TableSorter(evalsModel); 
 		final JTable table = new JTable(sorter);    
 		sorter.setTableHeader(table.getTableHeader());
-		table.getColumnModel().getColumn(0).setPreferredWidth(400);
+		table.getColumnModel().getColumn(0).setPreferredWidth(450);
 		table.getColumnModel().getColumn(1).setPreferredWidth(150);
-		table.getColumnModel().getColumn(2).setPreferredWidth(200);
+		table.getColumnModel().getColumn(2).setPreferredWidth(150);
 		
 		getContentPane().add(new JScrollPane(table));
 		
 		JPanel buttonsPanel = new JPanel();
 		//buttonsPanel.setLayout(new FlowLayout());
 		buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.X_AXIS));
+		buttonsPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 		
-		buttonsPanel.add(new JLabel("Collection:"));
+		buttonsPanel.add(new JLabel("Images:"));
 		buttonsPanel.add(Box.createHorizontalStrut(5));
 		final JComboBox collectionCombo = new JComboBox(); 
 			//new JComboBox(new String[] { 
@@ -173,8 +196,8 @@ public class Imperforate extends JFrame {
 						final int index = sorter.modelIndex(i);
 						new Thread(new Runnable() {
 							public void run() {
-								final HtmlDialog dialog = 
-									new HtmlDialog(Imperforate.this, "Results",
+								final HtmlFrame dialog = 
+									new HtmlFrame("Results",
 											"<h3>Please wait...</h3>");
 								EventQueue.invokeLater(new Runnable() {
 									public void run() {
