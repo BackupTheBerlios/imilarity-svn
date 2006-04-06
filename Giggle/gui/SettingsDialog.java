@@ -1006,7 +1006,7 @@ public class SettingsDialog extends JDialog {
 		c.insets = new Insets(0,10,0,0);
 		c.gridy++;
 		measure = new DescriptiveChooser();
-		measure.addObject(MEASURES[450]);
+		measure.addObject(MEASURES[496]);
 		//measure.setSelectedIndex(0);
 		//measure.setPreferredSize(new Dimension(200, measure.getPreferredSize().height));
 		content.add(measure, c);
