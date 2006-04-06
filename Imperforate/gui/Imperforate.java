@@ -22,6 +22,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -29,6 +30,7 @@ import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileFilter;
 
 import com.jgoodies.looks.FontSizeHints;
 import com.jgoodies.looks.Options;
@@ -110,6 +112,21 @@ public class Imperforate extends JFrame {
 		addCollectionButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fc = new JFileChooser();
+				fc.addChoosableFileFilter(new FileFilter() {
+					public boolean accept(File f) {
+						if (f.isDirectory())
+				            return true;
+						else {
+							String name = f.getName();
+							String extension = 
+								name.substring(name.lastIndexOf('.'), name.length());
+							return extension.equals(".class");
+						}
+					}
+					public String getDescription() {
+						return "*.class";
+					}
+				});
 				int retVal = fc.showOpenDialog(Imperforate.this);
 				if (retVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
@@ -130,7 +147,10 @@ public class Imperforate extends JFrame {
 						} catch (IllegalAccessException e1) {
 							e1.printStackTrace();
 						}
-				    	
+				    } else {
+				    	JOptionPane.showMessageDialog(Imperforate.this,
+								"Could not load image collection plugin!", 
+								"Error", JOptionPane.ERROR_MESSAGE);
 				    }
 				}
 			}
