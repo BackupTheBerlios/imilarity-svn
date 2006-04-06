@@ -43,7 +43,6 @@ public class SettingsDialog extends JDialog {
 
 	private DescriptiveChooser measure, aggregator;
 	private JDialog measuresDialog;
-	private JPanel measuresPanel; 
 	
 	private static final ImageMeasure[] MEASURES = new ImageMeasure[] {
 		new ScalingImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M1a()))),
@@ -973,10 +972,11 @@ public class SettingsDialog extends JDialog {
 		super(owner, "Settings");
 		
 		measuresDialog = new JDialog(this, "Measures");
-		measuresDialog.setLayout(new BorderLayout());
+		JPanel contentPane = new JPanel(new BorderLayout());
+		contentPane.setPreferredSize(new Dimension(300, 400));
+		measuresDialog.setContentPane(contentPane);
 		
-		measuresPanel = new JPanel();
-		JScrollPane scrollPane = new JScrollPane(measuresPanel);
+		final JScrollPane scrollPane = new JScrollPane();
 		scrollPane.getVerticalScrollBar().setUnitIncrement(10);
 		measuresDialog.getContentPane().add(scrollPane);
 		
@@ -989,8 +989,7 @@ public class SettingsDialog extends JDialog {
 		JPanel panel = new JPanel();
 		panel.add(cancel);
 		measuresDialog.getContentPane().add(panel, BorderLayout.SOUTH);
-		
-		measuresDialog.setPreferredSize(new Dimension(300, 400));
+
 		measuresDialog.pack();
 		
 		
@@ -1018,11 +1017,12 @@ public class SettingsDialog extends JDialog {
 		addMeasure.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				scrollPane.setViewportView(new JLabel("Loading ...", JLabel.CENTER));
 				measuresDialog.setVisible(true);
 				
 				new Thread(new Runnable() {
 					public void run() {
-						JTextArea first = null;
+						final JPanel measuresPanel = new JPanel();
 						measuresPanel.setLayout(new BoxLayout(measuresPanel, BoxLayout.Y_AXIS));
 						for (int i = 0; i < MEASURES.length; i++) {
 							final JPanel measurePanel = new JPanel(new BorderLayout());
@@ -1031,10 +1031,11 @@ public class SettingsDialog extends JDialog {
 							text.setLineWrap(true);
 							text.setWrapStyleWord(true);
 							text.setOpaque(false);
-							text.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+							text.setBorder(BorderFactory.createEmptyBorder(5,0,5,5));
 							
 							text.append(MEASURES[i].getDescription());
 							measurePanel.add(text);
+							measurePanel.setBorder(BorderFactory.createEmptyBorder(3,5,3,5));
 							JButton add = new JButton("Add");
 							final int index = i;
 							add.addActionListener(new ActionListener() {
@@ -1044,30 +1045,13 @@ public class SettingsDialog extends JDialog {
 								}
 							});
 							measurePanel.add(add, BorderLayout.EAST);
-							if (first == null) {
-								first = text;
-								EventQueue.invokeLater(new Runnable() {
-									public void run() {
-										measuresPanel.add(measurePanel);
-									}
-								});
-							} else {
-								EventQueue.invokeLater(new Runnable() {
-									public void run() {
-										JPanel separator = new JPanel();
-										separator.setPreferredSize(new Dimension(0,5));
-										measuresPanel.add(separator);
-										measuresPanel.add(measurePanel);
-										measuresPanel.revalidate();
-									}
-								});
-							}
+							measuresPanel.add(measurePanel);
 						}
 						
-						final JTextArea ffirst = first; // must be final
 						EventQueue.invokeLater(new Runnable() {
 							public void run() {
-								ffirst.setCaretPosition(0);
+								scrollPane.setViewportView(measuresPanel);
+								scrollPane.revalidate();
 							}
 						});
 					}
@@ -1126,7 +1110,8 @@ public class SettingsDialog extends JDialog {
 			text.setEditable(false);
 			text.setLineWrap(true);
 			text.setWrapStyleWord(true);
-			add(new JScrollPane(text));
+			text.setBorder(BorderFactory.createEtchedBorder());
+			add(text);
 			
 			prev = new JButton("<");
 			prev.setMargin(new Insets(0,0,0,0));
