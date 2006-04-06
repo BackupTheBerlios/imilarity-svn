@@ -91,16 +91,17 @@ public class SearchStringPanel extends JPanel implements ActionListener, Observe
 			}
 			new Thread(new Runnable() {
 				public void run() {
-					for (int i = 0; i <= searchModel.getPageCount(); i++) {
-						try {
+					try {
+						for (int i = 0; i <= searchModel.getPageCount(); i++)
 							searchModel.getPage(i);
-						} catch (IOException e) {} // ignore
+					} catch (IOException e) { // ignore
+					} finally {
+						EventQueue.invokeLater(new Runnable() {
+							public void run() {
+								stopButton.setEnabled(false);
+							}
+						});
 					}
-					EventQueue.invokeLater(new Runnable() {
-						public void run() {
-							stopButton.setEnabled(false);
-						}
-					});
 				}
 				
 			}).start();
