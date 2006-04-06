@@ -1023,7 +1023,7 @@ public class EvaluationsModel extends AbstractTableModel {
 		
 		EvalImilarity[] imilarities = evaluations[rowIndex].imilarities;
 		for (int i = 0; i < imilarities.length; i++) {
-			buf.append("<br/> <br/> ");
+			buf.append("<br> <br> ");
 			
 			//buf.append("<h3>Example image</h3>");
 			//buf.append("<table align=\"center\">");
@@ -1045,7 +1045,7 @@ public class EvaluationsModel extends AbstractTableModel {
 				if (k % 5 == 0)
 					buf.append("</tr><tr>");
 				buf.append("<td style=\"font-size: 10pt; text-align: center;\">"
-						+ "<img width=\"128\" height=\"128\" src=\"" + firstUrls[k] + "\"/><br/>" 
+						+ "<img width=\"128\" height=\"128\" src=\"" + firstUrls[k] + "\"><br>" 
 						+ similarity + "</td>");
 			}
 			buf.append("</tr>");
