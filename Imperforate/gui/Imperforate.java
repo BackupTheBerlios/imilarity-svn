@@ -3,17 +3,24 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -21,7 +28,9 @@ import javax.swing.JTextArea;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+
 import models.EvaluationsModel;
+import models.ImageCollection;
 import models.TableSorter;
 
 public class Imperforate extends JFrame {
@@ -31,14 +40,21 @@ public class Imperforate extends JFrame {
 	private boolean calculateRemaining = false, calculating = false;
 
 	private JTextArea console = new JTextArea(20,50);
+	private JButton calculateButton;
 	
+	private EvaluationsModel evalsModel;
+	private List imageCollections;
+
 	
 	public Imperforate() {
 		super("Imperforate");
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		final EvaluationsModel evalsModel = new EvaluationsModel();
+		evalsModel = new EvaluationsModel();
+		imageCollections = new ArrayList();
+		//imageCollections.add(new CoilImageCollection());
+		//evalsModel.setImageCollection((ImageCollection)imageCollections.get(0)); 
 		
 		final TableSorter sorter = new TableSorter(evalsModel); 
 		final JTable table = new JTable(sorter);    
@@ -49,9 +65,58 @@ public class Imperforate extends JFrame {
 		
 		getContentPane().add(new JScrollPane(table));
 		
-		JPanel buttonsPanel = new JPanel(new FlowLayout());
+		JPanel buttonsPanel = new JPanel();
+		//buttonsPanel.setLayout(new FlowLayout());
+		buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.X_AXIS));
 		
-		final JButton calculateButton = new JButton("Calculate");
+		buttonsPanel.add(new JLabel("Collection:"));
+		buttonsPanel.add(Box.createHorizontalStrut(5));
+		final JComboBox collectionCombo = new JComboBox(); 
+			//new JComboBox(new String[] { 
+			//	((ImageCollection)imageCollections.get(0)).getDescription() 
+			//});
+		collectionCombo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				evalsModel.setImageCollection
+					((ImageCollection)imageCollections.get(collectionCombo.getSelectedIndex()));
+			}
+		});
+		buttonsPanel.add(collectionCombo);
+		buttonsPanel.add(Box.createHorizontalStrut(5)); 
+		JButton addCollectionButton = new JButton("Add ...");
+		addCollectionButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fc = new JFileChooser();
+				int retVal = fc.showOpenDialog(Imperforate.this);
+				if (retVal == JFileChooser.APPROVE_OPTION) {
+					File file = fc.getSelectedFile();
+				    String name = file.getName();
+				    Class cls = loadClass(file.getParentFile(), 
+				    		name.substring(0, name.indexOf('.')));
+				    if (cls != null) {
+						try {
+							ImageCollection collection = 
+								(ImageCollection) cls.newInstance();
+							imageCollections.add(collection);
+					    	collectionCombo.addItem(collection.getDescription());
+					    	calculateButton.setEnabled(
+									!table.getSelectionModel().isSelectionEmpty() &&
+									collectionCombo.getSelectedIndex() >= 0);
+						} catch (InstantiationException e1) {
+							e1.printStackTrace();
+						} catch (IllegalAccessException e1) {
+							e1.printStackTrace();
+						}
+				    	
+				    }
+				}
+			}
+		});
+		buttonsPanel.add(addCollectionButton);
+		
+		buttonsPanel.add(Box.createHorizontalGlue());
+		
+		calculateButton = new JButton("Calculate");
 		calculateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (calculating) {
@@ -60,6 +125,7 @@ public class Imperforate extends JFrame {
 					calculateButton.setEnabled(false);
 				} else {
 					calculateButton.setText("Do not calculate remaining");
+					collectionCombo.setEnabled(false);
 					calculateRemaining = true;
 					final List indices = new LinkedList(); 
 					for (int i = 0;	i < sorter.getRowCount(); i++) {
@@ -85,7 +151,10 @@ public class Imperforate extends JFrame {
 							EventQueue.invokeLater(new Runnable() {
 								public void run() {
 									calculateButton.setText("Calculate");
-									calculateButton.setEnabled(!table.getSelectionModel().isSelectionEmpty());
+									calculateButton.setEnabled(
+										!table.getSelectionModel().isSelectionEmpty() &&
+										collectionCombo.getSelectedIndex() >= 0);
+									collectionCombo.setEnabled(true);
 								}
 							});
 						}
@@ -125,13 +194,8 @@ public class Imperforate extends JFrame {
 			}
 		});
 		resultsButton.setEnabled(false);
+		buttonsPanel.add(Box.createHorizontalStrut(5));
 		buttonsPanel.add(resultsButton);
-		
-		
-		
-		//////////////////////
-		//// CUSTOM HACKS ////
-		//////////////////////
 		
 		
 		final JButton printGnuplotButton = new JButton("Print gnuplot data");
@@ -150,64 +214,73 @@ public class Imperforate extends JFrame {
 			}
 		});
 		printGnuplotButton.setEnabled(false);
+		buttonsPanel.add(Box.createHorizontalStrut(5));
 		buttonsPanel.add(printGnuplotButton);
 		
 		
-		final Map imgMapper = new HashMap();
-		imgMapper.put("obj12", new Integer(0));
-		imgMapper.put("obj3", new Integer(12));
-		imgMapper.put("obj38", new Integer(18));
-		imgMapper.put("obj42", new Integer(24));
-		imgMapper.put("obj78", new Integer(54));
-		imgMapper.put("obj43", new Integer(30));
-		imgMapper.put("obj45", new Integer(36));
-		imgMapper.put("obj16", new Integer(6));
-		imgMapper.put("obj59", new Integer(48));
-		imgMapper.put("obj81", new Integer(60));
-		imgMapper.put("obj51", new Integer(42));
 		
-		final Map degreesMapper = new HashMap();
-		degreesMapper.put("0", new Integer(0));
-		degreesMapper.put("180", new Integer(1));
-		degreesMapper.put("270", new Integer(2));
-		degreesMapper.put("315", new Integer(3));
-		degreesMapper.put("45", new Integer(4));
-		degreesMapper.put("90", new Integer(5));
 		
-		final JButton printLatexButton = new JButton("Print latex tabular");
-		printLatexButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				for (int i = 0; i < sorter.getRowCount(); i++) {
-					if (table.getSelectionModel().isSelectedIndex(i)) {
-						console.append("\nLATEX TABULAR:\n\n");
-						console.append("\\begin{tabular}{m{11cm} | m{3cm} |}\n");
-						console.append("\\textbf{Eerste tien resultaten:} & \\textbf{GGR:} \\\\\n");
-						console.append("\\vspace{4pt}\n");
-						String[][] allUrls = evalsModel.getSortedFirstUrls(i);
-						double[] allNars = evalsModel.getSortedNars(i);
-						if (allUrls != null) {
-							for (int k = 0; k < allUrls.length; k++) {
-								for (int l = 0; l < allUrls[k].length; l++) {
-									String key1 = allUrls[k][l].substring
-										(allUrls[k][l].lastIndexOf('/')+1,allUrls[k][l].indexOf('_'));
-									int nr = ((Integer) imgMapper.get(key1)).intValue();
-									String key2 = allUrls[k][l].substring
-										(allUrls[k][l].lastIndexOf('_')+1,allUrls[k][l].indexOf('.'));
-									int offset = ((Integer) degreesMapper.get(key2)).intValue();
-									console.append("\\includegraphics[width=1cm]{coil/beeld-" 
-											+ (nr+offset) + ".eps}\n");
-								}
-								console.append("& {\\scriptsize " + allNars[k] + "}\n");
-								console.append("\\\\\n");
-							}
-						}
-						console.append("\\end{tabular}\n");
-					}
-				}
-			}
-		});
-		printLatexButton.setEnabled(false);
-		buttonsPanel.add(printLatexButton);
+		//////////////////////
+		//// CUSTOM HACKS ////
+		//////////////////////
+		
+		
+//		final Map imgMapper = new HashMap();
+//		imgMapper.put("obj12", new Integer(0));
+//		imgMapper.put("obj3", new Integer(12));
+//		imgMapper.put("obj38", new Integer(18));
+//		imgMapper.put("obj42", new Integer(24));
+//		imgMapper.put("obj78", new Integer(54));
+//		imgMapper.put("obj43", new Integer(30));
+//		imgMapper.put("obj45", new Integer(36));
+//		imgMapper.put("obj16", new Integer(6));
+//		imgMapper.put("obj59", new Integer(48));
+//		imgMapper.put("obj81", new Integer(60));
+//		imgMapper.put("obj51", new Integer(42));
+//		
+//		final Map degreesMapper = new HashMap();
+//		degreesMapper.put("0", new Integer(0));
+//		degreesMapper.put("180", new Integer(1));
+//		degreesMapper.put("270", new Integer(2));
+//		degreesMapper.put("315", new Integer(3));
+//		degreesMapper.put("45", new Integer(4));
+//		degreesMapper.put("90", new Integer(5));
+//		
+//		final JButton printLatexButton = new JButton("Print latex tabular");
+//		printLatexButton.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				for (int i = 0; i < sorter.getRowCount(); i++) {
+//					if (table.getSelectionModel().isSelectedIndex(i)) {
+//						console.append("\nLATEX TABULAR:\n\n");
+//						console.append("\\begin{tabular}{m{11cm} | m{3cm} |}\n");
+//						console.append("\\textbf{Eerste tien resultaten:} & \\textbf{GGR:} \\\\\n");
+//						console.append("\\vspace{4pt}\n");
+//						String[][] allUrls = evalsModel.getSortedFirstUrls(i);
+//						double[] allNars = evalsModel.getSortedNars(i);
+//						if (allUrls != null) {
+//							for (int k = 0; k < allUrls.length; k++) {
+//								for (int l = 0; l < allUrls[k].length; l++) {
+//									String key1 = allUrls[k][l].substring
+//										(allUrls[k][l].lastIndexOf('/')+1,allUrls[k][l].indexOf('_'));
+//									int nr = ((Integer) imgMapper.get(key1)).intValue();
+//									String key2 = allUrls[k][l].substring
+//										(allUrls[k][l].lastIndexOf('_')+1,allUrls[k][l].indexOf('.'));
+//									int offset = ((Integer) degreesMapper.get(key2)).intValue();
+//									console.append("\\includegraphics[width=1cm]{coil/beeld-" 
+//											+ (nr+offset) + ".eps}\n");
+//								}
+//								console.append("& {\\scriptsize " + allNars[k] + "}\n");
+//								console.append("\\\\\n");
+//							}
+//						}
+//						console.append("\\end{tabular}\n");
+//					}
+//				}
+//			}
+//		});
+//		printLatexButton.setEnabled(false);
+//		buttonsPanel.add(Box.createHorizontalStrut(5));
+//		buttonsPanel.add(printLatexButton);
 		
 		
 		//////////////////////
@@ -227,16 +300,37 @@ public class Imperforate extends JFrame {
 			public void valueChanged(ListSelectionEvent e) {
 				boolean value = !table.getSelectionModel().isSelectionEmpty();
 				if (!calculating)
-					calculateButton.setEnabled(value);
+					calculateButton.setEnabled(value &&
+							collectionCombo.getSelectedIndex() >= 0);
 				resultsButton.setEnabled(value);
 				printGnuplotButton.setEnabled(value);
-				printLatexButton.setEnabled(value);
+//				printLatexButton.setEnabled(value);
 			}
 		});
 		
 		pack();
 		setSize(new Dimension(800, 600));
 		setVisible(true);
+	}
+	
+	private static Class loadClass(File dir, String name) {
+		try {
+			URL url = dir.toURI().toURL();
+			URL[] urls = new URL[]{url};
+			ClassLoader loader = new URLClassLoader(urls);
+			return loader.loadClass(name);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			File parent = dir.getParentFile();
+			if (parent != null)
+				return loadClass(parent, dir.getName()+"."+name);
+		} catch (NoClassDefFoundError e) {
+			File parent = dir.getParentFile();
+			if (parent != null)
+				return loadClass(parent, dir.getName()+"."+name);
+		}
+		return null;
 	}
 	
 	public static void main(String[] args) {

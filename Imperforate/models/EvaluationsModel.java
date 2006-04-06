@@ -1,11 +1,13 @@
 package models;
 
+
 import java.awt.EventQueue;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
 
 import javax.swing.table.AbstractTableModel;
+
 
 
 import de.berlios.imilarity.aggregators.*;
@@ -984,15 +986,29 @@ public class EvaluationsModel extends AbstractTableModel {
 		new FuzzyHistogramImageMeasure(new MI3c()),		
 	};
 	
-	private ImageCollection collection = new CoilImageCollection();
+	private ImageCollection collection = null; //new CoilImageCollection();
 	private Evaluation[] evaluations; 
 	
 	public EvaluationsModel() {
 		super();
 		evaluations = new Evaluation[MEASURES.length];
-		ImageData[] examples = collection.getExamples();
+		init();
+	}	
+	
+	private void init() {
 		for (int i = 0; i < MEASURES.length; i++) {
 			evaluations[i] = new Evaluation();
+			evaluations[i].description = MEASURES[i].toString();
+			evaluations[i].cpuTime = 0;
+			evaluations[i].gnar = 1.0;
+		}
+	}
+	
+	public void setImageCollection(ImageCollection collection) {
+		this.collection = collection;
+		init();
+		ImageData[] examples = collection.getExamples();
+		for (int i = 0; i < MEASURES.length; i++) {
 			evaluations[i].imilarities = new EvalImilarity[examples.length];
 			for (int j = 0; j < examples.length; j++) {
 				evaluations[i].imilarities[j] = new EvalImilarity(collection);
@@ -1000,10 +1016,8 @@ public class EvaluationsModel extends AbstractTableModel {
 				evaluations[i].imilarities[j].setAggregator(new ArithmeticMean());
 				evaluations[i].imilarities[j].addExample(examples[j]);
 			}
-			evaluations[i].description = MEASURES[i].toString();
-			evaluations[i].cpuTime = 0;
-			evaluations[i].gnar = 1.0;
 		}
+		fireTableDataChanged();
 	}
 	
 	public int getRowCount() {
@@ -1025,10 +1039,17 @@ public class EvaluationsModel extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		if (columnIndex == 0)
 			return evaluations[rowIndex].description;
-		else if (columnIndex == 1)
-			return new Long(evaluations[rowIndex].cpuTime);
-		else
-			return new Double(evaluations[rowIndex].gnar);
+		else if (columnIndex == 1) {
+			if (collection != null)
+				return new Long(evaluations[rowIndex].cpuTime);
+			else
+				return new Long(0);
+		} else {
+			if (collection != null)
+				return new Double(evaluations[rowIndex].gnar);
+			else
+				return new Double(1.0);
+		}
 	}
 	
 	public String getHtml(int rowIndex) {
