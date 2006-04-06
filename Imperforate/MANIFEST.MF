@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Main-Class: gui.Imperforate
+Class-Path: looks-1.3.2.jar imilarity.jar yahoo_search-1.1.0.jar
