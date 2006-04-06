@@ -23,6 +23,8 @@ public class ImageData implements Comparable {
 	private URL url;
 	
 	private ImageData(BufferedImage image, String name, URL url, double similarity) {
+		if (image == null)
+			throw new IllegalArgumentException("image == null");
 		this.image = image;
 		this.name = name;
 		this.url = url;
@@ -108,7 +110,10 @@ public class ImageData implements Comparable {
 	}
 	
 	public static ImageData loadUrl(URL url) throws IOException {
-		return new ImageData(ImageIO.read(url), url.toString(), url);
+		BufferedImage image = ImageIO.read(url);
+		if (image == null)
+			return null;
+		return new ImageData(image, url.toString(), url);
 	}
 	
 	public static ImageData loadUrl(String url) throws IOException {

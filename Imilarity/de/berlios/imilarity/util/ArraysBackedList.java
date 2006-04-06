@@ -93,12 +93,20 @@ public class ArraysBackedList implements List {
 	}
 
 	public Object get(int index) {
-		return arrays[index / individualSize][index % individualSize];
+		int i1 = index / individualSize;
+		int i2 = index % individualSize;
+		if (arrays[i1] == null)
+			return null;
+		return arrays[i1][i2];
 	}
 
 	public Object set(int index, Object arg1) {
-		Object prev = arrays[index / individualSize][index % individualSize];
-		arrays[index / individualSize][index % individualSize] = arg1;
+		int i1 = index / individualSize;
+		int i2 = index % individualSize;
+		if (arrays[i1] == null)
+			return null;
+		Object prev = arrays[i1][i2];
+		arrays[i1][i2] = arg1;
 		return prev;
 	}
 
