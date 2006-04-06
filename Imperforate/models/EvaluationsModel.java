@@ -24,55 +24,6 @@ public class EvaluationsModel extends AbstractTableModel {
 	private static final long serialVersionUID = 2285465758067991988L;
 
 	private static final ImageMeasure[] MEASURES = new ImageMeasure[] {
-		new GrayscaledImageMeasure(new FuzzyImageMeasure(new M1a())),
-		new GrayscaledImageMeasure(new FuzzyImageMeasure(new M1b())),
-		new GrayscaledImageMeasure(new FuzzyImageMeasure(new M1c())),
-		new GrayscaledImageMeasure(new FuzzyImageMeasure(new M2())),
-		new GrayscaledImageMeasure(new FuzzyImageMeasure(new M3())),
-		new GrayscaledImageMeasure(new FuzzyImageMeasure(new M5())),
-		new GrayscaledImageMeasure(new FuzzyImageMeasure(new M5c())),
-		new GrayscaledImageMeasure(new FuzzyImageMeasure(new M6())),
-		new GrayscaledImageMeasure(new FuzzyImageMeasure(new M6c())),
-		new GrayscaledImageMeasure(new FuzzyImageMeasure(new M7())),
-		new GrayscaledImageMeasure(new FuzzyImageMeasure(new M7c())),
-		new GrayscaledImageMeasure(new FuzzyImageMeasure(new M8())),
-		new GrayscaledImageMeasure(new FuzzyImageMeasure(new M8c())),
-		new GrayscaledImageMeasure(new FuzzyImageMeasure(new M9())),
-		new GrayscaledImageMeasure(new FuzzyImageMeasure(new M9c())),
-		new GrayscaledImageMeasure(new FuzzyImageMeasure(new M10())),
-		new GrayscaledImageMeasure(new FuzzyImageMeasure(new M10c())),
-		new GrayscaledImageMeasure(new FuzzyImageMeasure(new M11())),
-		new GrayscaledImageMeasure(new FuzzyImageMeasure(new M11c())),
-		new GrayscaledImageMeasure(new FuzzyImageMeasure(new M12())),
-		new GrayscaledImageMeasure(new FuzzyImageMeasure(new M13())),
-		new GrayscaledImageMeasure(new FuzzyImageMeasure(new MI3())),
-		new GrayscaledImageMeasure(new FuzzyImageMeasure(new MI3c())),
-		
-		new ComponentsImageMeasure(new FuzzyImageMeasure(new M1a())),
-		new ComponentsImageMeasure(new FuzzyImageMeasure(new M1b())),
-		new ComponentsImageMeasure(new FuzzyImageMeasure(new M1c())),
-		new ComponentsImageMeasure(new FuzzyImageMeasure(new M2())),
-		new ComponentsImageMeasure(new FuzzyImageMeasure(new M3())),
-		new ComponentsImageMeasure(new FuzzyImageMeasure(new M5())),
-		new ComponentsImageMeasure(new FuzzyImageMeasure(new M5c())),
-		new ComponentsImageMeasure(new FuzzyImageMeasure(new M6())),
-		new ComponentsImageMeasure(new FuzzyImageMeasure(new M6c())),
-		new ComponentsImageMeasure(new FuzzyImageMeasure(new M7())),
-		new ComponentsImageMeasure(new FuzzyImageMeasure(new M7c())),
-		new ComponentsImageMeasure(new FuzzyImageMeasure(new M8())),
-		new ComponentsImageMeasure(new FuzzyImageMeasure(new M8c())),
-		new ComponentsImageMeasure(new FuzzyImageMeasure(new M9())),
-		new ComponentsImageMeasure(new FuzzyImageMeasure(new M9c())),
-		new ComponentsImageMeasure(new FuzzyImageMeasure(new M10())),
-		new ComponentsImageMeasure(new FuzzyImageMeasure(new M10c())),
-		new ComponentsImageMeasure(new FuzzyImageMeasure(new M11())),
-		new ComponentsImageMeasure(new FuzzyImageMeasure(new M11c())),
-		new ComponentsImageMeasure(new FuzzyImageMeasure(new M12())),
-		new ComponentsImageMeasure(new FuzzyImageMeasure(new M13())),
-		new ComponentsImageMeasure(new FuzzyImageMeasure(new MI3())),
-		new ComponentsImageMeasure(new FuzzyImageMeasure(new MI3c())),
-		
-		
 		new ScalingImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M1a()))),
 		new ScalingImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M1b()))),
 		new ScalingImageMeasure(new GrayscaledImageMeasure(new FuzzyImageMeasure(new M1c()))),
@@ -1094,7 +1045,7 @@ public class EvaluationsModel extends AbstractTableModel {
 				if (k % 5 == 0)
 					buf.append("</tr><tr>");
 				buf.append("<td style=\"font-size: 10pt; text-align: center;\">"
-						+ "<img src=\"" + firstUrls[k] + "\"/><br/>" 
+						+ "<img width=\"128\" height=\"128\" src=\"" + firstUrls[k] + "\"/><br/>" 
 						+ similarity + "</td>");
 			}
 			buf.append("</tr>");

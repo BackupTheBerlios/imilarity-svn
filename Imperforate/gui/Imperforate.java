@@ -45,7 +45,7 @@ public class Imperforate extends JFrame {
 
 	private boolean calculateRemaining = false, calculating = false;
 
-	private JTextArea console = new JTextArea(20,50);
+	private JTextArea console = new JTextArea(15,50);
 	private JButton calculateButton;
 	
 	private EvaluationsModel evalsModel;
@@ -174,9 +174,10 @@ public class Imperforate extends JFrame {
 							EventQueue.invokeLater(new Runnable() {
 								public void run() {
 									calculateButton.setText("Calculate");
-									calculateButton.setEnabled(
-										!table.getSelectionModel().isSelectionEmpty() &&
-										collectionCombo.getSelectedIndex() >= 0);
+									if (!calculating)
+										calculateButton.setEnabled(
+												!table.getSelectionModel().isSelectionEmpty() &&
+												collectionCombo.getSelectedIndex() >= 0);
 									collectionCombo.setEnabled(true);
 								}
 							});
@@ -228,9 +229,10 @@ public class Imperforate extends JFrame {
 				int counter = 0;
 				for (int i = 0; i < sorter.getRowCount(); i++) {
 					if (table.getSelectionModel().isSelectedIndex(i)) {
+						int index = sorter.modelIndex(i);
 						console.append("" + counter++ + "\t" 
-								+ evalsModel.getValueAt(i,1) + "\t"
-								+ evalsModel.getValueAt(i,2) + "\n");
+								+ evalsModel.getValueAt(index,1) + "\t"
+								+ evalsModel.getValueAt(index,2) + "\n");
 					}
 				}
 				console.append("e\n");
@@ -274,12 +276,13 @@ public class Imperforate extends JFrame {
 //			public void actionPerformed(ActionEvent e) {
 //				for (int i = 0; i < sorter.getRowCount(); i++) {
 //					if (table.getSelectionModel().isSelectedIndex(i)) {
+//		                int index = sorter.modelIndex(i);
 //						console.append("\nLATEX TABULAR:\n\n");
 //						console.append("\\begin{tabular}{m{11cm} | m{3cm} |}\n");
 //						console.append("\\textbf{Eerste tien resultaten:} & \\textbf{GGR:} \\\\\n");
 //						console.append("\\vspace{4pt}\n");
-//						String[][] allUrls = evalsModel.getSortedFirstUrls(i);
-//						double[] allNars = evalsModel.getSortedNars(i);
+//						String[][] allUrls = evalsModel.getSortedFirstUrls(index);
+//						double[] allNars = evalsModel.getSortedNars(index);
 //						if (allUrls != null) {
 //							for (int k = 0; k < allUrls.length; k++) {
 //								for (int l = 0; l < allUrls[k].length; l++) {
