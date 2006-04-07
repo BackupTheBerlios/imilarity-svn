@@ -190,6 +190,7 @@ public class ResultsPanel extends JPanel implements Observer {
 								JOptionPane.showMessageDialog(ResultsPanel.this,
 										e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 								progressModel.setValue(searchModel.getPageCount());
+								searchModel.stopLoading();
 							}
 						});
 					} finally  {

@@ -94,9 +94,7 @@ public class SearchStringPanel extends JPanel implements ActionListener, Observe
 					for (int i = 1; i <= searchModel.getPageCount(); i++) {
 						try {
 							searchModel.getPage(i);
-						} catch(IOException e) {
-							System.out.println("error: "+e.getMessage());
-						} // ignore
+						} catch(IOException e) {} // ignore
 					}
 					EventQueue.invokeLater(new Runnable() {
 						public void run() {
