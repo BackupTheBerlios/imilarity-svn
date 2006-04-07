@@ -1,8 +1,9 @@
 package de.berlios.imilarity.measures;
 
 import de.berlios.imilarity.fuzzy.FuzzySet;
+import de.berlios.imilarity.util.Describable;
 
-public interface FuzzyMeasure {
+public interface FuzzyMeasure extends Describable {
 	
 	/**
 	 * @param query set waarmee de doelsets vergeleken moeten worden
@@ -22,7 +23,5 @@ public interface FuzzyMeasure {
 	 * tussen de query- en target-set weergeeft.
 	 */
 	public double getSimilarity();
-	
-	
-	public String getDescription();
+
 }

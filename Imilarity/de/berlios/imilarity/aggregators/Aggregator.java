@@ -3,16 +3,16 @@
  */
 package de.berlios.imilarity.aggregators;
 
+import de.berlios.imilarity.util.Describable;
+
 /**
  * @author Klaas Bosteels
  */
-public interface Aggregator {
+public interface Aggregator extends Describable {
 
 	public void addValue(double value);
 	public void clearValues();
 	
 	public double getAggregatedValue();
-	
-	public String getDescription();
-	
+
 }

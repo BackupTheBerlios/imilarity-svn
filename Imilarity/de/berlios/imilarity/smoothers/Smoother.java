@@ -1,6 +1,8 @@
 package de.berlios.imilarity.smoothers;
 
-public interface Smoother {
+import de.berlios.imilarity.util.Describable;
+
+public interface Smoother extends Describable {
 
 	public int getRange();
 	
@@ -8,5 +10,4 @@ public interface Smoother {
 	
 	public double getIncrement(int bin, int offset, double value);
 
-	public String getDescription();
 }

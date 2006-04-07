@@ -2,8 +2,9 @@ package de.berlios.imilarity.image.quantizers;
 
 import de.berlios.imilarity.color.Color;
 import de.berlios.imilarity.image.Image;
+import de.berlios.imilarity.util.Describable;
 
-public interface Quantizer {
+public interface Quantizer extends Describable {
 
 	public void quantize(Image im);
 	
@@ -13,5 +14,4 @@ public interface Quantizer {
 	
 	public int getBin(int pixelNr);
 	
-	public String getDescription();
 }

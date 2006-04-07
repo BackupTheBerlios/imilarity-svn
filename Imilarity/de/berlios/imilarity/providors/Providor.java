@@ -6,19 +6,16 @@ package de.berlios.imilarity.providors;
 import java.io.IOException;
 
 import de.berlios.imilarity.image.ImageData;
-
-
-
+import de.berlios.imilarity.util.Describable;
 
 
 /**
  * @author Klaas Bosteels
  */
-public interface Providor {
+public interface Providor extends Describable {
 	
 	public int getPageSize();
 	public int getPageCount();
 	public ImageData[] getPage(int page) throws IOException;
 	
-	public String getDescription();
 }
