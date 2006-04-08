@@ -16,7 +16,7 @@
 \usepackage{simplemargins}
 \usepackage{fancyhdr}
 \usepackage{color}
-%\usepackage{makeidx}
+\usepackage{makeidx}
 \usepackage{hyphenat}
 %\usepackage{mathpple}		% Math Palatino
 \usepackage{charter}		% Text Charter
@@ -25,18 +25,24 @@
 \usepackage{pst-grad}
 \usepackage{pst-node}
 \usepackage{float}
+\usepackage[noprocindex,nolineno,noindent]{lgrind}
+
+
+\def\BGfont{\fontfamily{pcr}\selectfont}
+\def\CMfont{\fontfamily{ptm}\itshape\selectfont}
+\def\NOfont{\fontfamily{pcr}\selectfont}
+\def\KWfont{\fontfamily{ptm}\bfseries\selectfont}
+\def\STfont{\ttfamily}
+\def\VRfont{\fontfamily{cmss}\selectfont}
+
+\newcommand{\klassefont}{\fontfamily{cmss}\selectfont}
 
 \newcommand{\defin}[2][]{%
         \ifthenelse{\equal{#1}{}}
                 {{\em{#2}\index{#2}}}%
                 {{\em{#2}\index{#1}}}%
 }
-\newcommand{\notat}[2][]{%
-        \ifthenelse{\equal{#1}{}}
-                {{#2}\glossary{$#2$}}%
-                {{#2}\glossary{$#1$}}%
-}
-\newcommand{\glossaryentry}[2]{\item {#1}, {#2}}
+
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{maintheorem}[theorem]{Main Theorem}
@@ -220,3 +226,5 @@
 \floatstyle{ruled}
 \restylefloat{figure}
 \restylefloat{table}
+\newfloat{code}{bp}{lop}[chapter]
+\floatname{code}{Codefragment}

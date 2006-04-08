@@ -19,7 +19,7 @@ identificeren met (L-)vaagverzamelingen.
 \section{Eigenschappen}
 
 In de volgende hoofdstukken construeren we een aantal similariteitsmaten voor beelden. Daarbij 
-eisen we dat al onze similariteitsmaten \emph{reflexief} en \emph{symmetrisch} zijn.
+eisen we dat al onze similariteitsmaten \defin{reflexief} en \defin{symmetrisch} zijn.
 
 \subsection{Reflexiviteit}
 
@@ -39,9 +39,9 @@ $M(A,B)=M(B,A)$.
 De bovenstaande eigenschappen doen denken aan een klassieke equivalentierelatie. Dergelijke
 relaties zijn naast reflexief en symmetrisch ook transitief. In 
 \cite{zadeh:similarity_relations_and_fuzzy_orderings} definieert Zadeh
-de \emph{similariteitsrelatie} als vage uitbreiding van dat scherpe begrip. Als we zouden
+de \defin{similariteitsrelatie} als vage uitbreiding van dat scherpe begrip. Als we zouden
 afdwingen dat een similariteitsmaat $M$ een similariteitsrelatie is, dan moet $M$ 
-\emph{$\min$-transitief} zijn: voor drie beelden $A$, $B$ en $C$ moet 
+\defin{$\min$-transitief} zijn: voor drie beelden $A$, $B$ en $C$ moet 
 $\min\{M(A,B),M(B,C)\} \le M(A,C)$ gelden. Die
 eigenschap komt echter niet overeen met de intu\"itieve betekenis van similariteit
 \cite{de_cock:on_unsuitable_relations_for_approx_equal, de_cock:why_fuzzy_relations_do_not_resolve_pointcare_paradox}. 
@@ -62,7 +62,7 @@ van beelden. Vervolgens beoordelen we de zo bekomen rangschikking met behulp van
 
 Figuur~\ref{fig:testcollectie} bevat de collectie van beelden die we gaan 
 gebruiken. Die collectie bestaat uit een selectie van beelden uit
-de \emph{Columbia object image library} \cite{coil-100}, die gegenereerd werd 
+de \defin{Columbia object image library} \cite{coil-100}, die gegenereerd werd 
 door een aantal roterende objecten op bepaalde vaste momenten te fotograferen. 
 Onze testcollectie bestaat uit foto's van elf objecten. Van elk object zijn
 er zes momentopnames, wat een totaal van $11 \cdot 6 = 66$ beelden geeft.
@@ -155,10 +155,10 @@ er zes momentopnames, wat een totaal van $11 \cdot 6 = 66$ beelden geeft.
 \caption{\label{fig:testcollectie}De gebruikte collectie van beelden.}
 \end{figure}
 
-Voor het beoordelen van een rangschikking, gebruiken we de \emph{genormaliseerde gemiddelde rang} 
+Voor het beoordelen van een rangschikking, gebruiken we de \defin{genormaliseerde gemiddelde rang} 
 (GGR) \cite{muller:perf_eval}. Die performantiemaat wordt toegepast op een collectie
 van $N$ beelden. Voor elk van die beelden bevat de collectie
-$N_R$ zogenaamde \emph{relevante beelden}. In het geval van onze testcollectie geldt $N = 66$.
+$N_R$ zogenaamde \defin{relevante beelden}. In het geval van onze testcollectie geldt $N = 66$.
 We gaan er in die collectie van uit dat foto's van eenzelfde object relevant zijn ten opzichte
 van elkaar: $N_R = 6$. Beschouw nu de vector 
 $(r_1,r_2,\ldots,r_{N_R}) \in \{1,2,\ldots,N\}^{N_R}$, waarbij $r_i$ het
@@ -183,7 +183,7 @@ een similariteitsmaat afhankelijk kan zijn van het gekozen voorbeeld. Dat proble
 op door de GGR te berekenen voor meerdere voorbeelden en het gemiddelde van de bekomen waarden
 te beschouwen. We kiezen daarbij de beelden uit de linker kolom van 
 figuur~\ref{fig:testcollectie} als voorbeeld. De waarde die we zo bekomen noemen we de
-\emph{globale genormaliseerde gemiddelde rang} (GGGR). Het is die waarde die we zullen gebruiken
+\defin{globale genormaliseerde gemiddelde rang} (GGGR). Het is die waarde die we zullen gebruiken
 om de performantie van een similariteitsmaat te evalueren. We zullen dus met andere woorden op
 zoek gaan naar similariteitsmaten waarvan de GGGR zo klein mogelijk is.
 

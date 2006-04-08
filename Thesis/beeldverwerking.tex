@@ -9,7 +9,7 @@ technieken.
 
 \subsection{Kleurmodellen}
 
-Een \emph{kleurmodel} is een abstract mathematisch model dat beschrijft hoe kleuren gerepresenteerd 
+Een \defin{kleurmodel} is een abstract mathematisch model dat beschrijft hoe kleuren gerepresenteerd 
 kunnen worden als $n$-tallen uit $\mathbb{R}^n$. RGB is het meest gebruikte kleurmodel. In dat model is elke kleur
 een gewogen som van drie hoofdkleuren: rood, groen en blauw. De gewichten van die som
 worden gebruikt als componenten van het drietal dat de kleur voorstelt. Figuur~\ref{fig:rgb}
@@ -17,7 +17,7 @@ toont de grafische voorstelling van het RGB-model.
 %Naast RGB zijn ook
 %HSV en L*a*b* populaire kleurmodellen \cite{philips:beeldverwerking}.
 
-De kleuren die op basis van een bepaald model kunnen voorgesteld worden, vormen een \emph{kleurruimte}. 
+De kleuren die op basis van een bepaald model kunnen voorgesteld worden, vormen een \defin{kleurruimte}. 
 In het geval van RGB is dat een driedimensionale ruimte. De kleuren in die ruimte zijn afhankelijk
 van de manier waarop men ``rood'', ``groen'' en ``blauw'' definieert. Veelgebruikte kleurruimtes 
 op basis van het RGB-model zijn sRGB en Adobe RGB.
@@ -81,7 +81,7 @@ Een kleur in het Irb-model bestaat uit een intensiteit en een genormaliseerde $r
 met $r,g,b \in [0,1]$ de co\"ordinaten van de beschouwde kleur in het RGB-model. 
 
 Het I1I2I3-model, dat werd voorgesteld door Ohta 
-\cite{ohta:color_info_for_region_segm}, is een \emph{opponent color space}. 
+\cite{ohta:color_info_for_region_segm}, is een \defin{opponent color space}. 
 We zetten een kleur $(r,g,b) \in 
 [0,1]^3$ uit het RGB-model als volgt om:
 \begin{displaymath}
@@ -118,7 +118,7 @@ x' = \frac{x}{x+y+z} \qquad y' = \frac{y}{x+y+z}
 \end{displaymath}
 
 In figuur~\ref{fig:lab} wordt de grafische voorstelling van het L*a*b*-model weergegeven. 
-Een kleurruimte op basis van dat model is \emph{perceptueel uniform} 
+Een kleurruimte op basis van dat model is \defin{perceptueel uniform} 
 \cite{sharma:digital_color_imaging}. Dat wil zeggen dat, in een dergelijke 
 ruimte, de Euclidische afstand een goede maat is voor het waargenomen verschil 
 tussen twee kleuren. De co\"ordinaten $(l,a,b)$ van een kleur in het 
@@ -148,7 +148,7 @@ l' = \frac{l}{100} \qquad a' = \frac{120 +
 
 \subsection{Kleurbeelden}
 
-In een \emph{kleurbeeld} heeft elk beeldpunt een bepaalde kleur, die beschreven wordt met
+In een \defin{kleurbeeld} heeft elk beeldpunt een bepaalde kleur, die beschreven wordt met
 behulp van een kleurmodel. Met andere woorden: de kleur van een beeldpunt wordt voorgesteld 
 als een $n$-tal uit
 $\mathbb{R}^n$. Zoals hierboven reeds een aantal keer werd ge\"illustreerd, kunnen dergelijke 
@@ -178,10 +178,10 @@ $2^{24}=2^4 \cdot 2^{20}=16 \cdot 2^{20} \approx 16 \cdot 10^6$ kleuren kan
 voorstellen.
 
 Om de complexiteit te beperken, kan het dus nodig zijn om het aantal kleuren te 
-reduceren. Dat kan door middel van \emph{kleurkwantisatie}. Daarbij groeperen we de kleuren in 
-zogenaamde \emph{bins}. We beschouwen dus geen aparte kleuren meer, maar wel 
+reduceren. Dat kan door middel van \defin{kleurkwantisatie}. Daarbij groeperen we de kleuren in 
+zogenaamde \defin{bins}. We beschouwen dus geen aparte kleuren meer, maar wel 
 verzamelingen van kleuren. De kleuren die in dezelfde bin zitten, worden dan 
-vervangen door \'e\'en enkele kleur. Het \emph{kleurenpalet} is de verzameling 
+vervangen door \'e\'en enkele kleur. Het \defin{kleurenpalet} is de verzameling 
 van alle bin-kleuren. Bij eenvoudige kwantisatietechnieken wordt steeds 
 hetzelfde palet gebruikt, onafhankelijk van de voor te stellen beelden. Meer 
 geavanceerde technieken proberen een palet te gebruiken dat optimaal is voor de 
@@ -194,7 +194,7 @@ tweede functie kan men dan de kleur van die bin bepalen.
 
 \subsection{Uniforme kwantisatie}
 
-Bij \emph{uniforme kwantisatie} wordt elke kleurcomponent uniform verdeeld in een 
+Bij \defin{uniforme kwantisatie} wordt elke kleurcomponent uniform verdeeld in een 
 aantal intervallen. Als we zorgen dat $C=[0,1]^l$, $l > 0$, dan kunnen we de 
 volgende definitie voor $bin$ gebruiken:
 \begin{displaymath}
@@ -237,7 +237,7 @@ Dat doen we door $N_1=16$, $N_2=4$ en $N_3=4$ te kiezen.
 %Bovendien is het discriminerend
 %vermogen van dit histogram waarschijnlijk ook beter dan dat van een ongecomprimeerd kleurhistogram.
 Die keuzes voor $N_1$, $N_2$ en $N_3$ stemmen overeen met de keuzes die men 
-gemaakt heeft voor de \emph{scalable color descriptor} (SCD), die gedefinieerd 
+gemaakt heeft voor de \defin{scalable color descriptor} (SCD), die gedefinieerd 
 wordt in de MPEG-7 standaard \cite{manjunath:color_and_texture_descriptors}.
 
 Via analoge redeneringen voor de andere kleurmodellen, bekomen we de zes manieren 
@@ -285,7 +285,7 @@ slagen we er zo in om 240 kleurtinten te onderscheiden, zonder het aantal bins t
 gebaseerd is op deze kwantisatietechniek, spreken we van Smooth Color Transition (SCT) kwantisatie.  
 
 Een andere niet-uniforme manier om te kwantiseren, is het mappen van de kleuren op elf 
-\emph{focale kleuren} \cite{van_den_broek:human_color_categorization_for_cbir}: zwart, wit, rood, groen, geel, blauw, bruin, paars, roze, oranje en grijs.
+\defin{focale kleuren} \cite{van_den_broek:human_color_categorization_for_cbir}: zwart, wit, rood, groen, geel, blauw, bruin, paars, roze, oranje en grijs.
 Experimenten hebben aangetoond dat de mens geneigd is om enkel die kleurcategorie\"en te gebruiken bij 
 het beredeneren, onthouden en waarnemen van kleuren. We kunnen voor elke kleur de juiste mapping bepalen
 door op zoek te gaan naar de focale kleur die in het L*a*b*-model het dichtst bij die gegeven kleur ligt.
@@ -307,7 +307,7 @@ $(r,g,b)$ & $(255, 255,   0)$ & $(160,  32, 240)$ & $(192, 192, 192)$ & $(255, 1
 \caption{\label{tab:coords_focale_kleuren}De RGB-co\"ordinaten van de focale kleuren.}
 \end{table}
 
-\emph{Neural Image Quantization} (NeuQuant) \cite{dekker:neuquant} en de \emph{Wu quantizer} 
+\defin{Neural Image Quantization} (NeuQuant) \cite{dekker:neuquant} en de \defin{Wu quantizer} 
 \cite{wu:color_quantization_by_dynamic_programming_and_principal_analysis} zijn twee
 populaire kwantisatietechnieken die, in tegenstelling tot de technieken die we 
 tot nu toe bekeken hebben, een variabel kleurenpalet gebruiken. De eerste techniek gebruikt een
@@ -537,9 +537,9 @@ aantal kleuren dan Wu's techniek.
 \section{Lineaire filters}
 \label{sectie:lineaire_filters}
 
-Bij het \emph{filteren} van een tweedimensionaal beeld $b$ wordt de waarde $b(x,y)$ van een 
+Bij het \defin{filteren} van een tweedimensionaal beeld $b$ wordt de waarde $b(x,y)$ van een 
 beeldpunt $(x,y) \in \mathbb{N}^2$ vervangen door een nieuwe waarde die afhangt van $b(x,y)$ 
-en van de waarden van naburige beeldpunten. In het geval van een \emph{lineair filter} is die nieuwe waarde een lineaire combinatie 
+en van de waarden van naburige beeldpunten. In het geval van een \defin{lineair filter} is die nieuwe waarde een lineaire combinatie 
 van de oude waarden. Het beeld $b'$ dat we bekomen door $b$ lineair te filteren, wordt gegeven door
 de volgende correlatie \cite{philips:beeldverwerking}:
 \begin{displaymath}
@@ -547,9 +547,9 @@ b'(x,y) = \sum_{(k,l) \in \Omega_m} \mathring{b}(x+k,y+l) \cdot m(k,l)
 \end{displaymath}
 met $\mathring{b}$ de nuluitbreiding van $b$, $m$ een $\mathbb{N}^2 - \mathbb{R}$ afbeelding 
 en $\Omega_m = \{ (k,l) \in \mathbb{N}^2 \mid m(k,l) \ne 0 \}$. 
-De functie $m$ wordt het \emph{filtermasker} genoemd.
+De functie $m$ wordt het \defin{filtermasker} genoemd.
 
-Het \emph{3x3 binomiaalfilter} is een voorbeeld van een lineair filter. Voor het filtermasker 
+Het \defin{binomiaalfilter}{3x3 binomiaalfilter} is een voorbeeld van een lineair filter. Voor het filtermasker 
 $m_{bin}$ van dat filter geldt $m_{bin}(-1,-1)=m_{bin}(-1,1)=m_{bin}(1,-1)=m_{bin}(1,1)=1/16$, 
 $m_{bin}(-1,0)=m_{bin}(0,-1)=m_{bin}(1,0)=m_{bin}(0,1)=1/8$, $m_{bin}(0,0)=1/4$ en 
 $m_{bin}(k,l)=0$ voor de overige $(k,l)$. Als we veronderstellen dat $m_{bin}(k,l)=0$ voor de 
@@ -589,7 +589,7 @@ filteren met een binomiaalfilter (b).}
 
 Beeldranden in een tweedimensionaal beeld $b$ zijn plaatsen waar de luminantiecomponent $lum(x,y)$ van $b(x,y)$ 
 sterk varieert als functie van $x$ en/of $y$. Op die plaatsen zullen de partieel afgeleiden $D_1 lum(x,y)$ en 
-$D_2 lum(x,y)$ dus groot zijn. Bijgevolg zal de \emph{gradi\"ent} $\nabla lum$ daar ook groot zijn. We kunnen 
+$D_2 lum(x,y)$ dus groot zijn. Bijgevolg zal de \defin{gradi\"ent} $\nabla lum$ daar ook groot zijn. We kunnen 
 dus de volgende formule gebruiken om randen te detecteren in $b$: 
 \begin{displaymath}
 |\nabla lum(x,y)| / \sqrt{2} = \sqrt{(D_1 lum(x,y))^2 + (D_2 lum(x,y))^2} / \sqrt{2}
@@ -615,7 +615,7 @@ kunnen de eerste en tweede partieel afgeleiden dus berekenen met behulp van line
 D_1 lum(x,y)\textrm{: }\quad \frac{1}{2} \left[ \begin{array}{ccc} -1 & 0 & 1 \end{array} \right] \qquad \textrm{ en } 
 \qquad D_2 lum(x,y)\textrm{: }\quad \frac{1}{2} \left[ \begin{array}{c} -1 \\ 0 \\ 1 \end{array} \right]
 \end{displaymath}
-De \emph{Sobel-operator} is een variant hierop die minder ruisgevoelig is doordat er 
+De \defin{Sobel-operator} is een variant hierop die minder ruisgevoelig is doordat er 
 extra ruisonderdrukking voorzien wordt via een binomiaalfilter loodrecht op de richting 
 van de parti\"ele afleiding:
 \begin{displaymath}

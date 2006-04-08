@@ -1,7 +1,7 @@
 \chapter{Inleiding}
 
-Op dit eigenste moment zijn er waarschijnlijk enkele honderden \emph{spiders} actief op internet.
-Die computerprogramma's, die soms ook \emph{robots} of \emph{wanderers} worden genoemd, reizen
+Op dit eigenste moment zijn er waarschijnlijk enkele honderden \defin{spiders} actief op internet.
+Die computerprogramma's, die soms ook \defin{robots} of \defin{wanderers} worden genoemd, reizen
 het internet rond om bepaalde documenten -- in het bijzonder beelden -- te localiseren. Ze indexeren
 de gevonden documenten in een databank, die dan doorzocht kan worden door een zoekmachine. 
 
@@ -13,7 +13,7 @@ te doorzoeken.
 
 \section{Tekstgebaseerd zoeken van beelden}
 
-Alle belangrijke bestaande zoekmachines bieden \emph{text-based image retrieval} (TBIR) aan. 
+Alle belangrijke bestaande zoekmachines bieden \defin{text-based image retrieval} (TBIR) aan. 
 Figuur~\ref{fig:tbir} toont de algemene architectuur van die machines. Elk beeld 
 wordt voorzien van tekstuele annotaties, zoals bijvoorbeeld de 
 bestandsnaam of woorden uit de webpagina waarvan het deel uitmaakt. Die annotaties
@@ -29,15 +29,15 @@ uit de databank te overlopen, vermits de databank ge\"indexeerd is op de annotat
 
 Omdat de tekstgebaseerde aanpak in de praktijk dikwijls tekortschiet, is men op zoek gegaan 
 naar manieren om het zoeken te baseren op de visuele inhoud van de beelden 
-\cite{smeulders:cbir_end_of_early_years}. Zo zijn de \emph{content-based image retrieval} (CBIR) systemen 
+\cite{smeulders:cbir_end_of_early_years}. Zo zijn de \defin{content-based image retrieval} (CBIR) systemen 
 \cite{veltcamp:cbirs} ontstaan. 
 De algemene architectuur van een dergelijk systeem wordt ge\"illustreerd door
-figuur~\ref{fig:cbir}. Er wordt gebruik gemaakt van een proces dat \emph{kenmerkextractie}
-(\emph{(visual) feature extraction}) genoemd wordt \cite{rui:image_retr}. Dat proces zet een beeld om in een 
-\emph{kenmerkvector} (\emph{feature vector}). Met behulp van multidimensionale indexering kan die
+figuur~\ref{fig:cbir}. Er wordt gebruik gemaakt van een proces dat \defin{kenmerkextractie}
+(\defin{feature extraction}{(visual) feature extraction}) genoemd wordt \cite{rui:image_retr}. Dat proces zet een beeld om in een 
+\defin{kenmerkvector} (\defin{feature vector}). Met behulp van multidimensionale indexering kan die
 vector dan gebruikt worden als alternatief voor de tekstuele annotaties bij TBIR.
 
-De meeste CBIR-systemen werken volgens het \emph{query-by-example} principe. Dat houdt in dat de
+De meeste CBIR-systemen werken volgens het \defin{query-by-example} principe. Dat houdt in dat de
 gebruiker een beeld als voorbeeld opgeeft, waarna het systeem op zoek gaat naar beelden
 die visuele gelijkenissen vertonen met dat voorbeeld. Daartoe wordt eerst de kenmerkvector van
 het opgegeven beeld bepaald, om deze vervolgens te vergelijken met de kenmerkvectoren in

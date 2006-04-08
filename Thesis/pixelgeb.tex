@@ -3,14 +3,14 @@
 De similariteitsmaten die we in dit hoofdstuk beschouwen,
 meten de gelijkenis tussen twee beelden door hun beeldpunten met elkaar te vergelijken.
 We identificeren de beelden dus met vaagverzamelingen in een universum $P$ dat bestaat uit 
-beeldpunten. Die beeldpunten worden ook \emph{picture elements} of kortweg \emph{pixels} genoemd. 
-Vandaar dat we spreken van \emph{pixelgebaseerde} maten.
+beeldpunten. Die beeldpunten worden ook \defin{picture elements} of kortweg \defin{pixels} genoemd. 
+Vandaar dat we spreken van \defin{pixelgebaseerde similariteitsmaat}{pixelgebaseerde} maten.
 
 \section{Grijswaardebeelden}
 
 \subsection{Representatie}
 
-Een \emph{binair beeld} is een beeld dat enkel witte en zwarte beeldpunten bevat. We kunnen een 
+Een \defin{binair beeld} is een beeld dat enkel witte en zwarte beeldpunten bevat. We kunnen een 
 $n$-dimensionaal binair beeld dus modelleren als een scherpe verzameling $A$ in $\mathbb{R}^n$, met:
 \begin{displaymath}
 \begin{array}{rcl}
@@ -21,7 +21,7 @@ p \notin A & \iff & p \textrm{ is een zwart punt in het beeld}
 Vermits een binair beeld in de praktijk voorgesteld wordt als een rooster bestaande uit een
 eindig aantal beeldpunten, zal het universum doorgaans eerder een deelverzameling van $\mathbb{N}^2$ zijn.
 
-Behalve wit en zwart, kan een \emph{grijswaardebeeld} ook grijstinten bevatten. Die grijstinten
+Behalve wit en zwart, kan een \defin{grijswaardebeeld} ook grijstinten bevatten. Die grijstinten
 kunnen voorgesteld worden aan de hand van waarden uit het open eenheidsinterval $]0,1[$, waarbij
 geldt: hoe groter de grijswaarde, hoe lichter de grijstint. Een $n$-dimensionaal grijswaardebeeld
 kan dus gemodelleerd worden als een vaagverzameling $A$ in $\mathbb{R}^n$ bepaald door:
@@ -143,7 +143,7 @@ definities voor $\max$ en $\min$ uit \ref{sectie:kleurbeeld_repr} gebruiken.
 \section{Resolutie-onafhankelijke similariteitsmaten}
 \label{sectie:res-onafh}
 
-Het aantal pixels in een beeld wordt de \emph{resolutie} van dat beeld genoemd.
+Het aantal pixels in een beeld wordt de \defin{resolutie} van dat beeld genoemd.
 Een belangrijke beperking van de bovenstaande pixelgebaseerde similariteitsmaten is dat
 ze enkel kunnen toegepast worden op beelden die dezelfde resolutie hebben.
 We kunnen dit oplossen door ofwel intermediaire beelden ofwel beeldonderdelen te beschouwen.
@@ -192,8 +192,8 @@ De pixel in de linker bovenhoek van een intermediair beeld krijgt dus de kleur d
 in het gekwantiseerde beeld, terwijl we voor het beeldpunt rechts onderaan de minst voorkomende kleur
 gebruiken. 
 
-Figuur\ref{fig:moments} illustreert een derde optie, waarbij \emph{kleurmomenten} gebruikt
-worden om nieuwe intermediaire beelden te construeren. Het \emph{moment van de $k$-de orde rond $a$} ($a
+Figuur\ref{fig:moments} illustreert een derde optie, waarbij \defin{kleurmomenten} gebruikt
+worden om nieuwe intermediaire beelden te construeren. Het \defin{moment van de $k$-de orde rond $a$} ($a
 \in \mathbb{R}$) van een discrete toevalsveranderlijke $T$ met
 probabiliteitsfunctie $prob_T$ wordt als volgt gedefinieerd
 \cite{demeyer:statistiek}: 
@@ -352,7 +352,7 @@ figuur~\ref{fig:multires} voor (a) $M(A,B)$, (b) $M(B,A)$ en (c) beide.}
 %\end{table}
 
 We kunnen de similariteiten tussen de verschillende beeldonderdelen van twee beelden
-samenbrengen in een \emph{similariteitsmatrix}. Een dergelijke matrix kan grafisch 
+samenbrengen in een \defin{similariteitsmatrix}. Een dergelijke matrix kan grafisch 
 voorgesteld worden als een grijswaardebeeld, waarbij de waarde van een beeldpunt evenredig is met
 de overeenkomstige similariteit. Figuur~\ref{fig:multires_sim-matrix_1} toont het pad in de 
 similariteitsmatrix van de beelden $A$ en $B$ uit figuur~\ref{fig:multires}, dat wordt afgelopen
@@ -1396,7 +1396,7 @@ groter dan de winst die het product oplevert.
 Een opvallende observatie is dat de component-gebaseerde aanpak blijkbaar betere resultaten 
 geeft dan de tralie-gebaseerde. Verkeerdelijk hoge similariteiten tussen sterk verschillende 
 beelden zijn de oorzaak daarvan. Bij het vergelijken
-van beelden die niet sterk verschillen kunnen dergelijke \emph{valse positieven} niet optreden.
+van beelden die niet sterk verschillen kunnen dergelijke \defin{valse positieven} niet optreden.
 Vandaar dat de tralie-gebaseerde aanpak wel goed kan presteren bij de constructie van
 kwaliteitsmaten voor beelden \cite{debaets:similariteitsmaten_voor_kleurbeelden}.
 Beschouw bijvoorbeeld twee beelden $A$ en $B$ die elk uit \'e\'en enkele pixel bestaan. De pixel 

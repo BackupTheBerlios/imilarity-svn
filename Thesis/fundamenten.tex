@@ -15,8 +15,8 @@ we naar \cite{kerre:vaagmodellen}, \cite{vanderweken:similariteitsmaten} en
 
 In tegenstelling tot de meeste andere gebieden van de wiskunde, wordt in de theorie der 
 vaagverzamelingen het begrip ``orde'' ten volle ge\"exploreerd \cite{kerre:vaagmodellen}. Daarom beginnen we deze 
-sectie met het defini\"eren van twee ordestructuren: \emph{partieel geordende verzameling} 
-(\emph{poset}) en \emph{tralie}. We maken bovendien van de gelegenheid gebruik om enkele 
+sectie met het defini\"eren van twee ordestructuren: \defin{partieel geordende verzameling} 
+(\defin{poset}) en \defin{tralie}. We maken bovendien van de gelegenheid gebruik om enkele 
 belangrijke begrippen in verband met posets te introduceren. 
 
 \begin{definitie}
@@ -73,15 +73,15 @@ een supremum en een infimum bezit, dan is $(L, \le)$ een complete tralie.
 
 \subsection{Vaagverzamelingen}
 
-Het \emph{universum} is de collectie van alle mogelijke elementen (bijvoorbeeld de
+Het \defin{universum} is de collectie van alle mogelijke elementen (bijvoorbeeld de
 natuurlijke getallen). Een verzameling bevat bepaalde elementen uit dat universum (bijvoorbeeld de 
 verzameling van de priemgetallen). 
 
-In het geval van een \emph{scherpe (deel)verzameling} behoort elk 
+In het geval van een \defin{scherpe (deel)verzameling} behoort elk 
 element uit het universum wel of niet tot de verzameling. Andere mogelijkheden zijn er
 niet. Een dergelijke verzameling kan bijgevolg 
-gerepresenteerd worden door een \emph{karakteristieke afbeelding}, die elk element uit het 
-universum afbeeldt op 0 of 1. Dat getal wordt de \emph{lidmaatschapsgraad} van het element 
+gerepresenteerd worden door een \defin{karakteristieke afbeelding}, die elk element uit het 
+universum afbeeldt op 0 of 1. Dat getal wordt de \defin{lidmaatschapsgraad} van het element 
 in kwestie genoemd. De klasse van scherpe verzamelingen in een universum $X$ stellen we voor door 
 $\mathcal{P}(X)$.
 \begin{definitie}
@@ -96,7 +96,7 @@ wordt gedefinieerd als de $X - \{0,1\}$ afbeelding:
 \end{displaymath}
 \end{definitie}
 
-Bij een \emph{vaagverzameling} kunnen alle waarden tussen 0 en 1 als lidmaatschapsgraad 
+Bij een \defin{vaagverzameling} kunnen alle waarden tussen 0 en 1 als lidmaatschapsgraad 
 voorkomen. De ``karakteristieke'' afbeelding is in dat geval dus een $X - [0,1]$ afbeelding:
 \begin{definitie}
 Zij $X$ een universum. Een vaagverzameling $A$ in $X$ wordt gekarakteriseerd door een $X - [0,1]$
@@ -115,7 +115,7 @@ met andere woorden geen onderscheid tussen de vaagverzameling en de
 lidmaatschapsfunctie. Voor de klasse van vaagverzamelingen in een universum $X$ gebruiken we
 de notatie $\mathcal{F}(X)$.
 % beter geen nieuwe paragraaf volgens Stefan
-De \emph{drager} en de \emph{kern} van een vaagverzameling zijn twee belangrijke begrippen: 
+De \defin{drager} en de \defin{kern} van een vaagverzameling zijn twee belangrijke begrippen: 
 \begin{definitie}
 De drager van een vaagverzameling $A$ in $X$ wordt gedefinieerd als:
 \begin{displaymath}
@@ -129,10 +129,10 @@ ker\ A = \{x \in X \mid A(x) = 1\}
 \end{displaymath}
 \end{definitie}
 \noindent
-Ook het begrip \emph{cardinaliteit} speelt vaak een belangrijke rol. De cardinaliteit van een 
+Ook het begrip \defin{cardinaliteit} speelt vaak een belangrijke rol. De cardinaliteit van een 
 eindige scherpe verzameling wordt gegeven door het aantal elementen in die verzameling. 
 Dat concept kan uitgebreid worden naar vaagverzamelingen door gebruik te maken van het begrip 
-\emph{sigma count}:
+\defin{sigma count}:
 \begin{definitie}
 De sigma count van een vaagverzameling $A$ met eindige drager in een universum $X$ wordt
 gedefinieerd door:
@@ -144,8 +144,8 @@ gedefinieerd door:
 \subsection{Bewerkingen op vaagverzamelingen}
 \label{sectie:bew_op_vaagverz}
 
-We beginnen met het defini\"eren van de begrippen \emph{negator}, \emph{conjunctor} en 
-\emph{disjunctor}. Die operatoren zijn uitbreidingen van de klassieke logische operatoren
+We beginnen met het defini\"eren van de begrippen \defin{negator}, \defin{conjunctor} en 
+\defin{disjunctor}. Die operatoren zijn uitbreidingen van de klassieke logische operatoren
 $\lnot$ (negatie), $\land$ (conjunctie) en $\lor$ (disjunctie).
 \begin{definitie}
 Een negator $\mathcal{N}$ op $[0,1]$ is een dalende $[0,1] - [0,1]$ afbeelding die voldoet
@@ -248,7 +248,7 @@ waarbij $A$ en $B$ vaagverzamelingen in een zelfde universum zijn.
 \subsection{L-vaagverzamelingen}
 
 Het begrip vaagverzameling kan op zijn beurt nog eens uitgebreid worden tot 
-\emph{L-vaagverzameling}. Die uitbreiding is gebaseerd op het concept \emph{tralie}
+\defin{L-vaagverzameling}. Die uitbreiding is gebaseerd op het concept tralie
 uit sectie~\ref{sectie:posets_en_tralies}.
 \begin{definitie}
 Zij $X$ een universum en $(L,\le)$ een complete tralie. Een L-vaagverzameling $A$ in $X$ wordt
@@ -266,8 +266,8 @@ $\mathcal{F}_L(X)$. Merk op dat die klasse zich herleidt tot $\mathcal{F}(X)$ vo
 
 \subsection{Bewerkingen op L-vaagverzamelingen}
 
-De begrippen \emph{negator}, \emph{conjunctor} en 
-\emph{disjunctor} kunnen uitgebreid worden naar L-vaag\-ver\-za\-me\-ling\-en. Dat heeft als 
+De begrippen negator, conjunctor en 
+disjunctor kunnen uitgebreid worden naar L-vaag\-ver\-za\-me\-ling\-en. Dat heeft als 
 gevolg dat de veralgemeende verzameltechnische bewerkingen $co$, $\cap$ en 
 $\cup$ uit \ref{sectie:bew_op_vaagverz} eveneens toepasbaar zijn op L-vaagverzamelingen.
 We geven hieronder de definities van die uitbreidingen.
@@ -295,7 +295,7 @@ Een driehoeksconorm (t-conorm) is een commutatieve en associatieve semi-conorm.
 \label{sectie:vaagsimilariteitsmaten}
 
 Het nagaan van de graduele gelijkenis tussen twee vaagverzamelingen -- of tussen twee objecten die 
-identificeerbaar zijn met vaagverzamelingen -- kan aan de hand van \emph{vaagsimilariteitsmaten}. 
+identificeerbaar zijn met vaagverzamelingen -- kan aan de hand van \defin{vaagsimilariteitsmaten}. 
 Een dergelijke similariteitsmaat voor het vergelijken van twee vaagverzamelingen in een 
 universum $X$, is niets meer dan een vaagverzameling in $\mathcal{F}(X) \times \mathcal{F}(X)$. De 
 lidmaatschapsgraad van een koppel $(A,B) \in (\mathcal{F}(X))^2$ nadert daarbij naar 1 naarmate 
@@ -390,7 +390,7 @@ $
 
 \section{Aggregatieoperatoren} 
 
-Algemeen gesproken is een \emph{aggregatieoperator} een mathematisch object dat als doel heeft
+Algemeen gesproken is een \defin{aggregatieoperator} een mathematisch object dat als doel heeft
 een eindige verzameling getallen te reduceren tot \'e\'en representatief getal. In de context van 
 vaagverzamelingen wordt doorgaans de volgende definitie gebruikt 
 \cite{detyniecki:numerical_aggregation_operators}:
