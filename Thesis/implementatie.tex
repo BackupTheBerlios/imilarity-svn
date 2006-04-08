@@ -1,0 +1,255 @@
+\chapter{Implementatie}
+
+De belangrijkste bijdrage van dit eindwerk, is de bouw van een prototype
+dat het similariteitsgebaseerd rangschikken van zoekresultaten implementeert.
+Dat prototype wordt in dit hoofstuk in grote lijnen besproken. Voor de details
+verwijzen we naar de broncode op de bijgevoegde CD-ROM.
+
+\section{Imilarity}
+
+Aan de basis van het prototype ligt \defin{Imilarity}, een collectie van Java klassen 
+die kunnen gebruikt worden om beelden op te halen en vervolgens te vergelijken. Een 
+dergelijke collectie van nauw samenwerkende klassen wordt een \defin{framework} genoemd. 
+
+Het ophalen van beelden gebeurt aan de hand van een klasse die de interface 
+{\klassefont Providor} implementeert. Codefragment~\ref{code:providor} toont de definitie
+van die interface. Het is duidelijk dat de beelden in groepjes van 
+{\klassefont getPageSize()} doorgegeven worden, in plaats van allemaal in \'e\'en keer. 
+Dat heeft immers als voordeel dat de vooruitgang van het ophalen van de beelden kan 
+opgevolgd worden. E\'en groepje beelden noemen we een \defin{pagina}.
+
+\begin{code}[bp]
+\vspace{5pt}
+\begin{lgrind}
+\input{code/Providor.java.tex}
+\end{lgrind}
+\vspace{5pt}
+\caption{\label{code:providor}Definitie van de {\klassefont Providor} interface.}
+\end{code}
+
+Zodra de beelden opgehaald zijn, kunnen ze met elkaar vergeleken worden. Daarvoor
+gebruiken we de interface {\klassefont ImageMeasure} uit 
+codefragment~\ref{code:imagemeasure}. Een klasse die {\klassefont ImageMeasure} 
+implementeert, komt overeen met een similariteitsmaat voor beelden. Voor de 
+vaagsimilariteitsmaten gebruiken we de interface {\klassefont FuzzyMeasure}.
+Codefragment~\ref{code:fuzzymeasure} bevat de definitie van die interface.
+Beide interfaces zijn uitbreidingen van de interface {\klassefont Measure}
+uit codefragment~\ref{code:measure}. 
+Een object van het type {\klassefont FuzzyImageMeasure} vergelijkt beelden
+met behulp van een {\klassefont FuzzyMeasure}-object. Alle overige
+{\klassefont ImageMeasure}-objecten maken gebruiken van een ander 
+{\klassefont ImageMeasure}-object. Zo zal een {\klassefont ComponentsImageMeasure}
+bijvoorbeeld een andere {\klassefont ImageMeasure} gebruiken om de grijswaardebeelden
+van elk van de kleurcomponenten met elkaar te vergelijken. 
+
+\begin{code}[!b]
+\vspace{5pt}
+\begin{lgrind}
+\input{code/ImageMeasure.java.tex}
+\end{lgrind}
+\vspace{5pt}
+\caption{\label{code:imagemeasure}Definitie van de interface {\klassefont ImageMeasure}.}
+\end{code}
+%
+\begin{code}[!b]
+\vspace{5pt}
+\begin{lgrind}
+\input{code/FuzzyMeasure.java.tex}
+\end{lgrind}
+\vspace{5pt}
+\caption{\label{code:fuzzymeasure}Definitie van de interface {\klassefont FuzzyMeasure}.}
+\end{code}
+%
+\begin{code}[!b]
+\vspace{5pt}
+\begin{lgrind}
+\input{code/Measure.java.tex}
+\end{lgrind}
+\vspace{5pt}
+\caption{\label{code:measure}Definitie van de interface {\klassefont Measure}.}
+\end{code}
+
+Tot nu toe hebben we, bij het bepalen van de rangschikkingen, telkens \'e\'en 
+voorbeeld gebruikt. Het is echter zeker niet ondenkbaar dat een gebruiker
+van het prototype meerdere voorbeelden wenst op te geven. Om dat toe te laten,
+maken we gebruik van aggregatieoperatoren. We berekenen eerst de similariteit met
+elk van de voorbeelden, om daarna dan die similariteiten te aggregeren tot \'e\'en
+getal met behulp van een aggregatieoperator. De huidige implementatie 
+ondersteunt het gemiddelde, het maximum, het minimum, het product en de 
+algebra\"ische som. Het zou echter interessant zijn om na te gaan of er betere
+resultaten kunnen bekomen worden door meer geavanceerde operatoren te gebruiken.
+
+De klasse {\klassefont Imililarity} abstraheert het ophalen en rangschikken van
+beelden. Codefragement~\ref{code:simple_example} bevat een zeer eenvoudig 
+\begin{code}[bp]
+\vspace{5pt}
+\begin{lgrind}
+\input{code/SimpleExample.java.tex}
+\end{lgrind}
+\vspace{5pt}
+\caption{\label{code:simple_example}Simpel voorbeeldprogramma dat het gebruik van
+de klasse {\klassefont Imilarity} illustreert.}
+\end{code}
+voorbeeldprogramma dat het gebruik van die klasse illustreert. Het commando
+\texttt{java SimpleExample zadeh} genereert de volgende uitvoer:
+\begin{verbatim}
+Loading images #####
+Reordering images #####
+1: 'Hemati Zadeh'
+2: 'zadeh'
+\end{verbatim} 
+Dit zijn de verschillende stappen die daarbij plaatsvinden:
+\begin{enumerate}
+  \item Het {\klassefont Imilarity}-object wordt aangemaakt.
+  \item De similariteitsmaat wordt ingesteld via de methode {\klassefont setMeasure}.
+  \item Met behulp van de methode {\klassefont setAggregator} wordt het maximum ingesteld als
+		aggregatieoperator. 
+  \item Als {\klassefont Providor} wordt er een {\klassefont YahooProvidor} ingesteld.
+  	    Het eerste commandolijn-argument -- in dit geval ``zadeh'' -- doet daarbij 
+  	    dienst als zoekterm. Vervolgens worden de pagina's in het geheugen geladen
+  	    door {\klassefont loadPage} op te roepen voor elke pagina.
+  \item De eerste twee zoekresultaten worden opgegeven als voorbeeld en de pagina's
+        worden geordend volgens similariteit met die voorbeelden. Daarna wordt
+        {\klassefont mergeReorderedPages} uitgevoerd. Zoals de naam al doet vermoeden,
+        zorgt die methode ervoor dat de geordende pagina's samengevoegd 
+        worden tot een globale rangschikking.
+  \item Tenslotte worden de namen van de eerste twee beelden in de rangschikking 
+  	    uitgeschreven.
+\end{enumerate}
+
+\section{Imperforate}
+
+In de voorgaande hoofdstukken hebben we de geconstrueerde similariteitsmaten 
+met elkaar vergeleken door de GGGR-waarden te berekenen voor een bepaalde testcollectie.
+\defin{Imperforate} is een programma dat toelaat om dergelijke experimenten 
+uit te voeren. Dat programma kan gestart worden door dubbel te klikken op het 
+bestand ``imperforate.jar'' op de bijgevoegde CD-ROM. Eventueel kan het ook
+manueel gestart worden via het commando \texttt{java -jar imperforate.jar}. 
+In beide gevallen zal Imperforate uitgevoerd worden met de standaard maximale grootte
+van het grabbelgeheugen. Voor sommige testcollecties volstaat dat echter niet.
+Het kan bijgevolg nuttig zijn om het maximale geheugenverbruik te 
+vergroten. Als we bijvoorbeeld het commando 
+\texttt{java -Xmx256M -jar imperforate.jar} gebruiken,
+dan wordt de maximale grootte van het grabbelgeheugen verhoogd tot 256MB. 
+
+Figuur~\ref{fig:imperforate_1} toont het initi\"ele venster. Vooralleer er iets
+kan berekend worden, moet er eerst een beeldencollectie ingeladen worden.
+Dat kan door op de knop ``Add ...'' te klikken, waardoor het venster uit 
+figuur~\ref{fig:imperforate_2} verschijnt. Via dat venster kan er een 
+``*.class''-bestand opgegeven worden. Dat bestand is een gecompileerde 
+Java-klasse, die de interface {\klassefont ImageCollection} uit 
+codefragment~\ref{code:imagecollection} implementeert. De map ``image\_collections''
+op de CD-ROM bevat drie dergelijke bestanden. E\'en voor de COIL subcollectie,
+\'e\'en voor een selectie van beelden uit de UCID collectie \cite{ucid} en
+een derde voor een deel van de collectie van Kato 
+\cite{kato:cbir_using_stochastic_paintbrush}.
+
+Zodra er een beeldencollectie is ingeladen, kunnen de GGGRs berekend worden.
+Daartoe moet er op ``Calculate'' geklikt worden nadat de gewenste 
+similariteitsmaten geselecteerd werden. De waarden in de kolommen worden dan 
+geleidelijk aan ingevuld. Figuur~\ref{fig:imperforate_3} illustreert dat de 
+inhoud van een kolom kan gesorteerd worden door op de titel van die kolom te klikken.
+Wanneer de gebruiker op ``Show results'' klikt, dan worden de resultaten van de
+geselecteerde maten getoond in een venster zoals dat uit 
+figuur~\ref{fig:imperforate_4}. De overblijvende knop kan gebruikt worden om
+de gegevens van de geselecteerde maten uit te schrijven in een formaat dat
+rechtstreeks kan gebruikt worden als invoer voor het programma \emph{gnuplot}. 
+Op die manier kunnen de gegenereerde data gemakkelijk omgezet worden naar een grafiek.
+
+\begin{code}[!bp]
+\vspace{5pt}
+\begin{lgrind}
+\input{code/ImageCollection.java.tex}
+\end{lgrind}
+\vspace{5pt}
+\caption{\label{code:imagecollection}Definitie van de interface 
+{\klassefont ImageCollection}.}
+\end{code}
+
+\begin{figure}[bp]
+\vspace{6pt}
+\centering
+\begin{tabular}{@{}c@{}c@{}}
+\multicolumn{2}{c}{\subfigure[] {
+\begin{minipage}{\textwidth}
+\centering
+\includegraphics[height=8cm]{images/imperforate_1.eps}
+\vspace{6pt}
+\end{minipage}
+\label{fig:imperforate_1}
+}}\\
+\multicolumn{2}{c}{\subfigure[] {
+\begin{minipage}{\textwidth}
+\centering
+\includegraphics[height=8cm]{images/imperforate_3.eps}
+\vspace{6pt}
+\end{minipage}
+\label{fig:imperforate_3}
+}}\\
+\subfigure[] {
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[height=5cm]{images/imperforate_2.eps}
+\vspace{6pt}
+\end{minipage}
+\label{fig:imperforate_2}
+}
+&
+\subfigure[] {
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[height=5cm]{images/imperforate_4.eps}
+\vspace{6pt}
+\end{minipage}
+\label{fig:imperforate_4}
+}
+\end{tabular}\vspace{3pt}
+\caption{\label{fig:imperforate}Enkele screenshots van Imperforate.}
+\end{figure}
+
+
+\section{Giggle}
+
+Het eigenlijke prototype noemen we \defin{Giggle}. Uiteraard is Giggle, net zoals
+Imperforate, gebaseerd op het Imilarity framework.
+
+\begin{figure}[bp]
+\vspace{6pt}
+\centering
+\begin{tabular}{@{}c@{}c@{}}
+\multicolumn{2}{c}{\subfigure[] {
+\begin{minipage}{\textwidth}
+\centering
+\includegraphics[height=8cm]{images/giggle_1.eps}
+\vspace{6pt}
+\end{minipage}
+\label{fig:giggle_1}
+}}\\
+\multicolumn{2}{c}{\subfigure[] {
+\begin{minipage}{\textwidth}
+\centering
+\includegraphics[height=8cm]{images/giggle_2.eps}
+\vspace{6pt}
+\end{minipage}
+\label{fig:giggle_2}
+}}\\
+\subfigure[] {
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[height=5cm]{images/giggle_3.eps}
+\vspace{6pt}
+\end{minipage}
+\label{fig:giggle_3}
+}
+&
+\subfigure[] {
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[height=5cm]{images/giggle_4.eps}
+\vspace{6pt}
+\end{minipage}
+\label{fig:giggle_4}
+}
+\end{tabular}\vspace{3pt}
+\caption{\label{fig:giggle}Enkele screenshots van Giggle.}
+\end{figure}
