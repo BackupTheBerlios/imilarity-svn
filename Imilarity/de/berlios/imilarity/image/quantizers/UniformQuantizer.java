@@ -85,8 +85,8 @@ public class UniformQuantizer implements Quantizer {
 	// TESTPROGRAMMA
 	
 	public static void main(String[] args) throws IOException {
-		//doMainTest();
-		//doSpeedTest();
+		doMainTest();
+		doSpeedTest();
 		doOptBinsTest();
 	}
 	

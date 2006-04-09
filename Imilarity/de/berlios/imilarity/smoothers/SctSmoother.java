@@ -108,7 +108,7 @@ public class SctSmoother implements Smoother {
 		}
 	}
 	
-	private static int binom(int n, int k) {
-		return binoms(n)[k];
-	}
+//	private static int binom(int n, int k) {
+//		return binoms(n)[k];
+//	}
 }

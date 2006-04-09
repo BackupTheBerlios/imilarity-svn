@@ -7,8 +7,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import de.berlios.imilarity.color.Color;
-import de.berlios.imilarity.color.ColorSpace;
-import de.berlios.imilarity.color.Lab;
 import de.berlios.imilarity.image.Image;
 import de.berlios.imilarity.image.ImageData;
 import de.berlios.imilarity.image.LabImage;
