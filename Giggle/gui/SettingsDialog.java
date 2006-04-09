@@ -1025,27 +1025,29 @@ public class SettingsDialog extends JDialog {
 						final JPanel measuresPanel = new JPanel();
 						measuresPanel.setLayout(new BoxLayout(measuresPanel, BoxLayout.Y_AXIS));
 						for (int i = 0; i < MEASURES.length; i++) {
-							final JPanel measurePanel = new JPanel(new BorderLayout());
-							JTextArea text = new JTextArea();
-							text.setEditable(false);
-							text.setLineWrap(true);
-							text.setWrapStyleWord(true);
-							text.setOpaque(false);
-							text.setBorder(BorderFactory.createEmptyBorder(5,0,5,5));
-							
-							text.append(MEASURES[i].getDescription());
-							measurePanel.add(text);
-							measurePanel.setBorder(BorderFactory.createEmptyBorder(3,5,3,5));
-							JButton add = new JButton("Add");
-							final int index = i;
-							add.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent e) {
-									measure.addObject(MEASURES[index]);
-									measuresDialog.setVisible(false);
-								}
-							});
-							measurePanel.add(add, BorderLayout.EAST);
-							measuresPanel.add(measurePanel);
+							if (!measure.containsObject(MEASURES[i])) {
+								final JPanel measurePanel = new JPanel(new BorderLayout());
+								JTextArea text = new JTextArea();
+								text.setEditable(false);
+								text.setLineWrap(true);
+								text.setWrapStyleWord(true);
+								text.setOpaque(false);
+								text.setBorder(BorderFactory.createEmptyBorder(5,0,5,5));
+								
+								text.append(MEASURES[i].getDescription());
+								measurePanel.add(text);
+								measurePanel.setBorder(BorderFactory.createEmptyBorder(3,5,3,5));
+								JButton add = new JButton("Add");
+								final int index = i;
+								add.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent e) {
+										measure.addObject(MEASURES[index]);
+										measuresDialog.setVisible(false);
+									}
+								});
+								measurePanel.add(add, BorderLayout.EAST);
+								measuresPanel.add(measurePanel);
+							}
 						}
 						
 						EventQueue.invokeLater(new Runnable() {
