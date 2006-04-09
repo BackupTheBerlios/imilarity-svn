@@ -19,14 +19,18 @@ import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -35,8 +39,6 @@ import javax.swing.JScrollPane;
 import javax.swing.Scrollable;
 
 import de.berlios.imilarity.image.ImageData;
-
-
 
 import models.ExamplesModel;
 import models.ImageModel;
@@ -99,7 +101,7 @@ public class ResultsPanel extends JPanel implements Observer {
 		fullSizePanel.setBackground(Color.WHITE);
 		fullSizePanel.setLayout(new BoxLayout(fullSizePanel, BoxLayout.Y_AXIS));
 		fullSizePanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		fullSizePanel.setToolTipText("Click here to go back");
+		fullSizePanel.setToolTipText("Click here to save this image");
 		fullSizePanel.add(Box.createGlue());
 		fsProgressBar = new JProgressBar();
 		fsProgressBar.setIndeterminate(true);
@@ -121,7 +123,28 @@ public class ResultsPanel extends JPanel implements Observer {
 		
 		fullSizePanel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				ResultsPanel.this.fullSizeImgModel.setImageData(null);
+				ImageData imageData = fullSizePanel.getImage();
+				JFileChooser fc = new JFileChooser();
+				int retVal = fc.showSaveDialog(ResultsPanel.this);
+				if (retVal == JFileChooser.APPROVE_OPTION) {
+					File file = fc.getSelectedFile();
+				    String name = file.getName();
+				    String ext = name.substring(name.lastIndexOf('.')+1, name.length());
+				    BufferedImage bufImage = new BufferedImage
+				    	(imageData.getWidth(), imageData.getHeight(),
+				    	 BufferedImage.TYPE_INT_RGB);
+				    Graphics g = bufImage.getGraphics();
+				    g.drawImage(imageData.getImage(), 0, 0, 
+				    		bufImage.getWidth(), bufImage.getHeight(), null);
+				    g.dispose();
+				    try {
+						ImageIO.write(bufImage, ext, file);
+					} catch (IOException e1) {
+						JOptionPane.showMessageDialog(ResultsPanel.this,
+								"Could not save image: " + e1.getMessage(), 
+								"Error", JOptionPane.ERROR_MESSAGE);
+					}
+				}
 			}
 		});
 		
