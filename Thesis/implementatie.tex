@@ -93,8 +93,8 @@ de klasse {\klassefont Imilarity} illustreert.}
 voorbeeldprogramma dat het gebruik van die klasse illustreert. Het commando
 \texttt{java SimpleExample zadeh} genereert de volgende uitvoer:
 \begin{verbatim}
-Loading images #####
-Reordering images #####
+Loading images ####################
+Reordering images ####################
 1: 'Hemati Zadeh'
 2: 'zadeh'
 \end{verbatim} 
@@ -105,9 +105,11 @@ Dit zijn de verschillende stappen die daarbij plaatsvinden:
   \item Met behulp van de methode {\klassefont setAggregator} wordt het maximum ingesteld als
 		aggregatieoperator. 
   \item Als {\klassefont Providor} wordt er een {\klassefont YahooProvidor} ingesteld.
-  	    Het eerste commandolijn-argument -- in dit geval ``zadeh'' -- doet daarbij 
-  	    dienst als zoekterm. Vervolgens worden de pagina's in het geheugen geladen
-  	    door {\klassefont loadPage} op te roepen voor elke pagina.
+  	    Het ligt voor de hand dat die providor gebruik maakt van
+  	    \emph{Yahoo Image Search}. Bij de constructie van een dergelijke providor
+  	    moet er een zoekterm worden opgegeven. In dit geval wordt daarvoor het eerste 
+  	    commandolijn-argument gebruikt. Vervolgens worden de pagina's in 
+  	    het geheugen geladen door {\klassefont loadPage} op te roepen voor elke pagina.
   \item De eerste twee zoekresultaten worden opgegeven als voorbeeld en de pagina's
         worden geordend volgens similariteit met die voorbeelden. Daarna wordt
         {\klassefont mergeReorderedPages} uitgevoerd. Zoals de naam al doet vermoeden,
@@ -122,15 +124,15 @@ Dit zijn de verschillende stappen die daarbij plaatsvinden:
 In de voorgaande hoofdstukken hebben we de geconstrueerde similariteitsmaten 
 met elkaar vergeleken door de GGGR-waarden te berekenen voor een bepaalde testcollectie.
 \defin{Imperforate} is een programma dat toelaat om dergelijke experimenten 
-uit te voeren. Dat programma kan gestart worden door dubbel te klikken op het 
+uit te voeren. Het kan gestart worden door dubbel te klikken op het 
 bestand ``imperforate.jar'' op de bijgevoegde CD-ROM. Eventueel kan het ook
-manueel gestart worden via het commando \texttt{java -jar imperforate.jar}. 
-In beide gevallen zal Imperforate uitgevoerd worden met de standaard maximale grootte
+manueel opgestart worden via het commando \texttt{java -jar imperforate.jar}. 
+In beide gevallen wordt Imperforate uitgevoerd met de standaard maximale grootte
 van het grabbelgeheugen. Voor sommige testcollecties volstaat dat echter niet.
 Het kan bijgevolg nuttig zijn om het maximale geheugenverbruik te 
 vergroten. Als we bijvoorbeeld het commando 
 \texttt{java -Xmx256M -jar imperforate.jar} gebruiken,
-dan wordt de maximale grootte van het grabbelgeheugen verhoogd tot 256MB. 
+dan wordt de maximale grootte van het grabbelgeheugen verhoogd tot 256 MB. 
 
 Figuur~\ref{fig:imperforate_1} toont het initi\"ele venster. Vooralleer er iets
 kan berekend worden, moet er eerst een beeldencollectie ingeladen worden.
@@ -143,18 +145,6 @@ op de CD-ROM bevat drie dergelijke bestanden. E\'en voor de COIL subcollectie,
 \'e\'en voor een selectie van beelden uit de UCID collectie \cite{ucid} en
 een derde voor een deel van de collectie van Kato 
 \cite{kato:cbir_using_stochastic_paintbrush}.
-
-Zodra er een beeldencollectie is ingeladen, kunnen de GGGRs berekend worden.
-Daartoe moet er op ``Calculate'' geklikt worden nadat de gewenste 
-similariteitsmaten geselecteerd werden. De waarden in de kolommen worden dan 
-geleidelijk aan ingevuld. Figuur~\ref{fig:imperforate_3} illustreert dat de 
-inhoud van een kolom kan gesorteerd worden door op de titel van die kolom te klikken.
-Wanneer de gebruiker op ``Show results'' klikt, dan worden de resultaten van de
-geselecteerde maten getoond in een venster zoals dat uit 
-figuur~\ref{fig:imperforate_4}. De overblijvende knop kan gebruikt worden om
-de gegevens van de geselecteerde maten uit te schrijven in een formaat dat
-rechtstreeks kan gebruikt worden als invoer voor het programma \emph{gnuplot}. 
-Op die manier kunnen de gegenereerde data gemakkelijk omgezet worden naar een grafiek.
 
 \begin{code}[!bp]
 \vspace{5pt}
@@ -207,11 +197,47 @@ Op die manier kunnen de gegenereerde data gemakkelijk omgezet worden naar een gr
 \caption{\label{fig:imperforate}Enkele screenshots van Imperforate.}
 \end{figure}
 
+Zodra er een beeldencollectie is ingeladen, kunnen de GGGRs berekend worden.
+Daartoe moet er op ``Calculate'' geklikt worden nadat de gewenste 
+similariteitsmaten geselecteerd werden. De waarden in de kolommen worden dan 
+geleidelijk aan ingevuld. Figuur~\ref{fig:imperforate_3} illustreert dat de 
+inhoud van een kolom kan gesorteerd worden door op de titel van die kolom te klikken.
+Wanneer de gebruiker op ``Show results'' klikt, dan worden de resultaten van de
+geselecteerde maten getoond in een venster zoals dat uit 
+figuur~\ref{fig:imperforate_4}. De overblijvende knop ``Print gnuplot data'' 
+zorgt ervoor dat
+de gegevens van de geselecteerde maten uitgeschreven worden in een formaat dat
+rechtstreeks kan gebruikt worden als invoer voor het programma \emph{gnuplot}. 
+Op die manier kunnen de gegenereerde data gemakkelijk omgezet worden naar een grafiek.
+
 
 \section{Giggle}
 
 Het eigenlijke prototype noemen we \defin{Giggle}. Uiteraard is Giggle, net zoals
-Imperforate, gebaseerd op het Imilarity framework.
+Imperforate, gebaseerd op het Imilarity framework. Het opstarten gebeurt
+op dezelfde manier als bij Imperforate, maar dan met het bestand ``giggle.jar''
+in plaats van ``imperforate.jar''.
+
+Figuur~\ref{fig:giggle_1} toont
+hoe het hoofdvenster van Giggle er uitziet wanneer er zoekresultaten worden
+ingeladen. In dit geval werd de zoekterm ``zadeh'' gebruikt. 
+Door op een beeld
+uit de zoekresultaten te klikken en vervolgens ``Add to examples'' te kiezen,
+kunnen er voorbeelden worden toegevoegd. Daarna kan de gebruiker dan, met behulp 
+van de knop ``Reorder results'', de opdracht geven om de zoekresultaten te herordenen 
+volgens similariteit met de voorbeelden. In figuur~\ref{fig:giggle_2} wordt het
+resultaat van een dergelijke herordening getoond. Zoals weergegeven in
+figuur~\ref{fig:giggle_3}, kunnen de gevonden beelden op ware grootte bekeken worden via de link 
+``Show full size image''. De gebruiker kan een beeld ook opslaan op zijn of haar 
+lokale schijf door te klikken op de grote weergave.
+
+De knoppen ``Use first as examples'' en ``Clear examples'' spreken voor zich. Via
+de knop ``Settings ...'' kunnen de vensters uit figuur~\ref{fig:giggle_4}
+geopend worden. Die vensters laten toe om een andere similariteitsmaat en/of
+aggregatieoperator in te stellen. Standaard gebruikt Giggle de similariteitsmaat 
+die pseudo-vage Irb-histogrammen vergelijkt met behulp van $M_{I_3}$. 
+Die maat gaf immers een zeer lage GGGR-waarde bij onze experimenten. Het maximum is
+de standaard aggregatieoperator.
 
 \begin{figure}[bp]
 \vspace{6pt}
@@ -252,4 +278,227 @@ Imperforate, gebaseerd op het Imilarity framework.
 }
 \end{tabular}\vspace{3pt}
 \caption{\label{fig:giggle}Enkele screenshots van Giggle.}
+\end{figure}
+
+
+\section{Enkele voorbeelden}
+\label{sectie:tests_banaan}
+
+Tot slot van dit hoofdstuk bekijken we enkele rangschikkingen die door Giggle
+gegenereerd werden voor de zoekresultaten van de zoekterm ``banaan''. We
+gebruiken daarbij de beelden uit figuur~\ref{fig:tests_banaan_voorbeelden} als
+voorbeelden. Het aggregeren van de similariteiten voor elk van die voorbeelden,
+doen we telkens met behulp van het maximum. We gaan dus met andere woorden op
+zoek naar beelden die similair zijn met minstens \'e\'en van de voorbeelden. Als
+we het minimum -- of een andere t-conorm -- zouden gebruiken, dan zouden we eisen
+dat de beelden similair zijn met \emph{alle} voorbeelden. Bij de componentsgewijze
+similariteitsmaten gebruiken we het gemiddelde om de similariteiten van de 
+verschillende componenten te aggregeren.
+
+Figuur~\ref{fig:tests_banaan_1} toont de eerste tien beelden van drie rangschikkingen
+die werden bekomen aan de hand van pixelgebaseerde similariteitsmaten. Voor de
+rangschikking in figuur~\ref{fig:tests_banaan_2} en figuur~\ref{fig:tests_banaan_3}
+werden kleurgebaseerde maten gebruikt. Het valt op dat het glad SCT-histogram in dit
+geval betere resultaten geeft dan het Irb-histogram. Verder zien we ook dat
+het glad spatiaal SCT-histogram hier minder goede resultaten geeft, terwijl het
+glad SCT-randhistogram wel vrij behoorlijk presteert.
+
+\begin{figure}[bp]
+\vspace{6pt}
+\centering
+\begin{tabular}{@{}ccc@{}}
+\includegraphics[scale=0.6]{images/banaan_irb_1_1.eps} &
+\includegraphics[scale=0.6]{images/banaan_irb_1_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_irb_1_3.eps}
+\end{tabular}
+\vspace{5pt}
+\caption{\label{fig:tests_banaan_voorbeelden}De voorbeelden die we gebruiken bij het
+rangschikken van de zoekresultaten voor ``banaan''.}
+\end{figure}
+
+\begin{figure}[bp]
+\subfigure[]{
+\begin{minipage}{\textwidth}
+\vspace{6pt}
+\centering
+\begin{tabular}{@{}ccccc@{}}
+\includegraphics[scale=0.6]{images/banaan_scaling_1_1.eps} &
+\includegraphics[scale=0.6]{images/banaan_scaling_1_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_scaling_1_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_scaling_1_4.eps} &
+\includegraphics[scale=0.6]{images/banaan_scaling_1_5.eps} \\
+\includegraphics[scale=0.6]{images/banaan_scaling_2_1.eps} & 
+\includegraphics[scale=0.6]{images/banaan_scaling_2_2.eps} &
+\includegraphics[scale=0.45]{images/banaan_scaling_2_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_scaling_2_4.eps} & 
+\includegraphics[scale=0.6]{images/banaan_scaling_2_5.eps}
+\end{tabular}
+\vspace{5pt}
+\end{minipage}
+}\\
+\subfigure[]{
+\begin{minipage}{\textwidth}
+\vspace{6pt}
+\centering
+\begin{tabular}{@{}ccccc@{}}
+\includegraphics[scale=0.6]{images/banaan_moments_1_1.eps} &
+\includegraphics[scale=0.6]{images/banaan_moments_1_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_moments_1_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_moments_1_4.eps} &
+\includegraphics[scale=0.6]{images/banaan_moments_1_5.eps} \\
+\includegraphics[scale=0.6]{images/banaan_moments_2_1.eps} & 
+\includegraphics[scale=0.6]{images/banaan_moments_2_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_moments_2_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_moments_2_4.eps} & 
+\includegraphics[scale=0.45]{images/banaan_moments_2_5.eps}
+\end{tabular}
+\vspace{5pt}
+\end{minipage}
+}\\
+\subfigure[]{
+\begin{minipage}{\textwidth}
+\vspace{6pt}
+\centering
+\begin{tabular}{@{}ccccc@{}}
+\includegraphics[scale=0.6]{images/banaan_parts_1_1.eps} &
+\includegraphics[scale=0.6]{images/banaan_parts_1_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_parts_1_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_parts_1_4.eps} &
+\includegraphics[scale=0.6]{images/banaan_parts_1_5.eps} \\
+\includegraphics[scale=0.6]{images/banaan_parts_2_1.eps} & 
+\includegraphics[scale=0.6]{images/banaan_parts_2_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_parts_2_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_parts_2_4.eps} & 
+\includegraphics[scale=0.6]{images/banaan_parts_2_5.eps}
+\end{tabular}
+\vspace{5pt}
+\end{minipage}
+}
+\caption{\label{fig:tests_banaan_1}De eerst tien beelden van de rangschikkingen van de zoekresultaten voor ``banaan'' 
+op basis van componentsgewijze toepassing van (a) $M_7$, (b) $M_9$ en (c) $M_{I_{3c}}$, in combinatie met (a) herschaling, (b) kleurmomenten en (c) beeldonderdelen.}
+\end{figure}
+
+\begin{figure}[bp]
+\subfigure[]{
+\begin{minipage}{\textwidth}
+\vspace{6pt}
+\centering
+\begin{tabular}{@{}ccccc@{}}
+\includegraphics[scale=0.6]{images/banaan_irb_1_1.eps} &
+\includegraphics[scale=0.6]{images/banaan_irb_1_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_irb_1_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_irb_1_4.eps} &
+\includegraphics[scale=0.6]{images/banaan_irb_1_5.eps} \\
+\includegraphics[scale=0.6]{images/banaan_irb_2_1.eps} & 
+\includegraphics[scale=0.6]{images/banaan_irb_2_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_irb_2_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_irb_2_4.eps} & 
+\includegraphics[scale=0.6]{images/banaan_irb_2_5.eps}
+\end{tabular}
+\vspace{5pt}
+\end{minipage}
+}\\
+\subfigure[]{
+\begin{minipage}{\textwidth}
+\vspace{6pt}
+\centering
+\begin{tabular}{@{}ccccc@{}}
+\includegraphics[scale=0.6]{images/banaan_sct_1_1.eps} &
+\includegraphics[scale=0.6]{images/banaan_sct_1_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_sct_1_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_sct_1_4.eps} &
+\includegraphics[scale=0.6]{images/banaan_sct_1_5.eps} \\
+\includegraphics[scale=0.6]{images/banaan_sct_2_1.eps} & 
+\includegraphics[scale=0.6]{images/banaan_sct_2_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_sct_2_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_sct_2_4.eps} & 
+\includegraphics[scale=0.6]{images/banaan_sct_2_5.eps}
+\end{tabular}
+\vspace{5pt}
+\end{minipage}
+}\\
+\subfigure[]{
+\begin{minipage}{\textwidth}
+\vspace{6pt}
+\centering
+\begin{tabular}{@{}ccccc@{}}
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_1_1.eps} &
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_1_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_1_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_1_4.eps} &
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_1_5.eps} \\
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_2_1.eps} & 
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_2_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_2_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_2_4.eps} & 
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_2_5.eps}
+\end{tabular}
+\vspace{5pt}
+\end{minipage}
+}
+\caption{\label{fig:tests_banaan_2}De eerst tien beelden van de rangschikkingen van de zoekresultaten voor ``banaan'' 
+op basis van $M_{I_3}$ in combinatie met (a) het Irb-histogram, (b) het SCT-histogram en (c) het glad SCT-histogram.}
+\end{figure}
+
+\begin{figure}[bp]
+\subfigure[]{
+\begin{minipage}{\textwidth}
+\vspace{6pt}
+\centering
+\begin{tabular}{@{}ccccc@{}}
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_1_1.eps} &
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_1_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_1_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_1_4.eps} &
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_1_5.eps} \\
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_2_1.eps} & 
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_2_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_2_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_2_4.eps} & 
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_2_5.eps}
+\end{tabular}
+\vspace{5pt}
+\end{minipage}
+}\\
+\subfigure[]{
+\begin{minipage}{\textwidth}
+\vspace{6pt}
+\centering
+\begin{tabular}{@{}ccccc@{}}
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_spatial_1_1.eps} &
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_spatial_1_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_spatial_1_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_spatial_1_4.eps} &
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_spatial_1_5.eps} \\
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_spatial_2_1.eps} & 
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_spatial_2_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_spatial_2_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_spatial_2_4.eps} & 
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_spatial_2_5.eps}
+\end{tabular}
+\vspace{5pt}
+\end{minipage}
+}\\
+\subfigure[]{
+\begin{minipage}{\textwidth}
+\vspace{6pt}
+\centering
+\begin{tabular}{@{}ccccc@{}}
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_edgy_1_1.eps} &
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_edgy_1_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_edgy_1_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_edgy_1_4.eps} &
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_edgy_1_5.eps} \\
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_edgy_2_1.eps} & 
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_edgy_2_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_edgy_2_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_edgy_2_4.eps} & 
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_edgy_2_5.eps}
+\end{tabular}
+\vspace{5pt}
+\end{minipage}
+}
+\caption{\label{fig:tests_banaan_3}De eerst tien beelden van de rangschikkingen van de zoekresultaten voor ``banaan'' 
+op basis van $M_{I_3}$ in combinatie met (a) het glad SCT-histogram, (b) het glad spatiaal SCT-histogram en 
+(c) het glad SCT-randhistogram.}
 \end{figure}

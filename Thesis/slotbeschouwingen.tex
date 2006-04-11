@@ -1,0 +1,67 @@
+\chapter{Slotbeschouwingen}
+
+In dit laatste hoofdstuk vatten we eerst de belangrijkste resultaten van dit eindwerk
+nog even samen. Daarna vermelden we ook nog enkele interessante overblijvende
+onderzoekmogelijkheden.
+
+\section{Samenvatting van resultaten}
+
+De basisidee achter deze scriptie is het identificeren van beelden
+met vaagverzamelingen, zodanig dat vaagsimilariteitsmaten kunnen gebruikt worden
+om de graduele gelijkenis tussen twee beelden na te gaan. 
+We construeren dus similariteitsmaten voor beelden door een manier om beelden te
+identificeren met vaagverzamelingen, te combineren met een vaagsimilariteitsmaat.
+De eerste bijdrage van dit eindwerk is het herschrijven van de beschouwde
+vaagsimilariteitsmaten naar een vorm die, onder bepaalde voorwaarden, een stuk
+sneller kan berekend worden. 
+
+We hebben twee types van similariteitsmaten voor beelden besproken.
+De maten van het eerste type, waarbij het universum bestaat uit beeldpunten, 
+noemen we pixelgebaseerde similariteitsmaten. Similariteitsmaten die 
+beelden rechtstreeks interpreteren als vaagverzamelingen en vervolgens 
+vaagsimilariteitsmaten gebruiken voor het vergelijken van die vaagverzamelingen, 
+zijn pixelgebaseerd. Dergelijke maten kunnen echter niet gebruikt worden voor 
+beelden met verschillende resoluties. Om dat probleem op te lossen hebben we 
+similariteitsmaten op basis van intermediaire beelden beschouwd. Bovendien 
+hebben we aangetoond dat ook beeldonderdelen een oplossing kunnen bieden voor 
+het resolutieprobleem. 
+
+Door het universum te laten bestaan uit kleuren, bekomen we maten van het tweede
+type. Die maten noemen we kleurgebaseerde similariteitsmaten. Similariteitsmaten
+die gebruik maken van histogrammen, zijn voorbeelden van kleurgebaseerde 
+maten. Omdat vaagsimilariteitsmaten niet rechtstreeks kunnen
+toegepast worden op traditionele histogrammen, hebben we pseudo-vage histogrammen
+ge\"introduceerd. We hebben ook het vaaghistogram voorgesteld als alternatief.
+Dat vaaghistogram heeft als voordeel dat het minder gevoelig is voor
+problemen die optreden als gevolg van de kleurkwantisatie. Om ook bij de pseudo-vage
+histogrammen de invloed van de kwantisatieproblemen te beperken, hebben we 
+uitgebreide histogrammen gedefinieerd. 
+
+Bij de pixelgebaseerde maten blijkt het componentsgewijs vergelijken van intermediaire
+beelden goed te werken. In het bijzonder leiden de intermediaire beelden op basis van 
+kleurmomenten tot verrassend goede resultaten. Bij de histogrammen presteert het 
+Irb-histogram het best. In \ref{sectie:tests_banaan} hebben we echter een voorbeeld 
+gezien waarbij het glad SCT-histogram betere resultaten oplevert. Verder hebben we
+ook vastgesteld dat de vaagsimilariteitsmaat $M_{I_3}$ blijkbaar zeer 
+geschikt is voor het vergelijken van histogrammen.
+
+Voor de testcollectie uit figuur~\ref{fig:testcollectie} bekomen we de laagste 
+GGGR-waarde als we $M_3$, $M_6$, $M_7$ of $M_{I_3}$ afzonderlijk toepassen op 
+de componenten
+van intermediaire beelden op basis van kleurmomenten, om vervolgens de
+similariteiten van de verschillende componenten te aggregeren met behulp van
+het minimum. Het verschil met de 
+similariteitsmaat die gebaseerd is op het Irb-histogram en $M_{I_3}$ is echter 
+zeer klein. Bovendien bevatten de kleurmomenten minder informatie dan het
+Irb-histogram, zodat het Irb-histogram mogelijkerwijs beter zal presteren voor
+meer realistische beelden. Daarom hebben we de similariteitsmaat op basis
+van het Irb-histogram gekozen als standaard maat voor het prototype.
+
+We hebben de geconstrueerde similariteitsmaten ge\"implementeerd in een
+Java framework. Dat framework vormt de basis van twee applicaties. De ene
+applicatie kan gebruikt worden om de performantie van de
+verschillende similariteitsmaten na te gaan voor een bepaalde collectie
+van beelden. Het andere programma is het eigenlijke prototype.
+
+\section{Overblijvende onderzoeksmogelijkheden}
+

@@ -1,5 +1,5 @@
 %template voor een afstudeerwerk in LaTeX
-\documentclass[dutch,11pt,cite,titlepage]{report}
+\documentclass[dutch,11pt,cite,titlepage,oneside]{book}
 %''dutch'' voor splitsing en (in emacs) spellingscontrole
 \usepackage{babel}   %voor het geval we ook engels nodig hebben
 \usepackage{graphicx} %pakket voor includeren figuren
@@ -38,45 +38,34 @@
 
 
 \input{titel} % de titelpagina
-\pagenumbering{roman}
-\setcounter{page}{1}
+
+
+\frontmatter
+
+%\pagenumbering{roman}
+%\setcounter{page}{1}
+
 \input{voorwoord}             %het voorwoord.
 \input{abstract}              %samenvatting  van de thesis
-\renewcommand{\baselinestretch}{1}
 
 \tableofcontents %genereert de inhoudstafel
 %\listoffigures
 %\listoftables
 %\clearpage
 
-\newpage
 
-\renewcommand{\baselinestretch}{1}
-\pagenumbering{arabic}
-\setcounter{page}{1}
-
-
-
+\mainmatter
 
 \input{inleiding}
-
 \input{fundamenten}
-
 \input{beeldverwerking}
-
 \input{similariteit}
-
 \input{pixelgeb}
-
 \input{kleurgeb}
-
 \input{implementatie}
+\input{slotbeschouwingen}
 
-% \chapter{Aggregatie}
-% 
-% \section{Gecombineerde similariteitsmaten}
-% \section{Meerdere voorbeelden}
-
+\backmatter
 
 \nocite{*}
 %\selectlanguage{english} % vermits de meeste referenties in het engels zijn.
