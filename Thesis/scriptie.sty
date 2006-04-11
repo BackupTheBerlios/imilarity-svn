@@ -9,7 +9,6 @@
 \usepackage{graphicx}
 %\fi
 \usepackage{babel}
-\usepackage{ifthen}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
@@ -37,12 +36,8 @@
 
 \newcommand{\klassefont}{\fontfamily{cmss}\selectfont}
 
-\newcommand{\defin}[2][]{%
-        \ifthenelse{\equal{#1}{}}
-                {{\em{#2}\index{#2}}}%
-                {{\em{#2}\index{#1}}}%
-}
-
+\newcommand{\defin}[1]{{\em{#1}\index{#1}}}
+\newcommand{\definas}[2]{{\emph{#2}\index{#1}}}
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{maintheorem}[theorem]{Main Theorem}

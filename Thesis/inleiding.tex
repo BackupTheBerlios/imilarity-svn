@@ -4,10 +4,9 @@ Op dit eigenste moment zijn er waarschijnlijk enkele honderden \defin{spiders} a
 Die computerprogramma's, die soms ook \defin{robots} of \defin{wanderers} worden genoemd, reizen
 het internet rond om bepaalde documenten -- in het bijzonder beelden -- te localiseren. Ze indexeren
 de gevonden documenten in een databank, die dan doorzocht kan worden door een zoekmachine. 
-
 Zoekmachines zoals \emph{Google} en \emph{Yahoo} hebben op die manier reeds databanken
 opgebouwd die meer dan een miljard beelden bevatten. Het wordt bijgevolg steeds belangrijker
-om manieren te zoeken om die gigantische collecties van beelden op een effici\"ente wijze
+om manieren te vinden om die gigantische collecties van beelden op een effici\"ente wijze
 te doorzoeken.
 
 
@@ -33,14 +32,14 @@ naar manieren om het zoeken te baseren op de visuele inhoud van de beelden
 \cite{veltcamp:cbirs} ontstaan. 
 De algemene architectuur van een dergelijk systeem wordt ge\"illustreerd door
 figuur~\ref{fig:cbir}. Er wordt gebruik gemaakt van een proces dat \defin{kenmerkextractie}
-(\defin{feature extraction}{(visual) feature extraction}) genoemd wordt \cite{rui:image_retr}. Dat proces zet een beeld om in een 
+(\definas{feature extraction}{(visual) feature extraction}) genoemd wordt \cite{rui:image_retr}. Dat proces zet een beeld om in een 
 \defin{kenmerkvector} (\defin{feature vector}). Met behulp van multidimensionale indexering kan die
 vector dan gebruikt worden als alternatief voor de tekstuele annotaties bij TBIR.
 
 De meeste CBIR-systemen werken volgens het \defin{query-by-example} principe. Dat houdt in dat de
 gebruiker een beeld als voorbeeld opgeeft, waarna het systeem op zoek gaat naar beelden
 die visuele gelijkenissen vertonen met dat voorbeeld. Daartoe wordt eerst de kenmerkvector van
-het opgegeven beeld bepaald, om deze vervolgens te vergelijken met de kenmerkvectoren in
+het opgegeven beeld bepaald, om die vervolgens te vergelijken met de kenmerkvectoren in
 de databank. Het uiteindelijke resultaat bestaat uit de beelden uit de databank 
 waarvan de overeenkomstige vectoren grote similariteit vertonen met de vector van het 
 voorbeeld. Doordat de databank ge\"indexeerd is op de kenmerkvectoren, is het niet nodig
@@ -58,8 +57,14 @@ om ze volledig te overlopen.
 \includegraphics[width=10cm]{images/cbir.eps}
 \label{fig:cbir}
 }
-\caption{\label{fig:cbir_en_tbir}Algemene architectuur van (a) een TBIR- en 
-(b) een CBIR-systeem.}
+\vspace{5pt}
+\subfigure[]{
+\includegraphics[width=10cm]{images/simgeb_rangschikken.eps}
+\label{fig:simgeb_rangschikken}
+}
+\caption{\label{fig:cbir_en_tbir}Algemene architectuur van (a) een TBIR-systeem, 
+(b) een CBIR-systeem en (c) een systeem dat het similariteitsgebaseerd rangschikking
+van de zoekresultaten implementeert.}
 \end{figure}
 
 \section{Similariteitsgebaseerd rangschikken van de zoekresultaten}
@@ -68,10 +73,11 @@ Doordat CBIR-systemen zeer complex zijn, is het op dit moment nog niet mogelijk 
 doorzoeken van zeer omvangrijke databanken. Bovendien beschikt de gebruiker niet altijd over
 een geschikt voorbeeld. Dat probleem kan eventueel nog opgelost worden door gebruik
 te maken van een voorbeeld-schets, maar ook dat is in de praktijk niet altijd even handig.
-
-Het is dus zinvol om te zoeken naar manieren om inhoudgebaseerde aspecten toe te voegen aan
+Het is bijgevolg zinvol om te zoeken naar manieren om inhoudgebaseerde aspecten toe te voegen aan
 TBIR-systemen. De manier die we in deze scriptie bespreken, is het 
-similariteitsgebaseerd rangschikken van de resultaten van een TBIR-systeem. Hierbij verwachten we
+similariteitsgebaseerd rangschikken van de zoekresultaten van een TBIR-systeem. 
+Figuur~\ref{fig:simgeb_rangschikken} toont de algemene architectuur van een systeem
+dat die techniek implementeert. We verwachten
 nog steeds dat de gebruiker een tekstuele query opgeeft, waarop het systeem antwoordt met een 
 lijst van beelden die overeenkomen met die query. Daarna heeft de gebruiker echter ook nog 
 de mogelijkheid om een verzameling van voorbeelden te kiezen uit die lijst. Het 

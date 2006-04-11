@@ -34,7 +34,7 @@ toegepast worden op traditionele histogrammen, hebben we pseudo-vage histogramme
 ge\"introduceerd. We hebben ook het vaaghistogram voorgesteld als alternatief.
 Dat vaaghistogram heeft als voordeel dat het minder gevoelig is voor
 problemen die optreden als gevolg van de kleurkwantisatie. Om ook bij de pseudo-vage
-histogrammen de invloed van de kwantisatieproblemen te beperken, hebben we 
+histogrammen de invloed van die kwantisatieproblemen te beperken, hebben we 
 uitgebreide histogrammen gedefinieerd. 
 
 Bij de pixelgebaseerde maten blijkt het componentsgewijs vergelijken van intermediaire
@@ -65,3 +65,55 @@ van beelden. Het andere programma is het eigenlijke prototype.
 
 \section{Overblijvende onderzoeksmogelijkheden}
 
+In \ref{sectie:rekentijd} hebben we vermeld dat het bij echte CBIR mogelijk is
+om berekeneningen op voorhand te doen. Zo zouden de histogrammen van de beelden
+bijvoorbeeld mee pgeslagen kunnen worden in de databank. Bij echte CBIR kunnen
+er daarom ook meer complexe similariteitsmtaten gebruikt worden. Door de beelden
+op voorhand te segementeren, zou het bijvoorbeeld mogelijk zijn om bij het vergelijken
+rekening te houden met de vorm van de objecten in de beelden. In het 
+geval van het similariteitsgebaseerd rangschikken van de zoekresultaten kunnen we 
+geen gebruik maken van de vorm, vermits de segementatie aanleiding zou geven tot 
+similariteitsmaten met een veel te lange rekentijd. In de context van echte CBIR is 
+er bijgevolg nog zeer veel ruimte voor het construeren van nieuwe vage 
+similariteitsmaten voor beelden. Met de nodige creativiteit is het uiteraard ook 
+mogelijk om nog bijkomende similariteitsmaten te ontdekken die wel bruikbaar 
+zijn voor de praktische toepassing die we in dit eindwerk beschouwd hebben.
+
+De aggregatieoperatoren vormen een tweede luik van overblijvend onderzoek. In deze
+scriptie hebben we ons beperkt tot zeer eenvoudige operatoren. Bovendien hebben
+we de mogelijkheden van aggregatie niet ten volle uitgebuit. Het
+aggregeren van similariteiten kan onder meer nuttig zijn om: (1) meerdere voorbeelden 
+te ondersteunen, (2) de similariteiten van verschillende componenten samen te voegen
+en (3) similariteitsmaten te combineren.
+Beschouw bijvoorbeeld een similariteitsmaat die beelden onderverdeelt in 
+verschillende (vage) gebieden. Voor elk gebied kan er dan een andere similariteitsmaat
+gebruikt worden. Het zou zelfs nuttig kunnen zijn om meerdere maten toe te passen
+op hetzelfde gebied, bijvoorbeeld \'e\'en voor de kleur en een andere voor de vorm.
+De similariteiten die teruggegeven worden door al die similariteitsmaten, moeten
+uiteindelijk samengevoegd worden. Bovendien kunnen sommige maten
+componentsgewijs te werk gaan en moet het ook mogelijk zijn om de similariteit met
+een verzameling van voorbeelden te bepalen. De operatoren die gebruikt worden voor
+de verschillende aggregaties, kunnen uiteraard een nefaste invloed hebben op
+de performantie. Het zou bijgevolg zeer interessant zijn om voor elk van de 
+aggregaties op zoek te gaan naar bestaande en/of nieuwe operatoren die 
+zeer geschikt zijn voor dat type van aggregatie. Bij het combineren van 
+similariteitsmaten moet uiteraard ook onderzocht worden welke combinaties
+tot de beste resultaten leiden.
+
+Verder zou het ook zinvol zijn om op zoek te gaan naar optimale waarden
+voor de verschillende parameters van de similariteitsmaten. We denken bijvoorbeeld
+aan het aantal bins bij de histogrammen. Met behulp van statistische methoden is het
+mogelijk om een theoretisch optimaal aantal bins te bepalen. Mits enige aanpassing
+zijn die methoden ook bruikbaar in een CBIR context 
+\cite{viet_tran:ir_with_statistical_color_descriptors}. Mogelijk verder onderzoek bestaat
+erin om na te gaan of dergelijke optima ook nuttig kunnen zijn voor vage 
+similariteitsmaten voor beelden. 
+
+We kunnen de basisidee achter deze scriptie ook meer algemeen formuleren: het 
+identificeren van objecten -- in de algemene betekenis van het woord -- met 
+vaagverzamelingen, zodanig dat vaagsimilariteitsmaten kunnen gebruikt worden
+om de graduele gelijkenis tussen twee objecten na te gaan. Vaagverzamelingen en
+vaagsimilariteitsmaten kunnen met andere woorden gezien worden als algemene
+funderingen voor toepassingen waarbij gebruikt gemaakt wordt van similariteit.
+In het bijzonder kunnen ze aangewend worden voor de constructie van similariteitsmaten
+voor andere multimediabestanden, zoals audio en video.
