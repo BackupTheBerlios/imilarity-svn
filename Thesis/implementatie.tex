@@ -1,6 +1,6 @@
 \chapter{Implementatie}
 
-De belangrijkste bijdrage van dit eindwerk, is de bouw van een prototype
+De belangrijkste bijdrage van dit eindwerk is de bouw van een prototype
 dat het similariteitsgebaseerd rangschikken van zoekresultaten implementeert.
 Dat prototype wordt in dit hoofstuk in grote lijnen besproken. Voor de details
 verwijzen we naar de broncode op de bijgevoegde CD-ROM.
@@ -15,7 +15,7 @@ Het ophalen van beelden gebeurt aan de hand van een klasse die de interface
 {\klassefont Providor} implementeert. Codefragment~\ref{code:providor} toont de definitie
 van die interface. Het is duidelijk dat de beelden in groepjes van 
 {\klassefont getPageSize()} doorgegeven worden, in plaats van allemaal in \'e\'en keer. 
-Dat heeft immers als voordeel dat de vooruitgang van het ophalen van de beelden kan 
+Dat heeft als voordeel dat de vooruitgang van het ophalen van de beelden kan 
 opgevolgd worden. E\'en groepje beelden noemen we een \defin{pagina}.
 
 \begin{code}[bp]
@@ -134,12 +134,12 @@ vergroten. Als we bijvoorbeeld het commando
 \texttt{java -Xmx256M -jar imperforate.jar} gebruiken,
 dan wordt de maximale grootte van het grabbelgeheugen verhoogd tot 256 MB. 
 
-Figuur~\ref{fig:imperforate_1} toont het initi\"ele venster. Vooralleer er iets
+Figuur~\ref{fig:imperforate_1} toont het initi\"ele venster van Imperforate. Vooralleer er iets
 kan berekend worden, moet er eerst een beeldencollectie ingeladen worden.
 Dat kan door op de knop ``Add ...'' te klikken, waardoor het venster uit 
 figuur~\ref{fig:imperforate_2} verschijnt. Via dat venster kan er een 
-``*.class''-bestand opgegeven worden. Dat bestand is een gecompileerde 
-Java-klasse, die de interface {\klassefont ImageCollection} uit 
+``*.class''-bestand opgegeven worden. Dat bestand moet een gecompileerde 
+Java-klasse zijn, die de interface {\klassefont ImageCollection} uit 
 codefragment~\ref{code:imagecollection} implementeert. De map ``image\_collections''
 op de CD-ROM bevat drie dergelijke bestanden. E\'en voor de COIL subcollectie,
 \'e\'en voor een selectie van beelden uit de UCID collectie \cite{ucid} en
@@ -221,8 +221,8 @@ in plaats van ``imperforate.jar''.
 Figuur~\ref{fig:giggle_1} toont
 hoe het hoofdvenster van Giggle er uitziet wanneer er zoekresultaten worden
 ingeladen. In dit geval werd de zoekterm ``zadeh'' gebruikt. 
-Door op een beeld
-uit de zoekresultaten te klikken en vervolgens ``Add to examples'' te kiezen,
+Door op \'e\'en van
+de zoekresultaten te klikken en vervolgens ``Add to examples'' te kiezen,
 kunnen er voorbeelden worden toegevoegd. Daarna kan de gebruiker dan, met behulp 
 van de knop ``Reorder results'', de opdracht geven om de zoekresultaten te herordenen 
 volgens similariteit met de voorbeelden. In figuur~\ref{fig:giggle_2} wordt het
@@ -290,7 +290,7 @@ gebruiken daarbij de beelden uit figuur~\ref{fig:tests_banaan_voorbeelden} als
 voorbeelden. Het aggregeren van de similariteiten voor elk van die voorbeelden,
 doen we telkens met behulp van het maximum. We gaan dus met andere woorden op
 zoek naar beelden die similair zijn met minstens \'e\'en van de voorbeelden. Als
-we het minimum -- of een andere t-conorm -- zouden gebruiken, dan zouden we eisen
+we het minimum -- of een andere t-norm -- zouden gebruiken, dan zouden we eisen
 dat de beelden similair zijn met \emph{alle} voorbeelden. Bij de componentsgewijze
 similariteitsmaten gebruiken we het gemiddelde om de similariteiten van de 
 verschillende componenten te aggregeren.
@@ -374,7 +374,7 @@ rangschikken van de zoekresultaten voor ``banaan''.}
 \vspace{5pt}
 \end{minipage}
 }
-\caption{\label{fig:tests_banaan_1}De eerst tien beelden van de rangschikkingen van de zoekresultaten voor ``banaan'' 
+\caption{\label{fig:tests_banaan_1}De eerst tien beelden van de gerangschikte zoekresultaten voor ``banaan'' 
 op basis van componentsgewijze toepassing van (a) $M_7$, (b) $M_9$ en (c) $M_{I_{3c}}$, in combinatie met (a) herschaling, (b) kleurmomenten en (c) beeldonderdelen.}
 \end{figure}
 
@@ -436,7 +436,7 @@ op basis van componentsgewijze toepassing van (a) $M_7$, (b) $M_9$ en (c) $M_{I_
 \vspace{5pt}
 \end{minipage}
 }
-\caption{\label{fig:tests_banaan_2}De eerst tien beelden van de rangschikkingen van de zoekresultaten voor ``banaan'' 
+\caption{\label{fig:tests_banaan_2}De eerst tien beelden van de gerangschikte zoekresultaten voor ``banaan'' 
 op basis van $M_{I_3}$ in combinatie met (a) het Irb-histogram, (b) het SCT-histogram en (c) het glad SCT-histogram.}
 \end{figure}
 
@@ -498,7 +498,7 @@ op basis van $M_{I_3}$ in combinatie met (a) het Irb-histogram, (b) het SCT-hist
 \vspace{5pt}
 \end{minipage}
 }
-\caption{\label{fig:tests_banaan_3}De eerst tien beelden van de rangschikkingen van de zoekresultaten voor ``banaan'' 
+\caption{\label{fig:tests_banaan_3}De eerst tien beelden van de gerangschikte zoekresultaten voor ``banaan'' 
 op basis van $M_{I_3}$ in combinatie met (a) het glad SCT-histogram, (b) het glad spatiaal SCT-histogram en 
 (c) het glad SCT-randhistogram.}
 \end{figure}

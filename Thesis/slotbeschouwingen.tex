@@ -1,6 +1,6 @@
 \chapter{Slotbeschouwingen}
 
-In dit laatste hoofdstuk vatten we eerst de belangrijkste resultaten van dit eindwerk
+In dit laatste hoofdstuk vatten we eerst de belangrijkste resultaten
 nog even samen. Daarna vermelden we ook nog enkele interessante overblijvende
 onderzoekmogelijkheden.
 
@@ -11,7 +11,7 @@ met vaagverzamelingen, zodanig dat vaagsimilariteitsmaten kunnen gebruikt worden
 om de graduele gelijkenis tussen twee beelden na te gaan. 
 We construeren dus similariteitsmaten voor beelden door een manier om beelden te
 identificeren met vaagverzamelingen, te combineren met een vaagsimilariteitsmaat.
-De eerste bijdrage van dit eindwerk is het herschrijven van de beschouwde
+Een eerste bijdrage van dit eindwerk is het herschrijven van de beschouwde
 vaagsimilariteitsmaten naar een vorm die, onder bepaalde voorwaarden, een stuk
 sneller kan berekend worden. 
 
@@ -35,7 +35,8 @@ ge\"introduceerd. We hebben ook het vaaghistogram voorgesteld als alternatief.
 Dat vaaghistogram heeft als voordeel dat het minder gevoelig is voor
 problemen die optreden als gevolg van de kleurkwantisatie. Om ook bij de pseudo-vage
 histogrammen de invloed van die kwantisatieproblemen te beperken, hebben we 
-uitgebreide histogrammen gedefinieerd. 
+uitgebreide histogrammen gedefinieerd. Die uitgebreide histogrammen laten bovendien
+ook toe om spatiale informatie te incorporeren
 
 Bij de pixelgebaseerde maten blijkt het componentsgewijs vergelijken van intermediaire
 beelden goed te werken. In het bijzonder leiden de intermediaire beelden op basis van 
@@ -46,7 +47,7 @@ ook vastgesteld dat de vaagsimilariteitsmaat $M_{I_3}$ blijkbaar zeer
 geschikt is voor het vergelijken van histogrammen.
 
 Voor de testcollectie uit figuur~\ref{fig:testcollectie} bekomen we de laagste 
-GGGR-waarde als we $M_3$, $M_6$, $M_7$ of $M_{I_3}$ afzonderlijk toepassen op 
+GGGR-waarde als we $M_3$, $M_6$, $M_7$ of $M_{I_3}$ toepassen op 
 de componenten
 van intermediaire beelden op basis van kleurmomenten, om vervolgens de
 similariteiten van de verschillende componenten te aggregeren met behulp van
@@ -67,7 +68,7 @@ van beelden. Het andere programma is het eigenlijke prototype.
 
 In \ref{sectie:rekentijd} hebben we vermeld dat het bij echte CBIR mogelijk is
 om berekeneningen op voorhand te doen. Zo zouden de histogrammen van de beelden
-bijvoorbeeld mee pgeslagen kunnen worden in de databank. Bij echte CBIR kunnen
+bijvoorbeeld mee opgeslagen kunnen worden in de databank. Bij echte CBIR kunnen
 er daarom ook meer complexe similariteitsmtaten gebruikt worden. Door de beelden
 op voorhand te segementeren, zou het bijvoorbeeld mogelijk zijn om bij het vergelijken
 rekening te houden met de vorm van de objecten in de beelden. In het 

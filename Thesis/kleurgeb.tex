@@ -5,7 +5,7 @@ vergelijken op basis van de kleuren die er in voorkomen. We identificeren de bee
 in dit geval dus met vaagverzamelingen in een universum dat bestaat uit kleuren 
 in plaats van beeldpunten. Vermits kleur \'e\'en  van de meest gebruikte kenmerken is bij CBIR 
 \cite{rui:image_retr, schettini:survey_of_methods_for_colour_image_indexing_and_retrieval}, mogen we 
-verwachten dat die \defin{kleurgebaseerde similariteitsmaat}{kleurgebaseerde} aanpak effici\"ente 
+verwachten dat die \definas{kleurgebaseerde similariteitsmaat}{kleurgebaseerde} aanpak effici\"ente 
 similariteitsmaten zal opleveren. 
 
 \section{Histogrammen}
@@ -45,14 +45,16 @@ van beeld $A$:
 H_A(c) = \frac{\displaystyle h_A(c)}{\displaystyle \max_{c \in C'}(h_A(c))}
 \end{displaymath}
 Een dergelijke vaagverzameling noemen we een \defin{pseudo-vaag histogram}. 
-De kleur die het meest voorkomt heeft daarbij lidmaatschapsgraad $1$. Alle 
+De kleur die het meest voorkomt, heeft daarbij lidmaatschapsgraad $1$. Alle 
 andere kleuren hebben kleinere lidmaatschapsgraden. 
 
 We beschouwen de zes uniforme en de eerste twee niet-uniforme (focale kleuren en SCT) 
-kwantisatietechnieken uit \ref{sectie:kleurkwantisatie}. Figuur~\ref{fig:histogrammen_eerste_vb} bevat
+kwantisatietechnieken uit \ref{sectie:kleurkwantisatie}. 
+Met andere woorden: we beperken ons tot de technieken met een vast kleurenpalet.
+Figuur~\ref{fig:histogrammen_eerste_vb} bevat
 de pseudo-vage histogrammen die we zo bekomen voor het ``geel bootje'' voorbeeld
 uit onze testcollectie. In figuur~\ref{fig:alle_histn_geel_bootje} worden de pseudo-vage histogrammen
-getoond van alle beelden uit de testcollectie die relevant zijn ten opzichte van dat voorbeeld.
+getoond van alle beelden uit de testcollectie, die relevant zijn ten opzichte van dat voorbeeld.
 Zoals ge\"illustreerd in figuur~\ref{fig:constr_sim_op_basis_van_pseudo-vaag_hist}, kunnen we 
 dan similariteitsmaten construeren door een vaagsimilariteitsmaat toe te passen op 
 pseudo-vage histogrammen ge\"associeerd met de beelden in kwestie.
@@ -326,7 +328,7 @@ van het geel bootje (HSV (a), Irb (b), I1I2I3 (c), XYZ (d), Yxy (e) en L*a*b* (f
 Naast de bovenstaande vage interpretatie van het klassieke kleurhistogram, 
 beschouwen we ook nog een gelijkaardige kleurbeschrijving die we op een 
 ``volledig vage'' manier opbouwen. Bij dat \defin{vaaghistogram} maken we 
-gebruik van het L*a*b* kleurmodel en beschouwen we een 
+gebruik van het perceptueel uniforme L*a*b* kleurmodel en beschouwen we een 
 vaagverzameling voor elke kleur. Stel dat $lab$ de kleuren uit $C$ afbeeldt op de
 corresponderende niet-genormaliseerde L*a*b*-co\"ordinaten. De lidmaatschapsgraad van een 
 kleur $c' \in C$ in de vaagverzameling $\widetilde{C}_c$, die correspondeert met kleur $c \in C$, 
@@ -382,7 +384,7 @@ elkaar vergeleken worden in figuur~\ref{fig:alle_vaaghistn_geel_bootje}. Net zoa
 pseudo-vage histogrammen, kunnen vaaghistogrammen gebruikt worden om
 similariteitsmaten voor beelden te construeren.
 
-\begin{figure}[!bp]
+\begin{figure}[!b]
 \centering
 \begin{tabular}{@{}c@{}c@{}}
 \subfigure[]{
@@ -863,13 +865,12 @@ similariteitsmaten op basis van pseudo-vage histogrammen.}
 \caption{\label{fig:histogrammen_rood_en_groen}Een volledig (a) rood en (b) groen beeld samen 
 met de corresponderende histogrammen.}
 \end{figure}
-%
-%\clearpage}
+Stel nu dat $(\mathcal{H}_A,\mathcal{H}_B) \in \{(H_A,H_B), (\widetilde{H}_A,\widetilde{H}_B)\}$.
 Doordat rood en 
 groen steeds in verschillende bins gekwantiseerd worden, ligt de piek bij elk histogram op een 
-andere plaats. 
-Stel nu dat $(\mathcal{H}_A,\mathcal{H}_B) \in \{(H_A,H_B), (\widetilde{H}_A,\widetilde{H}_B)\}$.
-Er geldt dan
+andere plaats. Er geldt dus $\mathcal{H}_A \setminus \mathcal{H}_B = \mathcal{H}_A \cap \mathcal{H}^c_B=\mathcal{H}_A$
+en ook $\mathcal{H}_B \setminus \mathcal{H}_A = \mathcal{H}_B$. Bovendien
+geldt dan
 $|\mathcal{H}_A|=|\mathcal{H}_B|$ en $|\mathcal{H}_{A}^c|=|\mathcal{H}_{B}^c|$, zodat
 \begin{displaymath}
 |\mathcal{H}_A \setminus \mathcal{H}_B|=|\mathcal{H}_A \cap \mathcal{H}_{B}^c|=|\mathcal{H}_A|=|\mathcal{H}_B|=|\mathcal{H}_B \cap \mathcal{H}_{A}^c|=|\mathcal{H}_B \setminus \mathcal{H}_A|
@@ -922,12 +923,12 @@ die maten dan weer valse positieven veroorzaken.
 Bij het vaaghistogram wordt het tweede kwantisatieprobleem opgelost
 door de kleur van een pixel te laten bijdragen tot de waarde van meerdere bins. In feite kan een kleur
 bij een vaaghistogram dus wel tot meerdere bins behoren. Dat heeft
-bovendien als gevolg dat het eerste probleem minder doorweegt. Stel dat $c$ en $d$ twee perceptueel
+bovendien als gevolg dat het eerste probleem minder doorweegt. Stel dat $c_1$ en $c_2$ twee perceptueel
 similaire kleuren zijn die in verschillende bins terecht komen. Het
-voorkomen van $c$ zal er dan voor zorgen dat de waarde van de bin van $d$ verschilt van nul.
-Omgekeerd zal het voorkomen van $d$ als gevolg hebben dat de waarde van de bin van $c$ groter is
-dan nul. Als $A$ een beeld is waarin $c$ voorkomt en $B$ een beeld waarin $d$ voorkomt, dan
-moeten de waarden van de bins van $c$ en van $d$ dus zowel in $\widetilde{H}_A$ als in 
+voorkomen van $c_1$ zal er dan voor zorgen dat de waarde van de bin van $c_2$ verschilt van nul.
+Omgekeerd zal het voorkomen van $c_2$ als gevolg hebben dat de waarde van de bin van $c_1$ groter is
+dan nul. Als $A$ een beeld is waarin $c_1$ voorkomt en $B$ een beeld waarin $c_2$ voorkomt, dan
+moeten de waarden van de bins van $c_1$ en van $c_2$ dus zowel in $\widetilde{H}_A$ als in 
 $\widetilde{H}_B$ beide verschillend zijn van nul. Bijgevolg zullen vaagsimilariteitsmaten
 die bin per bin vergelijken minder lage similariteiten als resultaat geven.
 
@@ -941,7 +942,7 @@ beeld op een willekeurig manier verplaatsen, dan zal er immers niets veranderen 
 de geassocieerde histogrammen. Het beeld zelf zal er dan meestal wel totaal anders uitzien.  
 
 We kunnen pseudo-vage histogrammen construeren die minder gevoelig zijn voor de bovenstaande problemen,
-door \defin{uitgebreid histogram}{uitgebreide histogrammen} te beschouwen. 
+door \definas{uitgebreid histogram}{uitgebreide histogrammen} te beschouwen. 
 %De uitgebreide versie $\mathcal{H}'_A$ van een histogram
 %$\mathcal{H}_A \in \{H_A,\widetilde{H}_A\}$ geassocieerd met een beeld $A$ defini\"eren we
 %als volgt:
@@ -1072,20 +1073,23 @@ andere woorden: $c$ is \'e\'en van de grijstinten) dan geldt:
  & = \displaystyle\sum_{c' \in C'_{gr}} h_A(c') \cdot s(bin(c),bin(c')) + \sum_{c' \in C' \setminus C'_{gr}} h_A(c') \cdot 0 \displaybreak[0] \\
  & = \displaystyle\sum_{c' \in C'_{gr}} h_A(c') \cdot s(bin(c),bin(c')) \displaybreak[0] \\
  & = \displaystyle\sum_{c' \in C'_{gr}} \mathring{g}(bin(c')) \cdot 2^{-2 \cdot R_1} \cdot \binom{2 \cdot R_1}{R_1+|bin(c)-bin(c')|} \displaybreak[0] \\
- & = \displaystyle\sum_{k=-R_1}^{R_1} \mathring{g}(bin(c)+k) \cdot 2^{-2 \cdot R_1} \cdot \binom{2 \cdot R_1}{|k|}
+ & = \displaystyle\sum_{k=-R_1}^{R_1} \mathring{g}(bin(c)+k) \cdot 2^{-2 \cdot R_1} \cdot \binom{2 \cdot R_1}{R_1+|k|}
 \end{align*}
 De transformatie van het deelhistogram voor de grijstinten kan dus inderdaad beschouwd worden
 als een \'e\'endimensionaal lineair filter met filtermasker 
 \begin{displaymath}
 m(k)= \begin{cases}
-2^{-2 \cdot R_1} \cdot \binom{2 \cdot R_1}{|k|} & \textrm{als } |k| \le R_1 \\ 
+2^{-2 \cdot R_1} \cdot \binom{2 \cdot R_1}{R_1+|k|} & \textrm{als } |k| \le R_1 \\ 
 0 & \textrm{anders} 
 \end{cases}
 \end{displaymath}
 voor alle $k \in \mathbb{N}$. Dit is de corresponderende matrix: 
 \begin{displaymath}
-2^{-2 \cdot R_1} \cdot \left[ \begin{array}{cccc} \binom{2 \cdot R_1}{0} & \binom{2 \cdot R_1}{1} & 
-\ldots & \binom{2\cdot R_1}{N-1} \end{array} \right]
+2^{-2 \cdot R_1} \cdot \left[ \begin{array}{@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }} \binom{2 \cdot R_1}{2\cdot R_2} & \binom{2 \cdot R_1}{2\cdot R_2 -1} & 
+\ldots & \binom{2\cdot R_1}{R_1} & \ldots & \binom{2\cdot R_1}{R_1+1} &
+\binom{2\cdot R_1}{2\cdot R_1} \end{array} \right] =
+2^{-2 \cdot R_1} \cdot \left[ \begin{array}{@{\ }c@{\ }c@{\ }c@{\ }c@{\ }} \binom{2 \cdot R_1}{0} & \binom{2 \cdot R_1}{1} & 
+\ldots & \binom{2\cdot R_1}{2\cdot R_1} \end{array} \right]
 \end{displaymath}
 Er wordt dus eigenlijk een \'e\'endimensionaal binomiaalfilter toegepast.
 % $
@@ -1097,7 +1101,7 @@ De ``hue''-waarden van het HSV-model zijn echter circulair. Daarom gebruiken we 
 periodieke uitbreiding in plaats van uitbreiding met nullen. Meer formeel geldt voor 
 elke $c \in C' \setminus C'_{gr}$:
 \begin{displaymath}
-\mathring{h}_A(c) = \sum_{k=-R_2}^{R_2} \mathring{g}'(bin(c)+k) \cdot 2^{-2 \cdot R_2} \cdot \binom{2 \cdot R_2}{|k|}
+\mathring{h}_A(c) = \sum_{k=-R_2}^{R_2} \mathring{g}'(bin(c)+k) \cdot 2^{-2 \cdot R_2} \cdot \binom{2 \cdot R_2}{R_2+|k|}
 \end{displaymath}
 waarbij
 \begin{displaymath}
@@ -1270,7 +1274,7 @@ en is
 t(x) = \begin{cases}
 1 & \textrm{als } x < \alpha \\
 1 - 2 \cdot \left( \frac{x-\alpha}{\gamma - \alpha} \right)^2 & \textrm{als } \alpha \le x < \beta \\[6pt]
-2 \cdot \left( \frac{x-\alpha}{\gamma - \alpha} \right)^2 & \textrm{als } \beta \le x < \gamma \\
+2 \cdot \left( \frac{x-\gamma}{\gamma - \alpha} \right)^2 & \textrm{als } \beta \le x < \gamma \\
 0 & \textrm{als } \gamma \le x
 \end{cases}
 \end{displaymath}
@@ -1287,7 +1291,7 @@ voor alle $c \in C'$. De pseudo-vage uitgebreide
 histogrammen die we met $\alpha=3 \cdot \gamma / 5$ en $\gamma = \min\{M/2, N/2\}$ bekomen voor 
 de beelden van het geel bootje, worden weergegeven in
 figuur~\ref{fig:uitgebreide_sct-histogrammen_spatial}. We noemen dergelijke histogrammen
-\defin{spatiaal histogram}{spatiale histogrammen}. Figuur~\ref{fig:constructie_spatiale_histogrammen} illustreert
+\definas{spatiaal histogram}{spatiale histogrammen}. Figuur~\ref{fig:constructie_spatiale_histogrammen} illustreert
 de constructie van een kleurgebaseerde similariteitsmaat op basis van het pseudo-vaag 
 spatiaal SCT-histogram.
 
@@ -1342,7 +1346,7 @@ Vermits er voor elke $c \in C'$ dan geldt dat
 \mathring{h}_A(c) 
  &= \displaystyle \sum_{c' \in C'} \sum_{p \in P} \delta (bin(c')-bin(A(p))) \cdot w_{A,c}(p) \\
  &= \displaystyle \sum_{c' \in C'} \sum_{p \in P} \delta (bin(c')-bin(A(p))) \cdot s(bin(c),bin(A(p))) \cdot t(d_m(p)) \\
- &= \displaystyle \sum_{c' \in C'} \mathring{h}'_A(c') \cdot s(bin(c),bin(A(p)))
+ &= \displaystyle \sum_{c' \in C'} \mathring{h}'_A(c') \cdot s(bin(c),bin(c'))
 \end{align*}
 met $\mathring{h}'_A(c')=\sum_{p \in P} \delta (bin(c')-bin(A(p))) \cdot t(d_m(p))$, $\forall c' \in C'$, 
 kunnen we een glad spatiaal SCT-histogram $\mathring{h}_A$ in twee stappen construeren. Eerst
@@ -1369,9 +1373,9 @@ worden \cite{stricker:fuzzy_regions_for_image_indexing}.
 Vooral belang hechten aan de pixels in de omgeving van de randen, is een alternatieve
 manier om de invloed van minder belangrijke pixels te beperken 
 \cite{vertan:upgrading_color_distribution_for_ir}. Dat kan door 
-$w_{A,c}=\delta(bin(c)-bin(A(p))) \cdot r_{A}$ te kiezen, met $r_{A}(p)$ de randsterkte op positie $p \in P$ in $A$.
+$w_{A,c}(p)=\delta(bin(c)-bin(A(p))) \cdot r_{A}(p)$, $\forall p \in P$, te kiezen, met $r_{A}(p)$ de randsterkte op positie $p$ in $A$.
 Die randsterkte bepalen we op basis van de gradi\"ent, zoals uitgelegd in \ref{sectie:randdetectie}.  
-We noemen de histogrammen die we zo bekomen \defin{randhistogram}{randhistogrammen}. 
+We noemen de histogrammen die we zo bekomen \definas{randhistogram}{randhistogrammen}. 
 Figuur~\ref{fig:uitgebreide_sct-histogrammen_edgy} toont een aantal voorbeelden van
 pseudo-vage SCT-histogrammen die gebaseerd zijn op een randhistogram.
 Via de keuze $w_{A,c}(p)=s(bin(c),bin(A(c))) \cdot r(d_m(p))$, $\forall p \in P$, 

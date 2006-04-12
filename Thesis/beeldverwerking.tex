@@ -2,8 +2,7 @@
 
 We zullen in het vervolg van deze scriptie ook gebruik maken van enkele
 begrippen en technieken uit beeldverwerking. In dit hoofdstuk geven we 
-een overzicht van die begrippen en beschrijven we kort de verwante
-technieken.
+een overzicht van die begrippen en technieken.
 
 \section{Modellering van kleuren en beelden}
 
@@ -42,8 +41,8 @@ kleurruimtes bestaan die gebaseerd zijn op RGB.
 \includegraphics[height=4cm]{images/lab.eps}
 \label{fig:lab}
 }
-\caption{\label{fig:kleurmodellen}Grafische voorstelling van (a) het RGB-model, 
-(b) het HSV-model en (c) het L*a*b*-model.}
+\caption{\label{fig:kleurmodellen}Grafische voorstelling van het (a) RGB-, 
+(b) HSV- en (c) L*a*b*-model.}
 \end{figure}
 
 Ook in het HSV kleurmodel \cite{tkalcic:colour_spaces} wordt elke kleur voorgesteld 
@@ -176,9 +175,9 @@ kleuren. Zo gebruikt men voor een RGB-ruimte bijvoorbeeld typisch 8 bits per
 kleurcomponent. Dit geeft een totaal van 24 bits per kleur, zodat men dus 
 $2^{24}=2^4 \cdot 2^{20}=16 \cdot 2^{20} \approx 16 \cdot 10^6$ kleuren kan 
 voorstellen.
-
 Om de complexiteit te beperken, kan het dus nodig zijn om het aantal kleuren te 
-reduceren. Dat kan door middel van \defin{kleurkwantisatie}. Daarbij groeperen we de kleuren in 
+reduceren. Dat kan door middel van \defin{kleurkwantisatie}, waarbij de kleuren 
+gegroepeerd worden in
 zogenaamde \defin{bins}. We beschouwen dus geen aparte kleuren meer, maar wel 
 verzamelingen van kleuren. De kleuren die in dezelfde bin zitten, worden dan 
 vervangen door \'e\'en enkele kleur. Het \defin{kleurenpalet} is de verzameling 
@@ -204,7 +203,7 @@ bin: & C & \to & \{1,2,...,N\}\\[5pt] & (c_1,c_2,\ldots,c_l) & \mapsto & \left[
 + 1, & \forall (c_1,c_2,\ldots,c_l) \in C
 \end{array}
 \end{displaymath}
-met $N_j$ het aantal bins voor de $j$-de component, $N$ het totale aantal 
+met $N_j$ het aantal intervallen voor de $j$-de component, $N$ het aantal 
 bins ($N=N_1 \cdot N_2 \cdot \ldots \cdot N_l$) en 
 \begin{displaymath}
 \mathit{fl}(x,n) = \begin{cases}
@@ -213,7 +212,7 @@ n - 1 & \textrm{als } x = 1
 \end{cases}
 \end{displaymath}
 voor alle $x \in [0,1]$ en $n \in \mathbb{N}$. De middelste waarden van de 
-intervallen doen hierbij dienst als componenten van de kleur van een bin:
+intervallen doen dan dienst als componenten van de kleur van een bin:
 \begin{displaymath}
 \begin{array}{lrcll}
 col: & \{1,2,\ldots,N\} & \to & C \\ & n & \mapsto & (col_1(n), col_2(n), 
@@ -230,7 +229,6 @@ Bij image retrieval is doorgaans vooral de kleurtint op zich belangrijk. Door
 minder belang te hechten aan de luminantie kan de prestatie zelfs verbeteren,
 vermits de similariteitsmaten dan bijvoorbeeld minder afhankelijk zijn van
 belichtingsvariaties. 
-
 Een mogelijke manier om uniform te kwantiseren is dus
 het HSV-model gebruiken en meer belang hechten aan de eerste kleurcomponent. 
 Dat doen we door $N_1=16$, $N_2=4$ en $N_3=4$ te kiezen.
@@ -239,7 +237,6 @@ Dat doen we door $N_1=16$, $N_2=4$ en $N_3=4$ te kiezen.
 Die keuzes voor $N_1$, $N_2$ en $N_3$ stemmen overeen met de keuzes die men 
 gemaakt heeft voor de \defin{scalable color descriptor} (SCD), die gedefinieerd 
 wordt in de MPEG-7 standaard \cite{manjunath:color_and_texture_descriptors}.
-
 Via analoge redeneringen voor de andere kleurmodellen, bekomen we de zes manieren 
 uit tabel~\ref{tab:uniforme_kwantisatie} om uniform te kwantiseren met een vast kleurenpalet.
 Elk van die manieren gebruikt $256$ bins.
@@ -264,7 +261,7 @@ kleurenpalet.}
 
 \subsection{Niet-uniforme kwantisatie}
 
-We hebben reeds vermeld dat bij image retrieval vooral de tinten van de kleuren belangrijk zijn. Daarom 
+Omdat vooral de tinten van de kleuren belangrijk zijn bij image retrieval, 
 lijkt het op het eerste zicht geen slecht idee om kleuren met een zelfde kleurtint te groeperen in 
 \'e\'en enkele bin. De eerste HSV-component bepaalt dan tot welke bin een kleur behoort. We passen
 met andere woorden uniforme HSV-kwantisatie toe met $(N_1,N_2,N_3)=(256,1,1)$. Een probleem daarbij 
@@ -312,7 +309,7 @@ $(r,g,b)$ & $(255, 255,   0)$ & $(160,  32, 240)$ & $(192, 192, 192)$ & $(255, 1
 populaire kwantisatietechnieken die, in tegenstelling tot de technieken die we 
 tot nu toe bekeken hebben, een variabel kleurenpalet gebruiken. De eerste techniek gebruikt een
 zogenaamd \emph{Kohonen neuraal netwerk} om clusters van kleuren te vormen. Vervolgens worden 
-alle kleuren uit een cluster dan naar dezelfde kleur gekwantiseerd. Bij de tweede techniek 
+alle kleuren uit een cluster naar dezelfde kleur gekwantiseerd. Bij de tweede techniek 
 wordt er gebruik gemaakt van \emph{dynamisch programmeren} en van een statistische techniek voor 
 het reduceren van de dimensionaliteit van data, 
 die \emph{principal component analysis} (PCA) genoemd wordt. 
@@ -549,7 +546,7 @@ met $\mathring{b}$ de nuluitbreiding van $b$, $m$ een $\mathbb{N}^2 - \mathbb{R}
 en $\Omega_m = \{ (k,l) \in \mathbb{N}^2 \mid m(k,l) \ne 0 \}$. 
 De functie $m$ wordt het \defin{filtermasker} genoemd.
 
-Het \defin{binomiaalfilter}{3x3 binomiaalfilter} is een voorbeeld van een lineair filter. Voor het filtermasker 
+Het \definas{binomiaalfilter}{3x3 binomiaalfilter} is een voorbeeld van een lineair filter. Voor het filtermasker 
 $m_{bin}$ van dat filter geldt $m_{bin}(-1,-1)=m_{bin}(-1,1)=m_{bin}(1,-1)=m_{bin}(1,1)=1/16$, 
 $m_{bin}(-1,0)=m_{bin}(0,-1)=m_{bin}(1,0)=m_{bin}(0,1)=1/8$, $m_{bin}(0,0)=1/4$ en 
 $m_{bin}(k,l)=0$ voor de overige $(k,l)$. Als we veronderstellen dat $m_{bin}(k,l)=0$ voor de 
@@ -587,10 +584,10 @@ filteren met een binomiaalfilter (b).}
 \section{Eenvoudige randdetectie}
 \label{sectie:randdetectie}
 
-Beeldranden in een tweedimensionaal beeld $b$ zijn plaatsen waar de luminantiecomponent $lum(x,y)$ van $b(x,y)$ 
+In een tweedimensionaal beeld $b$ zijn randen plaatsen waar de luminantiecomponent $lum(x,y)$ van $b(x,y)$ 
 sterk varieert als functie van $x$ en/of $y$. Op die plaatsen zullen de partieel afgeleiden $D_1 lum(x,y)$ en 
-$D_2 lum(x,y)$ dus groot zijn. Bijgevolg zal de \defin{gradi\"ent} $\nabla lum$ daar ook groot zijn. We kunnen 
-dus de volgende formule gebruiken om randen te detecteren in $b$: 
+$D_2 lum(x,y)$ dus groot zijn, zodat ook de \defin{gradi\"ent} $\nabla lum$ daar groot zal zijn. Bijgevolg kunnen we
+de volgende formule gebruiken om randen te detecteren in $b$: 
 \begin{displaymath}
 |\nabla lum(x,y)| / \sqrt{2} = \sqrt{(D_1 lum(x,y))^2 + (D_2 lum(x,y))^2} / \sqrt{2}
 \end{displaymath}
@@ -652,7 +649,7 @@ resultaten geven.
 \label{fig:lena_sobel}
 }
 \caption{\label{fig:randdetectie}Het origineel luminantiebeeld (a) en het resultaat na 
-filteren met een gradi\"ent-filter (b) en met een Sobel-filter (c).}
+filteren met (a) een gradi\"ent-filter en (b) een Sobel-filter (c).}
 \end{figure}
 
 

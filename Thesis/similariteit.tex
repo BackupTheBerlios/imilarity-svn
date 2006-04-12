@@ -11,7 +11,7 @@ een beeld, al dan niet rechtstreeks, met een (L-)vaagverzameling. Daarna maken w
 de vaagsimilariteitsmaten uit \ref{sectie:vaagsimilariteitsmaten} om die (L-)vaagverzamelingen te
 vergelijken. 
 
-In het vervolg van deze scriptie bedoelen we met de term ``similariteitsmaat'' steeds
+In het vervolg van dit eindwerk bedoelen we met de term ``similariteitsmaat'' steeds
 een similariteitsmaat voor beelden. We gebruiken die term dus niet voor een vaagsimilariteitsmaat
 op zich, maar wel voor de combinatie van een dergelijke vaagsimilariteitsmaat met een manier om beelden te 
 identificeren met (L-)vaagverzamelingen.
@@ -31,7 +31,7 @@ de geordende lijst van zoekresultaten moet bevinden.
 \subsection{Symmetrie}
 
 Het resultaat van een similariteitsmaat $M$ wordt verwacht onafhankelijk te zijn van de 
-volgorde waarin de beelden aangeboden worden. Voor beelden $A$ en $B$ moet dus gelden:
+volgorde waarin de beelden aangeboden worden. Voor elke twee beelden $A$ en $B$ moet dus gelden:
 $M(A,B)=M(B,A)$.
 
 \subsection{Transitiviteit}
@@ -41,7 +41,7 @@ relaties zijn naast reflexief en symmetrisch ook transitief. In
 \cite{zadeh:similarity_relations_and_fuzzy_orderings} definieert Zadeh
 de \defin{similariteitsrelatie} als vage uitbreiding van dat scherpe begrip. Als we zouden
 afdwingen dat een similariteitsmaat $M$ een similariteitsrelatie is, dan moet $M$ 
-\defin{min-transitief}{$\min$-transitief} zijn: voor drie beelden $A$, $B$ en $C$ moet 
+\definas{min-transitief}{$\min$-transitief} zijn: voor drie beelden $A$, $B$ en $C$ moet 
 $\min\{M(A,B),M(B,C)\} \le M(A,C)$ gelden. Die
 eigenschap komt echter niet overeen met de intu\"itieve betekenis van similariteit
 \cite{de_cock:on_unsuitable_relations_for_approx_equal, de_cock:why_fuzzy_relations_do_not_resolve_pointcare_paradox}. 
@@ -60,8 +60,8 @@ moeten we een manier vinden om een dergelijke maat objectief te beoordelen.
 Dat doen we door, voor een bepaald voorbeeld, elke maat toe te passen op eenzelfde collectie 
 van beelden. Vervolgens beoordelen we de zo bekomen rangschikking met behulp van een performantiemaat.
 
-Figuur~\ref{fig:testcollectie} bevat de collectie van beelden die we gaan 
-gebruiken. Die collectie bestaat uit een selectie van beelden uit
+Figuur~\ref{fig:testcollectie} bevat de beelden van de collectie die we gaan 
+gebruiken. Die collectie is een selectie van beelden uit
 de \defin{Columbia object image library} \cite{coil-100}, die gegenereerd werd 
 door een aantal roterende objecten op bepaalde vaste momenten te fotograferen. 
 Onze testcollectie bestaat uit foto's van elf objecten. Van elk object zijn
@@ -176,22 +176,22 @@ De genormaliseerde gemiddelde rang wordt gegeven door de volgende afbeelding:
 \end{displaymath}
 \end{definitie}
 \noindent
-Deze maat nadert naar 1 naarmate de performantie slechter wordt.
+De GGR nadert naar 1 naarmate de performantie slechter wordt.
 
 Tot nu toe hebben we er nog geen rekening mee gehouden dat de performantie van
 een similariteitsmaat afhankelijk kan zijn van het gekozen voorbeeld. Dat probleem lossen we
 op door de GGR te berekenen voor meerdere voorbeelden en het gemiddelde van de bekomen waarden
 te beschouwen. We kiezen daarbij de beelden uit de linker kolom van 
-figuur~\ref{fig:testcollectie} als voorbeeld. De waarde die we zo bekomen noemen we de
-\defin{genormaliseerde gemiddelde rang!globale}{globale genormaliseerde gemiddelde rang} 
-(GGGR). Het is die waarde die we zullen gebruiken
-om de performantie van een similariteitsmaat te evalueren. We zullen dus met andere woorden op
-zoek gaan naar similariteitsmaten waarvan de GGGR zo klein mogelijk is.
+figuur~\ref{fig:testcollectie} als voorbeelden. De waarde die we zo bekomen, noemen we de
+\definas{genormaliseerde gemiddelde rang!globale}{globale genormaliseerde gemiddelde rang} 
+(GGGR). Het is die waarde die we gebruiken
+om de performantie van een similariteitsmaat te evalueren. We gaan met andere woorden op
+zoek naar similariteitsmaten waarvan de GGGR zo klein mogelijk is.
 
 \subsection{Rekentijd}
 \label{sectie:rekentijd}
 
-Voor elke similariteitsmaat die we construeren meten we ook hoe lang het duurt om
+Voor elke similariteitsmaat die we construeren, meten we ook hoe lang het duurt om
 de rangschikkingen, die nodig zijn om de GGGR te bepalen, te berekenen. Aan die 
 rekentijd hechten we echter niet zoveel belang als aan de GGGR, vermits het in onze
 praktische implementatie niet absoluut noodzakelijk is dat de similariteitsmaten zo weinig
@@ -301,7 +301,12 @@ vinden we bovendien:
 \end{array}
 \end{displaymath}
 We kunnen tabel~\ref{tab:similatiteitsmaten} bijgevolg herschrijven tot tabel~\ref{tab:beperkte_similatiteitsmaten}.
-\begin{table}[!bp]
+Merk op dat we daarbij enkel gesteund hebben op $T_M(0,0)=T_M(0,1)=0$ en 
+$S_M(0,0)=0$. 
+De bekomen eigenschappen blijven dus gelden indien we $T_M$ en $S_M$ vervangen door respectievelijk 
+een willekeurige conjunctor $\mathcal{C}$ en een willekeurige disjunctor $\mathcal{D}$, waarvoor per 
+definitie geldt: $\mathcal{C}(0,0)=\mathcal{C}(0,1)=\mathcal{C}(1,0)=0$ en $\mathcal{D}(0,0)=0$. 
+\begin{table}[!b]
 \vspace{10pt}
 \centering
 \begin{tabular}{l}
@@ -364,8 +369,8 @@ $
 \caption{\label{tab:beperkte_similatiteitsmaten}De vaagsimilariteitsmaten geschreven met 
 sommaties waarvan het bereik beperkt is.}
 \end{table}
-% beter geen nieuwe paragraaf volgens Valerie
-Beschouw bijvoorbeeld $M_{5}$:
+
+Beschouw nu bijvoorbeeld $M_{5}$:
 \begin{displaymath}
 M_{5} = \frac{\min\{|A|,|B|\}}{\max\{|A|,|B|\}} = \frac{\min\{||A||,||B||\}}{\max\{||A||,||B||\}}
 \end{displaymath}
@@ -394,9 +399,3 @@ meer dan de herschreven vorm van $M_5$. Zelfs voor $|X'| = |X|$ zal
 $2 \cdot |X| + 2 \cdot (|X|-1) + 2 = 4 \cdot |X|$ doorgaans een stuk groter zijn dan
 $2 \cdot (|X'|-1) + 4 = 2 \cdot |X'| + 2$. Als $|X'| \ll |X|$ dan wordt het verschil in rekentijd
 uiteraard nog significanter.
-
-Merk op dat we in de bovenstaande redeneringen enkel gesteund hebben op $T_M(0,0)=T_M(0,1)=0$ en 
-$S_M(0,0)=0$. 
-De bekomen eigenschappen blijven dus gelden indien we $T_M$ en $S_M$ vervangen door respectievelijk 
-een willekeurige conjunctor $\mathcal{C}$ en een willekeurige disjunctor $\mathcal{D}$, waarvoor per 
-definitie geldt: $\mathcal{C}(0,0)=\mathcal{C}(0,1)=\mathcal{C}(1,0)=0$ en $\mathcal{D}(0,0)=0$. 
