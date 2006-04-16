@@ -68,7 +68,7 @@ Als $s=0$ dan is $h$ niet gedefinieerd. Dat is logisch vermits we dan te
 maken hebben met een grijswaarde. Indien $v=0$ dan zijn $s$ en $h$ niet gedefinieerd. We 
 hebben het in dat geval dan ook over puur zwart, waarvoor er geen kleurtint of 
 saturatie kan gespecificeerd worden. In de praktische implementatie geven we 
-niet gedefinieerde componenten de waarde $0$. Uit figuur~\ref{fig:hsv} blijkt dat
+niet-gedefinieerde componenten de waarde $0$. Uit figuur~\ref{fig:hsv} blijkt dat
 het HSV-model de vorm van een kegel heeft.
 
 Een kleur in het Irb-model bestaat uit een intensiteit en een genormaliseerde $r$ en $b$ 
@@ -157,7 +157,7 @@ In de praktijk wordt een beeld echter voorgesteld als een rooster bestaande uit 
 eindig aantal beeldpunten. Bijgevolg zal $b$ eerder een afbeelding van een deelverzameling van 
 $\mathbb{N}^2$ naar $[0,1]^n$ zijn. 
 
-Om geen rekening te moeten houden met ``randgevallen'', beschouwen voor elk beeld $b$ ook een
+Om geen rekening te moeten houden met ``randgevallen'', beschouwen we voor elk beeld $b$ ook een
 met nullen uitgebreide versie $\mathring{b}$. Voor een beeld $b$ van $M$ bij $N$ beeldpunten
 defini\"eren we de $\mathbb{Z}^2 - [0,1]^n$ afbeelding $\mathring{b}$ als volgt:
 \begin{displaymath}
@@ -262,7 +262,7 @@ kleurenpalet.}
 \subsection{Niet-uniforme kwantisatie}
 
 Omdat vooral de tinten van de kleuren belangrijk zijn bij image retrieval, 
-lijkt het op het eerste zicht geen slecht idee om kleuren met een zelfde kleurtint te groeperen in 
+lijkt het geen slecht idee om kleuren met een zelfde kleurtint te groeperen in 
 \'e\'en enkele bin. De eerste HSV-component bepaalt dan tot welke bin een kleur behoort. We passen
 met andere woorden uniforme HSV-kwantisatie toe met $(N_1,N_2,N_3)=(256,1,1)$. Een probleem daarbij 
 is echter dat beelden ook grijswaarden kunnen bevatten. Voor grijswaarden is de ``hue''-component immers 
@@ -517,7 +517,7 @@ In figuur~\ref{fig:rekentijden_quant} merken we echter dat kwantisatie met een v
 vaak een stuk sneller is. Zo gaat het uniform kwantiseren op basis van Irb bijvoorbeeld
 twee keer zo snel als Wu kwantisatie naar hetzelfde aantal kleuren. Bovendien is het soms niet
 gewenst dat voor alle beelden een andere verzameling van kleuren gebruikt wordt. In deze scriptie gebruiken
-we kwantisatie trouwens louter om meer performante similariteitsmaten te constueren. De visuele kwaliteit
+we kwantisatie trouwens louter om meer performante similariteitsmaten te construeren. De visuele kwaliteit
 van de gekwantiseerde beelden is daarbij minder belangrijk. Similariteitsmaten op basis van kwantisatietechnieken 
 waarbij de gekwantiseerde beelden een lagere kwaliteit hebben, presteren immers niet noodzakelijk
 slechter dan maten die gebaseerd zijn op ``betere'' kwantisatietechnieken. Zo zouden we bijvoorbeeld 
@@ -649,7 +649,7 @@ resultaten geven.
 \label{fig:lena_sobel}
 }
 \caption{\label{fig:randdetectie}Het origineel luminantiebeeld (a) en het resultaat na 
-filteren met (a) een gradi\"ent-filter en (b) een Sobel-filter (c).}
+filteren met (b) een gradi\"ent-filter en (c) een Sobel-filter.}
 \end{figure}
 
 
