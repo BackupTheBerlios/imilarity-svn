@@ -16,25 +16,6 @@ public class UCID implements ImageCollection {
 		0, 0, 0, 0, 0,  0, 0, 0, 0, 0,  // 130-139
 		3, 3, 3, 3, 2,  2, 2, 2, 2, 2,  // 140-149
 		3, 0, 0, 0, 0,  4, 4, 0, 4, 0,  // 150-159
-//		0, 0, 0, 0, 0,  0, 0, 0, 0, 0,  // 160-169
-//		0, 0, 0, 0, 0,  0, 0, 0, 0, 0,  // 170-179
-//		0, 0, 0, 0, 0,  0, 0, 0, 0, 0,  // 180-189
-//		0, 0, 0, 0, 0,  0, 0, 0, 0, 0,  // 190-199
-//		0, 0, 0, 0, 0,  0, 0, 0, 0, 0,  // 200-209
-//		0, 0, 0, 0, 0,  0, 0, 0, 0, 0,  // 210-219
-//		0, 0, 0, 0, 0,  0, 0, 0, 0, 0,  // 220-229
-//		0, 0, 0, 0, 0,  0, 0, 0, 0, 0,  // 230-239
-//		0, 0, 0, 0, 0,  0, 0, 0, 0, 0,  // 240-249
-//		0, 0, 0, 0, 0,  0, 0, 0, 0, 0,  // 250-259
-//		0, 0, 0, 0, 0,  0, 0, 0, 0, 0,  // 260-269
-//		0, 0, 0, 0, 0,  0, 0, 0, 0, 0,  // 270-279
-//		0, 0, 0, 0, 0,  0, 0, 0, 0, 0,  // 280-289
-//		0, 0, 0, 0, 0,  0, 0, 0, 0, 0,  // 290-299
-//		0, 0, 0, 0, 0,  0, 0, 0, 0, 0,  // 300-309
-//		0, 0, 0, 0, 0,  0, 0, 0, 0, 0,  // 310-319
-//		0, 0, 0, 0, 0,  0, 0, 0, 0, 0,  // 320-329
-//		0, 0, 0, 0, 0,  0, 0, 0, 0, 0,  // 330-339
-//		0, 0, 0, 0						// 340-343
 	};
 	
 	private ImageData[] examples;
@@ -47,38 +28,7 @@ public class UCID implements ImageCollection {
 				ImageData.loadUrl(getClass().getResource(DIR + "/pict0108.png")),
 				ImageData.loadUrl(getClass().getResource(DIR + "/pict0145.png")),
 				ImageData.loadUrl(getClass().getResource(DIR + "/pict0150.png")),
-				ImageData.loadUrl(getClass().getResource(DIR + "/pict0156.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0159.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0209.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0211.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0213.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0220.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0226.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0235.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0236.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0243.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0248.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0257.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0262.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0305.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0313.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0316.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0328.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0330.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0333.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0337.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0342.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0173.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0266.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0270.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0271.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0279.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0282.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0291.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0295.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0297.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0299.png")),
-//				ImageData.loadUrl(getClass().getResource(DIR + "/pict0302.png"))
+				ImageData.loadUrl(getClass().getResource(DIR + "/pict0156.png"))
 			};
 		} catch (IOException e) {
 			e.printStackTrace();

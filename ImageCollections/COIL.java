@@ -69,8 +69,8 @@ public class COIL implements ImageCollection {
 			throw new IllegalArgumentException("arguments must be != null");
 		String url1 = im1.getUrl().toString();
 		String url2 = im2.getUrl().toString();
-		String str1 = url1.substring(url1.lastIndexOf('/'),url1.indexOf('_'));
-		String str2 = url2.substring(url2.lastIndexOf('/'),url2.indexOf('_'));
+		String str1 = url1.substring(url1.lastIndexOf('/'),url1.lastIndexOf('_'));
+		String str2 = url2.substring(url2.lastIndexOf('/'),url2.lastIndexOf('_'));
 		return str1.equals(str2);
 	}
 
