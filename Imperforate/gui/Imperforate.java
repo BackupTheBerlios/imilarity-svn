@@ -270,7 +270,7 @@ public class Imperforate extends JFrame {
 		//////////////////////
 		
 		
-//		final Map imgMapper = new HashMap();
+//		final java.util.Map imgMapper = new java.util.HashMap();
 //		imgMapper.put("obj12", new Integer(0));
 //		imgMapper.put("obj3", new Integer(12));
 //		imgMapper.put("obj38", new Integer(18));
@@ -283,7 +283,7 @@ public class Imperforate extends JFrame {
 //		imgMapper.put("obj81", new Integer(60));
 //		imgMapper.put("obj51", new Integer(42));
 //		
-//		final Map degreesMapper = new HashMap();
+//		final java.util.Map degreesMapper = new java.util.HashMap();
 //		degreesMapper.put("0", new Integer(0));
 //		degreesMapper.put("180", new Integer(1));
 //		degreesMapper.put("270", new Integer(2));
@@ -327,7 +327,7 @@ public class Imperforate extends JFrame {
 //		printLatexButton.setEnabled(false);
 //		buttonsPanel.add(Box.createHorizontalStrut(5));
 //		buttonsPanel.add(printLatexButton);
-		
+//		
 		
 		//////////////////////
 		//// END OF HACKS ////
