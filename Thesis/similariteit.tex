@@ -6,24 +6,26 @@ naarmate de gelijkenis groter is. Bijgevolg kunnen we een dergelijke maat gebrui
 een lijst van zoekresultaten te herordenen volgens similariteit met een bepaald 
 voorbeeld uit die lijst. 
 
-We construeren een similariteitsmaat voor beelden in twee stappen. Eerst identificeren we
-een beeld, al dan niet rechtstreeks, met een (L-)vaagverzameling. Daarna maken we gebruik van
-de vaagsimilariteitsmaten uit \ref{sectie:vaagsimilariteitsmaten} om die (L-)vaagverzamelingen te
-vergelijken. 
+In deze scriptie construeren we similariteitsmaten voor beelden in twee stappen. 
+Eerst identificeren we elk mogelijk beeld, al dan niet rechtstreeks, met 
+een (L-)vaagverzameling. Daarna maken we gebruik van
+de vaagsimilariteitsmaten uit \ref{sectie:vaagsimilariteitsmaten} om die 
+(L-)vaagverzamelingen te vergelijken. 
 
-In het vervolg van dit eindwerk bedoelen we met de term ``similariteitsmaat'' steeds
+Met de term ``similariteitsmaat'' bedoelen we in het vervolg van dit eindwerk steeds
 een similariteitsmaat voor beelden. We gebruiken die term dus niet voor een vaagsimilariteitsmaat
 op zich, maar wel voor de combinatie van een dergelijke vaagsimilariteitsmaat met een manier om beelden te 
 identificeren met (L-)vaagverzamelingen.
 
 \section{Eigenschappen}
 
-In de volgende hoofdstukken construeren we een aantal similariteitsmaten voor beelden. Daarbij 
-eisen we dat al onze similariteitsmaten \defin{reflexief} en \defin{symmetrisch} zijn.
+Voor de similariteitsmaten die we in de volgende hoofdstukken construeren,
+stellen we twee eigenschappen voorop. We eisen namelijk dat al onze 
+maten \defin{reflexief} en \defin{symmetrisch} zijn.
 
 \subsection{Reflexiviteit}
 
-Voor twee identieke beelden verwachten we dat een similariteitsmaat $M$ als resultaat $1$
+In het geval van twee identieke beelden verwachten we dat een similariteitsmaat $M$ als resultaat $1$
 teruggeeft. Met andere woorden, voor een beeld $A$ moet gelden: $M(A,A)=1$.
 Die eigenschap heeft als gevolg dat het voorbeeld zich steeds vooraan in
 de geordende lijst van zoekresultaten moet bevinden.
