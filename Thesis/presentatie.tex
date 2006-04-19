@@ -2,6 +2,9 @@
 \usepackage{babel}
 \usepackage{graphicx}
 \usepackage{epsfig}
+\usepackage{color}
+\usepackage{algorithmic}
+\usepackage{multicol}
 
 \usetheme{Rochester}
 \useinnertheme{rounded}
@@ -41,7 +44,6 @@
   \includegraphics[width=\textwidth]{images/situering.eps}
   \end{center}
 }
-\subsection{Tekstgebaseerd zoeken van beelden}
 \frame
 {
   \frametitle{Tekstgebaseerd zoeken van beelden}
@@ -52,7 +54,6 @@
 
   Terminologie: Text-Based Image Retrieval (TBIR).
 }
-\subsection{Inhoudgebaseerd zoeken van beelden}
 \frame
 {
   \frametitle{Inhoudgebaseerd zoeken van beelden}
@@ -63,10 +64,22 @@
 
   Terminologie: Content-Based Image Retrieval (CBIR).
 }
-\subsection{Similariteitsgebaseerd rangschikken van de zoekresultaten}
 \frame
 {
   \frametitle{Similariteitsgebaseerd rangschikken van de zoekresultaten}
+  
+  Nadelen CBIR:
+  \begin{itemize}
+    \item Te complex voor zeer omvangrijke databanken.
+    \item Gebruiker beschikt niet altijd over een geschikt voorbeeld.
+  \end{itemize}
+
+  Alternatief:
+  \begin{center}
+  \includegraphics[width=\textwidth]{images/simgeb_rangschikken.eps}
+  \end{center}
+  Extra laag bovenop TBIR die ervoor zorgt dat de resultaten gerangschikt
+  worden volgens similariteit met een opgegeven verzameling van voorbeelden.
 }
 
 \section{Wiskundige fundamenten}
@@ -78,12 +91,12 @@
   \begin{enumerate}
   \item Beelden identificeren met \textbf{(L-)vaagverzamelingen}.
   \item Gebruik maken van \textbf{vaagsimilariteitsmaten} om de graduele 
-  gelijkenis tussen die vaagverzamelingen te bepalen.
+  gelijkenis tussen dergelijke vaagverzamelingen te bepalen.
   \end{enumerate}
   
-  \textbf{Aggregatieoperatoren} laten toe om
+  \textbf{Aggregatieoperatoren} laten (onder andere) toe om
   \begin{itemize}
-  \item verschillende similariteitsmaten te combineren
+  \item componentsgewijs te werken
   \item en meerdere voorbeelden te ondersteunen.
   \end{itemize}
   
@@ -96,13 +109,292 @@
 }
 
 \section{Enkele begrippen uit beeldverwerking}
-\subsection{Modellering van kleuren en beelden}
-\subsection{Kleurkwantisatie}
-\subsection{Lineaire filters}
-\subsection{Randdetectie}
+\frame
+{
+  \frametitle{Modellering van kleuren en beelden}
+
+  \begin{definitie}
+  Een tweedimensionaal \textbf{kleurbeeld} is een rooster dat bestaat uit een eindig aantal
+  beeldpunten, die elk een bepaalde kleur hebben. 
+  \end{definitie}
+  
+  Modellering:
+  \begin{itemize}
+    \item Een \textbf{kleurmodel} is een abstract mathematisch model dat beschrijft
+    hoe kleuren gerepresenteerd kunnen worden als $n$-tallen uit $\mathbb{R}^n$.
+    Voorbeelden: RGB, HSV en L*a*b*.
+    \item Als we de $n$-tallen uit het
+    kleurmodel normaliseren tot $n$-tallen uit $[0,1]^n$, dan kunnen we een
+    $m$-dimensionaal kleurbeeld modelleren als een $\mathbb{N}^n - [0,1]^n$
+    afbeelding $b$.
+    \item Voor een beeld $b$ van $M$ bij $N$ beeldpunten defini\"eren we de
+    $\mathbb{Z}^2 - [0,1]^n$ afbeelding $\mathring{b}$ als volgt:
+    \begin{displaymath}
+    \mathring{b}(x,y) = \begin{cases} 
+    b(x,y) & \text{als } 0 \le x < M \text{ en } 0 \le y < N \\
+    (0,0,\ldots,0) & \text{anders}
+    \end{cases}
+    \end{displaymath}
+  \end{itemize}
+}
+\frame
+{
+  \frametitle{Kleurkwantisatie}
+  
+  De kleuren die op basis van een bepaald model kunnen voorgesteld worden, vormen
+  een \textbf{kleurruimte}. Om de complexiteit te beperken is het vaak nodig om 
+  het aantal kleuren in een kleurruimte te reduceren.
+  
+  \begin{definitie}
+  Bij \textbf{kleurkwantisatie} wordt het aantal kleuren gereduceerd door 
+  de kleuren te groeperen in zogenaamde \textbf{bins} en vervolgens alle kleuren van 
+  een bin te vervangen door \'e\'en enkele kleur.
+  \end{definitie}
+  
+  Modellering:
+  \begin{itemize}
+    \item De $C - \{1,2,\ldots,N\}$ afbeelding $bin$ associeert met elke kleur $c$, 
+    uit een kleurruimte $C$, het nummer van de corresponderende bin.
+    \item Met behulp van de $\{1,2,\ldots,N\} - C$ afbeelding $col$ kan de kleur van 
+    elk van de $N$ bins bepaald worden.
+  \end{itemize}
+}
+\frame
+{
+  \frametitle{Uniforme kwantisatie}
+  
+  \begin{flushleft}
+  \begin{tabular}{@{}cc@{}}
+  \begin{minipage}{0.65\textwidth}
+  \begin{definitie}
+  Bij \textbf{uniforme kwantisatie} wordt elke kleurcomponent uniform verdeeld
+  in een aantal intervallen. De middelste waarden van de intervallen doen daarbij dienst
+  als componenten van de kleur van een bin.
+  \end{definitie}
+  \end{minipage} &
+  \begin{minipage}{0.3\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{images/flowers.eps}\\
+  origineel
+  \end{minipage}
+  \end{tabular}
+  \end{flushleft}
+  We beschouwen zes manieren om uniform te kwantiseren, waarbij we telkens een ander
+  kleurmodel gebruiken:
+  \begin{center}
+  \begin{tabular}{@{}c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{}}
+  \includegraphics[width=0.15\textwidth]{images/uniform_hsv_flowers.eps} &
+  \includegraphics[width=0.15\textwidth]{images/uniform_irb_flowers.eps} &
+  \includegraphics[width=0.15\textwidth]{images/uniform_i1i2i3_flowers.eps} &
+  \includegraphics[width=0.15\textwidth]{images/uniform_xyz_flowers.eps} &
+  \includegraphics[width=0.15\textwidth]{images/uniform_yxy_flowers.eps} &
+  \includegraphics[width=0.15\textwidth]{images/uniform_lab_flowers.eps} \\
+  HSV & Irb & I1I2I3 & XYZ & Yxy & L*a*b* \\
+  {\scriptsize $16 \cdot 4 \cdot 4$} & {\scriptsize $4 \cdot 8 \cdot 8$} & 
+  {\scriptsize $4 \cdot 8 \cdot 8$} & {\scriptsize $8 \cdot 4 \cdot 8$} &
+  {\scriptsize $4 \cdot 8 \cdot 8$} & {\scriptsize $4 \cdot 8 \cdot 8$}
+  \end{tabular}
+  \end{center}
+}
+\definecolor{zwart}{rgb}{0,0,0}
+\definecolor{blauw}{rgb}{0,0,1}
+\definecolor{groen}{rgb}{0,1,0}
+\definecolor{rood}{rgb}{1,0,0}
+\definecolor{bruin}{rgb}{0.5,0.16,0.16}
+\definecolor{oranje}{rgb}{1,0.5,0}
+\definecolor{geel}{rgb}{1,1,0}
+\definecolor{paars}{rgb}{0.62,0.125,0.94}
+\definecolor{grijs}{rgb}{0.75,0.75,0.75}
+\definecolor{roze}{rgb}{1,0.75,0.79}
+\definecolor{wit}{rgb}{1,1,1}
+\frame
+{
+  \frametitle{Niet-uniforme kwantisatie}
+  
+  We beschouwen ook vier niet-uniforme kwantisatietechnieken:
+  \begin{enumerate}
+    \item \textbf{Smooth Color Transition (SCT) kwantisatie}: combinatie van twee uniforme
+    kwantisaties, \'e\'en voor grijstinten en \'e\'en voor kleurtinten. Als 
+    $s > 1 - 0.8\cdot v$ dan wordt de kleur benaderd met een kleurtint en anders met een
+    grijstint.
+    \item Mapping naar elf \textbf{focale kleuren} ({\color{zwart}zwart}, 
+    {\color{blauw}blauw}, {\color{groen}groen}, {\color{rood}rood}, 
+    {\color{bruin}bruin}, {\color{oranje}oranje}, {\color{geel}geel}, 
+    {\color{paars}paars}, {\color{grijs}grijs}, {\color{roze}roze} en {\color{wit}wit}): 
+    elke kleur vervangen door de focale kleur die het meest
+    nabij licht in het perceptueel uniforme L*a*b*-model.
+    \item \textbf{Neural Image Quantization (NeuQuant)}, waarbij gebruik gemaakt wordt van een 
+    Kohonen neuraal netwerk.
+    \item \textbf{Wu kwantisatie}, die gebaseerd is op dynamisch programmeren en principal 
+    component analysis.
+  \end{enumerate}
+}
+\frame
+{
+  \frametitle{Niet-uniforme kwantisatie}
+  
+  \begin{center}
+  \begin{tabular}{@{}c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{}}
+  \includegraphics[width=0.15\textwidth]{images/sct_flowers.eps} &
+  \includegraphics[width=0.15\textwidth]{images/focal_flowers.eps} &
+  \includegraphics[width=0.15\textwidth]{images/neuquant_flowers.eps} &
+  \includegraphics[width=0.15\textwidth]{images/wu_flowers.eps} &
+  \includegraphics[width=0.15\textwidth]{images/neuquant_flowers_8.eps} &
+  \includegraphics[width=0.15\textwidth]{images/wu_flowers_8.eps} \\
+  SCT & focaal & NeuQuant & Wu & NeuQuant & Wu \\
+  {\scriptsize $256$} & {\scriptsize $256$} & 
+  {\scriptsize $256$} & {\scriptsize $256$} &
+  {\scriptsize $8$} & {\scriptsize $8$}
+  \end{tabular}
+  \end{center}
+  Observaties:
+  \begin{itemize}
+  \item Onverwachte mapping bij focale kwantisatie:
+  \begin{center}
+  \includegraphics[height=2cm]{images/probleem_focale_kwantisatie.eps}
+  \end{center}
+  \item Wu kwantisatie is duidelijk meer geschikt dan NueQuant voor kwantisatie naar 
+  een zeer klein aantal kleuren.
+  \end{itemize}
+}
+\frame
+{
+  \frametitle{Kleurkwantisatie: rekentijd}
+  
+  \begin{center}
+  \begin{minipage}[t]{0.45\textwidth}
+  \vspace{0pt}
+  \centering
+  \includegraphics[height=2.85cm]{plots/uniform_quant_small_filled.eps}
+  \end{minipage}
+  \begin{minipage}[t]{0.45\textwidth}
+  \vspace{0pt}
+  \centering
+  \includegraphics[height=3.1cm]{plots/neuquant_vs_wu_small_filled.eps}
+  \end{minipage}
+  \end{center}
+
+  Observaties:
+  \begin{itemize}
+    \item Uniforme kwantisatie (naar 256 kleuren) is vaak sneller dan niet-uniforme.
+    \item Wu kwantisatie is sneller dan NeuQuant, behalve voor een klein aantal kleuren.
+  \end{itemize}
+}
+\frame
+{
+  \frametitle{Lineaire filters}
+
+  \begin{definitie}
+  Het beeld $b'$ dat we bekomen na toepassing van een \textbf{lineair filter} op 
+  een beeld $b$, wordt gegeven door de volgende correlatie:
+  \begin{minipage}{\textwidth}
+  \vspace{5pt}
+  \centering
+  $b'(x,y) = \displaystyle \sum_{(k,l) \in \Omega_m} \mathring{b}(x+k,y+l) \cdot m(k,l)$
+  \end{minipage}
+  met $\mathring{b}$ de nuluitbreiding van $b$, $m$ een $\mathbb{Z}^2 - \mathbb{R}$ 
+  afbeelding en $\Omega_m = \{ (k,l) \in \mathbb{Z}^2 \mid m(k,l) \ne 0 \}$.
+  %De functie $m$ wordt het \textbf{filtermasker} genoemd.
+  \end{definitie}
+  Voorbeeld: het 3x3 \textbf{binomiaalfilter}.
+  Voor het \textbf{filtermasker} $m_{bin}$ van dat filter geldt:
+  \begin{itemize} 
+    \item {\scriptsize $m_{bin}(-1,-1)=m_{bin}(-1,1)=m_{bin}(1,-1)=m_{bin}(1,1)=1/16$} 
+    \item {\scriptsize $m_{bin}(-1,0)=m_{bin}(0,-1)=m_{bin}(1,0)=m_{bin}(0,1)=1/8$}
+    \item {\scriptsize $m_{bin}(0,0)=1/4$}
+    \item {\scriptsize $m_{bin}(k,l)=0$ voor de overige $(k,l)$ uit $\mathbb{Z}^2$}
+  \end{itemize}
+}
+\frame
+{
+  \frametitle{Lineaire filters: binomiaalfilter}
+  
+  Als we veronderstellen dat $m_{bin}(k,l)=0$ voor alle posities
+  $(k,l)$ die niet weergegeven worden, dan kunnen we $m_{bin}$ noteren als
+  een matrix:
+  \begin{displaymath}
+  \scriptsize
+  \begin{array}{@{}l@{}}
+  \left[ \begin{array}{ccc} m_{bin}(-1,-1) & m_{bin}(0,-1) & m_{bin}(1,-1)\\ m_{bin}(-1,0) & m_{bin}(0,0) & m_{bin}(1,0)\\ m_{bin}(-1,1) & m_{bin}(0,1) & m_{bin}(1,1) \end{array} \right] \vspace{5pt}\\
+  \quad = \frac{1}{16}\left[ \begin{array}{ccc} 1 & 2 & 1\\ 2 & 4 & 2\\ 1 & 2 & 1 \end{array} \right]
+  = \frac{1}{16}\left[ \begin{array}{c} 1\\ 2\\ 1 \end{array} \right] \cdot 
+  \left[ \begin{array}{ccc} 1 & 2 & 1 \end{array} \right]
+  \end{array}
+  \end{displaymath}
+
+  \begin{flushleft}
+  \begin{tabular}{@{}lr@{}}
+  \begin{minipage}{0.3\textwidth}
+  \begin{tabular}{@{}l@{}}
+  $\begin{array}{@{}c@{}}
+  1 \\
+  1\quad 1 \\	
+  \textbf{1}\quad \textbf{2}\quad \textbf{1} \\
+  1\quad 3\quad 3\quad 1 \\ 
+  1\quad 4\quad 6\quad 4\quad 1
+  \end{array}$ \vspace{5pt}\\
+  {\scriptsize driehoek van Pascal}
+  \end{tabular}
+  \end{minipage} &
+  \begin{minipage}{0.65\textwidth}
+  Meer algemeen kan het $N$x$N$ binomiaalfilter geschreven worden als de matrix $R^T \cdot R$,
+  waarbij: 
+  \begin{displaymath}
+  R=2^{-N+1} \cdot \left[ \begin{array}{cccc} \binom{N-1}{0} & \binom{N-1}{1} & 
+  \ldots & \binom{N-1}{N-1} \end{array} \right]
+  \end{displaymath}
+  \end{minipage}
+  \end{tabular}
+  \end{flushleft}
+}
+\frame
+{
+  \frametitle{Eenvoudige randdetectie}
+  
+  In een tweedimensionaal beeld $b$ zijn randen plaatsen waar de luminantiecomponent
+  $lum(x,y)$ van $b(x,y)$ sterk varieert als funtie van $x$ en/of $y$. Bijgevolg
+  kunnen we een formule op basis van de \textbf{gradi\"ent} gebruiken om randen te 
+  detecteren in $b$:
+  \begin{displaymath}
+  |\nabla lum(x,y)| / \sqrt{2} = \sqrt{(D_1 lum(x,y))^2 + (D_2 lum(x,y))^2} / \sqrt{2}
+  \end{displaymath}
+  Discrete benadering van partieel afgeleiden van $lum$:
+  \begin{displaymath}
+  \begin{array}{c}
+  D_1 lum(x,y) \approx \frac{lum(x+1,y) - lum(x-1,y)}{2}\vspace{4pt}\\
+  D_2 lum(x,y) \approx \frac{lum(x,y+1) - lum(x,y-1)}{2}
+  \end{array}
+  \end{displaymath}
+  Met lineaire filters:
+  \begin{displaymath}
+  \scriptsize
+  D_1 lum(x,y)\text{: } \frac{1}{2} \left[ \begin{array}{@{\ }ccc@{\ }} -1 & 0 & 1 \end{array} \right] \text{, } 
+  D_2 lum(x,y)\text{: } \frac{1}{2} \left[ \begin{array}{@{\ }c@{\ }} -1 \\ 0 \\ 1 \end{array} \right]
+  \end{displaymath}
+}
+\frame
+{
+  \frametitle{Eenvoudige randdetectie}
+  
+  \textbf{Sobel-operator}: variant op gradi\"entmethode met extra ruisonderdrukking
+  door binomiaalfilter loodrecht op de richting van de parti\"ele afleiding:
+  \begin{displaymath}
+  \scriptsize
+  D_1 lum(x,y)\text{: } \frac{1}{8} \left[ \begin{array}{@{\ }c@{\ }} 1 \\ 2 \\ 1 \end{array} \right] \cdot \left[ \begin{array}{@{\ }ccc@{\ }} -1 & 0 & 1 \end{array} \right] \text{, } 
+  D_2 lum(x,y)\text{: } \frac{1}{8} \left[ \begin{array}{@{\ }c@{\ }} -1 \\ 0 \\ 1 \end{array} \right] \cdot \left[ \begin{array}{@{\ }ccc@{\ }} 1 & 2 & 1 \end{array} \right]
+  \end{displaymath}
+  Geen spectaculair verschillende resultaten:
+  \begin{center}
+  \begin{tabular}{@{}c@{\ }c@{\ }c@{}}
+  \includegraphics[width=0.3\textwidth]{images/lena_met_ruis.eps} &
+  \includegraphics[width=0.3\textwidth]{images/edges_lena_met_ruis.eps} &
+  \includegraphics[width=0.3\textwidth]{images/edges_sobel_lena_met_ruis.eps}\\
+  {\scriptsize ruizig luminantiebeeld} & {\scriptsize gradi\"ent} & {\scriptsize Sobel}
+  \end{tabular}
+  \end{center}
+}
 
 \section{Similariteitsmaten voor beelden}
-\subsection{Definitie en eigenschappen}
 \frame
 {
   \frametitle{Definitie en eigenschappen}
@@ -117,15 +409,45 @@
   \begin{itemize}
   \item Reflexief: $M(A,A)=1$
   \item Symmetrisch: $M(A,B)=M(B,A)$
-  \item Niet (noodzakelijk) transitief!
+  \item Geen (vorm van) transitiviteit, want dat zou bijvoorbeeld impliceren dat 
+  het eerste en het laatste beeld van
+  \begin{center}
+  \vspace{5pt}
+  \includegraphics[width=1cm]{images/video_trans_1.eps}\ 
+  \includegraphics[width=1cm]{images/video_trans_2.eps}\ 
+  \includegraphics[width=1cm]{images/video_trans_3.eps}\ 
+  \includegraphics[width=1cm]{images/video_trans_4.eps}\ 
+  \includegraphics[width=1cm]{images/video_trans_5.eps}\
+  \includegraphics[width=1cm]{images/video_trans_6.eps}\ 
+  \ldots\ 
+  \includegraphics[width=1cm]{images/video_trans_10.eps}\ 
+  \includegraphics[width=1cm]{images/video_trans_11.eps}
+  \end{center}
+  zeer similair zijn, wat niet overeenkomt met onze intu\"itie.
   \end{itemize}
+}
+\frame
+{
+  \frametitle{Constructie}
+  
+  We kunnen een similariteitsmaat voor beelden construeren door:
+  \begin{enumerate}
+    \item elk mogelijk beeld, al dan niet rechtstreeks, te identificeren
+    met een (L-)vaagverzameling.
+    \item gebruik te maken van vaagsimilariteitsmaten om die (L-)vaagverzamelingen
+    te vergelijken.
+  \end{enumerate}
   
   \begin{opmerking}
-  In het vervolg bedoelen we met ``similariteitsmaat'' steeds een similariteitsmaat
-  voor beelden (en niet een vaagsimilariteitsmaat).
+  In het vervolg bedoelen we met ``similariteitsmaat'' steeds
+  de combinatie van een vaagsimilariteitsmaat met een manier om beelden te 
+  identificeren met vaagverzamelingen. Dus: 
+  \begin{itemize}
+    \item ``similariteitsmaat'' $\neq$ een vaagsimilariteitsmaat op zich
+    \item ``similariteitsmaat'' $=$ een similariteitsmaat voor beelden op basis van een vaagsimilariteitsmaat
+  \end{itemize}
   \end{opmerking}
 }
-\subsection{Evaluatie van performantie}
 \frame
 {
   \frametitle{Evaluatie van performantie: testcollectie}
@@ -224,8 +546,8 @@
 {
   \frametitle{Evaluatie van performantie: GGR}
 
-  We gebruiken een similariteitsmaat om de testcollectie te rangschikken volgens
-  similariteit met een voorbeeld. Beschouw nu de vector 
+  We gebruiken de te evalueren similariteitsmaat om de testcollectie te rangschikken 
+  volgens similariteit met een voorbeeld. Beschouw nu de vector 
   $(r_1,r_2,\ldots,r_{N_R}) \in \{1,2,\ldots,N\}^{N_R}$, 
   waarbij $r_i$ het rangnummer van het $i$-de relevante beeld voorstelt.
 
@@ -234,7 +556,7 @@
   De \textbf{genormaliseerde gemiddelde rang} (GGR) wordt gegeven door de volgende afbeelding:
   $$
   \small\begin{array}{lrcl}
-  \textrm{GGR}: & \{1,2,\ldots,N\}^{N_R} & \to 	& [0,1] \\
+  \text{GGR}: & \{1,2,\ldots,N\}^{N_R} & \to 	& [0,1] \\
 		& (r_1,r_2,\ldots,r_{N_R}) & \mapsto &
 	{\displaystyle\frac{1}{N \cdot N_R}\left[ \left(\sum_{i=1}^{N_R}r_i\right) - \frac{N_R \cdot (N_R + 1)}{2} \right]},\\[15pt]
 	& & & \qquad \quad \forall (r_1, r_2, ..., r_{N_R}) \in \{1,2,\ldots,N\}^{N_R}
@@ -248,39 +570,288 @@
 {
   \frametitle{Evaluatie van performantie: GGGR}
 
-  Als het zoeken naar \includegraphics[width=0.6cm]{coil/beeld-12.eps} de volgende rangschikking geeft:
-  dan
-
-  \begin{itemize}
-  \item We berekenen de GGR voor meerdere voorbeelden en beschouwen het 
-  gemiddelde van de bekomen waarden. 
-  \item De waarde die we zo bekomen noemen we de
+  \begin{description}
+  \item[Probleem:] De GGR kan een verkeerd beeld geven omdat de performantie afhankelijk
+  kan zijn van het gekozen voorbeeld. 
+  \item[Oplossing:]
+  We berekenen de GGR voor
+  \begin{center}
+  \vspace{5pt}
+  \includegraphics[width=0.8cm]{coil/beeld-0.eps}, 
+  \includegraphics[width=0.8cm]{coil/beeld-42.eps}, 
+  \includegraphics[width=0.8cm]{coil/beeld-12.eps}, 
+  \includegraphics[width=0.8cm]{coil/beeld-18.eps}, 
+  \includegraphics[width=0.8cm]{coil/beeld-24.eps}, 
+  \includegraphics[width=0.8cm]{coil/beeld-54.eps},\\
+  \vspace{5pt}
+  \includegraphics[width=0.8cm]{coil/beeld-30.eps}, 
+  \includegraphics[width=0.8cm]{coil/beeld-36.eps}, 
+  \includegraphics[width=0.8cm]{coil/beeld-6.eps}, 
+  \includegraphics[width=0.8cm]{coil/beeld-48.eps}\ en  
+  \includegraphics[width=0.8cm]{coil/beeld-60.eps}, 
+  \end{center}
+  en we beschouwen het gemiddelde van de bekomen waarden. 
+  De waarde die we zo bekomen noemen we de
   \textbf{globale genormaliseerde gemiddelde rang} (GGGR).
-  \item 
-  \end{itemize}
+  \end{description}
 }
-\subsection{Optimalisatie van performantie}
 \frame
 {
-  \frametitle{Optimalisatie van performantie}
+  \frametitle{Evaluatie van performantie: rekentijd}
   
+  We meten ook hoe lang het duurt om de rangschikkingen, die nodig zijn om 
+  de GGGR te bepalen, te berekenen. Voor onze praktische implementatie
+  is de rekentijd echter minder belangrijk dan de GGGR, want:
+  \begin{itemize}
+    \item De collecties van beelden waarop de similariteitsmaten toegepast worden,
+    zijn beperkt in grootte.
+    \item Het uivoeren van de berekeningen gebeurd aan de kant van de client, 
+    waardoor er geen gevaar is voor overbelasting van de server.
+  \end{itemize}
+  Bij echte CBIR:
+  \begin{itemize}
+    \item is de rekentijd wel cruciaal,
+    \item maar het is wel mogelijk om berekeningen op voorhand te doen en de resultaten
+    ervan samen met de beelden op te slaan in de databank.
+  \end{itemize}
+}
+\frame
+{
+  \frametitle{Beperken rekentijd}
+  
+  Stel dat $A$ en $B$ twee (L-)vaagverzamelingen zijn in een zelfde universum $X$. 
+  Als $X'= supp\ A \cup supp\ B$ veel minder elementen bevat dan $X$, dan kunnen we 
+  de rekentijd sterk reduceren door het bereik van de sommaties in de 
+  vaagsimilariteitsmaten te beperken tot $X'$. Wanneer we $||C|| = \sum_{x \in X'} C(x)$
+  defini\"eren voor elke $C \in \mathcal{F}_L(X)$, dan vinden we bijvoorbeeld:
+  \begin{align*}
+  \scriptstyle M_{7c}(A,B) 
+  & \scriptstyle\ = \displaystyle \frac{\scriptstyle |A^c \cap B^c|}{\scriptstyle \max \{|A^c|,|B^c|\}} & & {\scriptsize \scriptstyle \text{definitie } M_{7c}} \\
+  & \scriptstyle\ = \displaystyle \frac{\scriptstyle |X|-|A \cup B|}{\scriptstyle \max \{|X|-|A|,|X|-|B|\}} & & {\scriptsize \scriptstyle (\forall C \in \mathcal{F}_L(X))(|C^c|=|X|-|C|)} \\ 
+  & \scriptstyle\ = \displaystyle \frac{\scriptstyle |X|-||A \cup B||}{\scriptstyle \max \{|X|-||A||,|X|-||B||\}} & & {\scriptsize \scriptstyle |A \cup B|=||A \cup B|| \text{, } |A|=||A|| \text{ en } |B|=||B||} \\
+  & \scriptstyle\ = \displaystyle \frac{\scriptstyle |X|-||A \cup B||}{\scriptstyle |X| - \min \{||A||,||B||\}} & & {\scriptsize \scriptstyle (\forall (a,b,c) \in \mathbb{R}^3)(\max\{c-a,c-b\}=c-\min\{a,b\})}
+  \end{align*}
+}
+\frame
+{
+  \frametitle{Beperken rekentijd}
+
+  \begin{minipage}{\textwidth}
+  \centering
+  \scriptsize
+  \begin{tabular}{@{}ccc@{}}
+  $M_{7}(A,B) = \displaystyle \frac{|A \cap B|}{\max \{|A|,|B|\}}$ & $\displaystyle\to$ &
+  $M_{7}(A,B) = \displaystyle \frac{||A \cap B||}{\max \{||A||,||B||\}}$ \vspace{5pt}\\
+  \begin{tabular}{r}
+  $|X|+1$ vergelijkingen\\
+  $3\cdot (|X|-1)$ optellingen\\
+  $1$ deling\\
+  \hline
+  $4\cdot |X| - 1$
+  \end{tabular} & &
+  \begin{tabular}{r}
+  $|X'|+1$ vergelijkingen\\ 
+  $3\cdot (|X'|-1)$ optellingen\\
+  $1$ deling\\
+  \hline
+  $4\cdot |X'| - 1$
+  \end{tabular} 
+  \end{tabular}
+  \vspace{4pt}
+  \end{minipage}
+  Als $|X'| \ll |X|$ dan is de herschreven vorm inderdaad een stuk sneller.
+  
+  \begin{minipage}{\textwidth}
+  \vspace{4pt}
+  \centering
+  \scriptsize
+  \begin{tabular}{@{}ccc@{}}
+  $M_{7c}(A,B) = \displaystyle \frac{|A^c \cap B^c|}{\max \{|A^c|,|B^c|\}}$ & $\displaystyle\to$ &
+  $M_{7c}(A,B) = \displaystyle \frac{|X|-||A \cup B||}{|X| - \min \{||A||,||B||\}}$ \vspace{5pt}\\
+  \begin{tabular}{r}
+  $|X|+1$ vergelijkingen\\
+  $3\cdot (|X|-1)$ optellingen\\
+  $1$ deling\\
+  $2\cdot |X|$ aftrekkingen\\
+  \hline
+  $6\cdot |X| - 1$
+  \end{tabular} & &
+  \begin{tabular}{r}
+  $|X'|+1$ vergelijkingen\\
+  $3\cdot (|X'|-1)$ optellingen\\
+  $1$ deling\\
+  $2$ aftrekkingen\\
+  \hline
+  $4\cdot |X'| + 1$
+  \end{tabular}
+  \end{tabular} 
+  \vspace{4pt}
+  \end{minipage} 
+  Zelfs voor $|X'|=|X|$ zal $4\cdot |X'| + 1$ doorgaans kleiner zijn dan
+  $6\cdot |X| - 1$. Als $|X'| \ll |X|$ dan wordt het verschil in rekentijd uiteraard
+  nog significanter.
 }
 
 \section{Pixelgebaseerde similariteitsmaten}
 \frame
 {
-  \frametitle{Pixelgebaseerde similariteitsmaten}
+  \frametitle{Pixelgebaseerde similariteitsmaten voor grijswaardebeelden}
+%   \begin{definitie}
+%   Een tweedimentionaal \textbf{binair beeld} is een eindig rooster dat enkel 
+%   witte en zwarte beeldpunten bevat.
+%   \end{definitie}
+%   Representatie: scherpe verzameling $A$ in $\mathbb{N}^2$ met:
+%   \begin{displaymath}
+%   \begin{array}{rcl}
+%   p \in A & \iff & p \text{ is een wit punt in het beeld} \\
+%   p \notin A & \iff & p \text{ is een zwart punt in het beeld}
+%   \end{array}
+%   \end{displaymath}
+  \begin{definitie}
+  Een tweedimensionaal \textbf{grijswaardebeeld} is een eindig rooster dat
+  naast wit en zwart ook grijstinten kan bevatten.
+  \end{definitie}
+  Representatie: een vaagverzameling $A$ in $\mathbb{N}^2$ bepaald door:
+  \begin{displaymath}
+  \begin{array}{rcl}
+  A(p) = 1 & \iff & p \text{ is een wit punt in het beeld} \\
+  A(p) = 0 & \iff & p \text{ is een zwart punt in het beeld} \\
+  A(p) \in\ ]0,1[ & \iff & p \text{ is een beeldpunt met een grijstint}
+  \end{array}
+  \end{displaymath}
+  Daarbij geldt: hoe groter de grijswaarde, hoe lichter de grijstint.
+  
+  \begin{flushleft}
+  Door de bovenstaande representatie te combineren met een vaagsimilariteitsmaat,
+  bekomen we een similariteitsmaat voor grijswaardebeelden. Omdat het universum
+  daarbij bestaat uit beeldpunten (pixels), spreken we van
+  \textbf{pixelgebaseerde} similariteitsmaten.
+  \end{flushleft}
+}
+\frame
+{
+  \frametitle{Pixelgebaseerde similariteitsmaten voor kleurbeelden}
+  
+  \begin{description}
+     \item[Probleem:] De meeste beelden op internet zijn 
+     geen grijswaardebeelden maar (tweedimensionale) kleurbeelden.
+     \item[Oplossing:] We beschouwen drie mogelijke oplossingen:
+     \begin{enumerate}
+       \item Beelden eerst omzetten naar grijswaardebeelden, bijvoorbeeld aan de 
+       hand van de formule $0.3 \cdot r + 0.59 \cdot g + 0.11 \cdot b$.
+       \item Een similariteitsmaat voor grijswaardebeelden toepassen op elke
+       kleurcomponent en vervolgens de resultaten voor de verschillende componenten
+       aggregeren tot \'e\'en getal.
+       \item Een traliegebaseerde representatie voor kleurbeelden defini\"eren (zie
+       volgende slide).
+     \end{enumerate}
+   \end{description}
+}
+\frame
+{
+  \frametitle{Pixelgebaseerde similariteitsmaten voor kleurbeelden}
 
-  Pixelgebaseerd: de pixels (spatiale lokaties) vormen het universum.
+  Traliegebaseerde aanpak: in het geval van het RGB-model kunnen kleurbeelden 
+  gerepresenteerd worden door een L-vaagverzameling in $\mathbb{N}^2$,
+  waarbij we de complete tralie $([0,1]^3, \le_{RGB,lex})$ gebruiken:
+  \begin{align*}
+  \scriptstyle c <_{RGB} c' & \scriptstyle\ \iff d(c,Bl) < d(c',Bl)\ \lor \\
+			 & \scriptstyle\ \qquad (d(c,Bl) = d(c',Bl) \land d(c,Wh) > d(c',Wh)) \\
+  \scriptstyle c >_{RGB} c' & \scriptstyle\ \iff d(c,Wh) < d(c',Wh)\ \lor \\
+			 & \scriptstyle\ \qquad(d(c,Wh) = d(c',Wh) \land d(c,Bl) > d(c',Bl)) \\
+  \scriptstyle c =_{RGB} c' & \scriptstyle\ \iff (d(c,Bl) = d(c',Bl) \land d(c,Wh) = d(c',Wh)) \\
+  \scriptstyle c \leq_{lex} c' & \scriptstyle\ \iff r < r' \lor (r = r' \land g < g') \lor (r = r' \land g = g' \land b \leq b') \\
+  \scriptstyle c \leq_{RGB,lex} c' & \scriptstyle\ \iff c <_{RGB} c' \lor (c =_{RGB} c' \land c \leq_{lex} c')
+  \end{align*}
+  met $Bl = (0,0,0)$, $Wh = (1,1,1)$ en $d$ de Euclidische afstand.
+}
+\frame
+{
+  \frametitle{Resolutie-onafhankelijke similariteitsmaten}
+  
+  \begin{definitie}
+  Het aantal pixels in een beeld wordt de \textbf{resolutie} van dat beeld genoemd.
+  \end{definitie}
+  \begin{description}
+	\item[Probleem:] De similariteitsmaten die we tot nu toe beschouwd hebben, kunnen
+	enkel toegepast worden op beelden die dezelfde resolutie hebben.
+	\item[Oplossing:] Constructie van resolutie-onafhankelijke 
+	pixelgebaseerde similariteitsmaten door
+	\begin{itemize}
+      \item \textbf{intermediaire beelden} of 
+      \item \textbf{beeldonderdelen} 
+    \end{itemize}
+    te beschouwen.
+  \end{description}
+}
+\frame
+{
+  \frametitle{Resolutie-onafhankelijke similariteitsmaten: intermediaire beelden}
 
   \begin{center}
-  \begin{tabular}{l@{$\qquad \qquad$}r}
-  \includegraphics[height=0.3\textheight]{images/rescale.eps} & 
-  \includegraphics[height=0.3\textheight]{images/dominant_colors.eps} \\
-  \\
-  \multicolumn{2}{c}{\includegraphics[height=0.3\textheight]{images/multires2.eps}}
+  \begin{tabular}{@{}lc@{}}
+  \begin{minipage}{0.6\textwidth}
+  De beelden \textbf{herschalen} zodanig dat we twee beelden met dezelfde resolutie bekomen. 
+  \end{minipage} & 
+  \begin{minipage}{0.4\textwidth}
+  \includegraphics[height=0.25\textheight]{images/rescale.eps}
+  \end{minipage}\vspace{5pt}\\
+  \begin{minipage}{0.6\textwidth}
+  Eerst \textbf{kleurkwantisatie} met een variabel kleurenpalet toepassen en vervolgens een
+  nieuw beeld construeren op basis van de kleuren van het bekomen palet.
+  \end{minipage} &
+  \begin{minipage}{0.4\textwidth}
+  \includegraphics[height=0.25\textheight]{images/dominant_colors.eps}
+  \end{minipage}\vspace{5pt}\\
+  \begin{minipage}{0.6\textwidth}
+  \textbf{Kleurmomenten} (gemiddelde, variantie en scheefheid) gebruiken om nieuwe 
+  intermediaire beelden te construeren.
+  \end{minipage} &
+  \begin{minipage}{0.4\textwidth}
+  \includegraphics[height=0.25\textheight]{images/moments.eps}
+  \end{minipage}
   \end{tabular}
   \end{center}
+}
+\frame
+{
+  \frametitle{Resolutie-onafhankelijke similariteitsmaten: beeldonderdelen}
+  
+  \begin{minipage}{\textwidth}
+  \centering
+  \includegraphics[width=0.65\textwidth]{images/multires.eps}\qquad
+  \includegraphics[width=0.25\textwidth]{images/multires_sim-matrix_beide.eps}
+  \vspace{4pt}
+  \end{minipage}
+  Ruwe schets van werking:
+  \begin{enumerate}
+    \item Beelden partitioneren in beeldonderdelen met dezelfde resolutie.
+    \item De beeldonderdelen (van groot naar klein) ordenen op basis van
+    hun gemiddelde kleur, met behulp van $\le_{RGB,lex}$.
+    \item Gebruik maken van de ordening om grote similariteiten te vinden.
+    \item Het gemiddelde van de grote similariteiten bepalen.
+  \end{enumerate}
+}
+\frame
+{
+  \frametitle{Experimentele observaties: intermediaire beelden}
+  
+  %De GGGR-waarde en de rekentijd in ms voor elk van de similariteitsmaten op basis 
+  %van herschaalde beelden:
+  \begin{center}
+  \begin{tabular}{@{}c@{}c@{}}
+  \includegraphics[width=0.49\textwidth]{plots/scaling_gggrs_en_cputimes_filled.eps} &
+  \includegraphics[width=0.49\textwidth]{plots/moments_gggrs_en_cputimes_filled.eps}\\
+  {\scriptsize herschaling} & {\scriptsize kleurmomenten} \vspace{10pt}\\
+  \includegraphics[width=0.49\textwidth]{plots/dom_colors_neuquant_gggrs_en_cputimes_filled.eps} &
+  \includegraphics[width=0.49\textwidth]{plots/dom_colors_wu_gggrs_en_cputimes_filled.eps}\\
+  {\scriptsize NeuQuant} & {\scriptsize Wu}
+  \end{tabular}
+  \end{center}
+}
+\frame
+{
+
 }
 
 \section{Kleurgebaseerde similariteitsmaten}
@@ -296,5 +867,7 @@
 }
 
 \section{Implementatie}
+
+\section{Slotbeschouwingen}
 
 \end{document}

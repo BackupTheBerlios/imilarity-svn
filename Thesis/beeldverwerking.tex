@@ -542,17 +542,18 @@ de volgende correlatie \cite{philips:beeldverwerking}:
 \begin{displaymath}
 b'(x,y) = \sum_{(k,l) \in \Omega_m} \mathring{b}(x+k,y+l) \cdot m(k,l)
 \end{displaymath}
-met $\mathring{b}$ de nuluitbreiding van $b$, $m$ een $\mathbb{N}^2 - \mathbb{R}$ afbeelding 
-en $\Omega_m = \{ (k,l) \in \mathbb{N}^2 \mid m(k,l) \ne 0 \}$. 
+met $\mathring{b}$ de nuluitbreiding van $b$, $m$ een $\mathbb{Z}^2 - \mathbb{R}$ afbeelding 
+en $\Omega_m = \{ (k,l) \in \mathbb{Z}^2 \mid m(k,l) \ne 0 \}$. 
 De functie $m$ wordt het \defin{filtermasker} genoemd.
 
 Het \definas{binomiaalfilter}{3x3 binomiaalfilter} is een voorbeeld van een lineair filter. Voor het filtermasker 
 $m_{bin}$ van dat filter geldt $m_{bin}(-1,-1)=m_{bin}(-1,1)=m_{bin}(1,-1)=m_{bin}(1,1)=1/16$, 
 $m_{bin}(-1,0)=m_{bin}(0,-1)=m_{bin}(1,0)=m_{bin}(0,1)=1/8$, $m_{bin}(0,0)=1/4$ en 
-$m_{bin}(k,l)=0$ voor de overige $(k,l)$. Als we veronderstellen dat $m_{bin}(k,l)=0$ voor de 
+$m_{bin}(k,l)=0$ voor de overige $(k,l)$ uit $\mathbb{Z}^2$. Als we veronderstellen dat $m_{bin}(k,l)=0$ voor de 
 posities $(k,l)$ die niet weergegeven worden, dan kunnen we dat masker noteren als een matrix:
 \begin{displaymath}
-\frac{1}{16}\left[ \begin{array}{ccc} 1 & 2 & 1\\ 2 & 4 & 2\\ 1 & 2 & 1 \end{array} \right]
+\left[ \begin{array}{ccc} m_{bin}(-1,-1) & m_{bin}(0,-1) & m_{bin}(1,-1)\\ m_{bin}(-1,0) & m_{bin}(0,0) & m_{bin}(1,0)\\ m_{bin}(-1,1) & m_{bin}(0,1) & m_{bin}(1,1) \end{array} \right]
+= \frac{1}{16}\left[ \begin{array}{ccc} 1 & 2 & 1\\ 2 & 4 & 2\\ 1 & 2 & 1 \end{array} \right]
 = \frac{1}{16}\left[ \begin{array}{c} 1\\ 2\\ 1 \end{array} \right] \cdot 
 \left[ \begin{array}{ccc} 1 & 2 & 1 \end{array} \right]
 \end{displaymath}
@@ -612,7 +613,9 @@ kunnen de eerste en tweede partieel afgeleiden dus berekenen met behulp van line
 D_1 lum(x,y)\textrm{: }\quad \frac{1}{2} \left[ \begin{array}{ccc} -1 & 0 & 1 \end{array} \right] \qquad \textrm{ en } 
 \qquad D_2 lum(x,y)\textrm{: }\quad \frac{1}{2} \left[ \begin{array}{c} -1 \\ 0 \\ 1 \end{array} \right]
 \end{displaymath}
-De \defin{Sobel-operator} is een variant hierop die minder ruisgevoelig is doordat er 
+
+De \defin{Sobel-operator} is een variant op de gradi\"entmethode die minder ruisgevoelig 
+is doordat er 
 extra ruisonderdrukking voorzien wordt via een binomiaalfilter loodrecht op de richting 
 van de parti\"ele afleiding:
 \begin{displaymath}

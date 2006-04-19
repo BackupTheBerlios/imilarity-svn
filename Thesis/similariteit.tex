@@ -13,9 +13,10 @@ de vaagsimilariteitsmaten uit \ref{sectie:vaagsimilariteitsmaten} om die
 (L-)vaagverzamelingen te vergelijken. 
 
 Met de term ``similariteitsmaat'' bedoelen we in het vervolg van dit eindwerk steeds
-een similariteitsmaat voor beelden. We gebruiken die term dus niet voor een vaagsimilariteitsmaat
-op zich, maar wel voor de combinatie van een dergelijke vaagsimilariteitsmaat met een manier om beelden te 
-identificeren met (L-)vaagverzamelingen.
+de combinatie van een vaagsimilariteitsmaat met een manier om beelden te 
+identificeren met vaagverzamelingen. We gebruiken die term dus niet voor een 
+vaagsimilariteitsmaat op zich, maar wel voor een similariteitsmaat voor beelden
+op basis van een dergelijke vaagsimilariteitsmaat.
 
 \section{Eigenschappen}
 
@@ -226,7 +227,7 @@ ervan uiteraard geen kwaad. Door toch voldoende aandacht te schenken aan de reke
 we er zelfs voor zorgen dat similariteitsmaten waarvoor we zonder extra inspanning veel te lang zouden 
 moeten rekenen, toch nog bruikbaar zijn.
 
-Stel dat $A$ en $B$ twee vaagverzamelingen zijn in een zelfde universum $X$. Het kan dan voorkomen dat 
+Stel dat $A$ en $B$ twee (L-)vaagverzamelingen zijn in een zelfde universum $X$. Het kan dan voorkomen dat 
 $X'= supp\ A \cup supp\ B$ veel minder elementen bevat dan $X$. In dat geval kunnen we de rekentijd sterk
 reduceren door het bereik van de sommaties in de vaagsimilariteitsmaten te beperken tot $X'$. Doordat
 $A(x)=B(x)=0$ voor alle $x \in X \setminus X'$ geldt er dan immers zowel
@@ -237,16 +238,16 @@ $A(x)=B(x)=0$ voor alle $x \in X \setminus X'$ geldt er dan immers zowel
 &= \displaystyle \sum_{x \in X'} | A(x) - B(x) |
 \end{align*}
 als $|A| = \sum_{x \in X} A(x) = \sum_{x \in X \setminus X'} 0 + \sum_{x \in X'} A(x) 
-= \sum_{x \in X'} A(x)$.
+= \sum_{x \in X'} A(x)$ en $|B| = \sum_{x \in X'} B(x)$.
 % \begin{displaymath}
 % |A| = \sum_{x \in X} A(x) = \sum_{x \in X \setminus X'} A(x) + \sum_{x \in X'} A(x) 
 % = \sum_{x \in X \setminus X'} 0 + \sum_{x \in X'} A(x) = \sum_{x \in X'} A(x)
 % \end{displaymath}
-Wanneer we 
+Wanneer we voor elke $C$ uit $\mathcal{F}_L(X)$
 \begin{displaymath}
-||A|| = \sum_{x \in X'} A(x)
+||C|| = \sum_{x \in X'} C(x)
 \end{displaymath} 
-defini\"eren, dan geldt dus $|A| = ||A||$ en ook:
+defini\"eren, dan geldt dus $|A| = ||A||$, $|B|=||B||$ en ook:
 \begin{align*}
 | A \cap B | 
 &= \displaystyle \sum_{x \in X} T_M(A(x),B(x)) & & \\
@@ -281,9 +282,9 @@ $|(A \cap B) \cap (A^c \cap B^c)| = ||(A \cap B) \cap (A^c \cap B^c)||$ en
 $|(A \cup B) \cap (A^c \cup B^c)| = ||(A \cup B) \cap (A^c \cup B^c)||$.
 Met behulp van de eigenschap
 \begin{displaymath}
-|A^c| = \sum_{x \in X} (1 - A(x)) = \sum_{x \in X} 1 - \sum_{x \in X} A(x) = |X| - |A|
+|C^c| = \sum_{x \in X} (1 - C(x)) = \sum_{x \in X} 1 - \sum_{x \in X} C(x) = |X| - |C|
 \end{displaymath}
-vinden we bovendien:
+voor alle $C \in \mathcal{F}_L(X)$, vinden we bovendien:
 \begin{displaymath}
 \begin{array}{l@{\ =\ }l@{\ =\ }l@{\ =\ }l}
 |A^c \cap B^c| & |(A \cup B)^c| & |X| - |A \cup B| & |X| - ||A \cup B|| \\[4pt]

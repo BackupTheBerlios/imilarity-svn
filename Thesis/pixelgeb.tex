@@ -237,15 +237,16 @@ vergelijken. We verdelen
 die beelden eerst in partities, die respectievelijk bestaan uit
 $m$ en $n$ beeldonderdelen. Daarbij zorgen we ervoor dat de onderdelen
 van die beide partities allemaal dezelfde resolutie hebben. We kunnen die onderdelen bijgevolg 
-opvatten als kleine beelden, waarvan de onderlinge similariteit kan nagegaan worden met behulp van de reeds 
-geziene pixelgebaseerde similariteitsmaten.
+opvatten als kleine beelden, waarvan de onderlinge similariteit kan nagegaan worden met behulp 
+van de pixelgebaseerde similariteitsmaten die we in \ref{sectie:kleurbeelden_similariteitsmaten}
+besproken hebben.
 Vervolgens bepalen we de gemiddelde kleur van elk beeldonderdeel. Die kleur gebruiken we om
 de collecties van beeldonderdelen voor te stellen als twee geordende lijsten, waarbij de 
 helderheid van de geassocieerde kleur afneemt naarmate de lijsten verder doorlopen worden.
 Dat doen we met behulp van de ordening $\leq_{RGB,lex}$. 
 De elementen van de lijst die correspondeert met $A$ noemen 
 we $A_i$, $i \in \{1,2,\ldots,m\}$, en die van de andere lijst $B_j$, $j \in \{1,2,\ldots,n\}$.
-Figuur~\ref{fig:multires} illustreert de constructie van deze lijsten voor twee concrete
+Figuur~\ref{fig:multires} illustreert de constructie van die lijsten voor twee concrete
 kleurbeelden. In die figuur is de kleur van een beeldonderdeel gelijk aan de gemiddelde 
 kleur van dat onderdeel.
 
@@ -262,7 +263,7 @@ $B_m$ komen. Als we de procedure $j$ keer kunnen herhalen, dan
 is de similariteit tussen $A_j$ en $B_m$ dus de laatste die we berekenen. Die similariteit
 voegen we ook nog toe aan $S$. Tenslotte bepalen we de globale similarteit tussen $A$ en $B$ 
 door het gemiddelde van de waarden uit $S$ te berekenen. De waarde $M(A,B)$ van een 
-resolutie-onafhankelijke similariteitsmaat $M$, op basis van een 
+similariteitsmaat $M$ op basis van beeldonderdelen, die gebruik maakt van een 
 pixelgebaseerde maat $M'$, wordt dus als volgt bepaald uit de geordende lijsten van
 beeldonderdelen:
 \begin{multicols}{2}

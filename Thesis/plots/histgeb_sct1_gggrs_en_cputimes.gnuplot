@@ -35,8 +35,8 @@ set label 18 "M_{11}" at 17.5, graph -0.05, 0 centre norotate
 set label 19 "M_{11c}" at 18.5, graph -0.05, 0 centre norotate
 set label 20 "M_{12}" at 19.5, graph -0.05, 0 centre norotate
 set label 21 "M_{13}" at 20.5, graph -0.05, 0 centre norotate
-set label 22 "M_{I3}" at 21.5, graph -0.05, 0 centre norotate
-set label 23 "M_{I3c}" at 22.5, graph -0.05, 0 centre norotate
+set label 22 "M_{I_3}" at 21.5, graph -0.05, 0 centre norotate
+set label 23 "M_{I_{3c}}" at 22.5, graph -0.05, 0 centre norotate
 
 set term postscript enhanced eps color solid "Time-Roman" 12
 set output "histgeb_sct1_gggrs_en_cputimes.eps"
