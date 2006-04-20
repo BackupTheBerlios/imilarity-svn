@@ -151,6 +151,9 @@
   beeldpunten, die elk een bepaalde kleur hebben. 
   \end{definitie}
   
+  \centering
+  \begin{tabular}{@{}lr@{}}
+  \begin{minipage}{0.7\textwidth}
   Modellering:
   \begin{itemize}
     \item Een \textbf{kleurmodel} is een abstract mathematisch model dat beschrijft
@@ -158,17 +161,26 @@
     Voorbeelden: RGB, HSV en L*a*b*.
     \item Als we de $n$-tallen uit het
     kleurmodel normaliseren tot $n$-tallen uit $[0,1]^n$, dan kunnen we een
-    $m$-dimensionaal kleurbeeld modelleren als een $\mathbb{N}^n - [0,1]^n$
-    afbeelding $b$.
-    \item Voor een beeld $b$ van $M$ bij $N$ beeldpunten defini\"eren we de
-    $\mathbb{Z}^2 - [0,1]^n$ afbeelding $\mathring{b}$ als volgt:
-    \begin{displaymath}
-    \mathring{b}(x,y) = \begin{cases} 
-    b(x,y) & \text{als } 0 \le x < M \text{ en } 0 \le y < N \\
-    (0,0,\ldots,0) & \text{anders}
-    \end{cases}
-    \end{displaymath}
+    tweedimensionaal kleurbeeld modelleren als een $\mathbb{N}^2 - [0,1]^n$
+    afbeelding.
+%     $b$.
+%     \item Voor een beeld $b$ van $M$ bij $N$ beeldpunten defini\"eren we de
+%     $\mathbb{Z}^2 - [0,1]^n$ afbeelding $\mathring{b}$ als volgt:
+%     \begin{displaymath}
+%     \mathring{b}(x,y) = \begin{cases} 
+%     b(x,y) & \text{als } 0 \le x < M \text{ en } 0 \le y < N \\
+%     (0,0,\ldots,0) & \text{anders}
+%     \end{cases}
+%     \end{displaymath}
   \end{itemize}
+  \end{minipage} &
+  \begin{minipage}{0.3\textwidth}
+  \centering
+  \includegraphics[height=1.8cm]{images/rgb.eps}\\
+  \includegraphics[height=1.8cm]{images/hsv.eps}\\[2pt]
+  \includegraphics[height=1.8cm]{images/lab.eps}
+  \end{minipage}
+  \end{tabular}
 }
 \frame
 {
@@ -313,119 +325,119 @@
     \item Wu kwantisatie is sneller dan NeuQuant, behalve voor een klein aantal kleuren.
   \end{itemize}
 }
-\frame
-{
-  \frametitle{Lineaire filters}
-
-  \begin{definitie}
-  Het beeld $b'$ dat we bekomen na toepassing van een \textbf{lineair filter} op 
-  een beeld $b$, wordt gegeven door de volgende correlatie:
-  \begin{minipage}{\textwidth}
-  \vspace{5pt}
-  \centering
-  $b'(x,y) = \displaystyle \sum_{(k,l) \in \Omega_m} \mathring{b}(x+k,y+l) \cdot m(k,l)$
-  \end{minipage}
-  met $\mathring{b}$ de nuluitbreiding van $b$, $m$ een $\mathbb{Z}^2 - \mathbb{R}$ 
-  afbeelding en $\Omega_m = \{ (k,l) \in \mathbb{Z}^2 \mid m(k,l) \ne 0 \}$.
-  %De functie $m$ wordt het \textbf{filtermasker} genoemd.
-  \end{definitie}
-  Voorbeeld: het 3x3 \textbf{binomiaalfilter}.
-  Voor het \textbf{filtermasker} $m_{bin}$ van dat filter geldt:
-  \begin{itemize} 
-    \item {\scriptsize $m_{bin}(-1,-1)=m_{bin}(-1,1)=m_{bin}(1,-1)=m_{bin}(1,1)=1/16$} 
-    \item {\scriptsize $m_{bin}(-1,0)=m_{bin}(0,-1)=m_{bin}(1,0)=m_{bin}(0,1)=1/8$}
-    \item {\scriptsize $m_{bin}(0,0)=1/4$}
-    \item {\scriptsize $m_{bin}(k,l)=0$ voor de overige $(k,l)$ uit $\mathbb{Z}^2$}
-  \end{itemize}
-}
-\frame
-{
-  \frametitle{Lineaire filters: binomiaalfilter}
-  
-  Als we veronderstellen dat $m_{bin}(k,l)=0$ voor alle posities
-  $(k,l)$ die niet weergegeven worden, dan kunnen we $m_{bin}$ noteren als
-  een matrix:
-  \begin{displaymath}
-  \scriptsize
-  \begin{array}{@{}l@{}}
-  \left[ \begin{array}{ccc} m_{bin}(-1,-1) & m_{bin}(0,-1) & m_{bin}(1,-1)\\ m_{bin}(-1,0) & m_{bin}(0,0) & m_{bin}(1,0)\\ m_{bin}(-1,1) & m_{bin}(0,1) & m_{bin}(1,1) \end{array} \right] \vspace{5pt}\\
-  \quad = \frac{1}{16}\left[ \begin{array}{ccc} 1 & 2 & 1\\ 2 & 4 & 2\\ 1 & 2 & 1 \end{array} \right]
-  = \frac{1}{16}\left[ \begin{array}{c} 1\\ 2\\ 1 \end{array} \right] \cdot 
-  \left[ \begin{array}{ccc} 1 & 2 & 1 \end{array} \right]
-  \end{array}
-  \end{displaymath}
-
-  \begin{flushleft}
-  \begin{tabular}{@{}lr@{}}
-  \begin{minipage}{0.3\textwidth}
-  \begin{tabular}{@{}l@{}}
-  $\begin{array}{@{}c@{}}
-  1 \\
-  1\quad 1 \\	
-  \textbf{1}\quad \textbf{2}\quad \textbf{1} \\
-  1\quad 3\quad 3\quad 1 \\ 
-  1\quad 4\quad 6\quad 4\quad 1
-  \end{array}$ \vspace{5pt}\\
-  {\scriptsize driehoek van Pascal}
-  \end{tabular}
-  \end{minipage} &
-  \begin{minipage}{0.65\textwidth}
-  Meer algemeen kan het $N$x$N$ binomiaalfilter geschreven worden als de matrix $R^T \cdot R$,
-  waarbij: 
-  \begin{displaymath}
-  R=2^{-N+1} \cdot \left[ \begin{array}{cccc} \binom{N-1}{0} & \binom{N-1}{1} & 
-  \ldots & \binom{N-1}{N-1} \end{array} \right]
-  \end{displaymath}
-  \end{minipage}
-  \end{tabular}
-  \end{flushleft}
-}
-\frame
-{
-  \frametitle{Eenvoudige randdetectie}
-  
-  In een tweedimensionaal beeld $b$ zijn randen plaatsen waar de luminantiecomponent
-  $lum(x,y)$ van $b(x,y)$ sterk varieert als funtie van $x$ en/of $y$. Bijgevolg
-  kunnen we een formule op basis van de \textbf{gradi\"ent} gebruiken om randen te 
-  detecteren in $b$:
-  \begin{displaymath}
-  |\nabla lum(x,y)| / \sqrt{2} = \sqrt{(D_1 lum(x,y))^2 + (D_2 lum(x,y))^2} / \sqrt{2}
-  \end{displaymath}
-  Discrete benadering van partieel afgeleiden van $lum$:
-  \begin{displaymath}
-  \begin{array}{c}
-  D_1 lum(x,y) \approx \frac{lum(x+1,y) - lum(x-1,y)}{2}\vspace{4pt}\\
-  D_2 lum(x,y) \approx \frac{lum(x,y+1) - lum(x,y-1)}{2}
-  \end{array}
-  \end{displaymath}
-  Met lineaire filters:
-  \begin{displaymath}
-  \scriptsize
-  D_1 lum(x,y)\text{: } \frac{1}{2} \left[ \begin{array}{@{\ }ccc@{\ }} -1 & 0 & 1 \end{array} \right] \text{, } 
-  D_2 lum(x,y)\text{: } \frac{1}{2} \left[ \begin{array}{@{\ }c@{\ }} -1 \\ 0 \\ 1 \end{array} \right]
-  \end{displaymath}
-}
-\frame
-{
-  \frametitle{Eenvoudige randdetectie}
-  
-  \textbf{Sobel-operator}: variant op gradi\"entmethode met extra ruisonderdrukking
-  door binomiaalfilter loodrecht op de richting van de parti\"ele afleiding:
-  \begin{displaymath}
-  \scriptsize
-  D_1 lum(x,y)\text{: } \frac{1}{8} \left[ \begin{array}{@{\ }c@{\ }} 1 \\ 2 \\ 1 \end{array} \right] \cdot \left[ \begin{array}{@{\ }ccc@{\ }} -1 & 0 & 1 \end{array} \right] \text{, } 
-  D_2 lum(x,y)\text{: } \frac{1}{8} \left[ \begin{array}{@{\ }c@{\ }} -1 \\ 0 \\ 1 \end{array} \right] \cdot \left[ \begin{array}{@{\ }ccc@{\ }} 1 & 2 & 1 \end{array} \right]
-  \end{displaymath}
-  Geen spectaculair verschillende resultaten:
-  \begin{center}
-  \begin{tabular}{@{}c@{\ }c@{\ }c@{}}
-  \includegraphics[width=0.3\textwidth]{images/lena_met_ruis.eps} &
-  \includegraphics[width=0.3\textwidth]{images/edges_lena_met_ruis.eps} &
-  \includegraphics[width=0.3\textwidth]{images/edges_sobel_lena_met_ruis.eps}\\
-  {\scriptsize ruizig luminantiebeeld} & {\scriptsize gradi\"ent} & {\scriptsize Sobel}
-  \end{tabular}
-  \end{center}
-}
+% \frame
+% {
+%   \frametitle{Lineaire filters}
+% 
+%   \begin{definitie}
+%   Het beeld $b'$ dat we bekomen na toepassing van een \textbf{lineair filter} op 
+%   een beeld $b$, wordt gegeven door de volgende correlatie:
+%   \begin{minipage}{\textwidth}
+%   \vspace{5pt}
+%   \centering
+%   $b'(x,y) = \displaystyle \sum_{(k,l) \in \Omega_m} \mathring{b}(x+k,y+l) \cdot m(k,l)$
+%   \end{minipage}
+%   met $\mathring{b}$ de nuluitbreiding van $b$, $m$ een $\mathbb{Z}^2 - \mathbb{R}$ 
+%   afbeelding en $\Omega_m = \{ (k,l) \in \mathbb{Z}^2 \mid m(k,l) \ne 0 \}$.
+%   %De functie $m$ wordt het \textbf{filtermasker} genoemd.
+%   \end{definitie}
+%   Voorbeeld: het 3x3 \textbf{binomiaalfilter}.
+%   Voor het \textbf{filtermasker} $m_{bin}$ van dat filter geldt:
+%   \begin{itemize} 
+%     \item {\scriptsize $m_{bin}(-1,-1)=m_{bin}(-1,1)=m_{bin}(1,-1)=m_{bin}(1,1)=1/16$} 
+%     \item {\scriptsize $m_{bin}(-1,0)=m_{bin}(0,-1)=m_{bin}(1,0)=m_{bin}(0,1)=1/8$}
+%     \item {\scriptsize $m_{bin}(0,0)=1/4$}
+%     \item {\scriptsize $m_{bin}(k,l)=0$ voor de overige $(k,l)$ uit $\mathbb{Z}^2$}
+%   \end{itemize}
+% }
+% \frame
+% {
+%   \frametitle{Lineaire filters: binomiaalfilter}
+%   
+%   Als we veronderstellen dat $m_{bin}(k,l)=0$ voor alle posities
+%   $(k,l)$ die niet weergegeven worden, dan kunnen we $m_{bin}$ noteren als
+%   een matrix:
+%   \begin{displaymath}
+%   \scriptsize
+%   \begin{array}{@{}l@{}}
+%   \left[ \begin{array}{ccc} m_{bin}(-1,-1) & m_{bin}(0,-1) & m_{bin}(1,-1)\\ m_{bin}(-1,0) & m_{bin}(0,0) & m_{bin}(1,0)\\ m_{bin}(-1,1) & m_{bin}(0,1) & m_{bin}(1,1) \end{array} \right] \vspace{5pt}\\
+%   \quad = \frac{1}{16}\left[ \begin{array}{ccc} 1 & 2 & 1\\ 2 & 4 & 2\\ 1 & 2 & 1 \end{array} \right]
+%   = \frac{1}{16}\left[ \begin{array}{c} 1\\ 2\\ 1 \end{array} \right] \cdot 
+%   \left[ \begin{array}{ccc} 1 & 2 & 1 \end{array} \right]
+%   \end{array}
+%   \end{displaymath}
+% 
+%   \begin{flushleft}
+%   \begin{tabular}{@{}lr@{}}
+%   \begin{minipage}{0.3\textwidth}
+%   \begin{tabular}{@{}l@{}}
+%   $\begin{array}{@{}c@{}}
+%   1 \\
+%   1\quad 1 \\	
+%   \textbf{1}\quad \textbf{2}\quad \textbf{1} \\
+%   1\quad 3\quad 3\quad 1 \\ 
+%   1\quad 4\quad 6\quad 4\quad 1
+%   \end{array}$ \vspace{5pt}\\
+%   {\scriptsize driehoek van Pascal}
+%   \end{tabular}
+%   \end{minipage} &
+%   \begin{minipage}{0.65\textwidth}
+%   Meer algemeen kan het $N$x$N$ binomiaalfilter geschreven worden als de matrix $R^T \cdot R$,
+%   waarbij: 
+%   \begin{displaymath}
+%   R=2^{-N+1} \cdot \left[ \begin{array}{cccc} \binom{N-1}{0} & \binom{N-1}{1} & 
+%   \ldots & \binom{N-1}{N-1} \end{array} \right]
+%   \end{displaymath}
+%   \end{minipage}
+%   \end{tabular}
+%   \end{flushleft}
+% }
+% \frame
+% {
+%   \frametitle{Eenvoudige randdetectie}
+%   
+%   In een tweedimensionaal beeld $b$ zijn randen plaatsen waar de luminantiecomponent
+%   $lum(x,y)$ van $b(x,y)$ sterk varieert als funtie van $x$ en/of $y$. Bijgevolg
+%   kunnen we een formule op basis van de \textbf{gradi\"ent} gebruiken om randen te 
+%   detecteren in $b$:
+%   \begin{displaymath}
+%   |\nabla lum(x,y)| / \sqrt{2} = \sqrt{(D_1 lum(x,y))^2 + (D_2 lum(x,y))^2} / \sqrt{2}
+%   \end{displaymath}
+%   Discrete benadering van partieel afgeleiden van $lum$:
+%   \begin{displaymath}
+%   \begin{array}{c}
+%   D_1 lum(x,y) \approx \frac{lum(x+1,y) - lum(x-1,y)}{2}\vspace{4pt}\\
+%   D_2 lum(x,y) \approx \frac{lum(x,y+1) - lum(x,y-1)}{2}
+%   \end{array}
+%   \end{displaymath}
+%   Met lineaire filters:
+%   \begin{displaymath}
+%   \scriptsize
+%   D_1 lum(x,y)\text{: } \frac{1}{2} \left[ \begin{array}{@{\ }ccc@{\ }} -1 & 0 & 1 \end{array} \right] \text{, } 
+%   D_2 lum(x,y)\text{: } \frac{1}{2} \left[ \begin{array}{@{\ }c@{\ }} -1 \\ 0 \\ 1 \end{array} \right]
+%   \end{displaymath}
+% }
+% \frame
+% {
+%   \frametitle{Eenvoudige randdetectie}
+%   
+%   \textbf{Sobel-operator}: variant op gradi\"entmethode met extra ruisonderdrukking
+%   door binomiaalfilter loodrecht op de richting van de parti\"ele afleiding:
+%   \begin{displaymath}
+%   \scriptsize
+%   D_1 lum(x,y)\text{: } \frac{1}{8} \left[ \begin{array}{@{\ }c@{\ }} 1 \\ 2 \\ 1 \end{array} \right] \cdot \left[ \begin{array}{@{\ }ccc@{\ }} -1 & 0 & 1 \end{array} \right] \text{, } 
+%   D_2 lum(x,y)\text{: } \frac{1}{8} \left[ \begin{array}{@{\ }c@{\ }} -1 \\ 0 \\ 1 \end{array} \right] \cdot \left[ \begin{array}{@{\ }ccc@{\ }} 1 & 2 & 1 \end{array} \right]
+%   \end{displaymath}
+%   Geen spectaculair verschillende resultaten:
+%   \begin{center}
+%   \begin{tabular}{@{}c@{\ }c@{\ }c@{}}
+%   \includegraphics[width=0.3\textwidth]{images/lena_met_ruis.eps} &
+%   \includegraphics[width=0.3\textwidth]{images/edges_lena_met_ruis.eps} &
+%   \includegraphics[width=0.3\textwidth]{images/edges_sobel_lena_met_ruis.eps}\\
+%   {\scriptsize ruizig luminantiebeeld} & {\scriptsize gradi\"ent} & {\scriptsize Sobel}
+%   \end{tabular}
+%   \end{center}
+% }
 
 \section{Similariteitsmaten voor beelden}
 \frame
@@ -767,7 +779,7 @@
   
   \begin{description}
      \item[Probleem:] De meeste beelden op internet zijn 
-     geen grijswaardebeelden maar (tweedimensionale) kleurbeelden.
+     geen grijswaardebeelden maar kleurbeelden.
      \item[Oplossing:] We beschouwen drie mogelijke oplossingen:
      \begin{enumerate}
        \item Beelden eerst omzetten naar grijswaardebeelden, bijvoorbeeld aan de 
@@ -1154,13 +1166,135 @@
 \section{Kleurgebaseerde similariteitsmaten}
 \frame
 {
-  \frametitle{Pixelgebaseerde similariteitsmaten}
+  \frametitle{Kleurgebaseerde similariteitsmaten}
 
-  Kleurgebaseerd: niet de pixels maar de kleuren vormen het universum.
+  Bij \textbf{kleurgebaseerde} similariteitsmaten bestaat het universum
+  uit kleuren in plaats van beeldpunten. Om de complexiteit te beperken,
+%   beperken we daarbij het aantal kleuren met behulp van kleurkwantisatie.
+%   De gekwantiseerde versie van het universum der kleuren $C$ noemen we $C'$. 
+  reduceren we het universum der kleuren $C$ daarbij tot $C'$ met behulp van
+  kleurkwantisatie.
 
+  \begin{definitie}
+  Een \textbf{histogram} van een kleurbeeld is een voorstelling van de frequentieverdeling
+  van de verschillende kleuren. We noteren de waarde in een kleur $c \in C'$ van het histogram
+  van een beeld $A$ met $h_A(c)$:
+  \begin{displaymath}
+  h_A(c) = \sum_{p \in P} \delta (bin(c) - bin(A(p))) 
+  \end{displaymath} 
+  met $\delta$ de Diracfunctie, $P$ het universum der beeldpunten en $bin$ de
+  $C - \{1,2,\ldots,N\}$ afbeelding die met 
+  elke kleur het nummer van \'e\'en van de $N$ bins associeert (zie kleurkwantisatie).
+  \end{definitie}
+}
+\frame
+{
+  \frametitle{Pseudo-vage histogrammen}
+  
+  \begin{definitie}
+  Een \textbf{pseudo-vaag histogram} is een genormaliseerd histogram.
+  De waarde in een kleur $c \in C'$ van het pseudo-vaag histogram $H_A$
+  geassocieerd met het histogram van een beeld $A$, wordt gegeven door:
+  \begin{displaymath}
+  H_A(c) = \frac{\displaystyle h_A(c)}{\displaystyle \max_{c \in C'}(h_A(c))}
+  \end{displaymath}
+  \end{definitie}
+
+  Op basis van een pseudo-vaag histogram kunnen we een similariteitsmaat construeren:
   \begin{center}
-  \includegraphics[height=0.4\textheight]{images/histograms.eps}
+  \includegraphics[width=0.8\textwidth]{images/histograms2.eps}
   \end{center}
+}
+\frame
+{
+  \frametitle{Vaaghistogrammen}
+  
+  \begin{definitie}
+  Het \textbf{vaaghistogram} $\widetilde{H}_A$, voor een kleurbeeld $A$, defini\"eren we 
+  als volgt:
+  \begin{minipage}{\textwidth}
+  %\vspace{2pt}
+  %\scriptsize
+  \centering 
+  $\widetilde{H}_A = \displaystyle\bigcup_{c \in C_A} \widetilde{C}_c$
+  \vspace{4pt}
+  \end{minipage} 
+  waarbij de verzameling $C_A \subseteq C$ bestaat uit de in $A$ voorkomende kleuren en
+  \begin{minipage}{\textwidth}
+  %\vspace{4pt}
+  \scriptsize
+  \centering
+  $\widetilde{C}_c(c') =
+  \begin{cases}
+  1 & \text{als } d'_{c,c'} = \frac{d \left( lab(c), lab(c') \right)}{2.3} \leq 1 \\ 
+  \exp \frac{- \left( d'_{c,c'} - 1 \right)^2}{2 \cdot \lambda^2} & \text{anders}
+  \end{cases}$
+  \vspace{4pt}
+  \end{minipage}
+  met $d$ de Euclidische afstand, $\lambda$ een vrij te kiezen parameter en $lab$ de 
+  functie die de kleuren uit $C$ afbeeldt op de corresponderende niet-genormaliseerde 
+  co\"ordinaten in het perceptueel uniforme L*a*b*-model 
+  ($2.3 =$ \textbf{just noticable difference}).
+  \end{definitie}
+}
+\frame
+{
+  \frametitle{Voorbeelden van histogrammen}
+  
+  \begin{center}
+  \begin{tabular}{@{}lc@{}}
+  \begin{minipage}{0.85\textwidth}
+  De verschillende pseudo-vage histogrammen en het vaaghistogram voor het 
+  ``geel bootje'' voorbeeld.
+  \end{minipage} &
+  \begin{minipage}{0.1\textwidth}
+  \includegraphics[width=1cm]{images/hist_obj3__0.eps}
+  \end{minipage}
+  \end{tabular}
+  \end{center}
+  
+  \begin{center}
+  \begin{tabular}{@{}c@{}}
+  \begin{tabular}{@{}ccc@{}}
+  \includegraphics[height=1cm, width=0.3\textwidth]{images/hist_hsv_obj3__0.eps} &
+  \includegraphics[height=1cm, width=0.3\textwidth]{images/hist_irb_obj3__0.eps} &
+  \includegraphics[height=1cm, width=0.3\textwidth]{images/hist_i1i2i3_obj3__0.eps}\\
+  {\scriptsize HSV} & {\scriptsize Irb} & {\scriptsize I1I2I3}
+  \end{tabular}\vspace{4pt}\\
+  \begin{tabular}{@{}ccc@{}}
+  \includegraphics[height=1cm, width=0.3\textwidth]{images/hist_xyz_obj3__0.eps} &
+  \includegraphics[height=1cm, width=0.3\textwidth]{images/hist_yxy_obj3__0.eps} &
+  \includegraphics[height=1cm, width=0.3\textwidth]{images/hist_lab_obj3__0.eps}\\
+  {\scriptsize XYZ} & {\scriptsize Yxy} & {\scriptsize L*a*b*}
+  \end{tabular}\vspace{4pt}\\
+  \begin{tabular}{@{}ccc@{}}
+  \includegraphics[height=1cm, width=0.1\textwidth]{images/hist_focal_obj3__0.eps} & 
+  \includegraphics[height=1cm, width=0.3\textwidth]{images/hist_sct_obj3__0.eps} &
+  \includegraphics[height=1cm, width=0.5\textwidth]{images/hist_fuzzy_obj3__0.eps}\\
+  {\scriptsize focaal} & {\scriptsize SCT} & {\scriptsize vaaghistogram}
+  \end{tabular}
+  \end{tabular}
+  \end{center}
+}
+\frame
+{
+  \frametitle{Experimentele observaties}
+  
+  \centering
+  \begin{tabular}{@{}c@{}c@{}}
+  \begin{minipage}{0.5\textwidth}
+  \includegraphics[width=\textwidth]{/home/klbostee/Workspace/Thesis/plots/histgeb1_gggrs_en_cputimes_filled.eps} 
+  \end{minipage} &
+  \begin{minipage}{0.5\textwidth}
+  \includegraphics[width=\textwidth]{/home/klbostee/Workspace/Thesis/plots/histgeb2_gggrs_en_cputimes_filled.eps}
+  \end{minipage}\vspace{10pt}\\
+  \begin{minipage}{0.5\textwidth}
+  \includegraphics[width=\textwidth]{/home/klbostee/Workspace/Thesis/plots/histgeb3_gggrs_en_cputimes_filled.eps}
+  \end{minipage} &
+  \begin{minipage}{0.4\textwidth}
+  $M_{I_3}$ geeft zowel de beste gemiddelde GGGR als de beste minimale GGGR.
+  \end{minipage}
+  \end{tabular}
 }
 
 \section{Implementatie}
@@ -1168,11 +1302,20 @@
 {
   \frametitle{Implementatie}
   
-  \begin{flushleft}
+  \begin{center}
+  \begin{tabular}{@{}rl@{}}
+  \begin{minipage}{0.8\textwidth}
+  \raggedright
   \textbf{Imilarity} is een collectie van Java klassen die gebruikt kunnen worden om 
   beelden op te halen en vervolgens te vergelijken. Een dergelijke collectie van nauw 
   samenwerkende klassen wordt een \textbf{framework} genoemd. 
-  \end{flushleft}
+  \end{minipage} &
+  \begin{minipage}{0.2\textwidth}
+  \centering
+  \includegraphics[width=1.7cm]{images/java_logo.eps}
+  \end{minipage}
+  \end{tabular}
+  \end{center}
   
   Bovenop Imilarity hebben we twee applicaties gebouwd:
   \begin{enumerate}
