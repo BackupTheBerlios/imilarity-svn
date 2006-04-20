@@ -107,6 +107,39 @@
   $T_M$ het minimum en $S_M$ het maximum.
   \end{opmerking}
 }
+\frame
+{
+  \frametitle{Ter herinnering}
+  
+  \begin{definitie}
+  De \textbf{drager} van een vaagverzameling $A$ in $X$ wordt gedefinieerd als:
+  \begin{minipage}{\textwidth}
+  \vspace{6pt}
+  \centering
+  $\displaystyle supp\ A = \{x \in X \mid A(x) > 0\}$
+  \end{minipage}
+  \end{definitie}
+%   \begin{definitie}
+%   De \textbf{kern} van een vaagverzameling $A$ in $X$ wordt als volgt gedefinieerd:
+%   \begin{displaymath}
+%   ker\ A = \{x \in X \mid A(x) = 1\}
+%   \end{displaymath}
+%   \end{definitie}
+  
+  \vspace{10pt}
+  Bij een eindige scherpe verzameling is de cardinaliteit het aantal 
+  elementen in die verzameling. Dat concept kan als volgt uitgebreid 
+  worden naar vaagverzamelingen:
+  \begin{definitie}
+  De \textbf{sigma count} van een vaagverzameling $A$ met eindige drager in een universum $X$, wordt
+  gedefinieerd door:
+  \begin{minipage}{\textwidth}
+  \vspace{6pt}
+  \centering
+  $\displaystyle |A|=\sum_{x \in X} A(x)$
+  \end{minipage}
+  \end{definitie}
+}
 
 \section{Enkele begrippen uit beeldverwerking}
 \frame
@@ -619,7 +652,7 @@
 {
   \frametitle{Beperken rekentijd}
   
-  Stel dat $A$ en $B$ twee (L-)vaagverzamelingen zijn in een zelfde universum $X$. 
+  Stel dat $A$ en $B$ twee vaagverzamelingen zijn in een zelfde universum $X$. 
   Als $X'= supp\ A \cup supp\ B$ veel minder elementen bevat dan $X$, dan kunnen we 
   de rekentijd sterk reduceren door het bereik van de sommaties in de 
   vaagsimilariteitsmaten te beperken tot $X'$. Wanneer we $||C|| = \sum_{x \in X'} C(x)$
@@ -754,16 +787,60 @@
   Traliegebaseerde aanpak: in het geval van het RGB-model kunnen kleurbeelden 
   gerepresenteerd worden door een L-vaagverzameling in $\mathbb{N}^2$,
   waarbij we de complete tralie $([0,1]^3, \le_{RGB,lex})$ gebruiken:
-  \begin{align*}
-  \scriptstyle c <_{RGB} c' & \scriptstyle\ \iff d(c,Bl) < d(c',Bl)\ \lor \\
-			 & \scriptstyle\ \qquad (d(c,Bl) = d(c',Bl) \land d(c,Wh) > d(c',Wh)) \\
-  \scriptstyle c >_{RGB} c' & \scriptstyle\ \iff d(c,Wh) < d(c',Wh)\ \lor \\
-			 & \scriptstyle\ \qquad(d(c,Wh) = d(c',Wh) \land d(c,Bl) > d(c',Bl)) \\
-  \scriptstyle c =_{RGB} c' & \scriptstyle\ \iff (d(c,Bl) = d(c',Bl) \land d(c,Wh) = d(c',Wh)) \\
-  \scriptstyle c \leq_{lex} c' & \scriptstyle\ \iff r < r' \lor (r = r' \land g < g') \lor (r = r' \land g = g' \land b \leq b') \\
-  \scriptstyle c \leq_{RGB,lex} c' & \scriptstyle\ \iff c <_{RGB} c' \lor (c =_{RGB} c' \land c \leq_{lex} c')
-  \end{align*}
+  \begin{minipage}{\textwidth}
+  \vspace{7pt}
+  \small
+  \centering
+  $\begin{array}{@{}r@{}l@{}}
+   c <_{RGB} c' & \ \iff d(c,Bl) < d(c',Bl)\ \lor \\
+			 & \ \qquad \qquad (d(c,Bl) = d(c',Bl) \land d(c,Wh) > d(c',Wh)) \\[4pt]
+   c >_{RGB} c' & \ \iff d(c,Wh) < d(c',Wh)\ \lor \\
+			 & \ \qquad \qquad (d(c,Wh) = d(c',Wh) \land d(c,Bl) > d(c',Bl)) \\[4pt]
+   c =_{RGB} c' & \ \iff (d(c,Bl) = d(c',Bl) \land d(c,Wh) = d(c',Wh)) \\[4pt]
+   c \leq_{lex} c' & \ \iff r < r' \lor (r = r' \land g < g')\ \lor \\
+   			 & \ \qquad \qquad (r = r' \land g = g' \land b \leq b') \\[4pt]
+   c \leq_{RGB,lex} c' & \ \iff c <_{RGB} c' \lor (c =_{RGB} c' \land c \leq_{lex} c')
+  \end{array}$
+  \vspace{7pt}
+  \end{minipage}
   met $Bl = (0,0,0)$, $Wh = (1,1,1)$ en $d$ de Euclidische afstand.
+}
+\frame
+{ 
+  \frametitle{Pixelgebaseerde similariteitsmaten voor kleurbeelden}
+
+  Voor de traliegebaseerde aanpak moeten de bewerkingen waarvan de 
+  vaagsimilariteitsmaten gebruik maken, veralgemeend worden van 
+  $[0,1]$ naar $[0,1]^3$. We gebruiken $c - c' = (r-r',g-g',b-b')$, 
+  $|c| = \frac{1}{\sqrt{3}} \cdot \sqrt{r^2 + g^2 + b^2}$, $1 - c = (1,1,1) - (r,g,b)$ en:
+  \begin{minipage}{\textwidth}
+    \vspace{4pt}
+    \scriptsize
+    \centering
+%     $c - c' = (r-r',g-g',b-b')$ \  
+%     $|c| = \frac{1}{\sqrt{3}} \cdot \sqrt{r^2 + g^2 + b^2}$\ 
+%     $1 - c = (1,1,1) - (r,g,b)$\\
+    $\min \{c,c'\} = \begin{cases}
+    c & \text{als } c <_{RGB} c' \lor (c =_{RGB} c' \land c \leq_{lex} c') \\
+    c' & \text{anders}
+    \end{cases}$\\[2pt]
+    $\max \{c,c'\} = \begin{cases}
+    c' & \text{als } c <_{RGB} c' \lor (c =_{RGB} c' \land c \leq_{lex} c') \\
+    c & \text{anders}
+    \end{cases}$
+    \vspace{4pt}
+  \end{minipage}
+  voor elke $c(r,g,b),c'(r',g',b') \in [0,1]^3$. 
+  Het begrip sigma count veralgemenen we als volgt:
+  \begin{minipage}{\textwidth}
+  \vspace{4pt}
+  \scriptsize
+  \centering
+  $\displaystyle |A|=\frac{1}{\sqrt{3}}\sum_{p \in P}\sqrt{(A_1(p))^2+(A_2(p))^2+(A_3(p))^2}$
+  \vspace{4pt}
+  \end{minipage}
+  met $A(p)=(A_1(p),A_2(p),A_3(p))$ voor alle $p$ uit het
+  universum der beeldpunten $P$.
 }
 \frame
 {
@@ -825,7 +902,8 @@
   \end{minipage}
   Ruwe schets van werking:
   \begin{enumerate}
-    \item Beelden partitioneren in beeldonderdelen met dezelfde resolutie.
+    \item Beelden partitioneren in beeldonderdelen met dezelfde resolutie 
+    ($8 \cdot 8$ pixels).
     \item De beeldonderdelen (van groot naar klein) ordenen op basis van
     hun gemiddelde kleur, met behulp van $\le_{RGB,lex}$.
     \item Gebruik maken van de ordening om grote similariteiten te vinden.
@@ -834,24 +912,243 @@
 }
 \frame
 {
-  \frametitle{Experimentele observaties: intermediaire beelden}
+  \frametitle{Experimentele observaties}
   
   %De GGGR-waarde en de rekentijd in ms voor elk van de similariteitsmaten op basis 
   %van herschaalde beelden:
   \begin{center}
   \begin{tabular}{@{}c@{}c@{}}
-  \includegraphics[width=0.49\textwidth]{plots/scaling_gggrs_en_cputimes_filled.eps} &
-  \includegraphics[width=0.49\textwidth]{plots/moments_gggrs_en_cputimes_filled.eps}\\
-  {\scriptsize herschaling} & {\scriptsize kleurmomenten} \vspace{10pt}\\
-  \includegraphics[width=0.49\textwidth]{plots/dom_colors_neuquant_gggrs_en_cputimes_filled.eps} &
-  \includegraphics[width=0.49\textwidth]{plots/dom_colors_wu_gggrs_en_cputimes_filled.eps}\\
-  {\scriptsize NeuQuant} & {\scriptsize Wu}
+  \includegraphics[width=0.5\textwidth]{plots/scaling_gggrs_en_cputimes_filled.eps} &
+  \includegraphics[width=0.5\textwidth]{plots/moments_gggrs_en_cputimes_filled.eps}\\
+  {\scriptsize intermediaire beelden: herschaling} & {\scriptsize intermediaire beelden: kleurmomenten} \vspace{10pt}\\
+  \includegraphics[width=0.5\textwidth]{plots/dom_colors_neuquant_gggrs_en_cputimes_filled.eps} &
+  \includegraphics[width=0.5\textwidth]{plots/dom_colors_wu_gggrs_en_cputimes_filled.eps}\\
+  {\scriptsize intermediaire beelden: NeuQuant} & {\scriptsize intermediaire beelden: Wu}
   \end{tabular}
   \end{center}
 }
 \frame
 {
+  \frametitle{Experimentele observaties}
+  
+  \begin{center}
+  \begin{tabular}{@{}cc@{}}
+  \begin{minipage}{0.5\textwidth}
+  \begin{tabular}{@{}c@{}}
+  \includegraphics[width=\textwidth]{plots/multires_gggrs_en_cputimes_filled.eps}\\
+  {\scriptsize beeldonderdelen}
+  \end{tabular}
+  \end{minipage} &
+  \begin{minipage}{0.4\textwidth}
+  \raggedright
+  De gegevens in de onderstaande tabel werden berekend uit de GGGRs van alle 
+  pixelgebaseerde similariteitsmaten die we beschouwd hebben.
+  \end{minipage} \vspace{10pt}
+  \end{tabular}
+  \end{center}
 
+  \begin{center}
+  \tiny
+  \begin{tabular}{r|cccccccc}
+  & $M_{1a}$ & $M_{1b}$ & $M_{1c}$ & $M_{2}$ & $M_{3}$ & $M_{5}$ & $M_{5c}$ & $M_{6}$ \\
+  \hline
+  minimale GGGR & 0.0147 & 0.0245 & 0.0323 & 0.0355 & 0.0093 & 0.0128 & 0.0219 & 0.0102 \\
+  gemiddelde GGGR & 0.0818 & 0.0951 & 0.1115 & 0.1428 & {\color{white} 0.0802} & 0.0922 & 0.0971 & 0.1024\vspace{8pt}\\
+  & $M_{6c}$ & $M_{7}$ & $M_{7c}$ & $M_{8}$ & $M_{8c}$ & $M_{9}$ & $M_{9c}$ & $M_{10}$ \\
+  \hline
+  minimale GGGR & 0.0212 & 0.0089 & 0.0203 & 0.2024 & 0.1985 & {\color{white} 0.0084} & 0.0201 & 0.2212 \\
+  gemiddelde GGGR & 0.1145 & 0.0873 & 0.0922 & 0.3604 & 0.3688 & 0.0806 & 0.0868 & 0.3895\vspace{8pt}\\
+  & $M_{10c}$ & $M_{11}$ & $M_{11c}$ & $M_{12}$ & $M_{13}$ & $M_{I_3}$ & $M_{I_{3c}}$ \\
+  \hline
+  minimale GGGR & 0.2106 & 0.0128 & 0.0219 & 0.0203 & 0.1985 & 0.0102 & 0.0212 \\
+  gemiddelde GGGR & 0.3850 & 0.0922 & 0.0971 & 0.0922 & 0.3696 & 0.1035 & 0.1038
+  \end{tabular}
+  \end{center} 
+}
+\frame
+{
+  \frametitle{Experimentele observaties}
+  
+%   Tot nu toe hebben we telkens het gemiddelde gebruikt om te aggregeren bij
+%   de componentsgewijze aanpak. We kunnen echter ook een t-norm gebruiken.
+%   De beelden kunnen dan enkel similair 
+%   zijn indien \emph{alle} kleurcomponenten goed op elkaar lijken.
+  
+  Aggregeren met een t-norm (in plaats van het gemiddelde) bij de componentsgewijze 
+  aanpak: beelden kunnen enkel similair zijn indien \emph{alle} kleurcomponenten 
+  goed op elkaar lijken.
+  
+  \begin{center}
+  \begin{tabular}{@{}c@{}c@{}}
+  \includegraphics[width=0.5\textwidth]{plots/dom_colors_wu_comps_gggrs_en_cputimes_filled.eps} &
+  \includegraphics[width=0.5\textwidth]{plots/moments_comps_gggrs_en_cputimes_filled.eps}\\
+  {\scriptsize intermediaire beelden: Wu} & {\scriptsize intermediaire beelden: kleurmomenten}
+  \end{tabular}
+  \end{center}
+
+  De pixelgebaseerde similariteitsmaten die intermediaire beelden
+  op basis van kleurmomenten componentsgewijs vergelijken met behulp van $M_3$, $M_6$, 
+  $M_7$ of $M_{I_3}$ geven de beste resultaten.
+}
+\frame
+{
+  \frametitle{Verklaringen voor observaties}
+  
+  \begin{definitie}
+  \textbf{Valse positieven} zijn verkeerdelijk hoge similariteiten tussen
+  sterk verschillende beelden. Lage similariteiten tussen zeer gelijkaardige
+  beelden worden \textbf{valse negatieven} genoemd.
+  \end{definitie}
+  
+  Het optreden van valse positieven is de oorzaak van de volgende observaties:
+  \begin{enumerate}
+    \item De componentsgewijze aanpak werkt beter dan de traliegebaseerde
+    methode.
+    \item De vaagsimilariteitsmaten $M_8$, $M_{8c}$, $M_{10}$, $M_{10c}$ en $M_{13}$ 
+    geven systematisch aanleiding tot de minst performante maten.
+    \item Bij de componentsgewijze aanpak kunnen we betere resultaten bekomen als we 
+    aggregeren met een t-norm in plaats van het gemiddelde.
+  \end{enumerate}
+}
+\frame
+{
+  \frametitle{Verklaringen voor observaties}
+  
+  Beschouw twee beelden $A$ en $B$ die bestaan uit repectievelijk
+  \'e\'en {\color{red} rode} en \'e\'en {\color{green} groene} pixel: $A(0,0)=(1,0,0)$ en $B(0,0)=(0,1,0)$.
+  Als we
+  $\frac{0}{0} = 0$ veronderstellen dan geeft rechtstreekse componentsgewijze toepassing van 
+  $M_5$ dus
+  \begin{minipage}{\textwidth}
+  \vspace{4pt}
+  \centering
+  $\begin{array}{r@{}l}
+  \displaystyle\frac{\scriptstyle M_5(A_1,B_1)+M_5(A_2,B_2)+M_5(A_3,B_3)}{\scriptstyle 3} 
+  & \scriptstyle\ = \displaystyle\frac{\scriptstyle \frac{\min\{|A_1|,|B_1|\}}{\max\{|A_1|,|B_1|\}}+\frac{\min\{|A_2|,|B_2|\}}{\max\{|A_2|,|B_2|\}}+\frac{\min\{|A_3|,|B_3|\}}{\max\{|A_3|,|B_3|\}}}{\scriptstyle 3} \\
+  & \scriptstyle\ = \displaystyle\frac{\scriptstyle\frac{0}{1}+\frac{0}{1}+0}{\scriptstyle 3} \scriptstyle\ =\ 0
+  \end{array}$
+  \vspace{4pt}
+  \end{minipage}
+  terwijl we via de traliegebaseerde aanpak dit bekomen:
+  \begin{minipage}{\textwidth}
+  \vspace{4pt}
+  \centering
+  $\scriptstyle M_5(A,B)\ = \displaystyle \frac{\scriptstyle \min\{|A|,|B|\}}{\scriptstyle \max\{|A|,|B|\}} \scriptstyle\ = \displaystyle \frac{\scriptstyle \sqrt{1} / \sqrt{3}}{\scriptstyle \sqrt{1} / \sqrt{3}} \scriptstyle\ =\ 1$
+  \end{minipage}
+  \begin{opmerking}
+  $A(p)=(A_1(p),A_2(p),A_3(p))$ en $B(p)=(B_1(p),B_2(p),B_3(p))$ voor elke $p$ uit het universum.
+  \end{opmerking}
+}
+\frame
+{
+  \frametitle{Verklaringen voor observaties}
+  
+  Als $A$ en $B$ meerdere respectievelijk rode en groene pixels bevatten, dan moeten 
+  de cardinaliteiten vermenigvuldigd worden met het aantal pixels. 
+  We bekomen in dat geval dus dezelfde similariteiten. Het probleem
+  manifesteert zich ook als de beelden naast de groene of rode pixels ook nog 
+  (ongeveer) evenveel beeldpunten van een zelfde kleur bevatten:
+  \begin{center}
+  \begin{tabular}{@{}c@{}}
+  \begin{minipage}{\textwidth}
+  %\vspace{10pt}
+  \centering
+  \begin{tabular}{cccccc}
+  \includegraphics[width=1.3cm]{coil/beeld-18.eps} & 
+  \includegraphics[width=1.3cm]{coil/beeld-54.eps} &
+  \includegraphics[width=1.3cm]{coil/beeld-55.eps} &
+  \includegraphics[width=1.3cm]{coil/beeld-19.eps} &
+  \includegraphics[width=1.3cm]{coil/beeld-21.eps} &
+  \includegraphics[width=1.3cm]{coil/beeld-57.eps} \\
+  {\scriptsize 1.0} & 
+  {\scriptsize 0.979455} & 
+  {\scriptsize 0.954748} & 
+  {\scriptsize 0.952282} & 
+  {\scriptsize 0.923282} &
+  {\scriptsize 0.910956} 
+  \end{tabular}
+  \end{minipage} \\
+  {\scriptsize $M_5$ toegepast op herschaalde intermediaire beelden}
+  \end{tabular}
+  \end{center}
+
+  Dus: er bestaan inderdaad (realistische) gevallen waarbij de componentsgewijze 
+  aanpak geen valse positieven oplevert, terwijl de traliegebaseerde
+  methode dat wel doet.
+}
+\frame
+{
+  \frametitle{Verklaring voor observaties}
+  
+  Stel dat $A$ en $B$
+  twee beelden zijn, waarvoor $A(p) \le B(p)$ voor alle
+  $p \in P$. Er geldt dan $A \cap B$ = A en ook $\min\{|A|,|B|\}=|A|$ zodat
+  \begin{displaymath}
+  M_8(A,B)= \frac{|A \cap B|}{\min\{|A|,|B|\}} = \frac{|A|}{|A|} = 1
+  \end{displaymath}
+  indien $|A| \ne 0$. Als $A(p) \le B(p)$ geldt voor de meeste $p \in P$, dan 
+  zal $M_8(A,B) \approx 1$ terwijl $A$ en $B$ toch 
+  zeer verschillend kunnen zijn. Analoge redeneringen zijn mogelijk voor
+  $M_{8c}$, $M_{10}$, $M_{10c}$ en $M_{13}$.
+  
+  \begin{center}
+  \begin{tabular}{@{}c@{}}
+  \begin{minipage}{\textwidth}
+  \vspace{6pt}
+  \centering
+  \begin{tabular}{cccccc}
+  \includegraphics[width=1.3cm]{coil/beeld-18.eps} &
+  \includegraphics[width=1.3cm]{coil/beeld-26.eps} &
+  \includegraphics[width=1.3cm]{coil/beeld-29.eps} &
+  \includegraphics[width=1.3cm]{coil/beeld-27.eps} &
+  \includegraphics[width=1.3cm]{coil/beeld-24.eps} &
+  \includegraphics[width=1.3cm]{coil/beeld-28.eps} \\
+  {\scriptsize 1.0} & 
+  {\scriptsize 0.999472} & 
+  {\scriptsize 0.998082} & 
+  {\scriptsize 0.997874} & 
+  {\scriptsize 0.992790} &
+  {\scriptsize 0.992584} 
+  \end{tabular}
+  \end{minipage} \\
+  {\scriptsize $M_8$ toegepast op herschaalde intermediaire beelden}
+  \end{tabular}
+  \end{center}
+}
+\definecolor{mymagenta}{rgb}{1,0,1}
+\frame
+{
+  \frametitle{Verklaringen voor observaties}
+  
+  We passen $M_5$ opnieuw toe op twee beelden $A$ en $B$ die slechts \'e\'en enkele pixel 
+  bevatten. Deze keer kiezen we echter $A(0,0)=(1,0,1)$ en $B(0,0)=(1,1,1)$. Met 
+  andere woorden: $A$ is {\color{mymagenta} paars (magenta)} en $B$ is {\color{white} wit}. Er geldt dan:
+  \begin{minipage}{\textwidth}
+  \vspace{4pt}
+  \small
+  \centering
+  $|A_1|=1 \quad |A_2|=0 \quad |A_3|=1 \qquad |B_1|=1 \quad |B_2|=1 \quad |B_3|=1$
+  \vspace{4pt}
+  \end{minipage}
+  en dus
+%   \begin{minipage}{\textwidth}
+%   \vspace{4pt}
+%   \small
+%   \centering
+  $M_5(A_1,B_1)=\frac{\min\{|A_1|,|B_1|\}}{\max\{|A_1|,|B_1|\}}=\frac{1}{1}=1$, 
+  %M_5(A_2,B_2)=\frac{\min\{|A_2|,|B_2|\}}{\max\{|A_2|,|B_2|\}}=\frac{0}{1}=0 \quad
+  %M_5(A_3,B_3)=\frac{\min\{|A_3|,|B_3|\}}{\max\{|A_3|,|B_3|\}}=\frac{1}{1}=1
+  $M_5(A_2,B_2)=\frac{0}{1}=0$ {\normalsize en} $M_5(A_3,B_3)=\frac{1}{1}=1$.
+%   \vspace{4pt}
+%   \end{minipage}
+  We bekomen dan voor het
+  \begin{itemize}
+    \item minimum: $\min\{1,0,1\}=\min\{0,1\}=0$
+    \item product: $1 \cdot 0 \cdot 1 = 0$
+    \item gemiddelde: $(1+0+1)/3=2/3$
+  \end{itemize}
+  De laatste waarde is te hoog vermits $A$ en $B$ eigenlijk helemaal niet 
+  similair zijn.
 }
 
 \section{Kleurgebaseerde similariteitsmaten}
@@ -867,7 +1164,61 @@
 }
 
 \section{Implementatie}
+\frame
+{
+  \frametitle{Implementatie}
+  
+  \begin{flushleft}
+  \textbf{Imilarity} is een collectie van Java klassen die gebruikt kunnen worden om 
+  beelden op te halen en vervolgens te vergelijken. Een dergelijke collectie van nauw 
+  samenwerkende klassen wordt een \textbf{framework} genoemd. 
+  \end{flushleft}
+  
+  Bovenop Imilarity hebben we twee applicaties gebouwd:
+  \begin{enumerate}
+    \item \textbf{Imperforate} is een programma dat toelaat om de beschouwde 
+    similariteitsmaten te testen op een bepaalde collectie van beelden.
+    \item \textbf{Giggle} is het eigenlijke prototype.
+  \end{enumerate}
+}
+\frame
+{
+  \frametitle{Imperforate}
+  
+  \centering
+  \begin{tabular}{@{}rl@{}}
+  \includegraphics[width=0.47\textwidth]{images/imperforate_1.eps} &
+  \includegraphics[width=0.47\textwidth]{images/imperforate_3.eps} \vspace{8pt}\\
+  \includegraphics[width=0.3\textwidth]{images/imperforate_2.eps} &
+  \includegraphics[width=0.3\textwidth]{images/imperforate_4.eps}
+  \end{tabular}
+}
+\frame
+{
+  \frametitle{Giggle}
+  
+  \centering
+  \begin{tabular}{@{}rl@{}}
+  \includegraphics[width=0.47\textwidth]{images/giggle_1.eps} &
+  \includegraphics[width=0.47\textwidth]{images/giggle_2.eps} \vspace{8pt}\\
+  \includegraphics[width=0.3\textwidth]{images/giggle_3.eps} &
+  \includegraphics[width=0.3\textwidth]{images/giggle_4_grijs.eps}
+  \end{tabular}
+}
 
 \section{Slotbeschouwingen}
 
+
+% EINDE
+
+\plainframe
+{
+  \begin{center}
+  \Huge \textbf{\color{white}Bedankt voor uw aandacht!}
+  \end{center}
+  \vspace{10pt}
+  \begin{center}
+  \LARGE Vragen?
+  \end{center}
+}
 \end{document}
