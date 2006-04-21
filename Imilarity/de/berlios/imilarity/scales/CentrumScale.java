@@ -2,7 +2,7 @@ package de.berlios.imilarity.scales;
 
 import de.berlios.imilarity.image.Image;
 
-public class SpatialScale implements Scale {
+public class CentrumScale implements Scale {
 
 	private Image image;
 	private int w, h;
