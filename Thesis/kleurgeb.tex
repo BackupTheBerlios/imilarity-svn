@@ -1225,8 +1225,8 @@ de beide kleuren toch in verschillende bins terecht komen.
 \end{tabular}
 \caption{\label{fig:uitgebreide_sct-histogrammen}De pseudo-vage SCT-histogrammen (a) voor de 
 beelden van het geel bootje, samen met de corresponderende pseudo-vage (b) gladde histogrammen, 
-(c) spatiale histogrammen, (d) zowel gladde als
-spatiale histogrammen, (e) randhistogrammen en (f) gladde randhistogrammen.}
+(c) centrumhistogrammen, (d) gladde
+centrumhistogrammen, (e) randhistogrammen en (f) gladde randhistogrammen.}
 \end{figure}
 
 \begin{figure}[bp]
@@ -1259,7 +1259,7 @@ nagenoeg identiek zijn, samen met het geassocieerde pseudo-vage SCT-histogram en
 versie van dat histogram.}
 \end{figure}
 
-\subsection{Spatiale histogrammen}
+\subsection{Centrumhistogrammen}
 
 %Hoewel de beelden van het gele bootje uiteraard relevant zijn ten
 %opzichte van elkaar, blijken hun gladde pseudo-vage SCT-histogrammen toch nog vrij verschillend 
@@ -1291,9 +1291,9 @@ voor alle $c \in C'$. De pseudo-vage uitgebreide
 histogrammen die we met $\alpha=3 \cdot \gamma / 5$ en $\gamma = \min\{M/2, N/2\}$ bekomen voor 
 de beelden van het geel bootje, worden weergegeven in
 figuur~\ref{fig:uitgebreide_sct-histogrammen_spatial}. We noemen dergelijke histogrammen
-\definas{spatiaal histogram}{spatiale histogrammen}. Figuur~\ref{fig:constructie_spatiale_histogrammen} illustreert
+\definas{centrumhistogram}{centrumhistogrammen}. Figuur~\ref{fig:constructie_centrumhistogrammen} illustreert
 de constructie van een kleurgebaseerde similariteitsmaat op basis van het pseudo-vaag 
-spatiaal SCT-histogram.
+SCT-centrumhistogram.
 
 \begin{figure}[bp]
 \vspace{5pt}
@@ -1328,7 +1328,7 @@ $t \circ d_m$ oplevert voor een beeld van $M$ bij $N$ pixels, met
 \centering
 \subfigure[]{
 \includegraphics[height=3cm]{images/spatial_histograms.eps}
-\label{fig:constructie_spatiale_histogrammen}
+\label{fig:constructie_centrumhistogrammen}
 }
 \qquad
 \subfigure[]{
@@ -1336,10 +1336,10 @@ $t \circ d_m$ oplevert voor een beeld van $M$ bij $N$ pixels, met
 \label{fig:constructie_randhistogrammen}
 }
 \caption{\label{fig:constructie_uitgebreide_histogrammen}Constructie van een kleurgebaseerde 
-similariteitsmaat op basis van (a) spatiale histogrammen en (b) randhistogrammen.}
+similariteitsmaat op basis van (a) centrumhistogrammen en (b) randhistogrammen.}
 \end{figure}
 
-We kunnen ook een histogram construeren dat zowel glad als spatiaal is. Dat doen we door
+We kunnen ook een glad centrumhistogram construeren. Dat doen we door
 $w_{A,c}(p)=s(bin(c),bin(A(p))) \cdot t(d_m(p))$, $\forall p \in P$, te kiezen. 
 Vermits er voor elke $c \in C'$ dan geldt dat
 \begin{align*}
@@ -1349,7 +1349,7 @@ Vermits er voor elke $c \in C'$ dan geldt dat
  &= \displaystyle \sum_{c' \in C'} \mathring{h}'_A(c') \cdot s(bin(c),bin(c'))
 \end{align*}
 met $\mathring{h}'_A(c')=\sum_{p \in P} \delta (bin(c')-bin(A(p))) \cdot t(d_m(p))$, $\forall c' \in C'$, 
-kunnen we een glad spatiaal SCT-histogram $\mathring{h}_A$ in twee stappen construeren. Eerst
+kunnen we een glad SCT-centrumhistogram $\mathring{h}_A$ in twee stappen construeren. Eerst
 genereren we het uitgebreid histogram $\mathring{h}'_A$, waarbij de invloed van een pixel 
 afhankelijk is van zijn spatiale locatie. Daarna maken we dat histogram glad door lineair te 
 filteren. Figuur~\ref{fig:uitgebreide_sct-histogrammen_smooted_en_spatial} toont de
@@ -1360,9 +1360,9 @@ bootje.
 % zullen in dit geval dus grotere similariteiten teruggeven, wat beter in overeenstemming is met het 
 % waargenomen verschil tussen de beelden.
  
-Een spatiaal histogram, geassocieerd met een beeld $A$, kan ge\"interpreteerd worden als het 
+Een centrumhistogram, geassocieerd met een beeld $A$, kan ge\"interpreteerd worden als het 
 histogram voor een \defin{vaag gebied} in $A$. Als we een beeld $B$ construeren door de pixels
-van $A$ willekeurig te verplaatsen, dan zullen de spatiale histogrammen van $A$ en $B$
+van $A$ willekeurig te verplaatsen, dan zullen de centrumhistogrammen van $A$ en $B$
 meestal niet gelijk zijn. De ``gewone'' histogrammen van $A$ en $B$ zijn dan uiteraard wel gelijk. 
 Door gebruik te maken van vage gebieden kunnen we het aantal mogelijke
 valse positieven dus beperken. Eventueel kunnen er per beeld ook meerdere vage gebieden beschouwd
@@ -1404,8 +1404,8 @@ figuur~\ref{fig:uitgebreide_sct-histogrammen_smooted_en_edgy}.
 
 Figuur~\ref{fig:histgeb_sct_gggrs_en_cputimes} toont de meetresultaten voor enkele
 similariteitsmaten die gebaseerd zijn op uitgebreide SCT-histogrammen. We stellen
-vast dat de gladde versies van de histogrammen vaak beter presteren. Ook spatiale 
-uitbreidingen leiden tot betere resultaten, in tegenstelling tot de randhistogrammen
+vast dat de gladde versies van de histogrammen vaak beter presteren. Ook de
+centrumhistogrammen leiden tot betere resultaten, in tegenstelling tot de randhistogrammen
 die meestal geen winst opleveren.
 
 We merken ook hier dat $M_5$, $M_{5c}$, $M_{11}$ en $M_{11c}$ significant slechter
@@ -1423,8 +1423,8 @@ is ook de enige vaagsimilariteitsmaat waarbij de gladde versie niet tot betere
 prestaties leidt. Figuur~\ref{fig:results_sct_histgeb} en 
 figuur~\ref{fig:results_sct_glad_histgeb} tonen de rangschikkingen die we bekomen
 door respectievelijk ``gewone'' en gladde pseudo-vage SCT-histogrammen te vergelijken
-met behulp van $M_{I_3}$. In figuur~\ref{fig:results_sct_glad_spatiaal_histgeb} worden 
-de resultaten getoond van de gladde spatiale SCT-histogrammen in combinatie met $M_{I_3}$.
+met behulp van $M_{I_3}$. In figuur~\ref{fig:results_sct_glad_centrum_histgeb} worden 
+de resultaten getoond van de gladde SCT-centrumhistogrammen in combinatie met $M_{I_3}$.
 
 \begin{figure}[bp]
 \centering
@@ -1888,6 +1888,6 @@ voorbeeld bij de similariteitsmaat op basis van het glad SCT-histogram en $M_{I_
 \\
 \end{tabular}
 \vspace{5pt}
-\caption{\label{fig:results_sct_glad_spatiaal_histgeb}De GGR-waarde en de eerste tien resultaten voor elk 
-voorbeeld bij de similariteitsmaat op basis van het glad spatiaal SCT-histogram en $M_{I_3}$.}
+\caption{\label{fig:results_sct_glad_centrum_histgeb}De GGR-waarde en de eerste tien resultaten voor elk 
+voorbeeld bij de similariteitsmaat op basis van het glad SCT-centrumhistogram en $M_{I_3}$.}
 \end{figure}

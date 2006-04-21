@@ -1296,6 +1296,156 @@
   \end{minipage}
   \end{tabular}
 }
+\frame
+{
+  \frametitle{Verklaringen voor observaties}
+  
+  We zien dat:
+  \begin{itemize}
+    \item $M_5$, $M_{5c}$, $M_{11}$ en $M_{11c}$ beduidend slechter presteren. Die
+    maten zijn dan ook de enige die de bins van de histogrammen niet rechtstreeks
+    met elkaar vergelijken. Voorbeeld:
+    \begin{center}
+    \begin{tabular}{@{}l@{}c@{\ }r@{}}
+    \begin{minipage}{0.25\textwidth}
+    \includegraphics[width=\textwidth]{images/rood_naar_hist.eps}
+    \end{minipage} &
+    \begin{minipage}{0.4\textwidth}
+    \scriptsize
+    \centering
+    $M_5(H_A,H_B)=\frac{\min\{|H_A|,|H_B|\}}{\max\{|H_A|,|H_B|\}}=1$
+    \end{minipage} &
+    \begin{minipage}{0.25\textwidth}
+    \includegraphics[width=\textwidth]{images/groen_naar_hist.eps}
+    \end{minipage}
+    \end{tabular}
+    \end{center}
+    \item bij de vaaghistogrammen ook $M_8$, $M_{8c}$, $M_{10}$, $M_{10c}$ en $M_{13}$
+    minder goede resultaten geven. De oorzaak daarvan is dezelfde als bij de 
+    pixelgebaseerde maten. Voor een beeld $A$ dat enkel kleuren bevat die ook 
+    in $B$ voorkomen, geldt immers
+    $\widetilde{H}_A(c) \leq \widetilde{H}_B(c)$ voor alle $c \in C'$.
+  \end{itemize}
+}
+\frame
+{
+  \frametitle{Kwantisatieproblemen}
+  
+  De kleurkwantisatie brengt twee problemen met zich mee:
+  \begin{enumerate}
+    \item Het is mogelijk dat perceptueel similaire kleuren in verschillende bins en 
+    perceptueel verschillende kleuren in dezelfde bin terecht komen.
+    \item Een kleur kan maar tot \'e\'en enkele bin behoren, terwijl ze perceptueel
+    similair kan zijn met de kleuren van meerdere bins.
+  \end{enumerate}
+  Bij het vaaghistogram worden die problemen (gedeeltelijk) opgelost door de kleur
+  van een pixel te laten bijdragen tot de waarde van meerdere bins. In feite kan een
+  kleur bij een vaaghistogram dus wel tot meerdere bins behoren.
+}
+\frame
+{
+  \frametitle{Gladde histogrammen}
+  
+  Pseudo-vage histogrammen kunnen ook minder gevoelig gemaakt worden voor de
+  kwantisatieproblemen door ze \textbf{glad} te maken. Dat houdt in dat
+  de waarden van de bins vervangen worden door nieuwe waarden die ook 
+  afhangen van de waarden van ``naburige'' bins met een perceptueel similaire kleur.
+  Voorbeeld voor het SCT-histogram:
+  \begin{minipage}{\textwidth}
+  \vspace{7pt}
+  \centering
+  \begin{tabular}{@{}ccc@{}}
+  \includegraphics[height=1.5cm, width=0.15\textwidth]{images/groen.eps} &
+  \includegraphics[height=1.5cm, width=0.35\textwidth]{images/hist_sct_groen.eps} &
+  \includegraphics[height=1.5cm, width=0.35\textwidth]{images/hist_smoothed_sct_groen.eps}\\
+   & {\scriptsize SCT-histogram} & {\scriptsize glad SCT-histogram} \vspace{6pt}\\
+  \includegraphics[height=1.5cm, width=0.15\textwidth]{images/lichter_groen.eps} &
+  \includegraphics[height=1.5cm, width=0.35\textwidth]{images/hist_sct_lichter_groen.eps} &
+  \includegraphics[height=1.5cm, width=0.35\textwidth]{images/hist_smoothed_sct_lichter_groen.eps}\\
+   & {\scriptsize SCT-histogram} & {\scriptsize glad SCT-histogram}
+  \end{tabular}
+  \end{minipage}
+}
+\frame
+{
+  \frametitle{Spatiale histogrammen}
+  
+  Vaak zijn niet alle pixels even belangrijk. We kunnen similariteitsmaten construeren
+  die daar rekening mee houden door histogrammen te gebruiken waarbij de
+  invloed van een pixel afhankelijk is van zijn spatiale locatie:
+  \begin{center}
+  \begin{tabular}{@{}lc@{}}
+  \begin{minipage}{0.55\textwidth}
+  \raggedright
+  Bij \textbf{centrumhistogrammen} veronderstellen we dat de belangrijkste informatie
+  zich steeds in het centrum bevindt.
+  \end{minipage} &
+  \begin{minipage}{0.4\textwidth}
+  \includegraphics[height=2cm]{images/spatial_histograms_grijs.eps}
+  \end{minipage}\vspace{8pt}\\
+  \begin{minipage}{0.55\textwidth}
+  Bij \textbf{randhistogrammen} beschouwen we enkel de pixels in de omgeving
+  van beeldranden.
+  \end{minipage} &
+  \begin{minipage}{0.4\textwidth}
+  \includegraphics[height=2cm]{images/edgy_histograms_grijs.eps}
+  \end{minipage}
+  \end{tabular}
+  \end{center}
+}
+\frame
+{ 
+  \frametitle{Uitgebreide histogrammen}
+  
+  \begin{definitie}
+  Zij $A$ een beeld en $w_{A,c}$ een $P - \mathbb{R}$ afbeelding. Een functie van de vorm
+  \begin{minipage}{\textwidth}
+  \vspace{5pt}
+  \centering
+  \footnotesize
+  $\begin{array}{rrcll}
+  \mathring{h}_A: 
+   & C' & \to & \mathbb{R} \\
+   & c  & \mapsto & \displaystyle\sum_{c' \in C'} \sum_{p \in P} \delta (bin(c')-bin(A(p))) \cdot w_{A,c}(p), & 
+   \forall c \in C'
+  \end{array}$
+  \vspace{5pt}
+  \end{minipage}
+  met $\delta$ de Dirac functie, noemen we dan een \textbf{uitgebreid histogram} 
+  geassocieerd met $A$.
+  \end{definitie}
+
+  Speciale gevallen:
+  \begin{itemize}
+    \item ``gewone'' histogrammen
+    \item gladde histogrammen
+    \item centrumhistogrammen
+    \item randhistogrammen
+  \end{itemize}
+}
+\frame
+{
+  \frametitle{Experimentele observaties}
+
+  \begin{minipage}{\textwidth}
+  \centering
+  \begin{tabular}{@{}cc@{}}
+  \includegraphics[width=0.5\textwidth]{/home/klbostee/Workspace/Thesis/plots/histgeb_sct1_gggrs_en_cputimes_filled.eps} &
+  \includegraphics[width=0.5\textwidth]{/home/klbostee/Workspace/Thesis/plots/histgeb_sct2_gggrs_en_cputimes_filled.eps}
+  \end{tabular}
+  \vspace{4pt}
+  \end{minipage}
+  Observaties:
+  \begin{itemize}
+    \item We merken ook hier dat $M_5$, $M_{5c}$, $M_{11}$ en $M_{11c}$ significant 
+    slechter presteren.
+    \item Bij de randhistogrammen geven ook $M_{8c}$, $M_{10}$, 
+    $M_{10c}$, $M_{13}$ en (in mindere mate) $M_{8}$ aanleiding tot minder goede resultaten
+    (reden analoog aan die van bij vaaghistogrammen). 
+    \item $M_{I_3}$ geeft opnieuw de beste resultaten. Het is ook de enige vaagsimilariteitsmaat
+    waarbij de gladde versie niet tot betere prestaties leidt.
+  \end{itemize}
+}
 
 \section{Implementatie}
 \frame
@@ -1348,9 +1498,30 @@
   \includegraphics[width=0.3\textwidth]{images/giggle_4_grijs.eps}
   \end{tabular}
 }
-
-\section{Slotbeschouwingen}
-
+\frame
+{
+	\frametitle{Standaard similariteitsmaat}
+	
+	Beste similariteitsmaten:
+	\begin{itemize}
+      \item bij pixelgebaseerde: componentsgewijs vergelijken van intermediaire
+      beelden op basis kleurmomenten.
+      \item bij kleurgebaseerde: op basis van Irb-histogram (vooral in combinatie
+      met $M_{I_3}$). 
+      \item globaal:
+      \begin{itemize}
+        \item het verschil is zeer klein en
+        \item kleurmomenten bevatten minder informatie dan het Irb-histogram.
+      \end{itemize}
+    \end{itemize}
+    Daarom: de similariteitsmaat die het Irb-histogram combineert met $M_{I_3}$
+    is de standaard maat voor Giggle.
+    
+    \begin{opmerking}
+    In de praktijk geeft het glad SCT-histogram soms betere resultaten dan
+    het Irb-histogram.
+    \end{opmerking}
+}
 
 % EINDE
 
