@@ -11,7 +11,7 @@ import de.berlios.imilarity.Imilarity;
 import de.berlios.imilarity.aggregators.Aggregator;
 import de.berlios.imilarity.image.ImageData;
 import de.berlios.imilarity.measures.ImageMeasure;
-import de.berlios.imilarity.providors.Providor;
+import de.berlios.imilarity.providers.Provider;
 
 
 
@@ -30,8 +30,8 @@ public class SearchModel extends Observable {
 		this.imilarity = imilarity;		
 	}
 	
-	public void setProvidor(Providor providor) {
-		imilarity.setProvidor(providor);
+	public void setProvider(Provider provider) {
+		imilarity.setProvider(provider);
 		setChanged();
 		notifyObservers();
 	}

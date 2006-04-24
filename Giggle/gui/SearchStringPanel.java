@@ -19,8 +19,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import de.berlios.imilarity.providors.DirProvidor;
-import de.berlios.imilarity.providors.YahooProvidor;
+import de.berlios.imilarity.providers.DirProvider;
+import de.berlios.imilarity.providers.YahooProvider;
 
 
 
@@ -82,9 +82,9 @@ public class SearchStringPanel extends JPanel implements ActionListener, Observe
 			stopButton.setEnabled(true);
 			try {
 				if (comboBox.getSelectedItem().equals("Directory"))
-					searchModel.setProvidor(new DirProvidor(textField.getText()));
+					searchModel.setProvider(new DirProvider(textField.getText()));
 				else
-					searchModel.setProvidor(new YahooProvidor(textField.getText()));
+					searchModel.setProvider(new YahooProvider(textField.getText()));
 			} catch(IllegalArgumentException e1) {
 				JOptionPane.showMessageDialog(this.getParent(),
 						e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
