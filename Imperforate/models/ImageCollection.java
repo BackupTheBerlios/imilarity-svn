@@ -1,8 +1,8 @@
 package models;
 import de.berlios.imilarity.image.ImageData;
-import de.berlios.imilarity.providors.Providor;
+import de.berlios.imilarity.providers.Provider;
 
-public interface ImageCollection extends Providor {
+public interface ImageCollection extends Provider {
 	
 	public ImageData[] getExamples();
 	
