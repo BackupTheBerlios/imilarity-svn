@@ -6,7 +6,7 @@ import de.berlios.imilarity.Imilarity;
 import de.berlios.imilarity.aggregators.*;
 import de.berlios.imilarity.image.ImageData;
 import de.berlios.imilarity.measures.*;
-import de.berlios.imilarity.providors.Providor;
+import de.berlios.imilarity.providers.Provider;
 
 public class EvalImilarity extends Imilarity implements Comparable {
 	
@@ -25,7 +25,7 @@ public class EvalImilarity extends Imilarity implements Comparable {
 		if (collection == null)
 			throw new NullPointerException("collection == null");
 		this.collection = collection;
-		super.setProvidor(collection);
+		super.setProvider(collection);
 	}
 	
 	public void setMeasure(ImageMeasure measure) {
@@ -38,8 +38,8 @@ public class EvalImilarity extends Imilarity implements Comparable {
 		this.aggregator = aggregator;
 	}
 	
-	public void setProvidor(Providor providor) {
-		throw new UnsupportedOperationException("the collection is the providor for this object");
+	public void setProvider(Provider provider) {
+		throw new UnsupportedOperationException("the collection is the provider for this object");
 	}
 	
 	public void reorderPage(int page) {
