@@ -12,7 +12,7 @@ import de.berlios.imilarity.util.Describable;
 /**
  * @author Klaas Bosteels
  */
-public interface Providor extends Describable {
+public interface Provider extends Describable {
 	
 	public int getPageSize();
 	public int getPageCount();

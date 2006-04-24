@@ -23,7 +23,7 @@ import de.berlios.imilarity.image.ImageData;
 /**
  * @author Klaas Bosteels
  */
-public class YahooProvidor extends ProvidorBase {
+public class YahooProvider extends ProviderBase {
 	
 	private static final int PAGE_SIZE = 5;
 	private static final int RESULTSET_SIZE = 100;
@@ -31,27 +31,27 @@ public class YahooProvidor extends ProvidorBase {
 	private String keywords;
 	
 	
-	public YahooProvidor(String keywords) {
+	public YahooProvider(String keywords) {
 		this.keywords = keywords;
 	}
 	
 	
 	/**
-	 * @see de.berlios.imilarity.providers.Providor#getPageSize()
+	 * @see de.berlios.imilarity.providers.Provider#getPageSize()
 	 */
 	public int getPageSize() {
 		return PAGE_SIZE;
 	}
 
 	/**
-	 * @see de.berlios.imilarity.providers.Providor#getPageCount()
+	 * @see de.berlios.imilarity.providers.Provider#getPageCount()
 	 */
 	public int getPageCount() {
 		return (RESULTSET_SIZE + PAGE_SIZE - 1) / PAGE_SIZE;
 	}
 	
 	/**
-	 * @see de.berlios.imilarity.providers.Providor#getDescription()
+	 * @see de.berlios.imilarity.providers.Provider#getDescription()
 	 */
 	public String getDescription() {
 		return "Yahoo";
@@ -59,7 +59,7 @@ public class YahooProvidor extends ProvidorBase {
 	
 	
 	/**
-	 * @see de.berlios.imilarity.providers.Providor#getPage(int) 
+	 * @see de.berlios.imilarity.providers.Provider#getPage(int) 
 	 */
 	public ImageData[] getPage(int page) throws IOException {
 		SearchClient client = new SearchClient("imilarity");

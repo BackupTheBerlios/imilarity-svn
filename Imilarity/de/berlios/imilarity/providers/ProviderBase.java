@@ -7,7 +7,7 @@ package de.berlios.imilarity.providers;
 /**
  * @author Klaas Bosteels
  */
-public abstract class ProvidorBase implements Providor {
+public abstract class ProviderBase implements Provider {
 	
 	public String toString() {
 		return getDescription();

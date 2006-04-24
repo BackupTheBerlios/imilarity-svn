@@ -15,7 +15,7 @@ import de.berlios.imilarity.image.ImageData;
 /**
  * @author Klaas Bosteels
  */
-public class DirProvidor extends ProvidorBase {
+public class DirProvider extends ProviderBase {
 
 	private final File[] files;
 	
@@ -34,7 +34,7 @@ public class DirProvidor extends ProvidorBase {
 	};
 	
 	
-	public DirProvidor(String dir) {
+	public DirProvider(String dir) {
 		super();
 		if (dir == null)
 			throw new NullPointerException("dir == null");
@@ -47,21 +47,21 @@ public class DirProvidor extends ProvidorBase {
 	
 	
 	/**
-	 * @see de.berlios.imilarity.providers.Providor#getPageSize()
+	 * @see de.berlios.imilarity.providers.Provider#getPageSize()
 	 */
 	public int getPageSize() {
 		return PAGE_SIZE;
 	}
 
 	/**
-	 * @see de.berlios.imilarity.providers.Providor#getPageCount()
+	 * @see de.berlios.imilarity.providers.Provider#getPageCount()
 	 */
 	public int getPageCount() {
 		return pageCount;
 	}
 	
 	/**
-	 * @see de.berlios.imilarity.providers.Providor#getDescription()
+	 * @see de.berlios.imilarity.providers.Provider#getDescription()
 	 */
 	public String getDescription() {
 		return "Dir";
@@ -69,7 +69,7 @@ public class DirProvidor extends ProvidorBase {
 	
 	
 	/**
-	 * @see de.berlios.imilarity.providers.Providor#getPage(int)
+	 * @see de.berlios.imilarity.providers.Provider#getPage(int)
 	 */
 	public ImageData[] getPage(int page) throws IOException {
 		ImageData[] images = new ImageData[PAGE_SIZE];
