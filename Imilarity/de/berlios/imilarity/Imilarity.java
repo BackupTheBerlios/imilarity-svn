@@ -16,7 +16,7 @@ import de.berlios.imilarity.aggregators.Aggregator;
 import de.berlios.imilarity.aggregators.ArithmeticMean;
 import de.berlios.imilarity.image.ImageData;
 import de.berlios.imilarity.measures.ImageMeasure;
-import de.berlios.imilarity.providors.Providor;
+import de.berlios.imilarity.providers.Provider;
 import de.berlios.imilarity.util.ArraysBackedList;
 
 
@@ -28,30 +28,20 @@ import de.berlios.imilarity.util.ArraysBackedList;
 public class Imilarity {
 
 	// defaults: 
-	private Providor providor = null;
+	private Provider provider = null;
 	private Aggregator aggregator = new ArithmeticMean();
 	private ImageMeasure measure = null;
-//		new GrayscaledImageMeasure(new ScalingImageMeasure(
-//				new PartImageMeasure(new StagedImageMeasureFactory() {
-//					public StagedImageMeasure createMeasure() {
-//						return new ProductImageMeasure(
-//							new FuzzyHistogramImageMeasure(new M3()), 
-//							new HomImageMeasure(new FuzzyImageMeasure(new M20())));
-//					}
-//				})));
+
 	
 	private Collection examples = new HashSet(); 
 	protected ImageData[][] pages;
 	protected boolean[] pageLoaded;
 	
-	//private boolean aggregationCalculated = false;
-	//Image aggregation = null;
 	
-	
-	public void setProvidor(Providor providor) {
-		if (providor == null)
-			throw new NullPointerException("providor == null");
-		this.providor = providor;
+	public void setProvider(Provider provider) {
+		if (provider == null)
+			throw new NullPointerException("provider == null");
+		this.provider = provider;
 		pages = new ImageData[getPageCount()][getPageSize()];
 		for (int i = 0; i < pages.length; i++)
 			pages[i] = null;
@@ -106,35 +96,35 @@ public class Imilarity {
 	
 	
 	public int getPageSize() {
-		if (providor == null) 
+		if (provider == null) 
 			return 0;
-		return providor.getPageSize();
+		return provider.getPageSize();
 	}
 	
 	public int getPageCount() {
-		if (providor == null)
+		if (provider == null)
 			return 0;
-		return providor.getPageCount();
+		return provider.getPageCount();
 	}
 	
 	public ImageData[] getPage(int page) throws IOException {
-		if (providor == null)
+		if (provider == null)
 			return null;
 		if (page < 1 || page > getPageCount())
 			throw new IOException("wrong page number");
 		if (!pageLoaded[page-1]) {
 			pageLoaded[page-1] = true;
-			pages[page-1] = providor.getPage(page);
+			pages[page-1] = provider.getPage(page);
 		}
 		// Als deze methode in twee aparte draden uitgevoerd wordt dan kan het 
 		// voorkomen dat 'pages[x]' nog gelijk is aan 'null', terwijl de inhoud
 		// van 'pages[x]' wel al berekend wordt. In dat geval moet er gewacht worden...
-		else while (pages[page-1] == null);
+		else while (pages[page-1] == null) Thread.yield();
 		return pages[page-1];
 	}
 	
 	public ImageData[] getImages() throws IOException {
-		if (providor == null)
+		if (provider == null)
 			return null;
 		int ps = getPageSize(), pc = getPageCount();
 		ImageData[] images = new ImageData[ps * pc];
@@ -194,25 +184,15 @@ public class Imilarity {
 	
 	
 	public void reorderPage(int page) {
-		if (providor == null)
+		if (provider == null || pages[page-1] == null)
 			return;
-		
-//		if (!aggregationCalculated) {
-//			aggregationCalculated = true;
-//			Image[] scis = new Image[examples.size()];
-//			Iterator it = examples.iterator();
-//			for (int i = 0; i < scis.length && it.hasNext(); i++)
-//				scis[i] = ((ImageData) it.next()).getRgbImage();
-//			aggregation = new AggregatedColorImage(scis, aggregator);
-//			measure.setQuery(aggregation);
-//		}
 		for (int i = 0; i < pages[page-1].length; i++) {
 			if (pages[page-1][i] != null) {
 				aggregator.clearValues();
+				measure.setTarget(pages[page-1][i].getRgbImage());
 				Iterator it = examples.iterator();
 				while (it.hasNext()) {
 					measure.setQuery(((ImageData)it.next()).getRgbImage());
-					measure.setTarget(pages[page-1][i].getRgbImage());
 					aggregator.addValue(measure.getSimilarity());
 				}
 				pages[page-1][i].setSimilarity(aggregator.getAggregatedValue());
@@ -222,7 +202,7 @@ public class Imilarity {
 	}
 	
 	public void mergeReorderedPages() {
-		if (providor == null)
+		if (provider == null)
 			return;
 		
 		ImageData[][] arrays = new ImageData[getPageCount()][];
