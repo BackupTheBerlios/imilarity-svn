@@ -959,11 +959,11 @@ public class SettingsDialog extends JDialog {
 	};
 	
 	private static final Aggregator[] AGGREGATORS = new Aggregator[] { 
+		new Maximum(),
+		new ProbabilisticSum(),
 		new ArithmeticMean(),
 		new Minimum(),
-		new Maximum(),
-		new Product(),
-		new ProbabilisticSum()
+		new Product()
 	};
 	
 	
