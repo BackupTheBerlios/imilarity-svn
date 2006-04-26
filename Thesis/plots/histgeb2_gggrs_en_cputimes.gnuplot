@@ -43,12 +43,12 @@ set output "histgeb2_gggrs_en_cputimes.eps"
 
 set key left top
 set boxwidth 0.25
-plot "-" using ($1+0.30):2 title "rekentijd XYZ" linetype 2 axes x1y2 ,\
-	 "-" using ($1+0.50):2 title "rekentijd Yxy" linetype 3 axes x1y2,\
+plot "-" using ($1+0.30):2 title "rekentijd XYZ" linetype 5 axes x1y2 ,\
+	 "-" using ($1+0.50):2 title "rekentijd Yxy" linetype 6 axes x1y2,\
 	 "-" using ($1+0.70):2 title "rekentijd L*a*b*" linetype 4 axes x1y2,\
- 	 "-" using ($1+0.30):3 title "GGGR XYZ" linetype 5 axes x1y1,\
-         "-" using ($1+0.50):3 title "GGGR Yxy" linetype 6 axes x1y1,\
-         "-" using ($1+0.70):3 title "GGGR L*a*b*" linetype 7 axes x1y1
+ 	 "-" using ($1+0.30):3 title "GGGR XYZ" linetype 1 axes x1y1,\
+         "-" using ($1+0.50):3 title "GGGR Yxy" linetype 2 axes x1y1,\
+         "-" using ($1+0.70):3 title "GGGR L*a*b*" linetype 3 axes x1y1
 
 0	33365	0.04588744588744589
 1	32892	0.07164502164502164

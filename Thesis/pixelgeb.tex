@@ -8,7 +8,7 @@ Vandaar dat we spreken van \definas{pixelgebaseerde similariteitsmaat}{pixelgeba
 
 \section{Grijswaardebeelden}
 
-\subsection{Representatie}
+%\subsection{Representatie}
 
 Een \defin{binair beeld} is een beeld dat enkel witte en zwarte beeldpunten bevat. We kunnen een 
 $n$-dimensionaal binair beeld dus modelleren als een scherpe verzameling $A$ in $\mathbb{R}^n$, met:
@@ -34,7 +34,7 @@ A(p) \in\ ]0,1[ & \iff & p \textrm{ is een beeldpunt met een grijstint}
 \end{displaymath}
 Ook bij grijswaardebeelden is het universum in de praktijk eerder een deelverzameling van $\mathbb{N}^2$.
 
-\subsection{Similariteitsmaten}
+%\subsection{Similariteitsmaten}
 
 Door de bovenstaande representatie te combineren met de vaagsimilariteitsmaten uit 
 \ref{sectie:vaagsimilariteitsmaten}, bekomen we 23 similariteitsmaten voor grijswaardebeelden.
@@ -44,10 +44,31 @@ meeste beelden op internet kleurbeelden zijn.
 
 \section{Kleurbeelden}
 \label{sectie:pixelgeb_kleurbeelden}
+\label{sectie:kleurbeelden_similariteitsmaten}
 
-\subsection{Representatie}
-\label{sectie:kleurbeeld_repr}
+De meest eenvoudige manier om twee kleurbeelden met elkaar te vergelijken, is de beelden eerst omzetten naar 
+grijswaardebeelden en er vervolgens een similariteitsmaat voor grijswaardebeelden op toepassen. Die omzetting 
+kan bijvoorbeeld aan de hand van de formule $y = 0.3 \cdot r + 0.59 \cdot g + 0.11 \cdot b$ 
+\cite{debaets:similariteitsmaten_voor_kleurbeelden} gebeuren.
 
+Bij de klassieke manier om kleurbeelden te vergelijken, wordt een similariteitsmaat 
+voor grijswaardebeelden toegepast op elk van de kleurcomponenten. De resultaten voor de
+verschillende componenten worden daarna samengevoegd. Een kleurbeeld in het RGB-model wordt daarbij
+dus ge\"interpreteerd als een combinatie van drie grijswaardebeelden. Meestal wordt
+het rekenkundig gemiddelde gebruikt om de similariteiten van de componenten samen te voegen,
+maar er kunnen uiteraard ook andere aggregatieoperatoren aangewend worden. Door een t-norm
+te gebruiken, kan er afgedwongen worden dat beelden enkel similair kunnen
+zijn indien \emph{alle} kleurcomponenten goed op elkaar lijken. Aggregatieoperatoren
+die toelaten om bepaalde componenten meer te laten doorwegen, kunnen ook nuttig
+zijn. Als er in het HSV-model gewerkt wordt, dan kan er op die manier 
+bijvoorbeeld meer belang gehecht worden aan de kleurtint-component.
+
+De componentsgewijze aanpak behandelt de verschillende kleurcomponenten dus los van
+elkaar. In het RGB-model zijn de componenten van een kleur echter sterk gecorreleerd 
+\cite{sharma:digital_color_imaging}, waardoor er
+informatie verloren gaat als we ze elk afzonderlijk beschouwen. Dat verlies van informatie kan vermeden
+worden door gebruik te maken van een traliegebaseerde aanpak.
+%op basis van de volgende representatie.
 We beperken ons tot het RGB-model en we beschouwen de ordening $\leq_{RGB,lex}$, die
 gebaseerd is op de lexicografische ordening $\leq_{lex}$ en op de ordening voor kleuren in het 
 RGB-model uit \cite{dewitte:vect_morph_ops}:
@@ -86,36 +107,9 @@ c & \textrm{anders}
 Een $n$-dimensionaal RGB-kleurbeeld kan dus gemodelleerd worden als een L-vaagverzameling in 
 $\mathbb{R}^n$, waarbij $L=[0,1]^3$. Net zoals bij grijswaardebeelden, is 
 het universum in de praktijk echter eerder een deelverzameling van $\mathbb{N}^2$.
-
 Merk op dat er gelijkaardige representaties kunnen gedefineerd worden voor het HSV- en L*a*b*-model
 \cite{vanderweken:construction_of_quality_measures}.
 
-\subsection{Similariteitsmaten}
-\label{sectie:kleurbeelden_similariteitsmaten}
-
-De meest eenvoudige manier om twee kleurbeelden met elkaar te vergelijken, is de beelden eerst omzetten naar 
-grijswaardebeelden en er vervolgens een similariteitsmaat voor grijswaardebeelden op toepassen. Die omzetting 
-kan bijvoorbeeld aan de hand van de formule $y = 0.3 \cdot r + 0.59 \cdot g + 0.11 \cdot b$ 
-\cite{debaets:similariteitsmaten_voor_kleurbeelden} gebeuren.
-
-Bij de klassieke manier om kleurbeelden te vergelijken, wordt een similariteitsmaat 
-voor grijswaardebeelden toegepast op elk van de kleurcomponenten. De resultaten voor de
-verschillende componenten worden daarna samengevoegd. Een kleurbeeld in het RGB-model wordt daarbij
-dus ge\"interpreteerd als een combinatie van drie grijswaardebeelden. Meestal wordt
-het rekenkundig gemiddelde gebruikt om de similariteiten van de componenten samen te voegen,
-maar er kunnen uiteraard ook andere aggregatieoperatoren aangewend worden. Door een t-norm
-te gebruiken, kan er afgedwongen worden dat beelden enkel similair kunnen
-zijn indien \emph{alle} kleurcomponenten goed op elkaar lijken. Aggregatieoperatoren
-die toelaten om bepaalde componenten meer te laten doorwegen, kunnen ook nuttig
-kunnen zijn. Als er in het HSV-model gewerkt wordt, dan kan er op die manier 
-bijvoorbeeld meer belang gehecht worden aan de kleurtint-component.
-
-De componentsgewijze aanpak behandelt de verschillende kleurcomponenten dus los van
-elkaar. In het RGB-model zijn de componenten van een kleur echter sterk gecorreleerd 
-\cite{sharma:digital_color_imaging}, waardoor er
-informatie verloren gaat als we ze elk afzonderlijk beschouwen. Dat verlies van informatie kan vermeden
-worden door gebruik te maken van een traliegebaseerde aanpak,
-op basis van de bovenstaande representatie.
 We hebben in \ref{sectie:vaagsimilariteitsmaten} reeds vermeld dat de beschouwde 
 vaagsimilariteitsmaten uitbreidbaar zijn naar L-vaag\-ver\-za\-me\-ling\-en met
 $L=[0,1]^3$. Daarvoor moeten we de bewerkingen waarvan die maten gebruik maken, veralgemenen van 
@@ -138,7 +132,12 @@ $\cap$ (doorsnede) en $\cup$ (unie). Doordat we
 $(\mathcal{N},\mathcal{C},\mathcal{D})=(N_s,T_M,S_M)$ gekozen hebben, moeten we
 dus $1 - c$, $\max \{c,c'\}$ en $\min \{c,c'\}$ kunnen bepalen voor alle 
 $c(r,g,b),c'(r',g',b') \in [0,1]^3$. Daarvoor kunnen we $1 - c = (1,1,1) - (r,g,b)$ en de
-definities voor $\max$ en $\min$ uit \ref{sectie:kleurbeeld_repr} gebruiken.
+bovenstaande definities voor $\max$ en $\min$ gebruiken.
+
+%\subsection{Representatie}
+%\label{sectie:kleurbeeld_repr}
+
+%\subsection{Similariteitsmaten}
 
 
 \section{Resolutie-onafhankelijke similariteitsmaten}
@@ -183,7 +182,7 @@ voor door de beelden met elkaar te verbinden.
 We kunnen ook volledig nieuwe intermediaire beelden construeren. Een mogelijkheid is bijvoorbeeld om
 eerst kleurkwantisatie met een variabel kleurenpalet toe te passen en vervolgens een
 nieuw beeld te construeren op basis van de kleuren van het bekomen palet. Die mogelijkheid wordt getoond
-in figuur~\ref{fig:dominant_colors}.  We construeren de beelpunten 
+in figuur~\ref{fig:dominant_colors}.  We construeren de beeldpunten 
 van het nieuwe beeld van links naar rechts en van boven naar onder. Daarbij is de kleur van een beeldpunt 
 telkens de nog niet gebruikte kleur die het meest voorkomt in het gekwantiseerde beeld. 
 %Voor een 
@@ -193,7 +192,7 @@ De pixel in de linker bovenhoek van een intermediair beeld krijgt dus de kleur d
 in het gekwantiseerde beeld, terwijl we voor het beeldpunt rechts onderaan de minst voorkomende kleur
 gebruiken. 
 
-Figuur\ref{fig:moments} illustreert een derde optie, waarbij \defin{kleurmomenten} gebruikt
+Figuur~\ref{fig:moments} illustreert een derde optie, waarbij \defin{kleurmomenten} gebruikt
 worden om nieuwe intermediaire beelden te construeren. Het \definas{moment}{moment van de $k$-de orde rond $a$} ($a
 \in \mathbb{R}$) van een discrete toevalsveranderlijke $T$ met
 probabiliteitsfunctie $prob_T$ wordt als volgt gedefinieerd
@@ -223,8 +222,9 @@ c_{j,i} = \left( \frac{1}{|P|} \sum_{p \in P} (A_i(p) - c_{1,i})^j \right)^{1/j}
 Op die manier construeren we een intermediair beeld dat de
 belangrijkste informatie uit de distributie van de kleuren van het origineel beeld
 destilleert. Net zoals in \cite{stricker:similarity_of_color_images} kiezen we 
-in deze scriptie steeds $M = 3$. We vullen het gemiddelde dus aan met twee
-centrale momenten.
+%in deze scriptie steeds 
+$M = 3$. We vullen het gemiddelde dus aan met twee centrale momenten 
+(variantie en scheefheid).
 
 \subsection{Beeldonderdelen}
 
@@ -249,6 +249,14 @@ we $A_i$, $i \in \{1,2,\ldots,m\}$, en die van de andere lijst $B_j$, $j \in \{1
 Figuur~\ref{fig:multires} illustreert de constructie van die lijsten voor twee concrete
 kleurbeelden. In die figuur is de kleur van een beeldonderdeel gelijk aan de gemiddelde 
 kleur van dat onderdeel.
+
+\begin{figure}[bp]
+\vspace{10pt}
+\centering
+\includegraphics[width=10cm]{images/multires.eps}
+\caption{\label{fig:multires}Constructie van een resolutie-onafhankelijke similariteitsmaat 
+door gebruik van beeldonderdelen.}
+\end{figure}
 
 De twee geordende lijsten die we zo bekomen, gebruiken we vervolgens voor het bepalen van 
 de similariteit tussen $A$ en $B$. Daartoe overlopen we de elementen van de 
@@ -305,14 +313,6 @@ die waarden.
 %van de vaagsimilariteitsmaat $M_3$ en de traliegebaseerde aanpak uit \ref{sectie:pixelgeb_kleurbeelden}.
 %De similariteiten die  
 %toegevoegd worden aan $S$ staan in het vet. 
-
-\begin{figure}[bp]
-\vspace{10pt}
-\centering
-\includegraphics[width=10cm]{images/multires.eps}
-\caption{\label{fig:multires}Constructie van een resolutie-onafhankelijke similariteitsmaat 
-door gebruik van beeldonderdelen.}
-\end{figure}
 
 \begin{figure}[!bp]
 \vspace{10pt}
@@ -372,7 +372,7 @@ worden om een symmetrische maat te bekomen.
 \section{Experimentele observaties}
 
 %In figuur~\ref{fig:pixelgeb_gggrs_en_cputimes} 
-Tot slot van dit hoofdstuk vergelijken we enkele pixelgebaseerde similariteitsmaten.
+%Tot slot van dit hoofdstuk vergelijken we enkele pixelgebaseerde similariteitsmaten.
 Hoewel de beelden in onze testcollectie allemaal dezelfde resolutie hebben, zullen de
 resoluties van de beelden die we in de praktijk gaan vergelijken vrijwel altijd verschillend zijn.
 We beperken ons daarom tot resolutie-onafhankelijke similariteitsmaten. Die maten construeren
@@ -381,8 +381,8 @@ Voor het toepassen van de vaagsimilariteitsmaten op
 intermediaire beelden of op beeldonderdelen, beschouwen we de drie manieren uit \ref{sectie:kleurbeelden_similariteitsmaten}:
 (1) eerst omzetten naar grijswaardebeelden, 
 (2) toepassen op de afzonderlijke kleurcomponenten en 
-(3) traliegebaseerd. We gebruiken het gemiddelde om de similariteiten te aggregeren
-bij de componentsgewijze aanpak.
+(3) traliegebaseerd. We gebruiken het rekenkundig gemiddelde om de similariteiten te 
+aggregeren bij de componentsgewijze aanpak.
 
 \subsection{Resultaten van experimenten}
 
@@ -417,8 +417,37 @@ $M_{I_{3c}}$ geeft daarbij de beste GGGR-waarde. Zoals blijkt uit
 figuur~\ref{fig:results_beste_multires_pixelgeb}, zijn de resultaten van die
 maat niet zo overtuigend.
 
-Uit de grafieken blijkt dat we de beste resultaten bekomen bij de similariteitsmaten 
-die intermediaire beelden componentsgewijs vergelijken. Voor die maten proberen we, naast 
+Tabel~\ref{tab:stat_gegevens_pixelgeb_maten} bevat een minimale en een gemiddelde 
+GGGR-waarde voor elk van de vaagsimilariteitsmaten.
+\begin{table}[!b]
+\vspace{10pt}
+\centering
+\small
+\begin{tabular}{r|cccccccc}
+& $M_{1a}$ & $M_{1b}$ & $M_{1c}$ & $M_{2}$ & $M_{3}$ & $M_{5}$ & $M_{5c}$ & $M_{6}$ \\
+\hline
+minimale GGGR & 0.0147 & 0.0245 & 0.0323 & 0.0355 & 0.0093 & 0.0128 & 0.0219 & 0.0102 \\
+gemiddelde GGGR & 0.0818 & 0.0951 & 0.1115 & 0.1428 & 0.0802 & 0.0922 & 0.0971 & 0.1024\vspace{8pt}\\
+& $M_{6c}$ & $M_{7}$ & $M_{7c}$ & $M_{8}$ & $M_{8c}$ & $M_{9}$ & $M_{9c}$ & $M_{10}$ \\
+\hline
+minimale GGGR & 0.0212 & 0.0089 & 0.0203 & 0.2024 & 0.1985 & 0.0084 & 0.0201 & 0.2212 \\
+gemiddelde GGGR & 0.1145 & 0.0873 & 0.0922 & 0.3604 & 0.3688 & 0.0806 & 0.0868 & 0.3895\vspace{8pt}\\
+& $M_{10c}$ & $M_{11}$ & $M_{11c}$ & $M_{12}$ & $M_{13}$ & $M_{I_3}$ & $M_{I_{3c}}$ \\
+\hline
+minimale GGGR & 0.2106 & 0.0128 & 0.0219 & 0.0203 & 0.1985 & 0.0102 & 0.0212 \\
+gemiddelde GGGR & 0.3850 & 0.0922 & 0.0971 & 0.0922 & 0.3696 & 0.1035 & 0.1038
+\end{tabular}
+\vspace{10pt}
+\caption{\label{tab:stat_gegevens_pixelgeb_maten}De minimale en gemiddelde GGGR-waarde voor 
+de verschillende vaagsimilariteitsmaten, bij toepassing in de beschouwde pixelgebaseerde 
+similariteitsmaten.}
+\end{table}
+Die gegevens werden berekend uit de GGGRs voor de pixelgebaseerde similariteitsmaten
+die we hierboven beschouwd hebben. We zien dat $M_9$ de laagste GGGR-waarde geeft. Het is
+bij het compentsgewijs vergelijken van momentgebaseerde intermediaire beelden dat we
+die waarde bekomen. We vinden ook lage GGGRs bij het componentgebaseerd vergelijken van 
+intermediaire beelden op basis van Wu kwantisatie. Voor de maten op basis van
+die twee technieken proberen we, naast 
 het rekenkundig gemiddelde, ook nog het minimum en het product voor het aggregeren 
 van de similariteiten van de verschillende componenten. Figuur~\ref{fig:dom_colors_wu_comps_gggrs_en_cputimes}
 en figuur~\ref{fig:moments_comps_gggrs_en_cputimes} tonen de resultaten van
@@ -1533,15 +1562,38 @@ lang. Ook dat is logisch, vermits de zeer kleine afmetingen van de intermediaire
 gevolg hebben dat de rekentijd gedomineerd wordt door de tijd die nodig is om die 
 intermediaire beelden te genereren.
 
-\subsection{Conclusie}
+\section{Conclusie}
 
-Tabel \ref{tab:stat_gegevens_pixelgeb_maten} bevat een minimale en een gemiddelde GGGR-waarde voor elk van de vaagsimilariteitsmaten.
-Die gegevens werden berekend uit de GGGRs van alle pixelgebaseerde similariteitsmaten
-die we beschouwd hebben, behalve diegene die componentsgewijs vergelijken en vervolgens 
-niet het gemiddelde maar het 
-minimum of het product gebruiken om te aggregeren. We merken dat $M_3$ gemiddeld het best 
-presteert. De laagste GGGR-waarde bekomen we door momentgebaseerde intermediaire beelden 
-componentsgewijs te vergelijken met $M_9$. Figuur~\ref{fig:results_beste_moments_pixelgeb} 
+We zijn dit hoofdstuk begonnen met uit te leggen hoe grijswaardebeelden 
+ge\"interpreteerd kunnen worden als vaagverzamelingen. Vaagsimilariteitsmaten 
+laten toe om de vaagverzamelingen die we zo bekomen met elkaar te vergelijken.
+Bijgevolg is het mogelijk om op basis van die interpretatie similariteitsmaten voor 
+grijswaardebeelden te construeren. We hebben drie manieren voorgesteld om hetzelfde te 
+doen voor kleurbeelden:
+\begin{enumerate}
+  \item De beelden eerst omzetten naar grijswaardebeelden.
+  \item Voor elke kleurcomponent een grijswaardebeeld beschouwen en de similariteiten
+  tussen de beelden van de verschillende componenten aggregeren tot \'e\'en getal
+  (componentsgewijze aanpak).
+  \item L-vaagverzamelingen gebruiken om kleurbeelden te representeren en de
+  vaagsimilariteitsmaten uitbreiden zodanig dat ze kunnen toegepast worden
+  op die L-vaagverza\-me\-ling\-en (traliegebaseerde aanpak).
+\end{enumerate}
+De similariteitsmaten die we zo bekomen, zijn enkel toepasbaar op beelden van dezelfde
+resolutie. Voor dat laatste probleem hebben we twee oplossingen beschreven:
+\begin{enumerate}
+  \item De beelden omzetten naar intermediaire beelden die wel dezelfe resolutie
+  hebben.
+  \item Elk beeld partitioneren in beeldonderdelen van gelijke grootte en vervolgens
+  een globale similariteit berekenen op basis van de similariteiten tussen een aantal
+  goedgekozen beeldonderdelen.
+\end{enumerate}
+
+Hoewel de traliegebaseerde aanpak de kleurinformatie het beste behoudt, blijkt de 
+componentsgewijze methode betere resultaten te geven. Het optreden van valse positieven 
+bij de traliegebaseerde similariteitsmaten is daar de oorzaak van. We bekomen de laagste
+GGGR-waarde door momentgebaseerde intermediaire beelden componentsgewijs te vergelijken
+met behulp van $M_9$. Figuur~\ref{fig:results_beste_moments_pixelgeb} 
 toont de resultaten van die similariteitsmaat. Die resultaten kunnen nog verbeterd worden 
 door te aggregeren met behulp van het minimum in plaats van het gemiddelde. Hoewel de 
 resulterende rangschikkingen bijna identiek zijn, bekomen we in dat geval voor $M_3$, $M_6$, 
@@ -1549,26 +1601,3 @@ $M_7$ en $M_{I_3}$ een GGGR-waarde die nog een fractie lager is dan diegene die 
 met $M_9$. In figuur~\ref{fig:results_beste_moments_comps_pixelgeb} worden de resultaten
 van $M_6$ weergegeven.
 
-\begin{table}[!b]
-\vspace{10pt}
-\centering
-\small
-\begin{tabular}{r|cccccccc}
-& $M_{1a}$ & $M_{1b}$ & $M_{1c}$ & $M_{2}$ & $M_{3}$ & $M_{5}$ & $M_{5c}$ & $M_{6}$ \\
-\hline
-minimale GGGR & 0.0147 & 0.0245 & 0.0323 & 0.0355 & 0.0093 & 0.0128 & 0.0219 & 0.0102 \\
-gemiddelde GGGR & 0.0818 & 0.0951 & 0.1115 & 0.1428 & 0.0802 & 0.0922 & 0.0971 & 0.1024\vspace{8pt}\\
-& $M_{6c}$ & $M_{7}$ & $M_{7c}$ & $M_{8}$ & $M_{8c}$ & $M_{9}$ & $M_{9c}$ & $M_{10}$ \\
-\hline
-minimale GGGR & 0.0212 & 0.0089 & 0.0203 & 0.2024 & 0.1985 & 0.0084 & 0.0201 & 0.2212 \\
-gemiddelde GGGR & 0.1145 & 0.0873 & 0.0922 & 0.3604 & 0.3688 & 0.0806 & 0.0868 & 0.3895\vspace{8pt}\\
-& $M_{10c}$ & $M_{11}$ & $M_{11c}$ & $M_{12}$ & $M_{13}$ & $M_{I_3}$ & $M_{I_{3c}}$ \\
-\hline
-minimale GGGR & 0.2106 & 0.0128 & 0.0219 & 0.0203 & 0.1985 & 0.0102 & 0.0212 \\
-gemiddelde GGGR & 0.3850 & 0.0922 & 0.0971 & 0.0922 & 0.3696 & 0.1035 & 0.1038
-\end{tabular}
-\vspace{10pt}
-\caption{\label{tab:stat_gegevens_pixelgeb_maten}De minimale en gemiddelde GGGR-waarde voor 
-de verschillende vaagsimilariteitsmaten, bij toepassing in de beschouwde pixelgebaseerde 
-similariteitsmaten.}
-\end{table}

@@ -43,12 +43,12 @@ set output "histgeb_sct1_gggrs_en_cputimes.eps"
 
 set key left top
 set boxwidth 0.25
-plot "-" using ($1+0.30):2 title "rekentijd SCT" linetype 2 axes x1y2 ,\
-	 "-" using ($1+0.50):2 title "rekentijd SCT centrum" linetype 3 axes x1y2,\
+plot "-" using ($1+0.30):2 title "rekentijd SCT" linetype 5 axes x1y2 ,\
+	 "-" using ($1+0.50):2 title "rekentijd SCT centrum" linetype 6 axes x1y2,\
 	 "-" using ($1+0.70):2 title "rekentijd SCT rand" linetype 4 axes x1y2,\
- 	 "-" using ($1+0.30):3 title "GGGR SCT" linetype 5 axes x1y1,\
-	 "-" using ($1+0.50):3 title "GGGR SCT centrum" linetype 6 axes x1y1,\
-         "-" using ($1+0.70):3 title "GGGR SCT rand" linetype 7 axes x1y1
+ 	 "-" using ($1+0.30):3 title "GGGR SCT" linetype 1 axes x1y1,\
+	 "-" using ($1+0.50):3 title "GGGR SCT centrum" linetype 2 axes x1y1,\
+         "-" using ($1+0.70):3 title "GGGR SCT rand" linetype 3 axes x1y1
 
 0	36272	0.04956709956709957
 1	36182	0.08246753246753247

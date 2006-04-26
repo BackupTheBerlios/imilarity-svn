@@ -12,7 +12,7 @@ die kunnen gebruikt worden om beelden op te halen en vervolgens te vergelijken. 
 dergelijke collectie van nauw samenwerkende klassen wordt een \defin{framework} genoemd. 
 
 Het ophalen van beelden gebeurt aan de hand van een klasse die de interface 
-{\klassefont Providor} implementeert. Codefragment~\ref{code:providor} toont de definitie
+{\klassefont Provider} implementeert. Codefragment~\ref{code:provider} toont de definitie
 van die interface. Het is duidelijk dat de beelden in groepjes van 
 {\klassefont getPageSize()} doorgegeven worden, in plaats van allemaal in \'e\'en keer. 
 Dat heeft als voordeel dat de vooruitgang van het ophalen van de beelden kan 
@@ -21,10 +21,10 @@ opgevolgd worden. E\'en groepje beelden noemen we een \defin{pagina}.
 \begin{code}[bp]
 \vspace{5pt}
 \begin{lgrind}
-\input{code/Providor.java.tex}
+\input{code/Provider.java.tex}
 \end{lgrind}
 \vspace{5pt}
-\caption{\label{code:providor}Definitie van de {\klassefont Providor} interface.}
+\caption{\label{code:provider}Definitie van de {\klassefont Provider} interface.}
 \end{code}
 
 Zodra de beelden opgehaald zijn, kunnen ze met elkaar vergeleken worden. Daarvoor
@@ -37,7 +37,7 @@ Beide interfaces zijn uitbreidingen van de interface {\klassefont Measure}
 uit codefragment~\ref{code:measure}. 
 Een object van het type {\klassefont FuzzyImageMeasure} vergelijkt beelden
 met behulp van een {\klassefont FuzzyMeasure}-object. Alle overige
-{\klassefont ImageMeasure}-objecten maken gebruiken van een ander 
+{\klassefont ImageMeasure}-objecten maken gebruik van een ander 
 {\klassefont ImageMeasure}-object. Zo zal een {\klassefont ComponentsImageMeasure}
 bijvoorbeeld een andere {\klassefont ImageMeasure} gebruiken om de grijswaardebeelden
 van elk van de kleurcomponenten met elkaar te vergelijken. 
@@ -104,9 +104,9 @@ Dit zijn de verschillende stappen die daarbij plaatsvinden:
   \item De similariteitsmaat wordt ingesteld via de methode {\klassefont setMeasure}.
   \item Met behulp van de methode {\klassefont setAggregator} wordt het maximum ingesteld als
 		aggregatieoperator. 
-  \item Als {\klassefont Providor} wordt er een {\klassefont YahooProvidor} ingesteld.
-  	    Het ligt voor de hand dat die providor gebruik maakt van
-  	    \emph{Yahoo Image Search}. Bij de constructie van een dergelijke providor
+  \item Als {\klassefont Provider} wordt er een {\klassefont YahooProvider} ingesteld.
+  	    Het ligt voor de hand dat die provider gebruik maakt van
+  	    \emph{Yahoo Image Search}. Bij de constructie van een dergelijke provider
   	    moet er een zoekterm worden opgegeven. In dit geval wordt daarvoor het eerste 
   	    commandolijn-argument gebruikt. Vervolgens worden de pagina's in 
   	    het geheugen geladen door {\klassefont loadPage} op te roepen voor elke pagina.
@@ -236,7 +236,8 @@ de knop ``Settings ...'' kunnen de vensters uit figuur~\ref{fig:giggle_4}
 geopend worden. Die vensters laten toe om een andere similariteitsmaat en/of
 aggregatieoperator in te stellen. Standaard gebruikt Giggle de similariteitsmaat 
 die pseudo-vage Irb-histogrammen vergelijkt met behulp van $M_{I_3}$. 
-Die maat gaf immers een zeer lage GGGR-waarde bij onze experimenten. Het maximum is
+In \ref{sectie:conclusie_kleurgeb} zijn we immers tot de conclusie gekomen dat
+die maat het meest geschikt is voor de beschouwde praktische toepassing. Het maximum is
 de standaard aggregatieoperator.
 
 \begin{figure}[bp]
@@ -285,15 +286,16 @@ de standaard aggregatieoperator.
 \label{sectie:tests_banaan}
 
 Tot slot van dit hoofdstuk bekijken we enkele rangschikkingen die door Giggle
-gegenereerd werden voor de zoekresultaten van de zoekterm ``banaan''. We
-gebruiken daarbij de beelden uit figuur~\ref{fig:tests_banaan_voorbeelden} als
+gegenereerd werden voor de zoekresultaten van de zoekterm ``banaan''.
+Figuur~\ref{fig:resultaten_orig_banaan} toont een deel van die resultaten. We
+gebruiken de beelden uit figuur~\ref{fig:tests_banaan_voorbeelden} als
 voorbeelden. Het aggregeren van de similariteiten voor elk van die voorbeelden,
 doen we telkens met behulp van het maximum. We gaan dus met andere woorden op
 zoek naar beelden die similair zijn met minstens \'e\'en van de voorbeelden. Als
 we het minimum -- of een andere t-norm -- zouden gebruiken, dan zouden we eisen
 dat de beelden similair zijn met \emph{alle} voorbeelden. Bij de componentsgewijze
-similariteitsmaten gebruiken we het gemiddelde om de similariteiten van de 
-verschillende componenten te aggregeren.
+similariteitsmaten doen we beroep op het rekenkundig gemiddelde om de similariteiten 
+van de verschillende componenten te aggregeren.
 
 Figuur~\ref{fig:tests_banaan_1} toont de eerste tien beelden van drie rangschikkingen
 die werden bekomen aan de hand van pixelgebaseerde similariteitsmaten. Voor de
@@ -326,10 +328,10 @@ rangschikken van de zoekresultaten voor ``banaan''.}
 \includegraphics[scale=0.6]{images/banaan_scaling_1_2.eps} &
 \includegraphics[scale=0.6]{images/banaan_scaling_1_3.eps} &
 \includegraphics[scale=0.6]{images/banaan_scaling_1_4.eps} &
-\includegraphics[scale=0.6]{images/banaan_scaling_1_5.eps} \\
+\includegraphics[scale=0.6]{images/banaan_scaling_1_5.eps} \vspace{2pt}\\
 \includegraphics[scale=0.6]{images/banaan_scaling_2_1.eps} & 
 \includegraphics[scale=0.6]{images/banaan_scaling_2_2.eps} &
-\includegraphics[scale=0.45]{images/banaan_scaling_2_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_scaling_2_3.eps} &
 \includegraphics[scale=0.6]{images/banaan_scaling_2_4.eps} & 
 \includegraphics[scale=0.6]{images/banaan_scaling_2_5.eps}
 \end{tabular}
@@ -345,12 +347,12 @@ rangschikken van de zoekresultaten voor ``banaan''.}
 \includegraphics[scale=0.6]{images/banaan_moments_1_2.eps} &
 \includegraphics[scale=0.6]{images/banaan_moments_1_3.eps} &
 \includegraphics[scale=0.6]{images/banaan_moments_1_4.eps} &
-\includegraphics[scale=0.6]{images/banaan_moments_1_5.eps} \\
+\includegraphics[scale=0.6]{images/banaan_moments_1_5.eps} \vspace{2pt}\\
 \includegraphics[scale=0.6]{images/banaan_moments_2_1.eps} & 
 \includegraphics[scale=0.6]{images/banaan_moments_2_2.eps} &
 \includegraphics[scale=0.6]{images/banaan_moments_2_3.eps} &
 \includegraphics[scale=0.6]{images/banaan_moments_2_4.eps} & 
-\includegraphics[scale=0.45]{images/banaan_moments_2_5.eps}
+\includegraphics[scale=0.6]{images/banaan_moments_2_5.eps}
 \end{tabular}
 \vspace{5pt}
 \end{minipage}
@@ -364,7 +366,7 @@ rangschikken van de zoekresultaten voor ``banaan''.}
 \includegraphics[scale=0.6]{images/banaan_parts_1_2.eps} &
 \includegraphics[scale=0.6]{images/banaan_parts_1_3.eps} &
 \includegraphics[scale=0.6]{images/banaan_parts_1_4.eps} &
-\includegraphics[scale=0.6]{images/banaan_parts_1_5.eps} \\
+\includegraphics[scale=0.6]{images/banaan_parts_1_5.eps} \vspace{2pt}\\
 \includegraphics[scale=0.6]{images/banaan_parts_2_1.eps} & 
 \includegraphics[scale=0.6]{images/banaan_parts_2_2.eps} &
 \includegraphics[scale=0.6]{images/banaan_parts_2_3.eps} &
@@ -388,7 +390,7 @@ op basis van componentsgewijze toepassing van (a) $M_7$, (b) $M_9$ en (c) $M_{I_
 \includegraphics[scale=0.6]{images/banaan_irb_1_2.eps} &
 \includegraphics[scale=0.6]{images/banaan_irb_1_3.eps} &
 \includegraphics[scale=0.6]{images/banaan_irb_1_4.eps} &
-\includegraphics[scale=0.6]{images/banaan_irb_1_5.eps} \\
+\includegraphics[scale=0.6]{images/banaan_irb_1_5.eps} \vspace{2pt}\\
 \includegraphics[scale=0.6]{images/banaan_irb_2_1.eps} & 
 \includegraphics[scale=0.6]{images/banaan_irb_2_2.eps} &
 \includegraphics[scale=0.6]{images/banaan_irb_2_3.eps} &
@@ -407,7 +409,7 @@ op basis van componentsgewijze toepassing van (a) $M_7$, (b) $M_9$ en (c) $M_{I_
 \includegraphics[scale=0.6]{images/banaan_sct_1_2.eps} &
 \includegraphics[scale=0.6]{images/banaan_sct_1_3.eps} &
 \includegraphics[scale=0.6]{images/banaan_sct_1_4.eps} &
-\includegraphics[scale=0.6]{images/banaan_sct_1_5.eps} \\
+\includegraphics[scale=0.6]{images/banaan_sct_1_5.eps} \vspace{2pt}\\
 \includegraphics[scale=0.6]{images/banaan_sct_2_1.eps} & 
 \includegraphics[scale=0.6]{images/banaan_sct_2_2.eps} &
 \includegraphics[scale=0.6]{images/banaan_sct_2_3.eps} &
@@ -426,7 +428,7 @@ op basis van componentsgewijze toepassing van (a) $M_7$, (b) $M_9$ en (c) $M_{I_
 \includegraphics[scale=0.6]{images/banaan_smoothed_sct_1_2.eps} &
 \includegraphics[scale=0.6]{images/banaan_smoothed_sct_1_3.eps} &
 \includegraphics[scale=0.6]{images/banaan_smoothed_sct_1_4.eps} &
-\includegraphics[scale=0.6]{images/banaan_smoothed_sct_1_5.eps} \\
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_1_5.eps} \vspace{2pt}\\
 \includegraphics[scale=0.6]{images/banaan_smoothed_sct_2_1.eps} & 
 \includegraphics[scale=0.6]{images/banaan_smoothed_sct_2_2.eps} &
 \includegraphics[scale=0.6]{images/banaan_smoothed_sct_2_3.eps} &
@@ -450,7 +452,7 @@ op basis van $M_{I_3}$ in combinatie met (a) het Irb-histogram, (b) het SCT-hist
 \includegraphics[scale=0.6]{images/banaan_smoothed_sct_1_2.eps} &
 \includegraphics[scale=0.6]{images/banaan_smoothed_sct_1_3.eps} &
 \includegraphics[scale=0.6]{images/banaan_smoothed_sct_1_4.eps} &
-\includegraphics[scale=0.6]{images/banaan_smoothed_sct_1_5.eps} \\
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_1_5.eps} \vspace{2pt}\\
 \includegraphics[scale=0.6]{images/banaan_smoothed_sct_2_1.eps} & 
 \includegraphics[scale=0.6]{images/banaan_smoothed_sct_2_2.eps} &
 \includegraphics[scale=0.6]{images/banaan_smoothed_sct_2_3.eps} &
@@ -469,7 +471,7 @@ op basis van $M_{I_3}$ in combinatie met (a) het Irb-histogram, (b) het SCT-hist
 \includegraphics[scale=0.6]{images/banaan_smoothed_sct_spatial_1_2.eps} &
 \includegraphics[scale=0.6]{images/banaan_smoothed_sct_spatial_1_3.eps} &
 \includegraphics[scale=0.6]{images/banaan_smoothed_sct_spatial_1_4.eps} &
-\includegraphics[scale=0.6]{images/banaan_smoothed_sct_spatial_1_5.eps} \\
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_spatial_1_5.eps} \vspace{2pt}\\
 \includegraphics[scale=0.6]{images/banaan_smoothed_sct_spatial_2_1.eps} & 
 \includegraphics[scale=0.6]{images/banaan_smoothed_sct_spatial_2_2.eps} &
 \includegraphics[scale=0.6]{images/banaan_smoothed_sct_spatial_2_3.eps} &
@@ -488,7 +490,7 @@ op basis van $M_{I_3}$ in combinatie met (a) het Irb-histogram, (b) het SCT-hist
 \includegraphics[scale=0.6]{images/banaan_smoothed_sct_edgy_1_2.eps} &
 \includegraphics[scale=0.6]{images/banaan_smoothed_sct_edgy_1_3.eps} &
 \includegraphics[scale=0.6]{images/banaan_smoothed_sct_edgy_1_4.eps} &
-\includegraphics[scale=0.6]{images/banaan_smoothed_sct_edgy_1_5.eps} \\
+\includegraphics[scale=0.6]{images/banaan_smoothed_sct_edgy_1_5.eps} \vspace{2pt}\\
 \includegraphics[scale=0.6]{images/banaan_smoothed_sct_edgy_2_1.eps} & 
 \includegraphics[scale=0.6]{images/banaan_smoothed_sct_edgy_2_2.eps} &
 \includegraphics[scale=0.6]{images/banaan_smoothed_sct_edgy_2_3.eps} &

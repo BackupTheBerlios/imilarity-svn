@@ -43,12 +43,12 @@ set output "scaling_gggrs_en_cputimes.eps"
 
 set key left top
 set boxwidth 0.25
-plot "-" using ($1+0.30):2 title "rekentijd grijswaarde" linetype 2 axes x1y2 ,\
-	 "-" using ($1+0.50):2 title "rekentijd componenten" linetype 3 axes x1y2,\
+plot "-" using ($1+0.30):2 title "rekentijd grijswaarde" linetype 5 axes x1y2 ,\
+	 "-" using ($1+0.50):2 title "rekentijd componenten" linetype 6 axes x1y2,\
 	 "-" using ($1+0.70):2 title "rekentijd tralie" linetype 4 axes x1y2,\
- 	 "-" using ($1+0.30):3 title "GGGR grijswaarde" linetype 5 axes x1y1,\
-         "-" using ($1+0.50):3 title "GGGR componenten" linetype 6 axes x1y1,\
-         "-" using ($1+0.70):3 title "GGGR tralie" linetype 7 axes x1y1
+ 	 "-" using ($1+0.30):3 title "GGGR grijswaarde" linetype 1 axes x1y1,\
+         "-" using ($1+0.50):3 title "GGGR componenten" linetype 2 axes x1y1,\
+         "-" using ($1+0.70):3 title "GGGR tralie" linetype 3 axes x1y1
 
 0	41645	0.09393939393939395
 1	40842	0.1051948051948052

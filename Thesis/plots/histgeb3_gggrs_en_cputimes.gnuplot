@@ -43,12 +43,12 @@ set output "histgeb3_gggrs_en_cputimes.eps"
 
 set key left top
 set boxwidth 0.25
-plot "-" using ($1+0.30):2 title "rekentijd focaal" linetype 2 axes x1y2 ,\
-	 "-" using ($1+0.50):2 title "rekentijd SCT" linetype 3 axes x1y2,\
+plot "-" using ($1+0.30):2 title "rekentijd focaal" linetype 5 axes x1y2 ,\
+	 "-" using ($1+0.50):2 title "rekentijd SCT" linetype 6 axes x1y2,\
 	 "-" using ($1+0.70):2 title "rekentijd vaag" linetype 4 axes x1y2,\
- 	 "-" using ($1+0.30):3 title "GGGR focaal" linetype 5 axes x1y1,\
-	 "-" using ($1+0.50):3 title "GGGR SCT" linetype 6 axes x1y1,\
-         "-" using ($1+0.70):3 title "GGGR vaag" linetype 7 axes x1y1
+ 	 "-" using ($1+0.30):3 title "GGGR focaal" linetype 1 axes x1y1,\
+	 "-" using ($1+0.50):3 title "GGGR SCT" linetype 2 axes x1y1,\
+         "-" using ($1+0.70):3 title "GGGR vaag" linetype 3 axes x1y1
 
 0	205582	0.14502164502164502
 1	201157	0.15303030303030302

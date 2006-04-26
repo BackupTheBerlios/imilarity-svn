@@ -26,7 +26,10 @@ uit de databank te overlopen, vermits de databank ge\"indexeerd is op de annotat
 
 \section{Inhoudgebaseerd zoeken van beelden}
 
-Omdat de tekstgebaseerde aanpak in de praktijk dikwijls tekortschiet, is men op zoek gegaan 
+Figuur~\ref{fig:resultaten_orig_banaan} toont de eerste 25 zoekresultaten die teruggegeven 
+worden door \emph{Yahoo Image Search} voor de query ``banaan''. Uit dat voorbeeld
+blijkt dat de tekstgebaseerde aanpak in de praktijk niet altijd even goed werkt. Men is 
+daarom op zoek gegaan 
 naar manieren om het zoeken te baseren op de visuele inhoud van de beelden 
 \cite{smeulders:cbir_end_of_early_years}. Zo zijn de \defin{content-based image retrieval} (CBIR) systemen 
 \cite{veltcamp:cbirs} ontstaan. 
@@ -36,30 +39,65 @@ figuur~\ref{fig:cbir}. Er wordt gebruik gemaakt van een proces dat \defin{kenmer
 \defin{kenmerkvector} (\defin{feature vector}). Met behulp van multidimensionale indexering kan die
 vector dan gebruikt worden als alternatief voor de tekstuele annotaties bij TBIR.
 
+\begin{figure}[bp]
+\vspace{10pt}
+\centering
+\begin{tabular}{@{}ccccc@{}}
+\includegraphics[scale=0.6]{images/banaan_orig_1_1.eps} &
+\includegraphics[scale=0.5]{images/banaan_orig_1_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_orig_1_3.eps} &
+\includegraphics[scale=0.4]{images/banaan_orig_1_4.eps} &
+\includegraphics[scale=0.5]{images/banaan_orig_1_5.eps}\vspace{10pt}\\
+\includegraphics[scale=0.6]{images/banaan_orig_2_1.eps} &
+\includegraphics[scale=0.7]{images/banaan_orig_2_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_orig_2_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_orig_2_4.eps} &
+\includegraphics[scale=0.6]{images/banaan_orig_2_5.eps}\vspace{10pt}\\
+\includegraphics[scale=0.6]{images/banaan_orig_3_1.eps} &
+\includegraphics[scale=0.6]{images/banaan_orig_3_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_orig_3_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_orig_3_4.eps} &
+\includegraphics[scale=0.6]{images/banaan_orig_3_5.eps}\vspace{10pt}\\
+\includegraphics[scale=0.6]{images/banaan_orig_4_1.eps} &
+\includegraphics[scale=0.8]{images/banaan_orig_4_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_orig_4_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_orig_4_4.eps} &
+\includegraphics[scale=0.6]{images/banaan_orig_4_5.eps}\vspace{10pt}\\
+\includegraphics[scale=0.6]{images/banaan_orig_5_1.eps} &
+\includegraphics[scale=0.6]{images/banaan_orig_5_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_orig_5_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_orig_5_4.eps} &
+\includegraphics[scale=0.6]{images/banaan_orig_5_5.eps}
+\end{tabular}
+\vspace{10pt}
+\caption{\label{fig:resultaten_orig_banaan}De eerste 25 zoekresultaten voor de query "banaan".}
+\end{figure}
+
 De meeste CBIR-systemen werken volgens het \defin{query-by-example} principe. Dat houdt in dat de
 gebruiker een beeld als voorbeeld opgeeft, waarna het systeem op zoek gaat naar beelden
 die visuele gelijkenissen vertonen met dat voorbeeld. Daartoe wordt eerst de kenmerkvector van
 het opgegeven beeld bepaald, om die vervolgens te vergelijken met de kenmerkvectoren in
 de databank. Het uiteindelijke resultaat bestaat uit de beelden uit de databank 
 waarvan de overeenkomstige vectoren grote similariteit vertonen met de vector van het 
-voorbeeld. Doordat de databank ge\"indexeerd is op de kenmerkvectoren, is het niet nodig
-om ze volledig te overlopen.
+voorbeeld. 
+%Doordat de databank ge\"indexeerd is op de kenmerkvectoren, is het niet nodig
+%om alle vectoren te overlopen.
 
 \begin{figure}[!b]
 \vspace{10pt}
 \centering
 \subfigure[]{
-\includegraphics[width=10cm]{images/tbir.eps}
+\includegraphics[width=9cm]{images/tbir.eps}
 \label{fig:tbir}
 }
 \vspace{5pt}
 \subfigure[]{
-\includegraphics[width=10cm]{images/cbir.eps}
+\includegraphics[width=9cm]{images/cbir.eps}
 \label{fig:cbir}
 }
 \vspace{5pt}
 \subfigure[]{
-\includegraphics[width=10cm]{images/simgeb_rangschikken.eps}
+\includegraphics[width=9cm]{images/simgeb_rangschikken.eps}
 \label{fig:simgeb_rangschikken}
 }
 \caption{\label{fig:cbir_en_tbir}Algemene architectuur van (a) een TBIR-systeem, 
@@ -74,7 +112,9 @@ doorzoeken van zeer omvangrijke databanken. Bovendien beschikt de gebruiker niet
 een geschikt voorbeeld. Dat probleem kan eventueel nog opgelost worden door gebruik
 te maken van een voorbeeld-schets, maar ook dat is in de praktijk niet altijd even handig.
 Het is bijgevolg zinvol om te zoeken naar manieren om inhoudgebaseerde aspecten toe te voegen aan
-TBIR-systemen. De manier die we in deze scriptie bespreken, is het 
+TBIR-systemen. 
+
+De manier die we in deze scriptie bespreken, is het 
 similariteitsgebaseerd rangschikken van de zoekresultaten van een TBIR-systeem. 
 Figuur~\ref{fig:simgeb_rangschikken} toont de algemene architectuur van een systeem
 dat die techniek implementeert. We verwachten
@@ -84,3 +124,45 @@ de mogelijkheid om een verzameling van voorbeelden te kiezen uit die lijst. Het
 systeem zorgt er vervolgens voor dat de zoekresultaten gerangschikt worden in 
 volgorde van similariteit met de voorbeelden.
 
+Beschouw bijvoorbeeld de zoekresultaten uit figuur~\ref{fig:resultaten_orig_banaan}. Als
+we effectief op zoek zijn naar een beeld van een banaan, dan zijn het
+eerste en het voorlaatste beeld vrij goede resultaten. Bij een uitbreiding die het 
+similariteitsgebaseerd rangschikken implementeert, kunnen die beelden als
+voobeeld opgegeven worden. Via \'e\'en van de technieken die we verder in dit
+eindwerk bespreken, bekomen we dan de rangschikking uit 
+figuur~\ref{fig:resultaten_sorted_banaan}. Die rangschikking kan eventueel nog 
+verder verfijnd worden door bijkomende voorbeelden op te geven.
+
+\begin{figure}[!bp]
+\vspace{10pt}
+\centering
+\begin{tabular}{@{}ccccc@{}}
+\includegraphics[scale=0.6]{images/banaan_sorted_1_1.eps} &
+\includegraphics[scale=0.6]{images/banaan_sorted_1_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_sorted_1_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_sorted_1_4.eps} &
+\includegraphics[scale=0.6]{images/banaan_sorted_1_5.eps}\vspace{10pt}\\
+\includegraphics[scale=0.6]{images/banaan_sorted_2_1.eps} &
+\includegraphics[scale=0.6]{images/banaan_sorted_2_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_sorted_2_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_sorted_2_4.eps} &
+\includegraphics[scale=0.6]{images/banaan_sorted_2_5.eps}\vspace{10pt}\\
+\includegraphics[scale=0.6]{images/banaan_sorted_3_1.eps} &
+\includegraphics[scale=0.6]{images/banaan_sorted_3_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_sorted_3_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_sorted_3_4.eps} &
+\includegraphics[scale=0.6]{images/banaan_sorted_3_5.eps}\vspace{10pt}\\
+\includegraphics[scale=0.6]{images/banaan_sorted_4_1.eps} &
+\includegraphics[scale=0.6]{images/banaan_sorted_4_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_sorted_4_3.eps} &
+\includegraphics[scale=0.6]{images/banaan_sorted_4_4.eps} &
+\includegraphics[scale=0.6]{images/banaan_sorted_4_5.eps}\vspace{10pt}\\
+\includegraphics[scale=0.6]{images/banaan_sorted_5_1.eps} &
+\includegraphics[scale=0.6]{images/banaan_sorted_5_2.eps} &
+\includegraphics[scale=0.6]{images/banaan_sorted_5_3.eps} &
+\includegraphics[scale=0.8]{images/banaan_sorted_5_4.eps} &
+\includegraphics[scale=0.6]{images/banaan_sorted_5_5.eps}
+\end{tabular}
+\vspace{10pt}
+\caption{\label{fig:resultaten_sorted_banaan}De eerste 25 gerangschikte zoekresultaten voor de query "banaan".}
+\end{figure}

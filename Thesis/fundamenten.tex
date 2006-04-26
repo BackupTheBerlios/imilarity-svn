@@ -165,42 +165,68 @@ $(\forall a \in [0,1])(\mathcal{D}(0,a)=\mathcal{D}(a,0)=a)$ dan is het een semi
 Een driehoeksconorm (t-conorm) is een commutatieve en associatieve semi-conorm.
 \end{definitie}
 \noindent
-De meest gebruikte negator is de standaardnegator $N_s$. Het minimum $T_M$ en het algebra\"isch 
-product $T_P$ zijn veelgebruikte t-normen. Bij de t-conormen zijn het maximum $S_M$ en de
-probabilistische som $S_P$ dan weer populaire mogelijkheden. Die operatoren worden als 
-volgt gedefinieerd:
+De meest gebruikte negator is de standaardnegator $N_s$:
+$N_s(x)=1-x$, $\forall x \in [0,1]$.
+Het minimum $T_M$, het algebra\"isch 
+product $T_P$, de Lukasiewicz t-norm $T_W$ en de de drastische t-norm $T_D$ zijn 
+veelgebruikte t-normen. Bij de t-conormen zijn het maximum $S_M$, de
+probabilistische som $S_P$, de Lukasiewicz t-conorm $S_W$ en de drastische 
+t-conorm $S_D$ dan weer 
+populaire mogelijkheden. Die operatoren worden als volgt gedefinieerd:
 %\begin{displaymath}
 %\begin{array}{r@{\quad=\quad}l}
 \begin{align*}
-N_s(x) &= 1 - x \\
-T_M(x,y) &= \min \{x,y\} \\
-T_P(x,y) &= x \cdot y \\
-S_M(x,y) &= \max \{x,y\} \\
-S_P(x,y) &= x + y - x \cdot y
+T_M(x,y) &= \min \{x,y\} 		& S_M(x,y) &= \max \{x,y\} \\
+T_P(x,y) &= x \cdot y 			& S_P(x,y) &= x + y - x \cdot y\\
+T_W(x,y) &= \max \{0,x+y-1\} 	& S_W(x,y) &= \min \{1,x+y\}\\
+T_D(x,y) &= \begin{cases}		
+\min\{x,y\} & \text{als } \max \{x,y\}=1\\
+0 			& \text{anders}
+\end{cases}
+& S_D(x,y) &= \begin{cases}
+\max\{x,y\} & \text{als } \min \{x,y\}=0\\
+1 			& \text{anders} 		
+\end{cases}
 \end{align*}
 %\end{array}
 %\end{displaymath}
 voor alle $(x,y)$ in $[0,1]^2$. Figuur~\ref{fig:grafieken_normen} toont de corresponderende
-grafieken.
+grafieken. Merk op dat voor elke t-norm $\mathcal{T}$ en t-conorm $\mathcal{S}$ geldt:
+\begin{displaymath}
+T_D(x,y) \le \mathcal{T}(x,y) \le T_M(x,y) \le S_M(x,y) \le \mathcal{S}(x,y) \le S_D(x,y)
+\end{displaymath}
+voor alle $(x,y) \in [0,1]^2$.
 
 \begin{figure}[bp]
 \vspace{5pt}
 \centering
 \subfigure[]{
-\includegraphics[width=0.48\textwidth]{images/t_m.eps}
+\includegraphics[width=0.48\textwidth,height=5cm]{images/t_m.eps}
 }
 \subfigure[]{
-\includegraphics[width=0.48\textwidth]{images/s_m.eps}
+\includegraphics[width=0.48\textwidth,height=5cm]{images/s_m.eps}
 }
 \subfigure[]{
-\includegraphics[width=0.48\textwidth]{images/t_p.eps}
+\includegraphics[width=0.48\textwidth,height=5cm]{images/t_p.eps}
 }
 \subfigure[]{
-\includegraphics[width=0.48\textwidth]{images/s_p.eps}
+\includegraphics[width=0.48\textwidth,height=5cm]{images/s_p.eps}
+}
+\subfigure[]{
+\includegraphics[width=0.48\textwidth,height=5cm]{images/t_w.eps}
+}
+\subfigure[]{
+\includegraphics[width=0.48\textwidth,height=5cm]{images/s_w.eps}
+}
+\subfigure[]{
+\includegraphics[width=0.48\textwidth,height=5cm]{images/t_d.eps}
+}
+\subfigure[]{
+\includegraphics[width=0.48\textwidth,height=5cm]{images/s_d.eps}
 }
 \vspace{5pt}
-\caption{\label{fig:grafieken_normen}De grafiek voor (a) $T_M$, (b) $S_M$, (c) $T_P$ en 
-(d) $S_P$.}
+\caption{\label{fig:grafieken_normen}De grafiek voor (a) $T_M$, (b) $S_M$, (c) $T_P$,
+(d) $S_P$, (e) $T_W$, (f) $S_W$, (g) $T_D$ en (h) $S_D$.}
 \end{figure}
 
 We kunnen de bovenstaande operatoren nu gebruiken om de klassieke verzameltechnische bewerkingen 
@@ -235,11 +261,12 @@ In het vervolg van deze scriptie zullen we steeds
 $(\mathcal{N},\mathcal{C},\mathcal{D})=(N_s,T_M,S_M)$ kiezen. We voeren daarom de volgende
 verkorte notaties in:
 \begin{align*}
-A^c 			&= co_{N_s} A \\
-A \cap B 		&= A \cap_{T_M} B \\
-A \cup B		&= A \cup_{S_M} B \\
-A \setminus B  	&= A \cap B^c \\
-A \triangle B 	&= (A \setminus B) \cup (B \setminus A)
+A^c 		&= co_{N_s} A 		
+& A \cap B 	&= A \cap_{T_M} B 
+& A \setminus B &= A \cap B^c \\
+ 			& 			% leeg
+& A \cup B	&= A \cup_{S_M} B 
+& A \triangle B &= (A \setminus B) \cup (B \setminus A)
 \end{align*}
 waarbij $A$ en $B$ vaagverzamelingen in een zelfde universum zijn.
 
@@ -318,7 +345,8 @@ vaagverzamelingen in $\mathcal{F}_L(X) \times \mathcal{F}_L(X)$. De details van 
 uitbreiding behandelen we in \ref{sectie:pixelgeb_kleurbeelden}. 
 We komen zo uiteindelijk tot
 de vaagsimilariteitsmaten die worden weergegeven in tabel~\ref{tab:similatiteitsmaten}. 
-Alle maten uit die tabel zijn reflexief en symmetrisch. Dat wil zeggen dat 
+Alle maten uit die tabel zijn reflexief en symmetrisch 
+\cite{vanderweken:similariteitsmaten}. Dat wil zeggen dat 
 voor elke maat $M$ geldt: $M(A,A)=1$ en $M(A,B)=M(B,A)$. 
 
 \begin{table}[!bp]
@@ -393,9 +421,11 @@ een eindige verzameling getallen te reduceren tot \'e\'en representatief getal. 
 vaagverzamelingen wordt doorgaans de volgende definitie gebruikt 
 \cite{detyniecki:numerical_aggregation_operators}:
 \begin{definitie}
-Een aggregatieoperator $a$ is een stijgende $\bigcup_{n \in \mathbb{N}}[0,1]^n - [0,1]$ afbeelding
+Een aggregatieoperator $a$ is een stijgende 
+$\bigcup_{n \in \mathbb{N}\setminus\{0\}}[0,1]^n - [0,1]$ afbeelding
 waarvoor $a(x)=x$, $\forall x \in [0,1]$, en die voldoet aan de randvoorwaarden 
-$a(0,0,\ldots,0)=0$ en $a(1,1,\ldots,1)=1$.
+$a(y)=0$, $\forall y \in \bigcup_{n \in \mathbb{N}\setminus\{0\}}\{0\}^n$, en 
+$a(z)=1$, $\forall z \in \bigcup_{n \in \mathbb{N}\setminus\{0\}}\{1\}^n$.
 \end{definitie}
 \noindent
 Bovenop de eisen die opgelegd worden in die algemene definitie, worden er vaak nog
@@ -404,10 +434,51 @@ bijkomende eigenschappen vooropgesteld
 
 Op basis van de manier waarop de aggregatie gebeurt, kunnen aggregatieoperatoren onderverdeeld
 worden in verschillende categorie\"en \cite{grabisch:fuzzy_aggregation_of_numerical_preferences}:
-conjunctieve, disjunctieve, compenserende, niet-compenserende en gewogen operatoren.
-In \cite{detyniecki:numerical_aggregation_operators} wordt er een overzicht gegeven van
-de bestaande aggregatieoperatoren. Het rekenkundig en het gewogen gemiddelde zijn
-veelgebruikte aggregatieoperatoren. Ook het minimum en het maximum behoren
-tot de mogelijkheden. Meer algemeen is het niet moeilijk om in te zien 
+\begin{description}
+\item[conjunctieve operatoren] Het is niet moeilijk om in te zien 
 dat we, wegens de associativiteit, door recursieve toepassing van een willekeurige
-t-norm of t-conorm een aggregatieoperator bekomen.
+t-norm of t-conorm een aggregatieoperator bekomen. Dergelijke operatoren worden
+\defin{conjunctieve operatoren} genoemd.
+\item[disjunctieve operatoren] Ook t-conormen kunnen aangewend worden om
+aggregatieoperatoren te construeren. In dat geval wordt de naam 
+\defin{disjunctieve operatoren} gebruikt.
+\item[compenserende operatoren] Een aggregatieoperator $a$ is 
+\definas{compenserende operatoren}{compenserend} indien
+\begin{displaymath}
+\min \{x_1,x_2,\ldots,x_n\} \le a(x_1,x_2,\ldots,x_n) \le \max \{x_1,x_2,\ldots,x_n\}
+\end{displaymath}
+voor alle $(x_1,x_2,\ldots,x_n) \in [0,1]^n$ ($n \in \mathbb{N}\setminus\{0\}$). 
+Op het minimum en het maximum na kunnen
+conjunctieve of disjunctieve operatoren bijgevolg niet compenserend zijn, 
+want het minimum is de grootste t-norm en het maximum is de kleinste t-conorm. 
+Het \defin{rekenkundig gemiddelde} $mean_{arith}$ is een voorbeeld van een 
+compenserende operator:
+\begin{displaymath}
+mean_{arith}(x_1,x_2, \ldots ,x_n) = \frac{1}{n} \cdot \sum_{i=1}^n x_i
+\end{displaymath}
+voor alle $(x_1,x_2,\ldots,x_n) \in [0,1]^n$, met $n \in \mathbb{N}\setminus\{0\}$.
+\item[niet-compenserende operatoren] Er bestaan ook aggregatieoperatoren die 
+niet conjunctief, disjunctief of compenserend zijn. \emph{Symmetrische sommen} 
+\cite{grabisch:fuzzy_aggregation_of_numerical_preferences} zijn
+voorbeelden van dergelijke operatoren.
+\item[gewogen operatoren] Gewogen operatoren zijn uitbreidingen van operatoren
+uit \'e\'en van de bovenstaande categori\"en, waarbij het belang van elk van de 
+te aggregeren waarden kan opgegeven worden. Het 
+\definas{rekenkundig gemiddelde!gewogen}{gewogen rekenkundig gemiddelde}
+$wmean_{arith}$ is een voorbeeld van een dergelijke operator:
+\begin{displaymath}
+wmean_{arith}(x_1,x_2,\ldots,x_n)=\sum_{i=1}^n w_i \cdot x_i
+\end{displaymath}
+voor alle $(x_1,x_2,\ldots,x_n) \in [0,1]^n$, met
+$n \in \mathbb{N}\setminus\{0\}$, 
+$(w_1,w_2,\ldots,w_n) \in \{w \in \mathbb{R}^n \mid w \ge 0\}$ en
+$\sum_{i=1}^n w_i = 1$.
+
+\end{description}
+In \cite{detyniecki:numerical_aggregation_operators} wordt er een overzicht gegeven van
+de bestaande aggregatieoperatoren. 
+% Het rekenkundig en het gewogen gemiddelde zijn
+% veelgebruikte aggregatieoperatoren. Ook het minimum en het maximum behoren
+% tot de mogelijkheden. Meer algemeen is het niet moeilijk om in te zien 
+% dat we, wegens de associativiteit, door recursieve toepassing van een willekeurige
+% t-norm of t-conorm een aggregatieoperator bekomen.

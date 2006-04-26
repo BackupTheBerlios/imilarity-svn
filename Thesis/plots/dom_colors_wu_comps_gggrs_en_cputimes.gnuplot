@@ -43,12 +43,12 @@ set output "dom_colors_wu_comps_gggrs_en_cputimes.eps"
 
 set key left top
 set boxwidth 0.25
-plot "-" using ($1+0.30):2 title "rekentijd gemiddelde" linetype 2 axes x1y2 ,\
-	 "-" using ($1+0.50):2 title "rekentijd minimum" linetype 3 axes x1y2,\
+plot "-" using ($1+0.30):2 title "rekentijd gemiddelde" linetype 5 axes x1y2 ,\
+	 "-" using ($1+0.50):2 title "rekentijd minimum" linetype 6 axes x1y2,\
 	 "-" using ($1+0.70):2 title "rekentijd product" linetype 4 axes x1y2,\
- 	 "-" using ($1+0.30):3 title "GGGR gemiddelde" linetype 5 axes x1y1,\
-         "-" using ($1+0.50):3 title "GGGR minimum" linetype 6 axes x1y1,\
-         "-" using ($1+0.70):3 title "GGGR product" linetype 7 axes x1y1
+ 	 "-" using ($1+0.30):3 title "GGGR gemiddelde" linetype 1 axes x1y1,\
+         "-" using ($1+0.50):3 title "GGGR minimum" linetype 2 axes x1y1,\
+         "-" using ($1+0.70):3 title "GGGR product" linetype 3 axes x1y1
 
 0	51476	0.07792207792207792
 1	51912	0.08008658008658008

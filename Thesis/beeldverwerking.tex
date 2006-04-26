@@ -9,10 +9,13 @@ een overzicht van die begrippen en technieken.
 \subsection{Kleurmodellen}
 
 Een \defin{kleurmodel} is een abstract mathematisch model dat beschrijft hoe kleuren gerepresenteerd 
-kunnen worden als $n$-tallen uit $\mathbb{R}^n$. RGB is het meest gebruikte kleurmodel. In dat model is elke kleur
-een gewogen som van drie hoofdkleuren: rood, groen en blauw. De gewichten van die som
-worden gebruikt als componenten van het drietal dat de kleur voorstelt. Figuur~\ref{fig:rgb}
-toont de grafische voorstelling van het RGB-model.
+kunnen worden als $n$-tallen uit $\mathbb{R}^n$. RGB is het meest gebruikte kleurmodel. In 
+dat model is elke kleur een gewogen som van drie hoofdkleuren: rood, groen en blauw. De 
+gewichten van die som worden gebruikt als componenten van het drietal dat de kleur 
+voorstelt. Dergelijke kleurmodellen,
+waarbij elke kleur een superpositie van een aantal \defin{primaire kleuren} is, 
+worden \defin{additieve kleurmodellen} genoemd. Figuur~\ref{fig:rgb}
+toont de grafische voorstelling van het RGB-model. 
 %Naast RGB zijn ook
 %HSV en L*a*b* populaire kleurmodellen \cite{philips:beeldverwerking}.
 
@@ -72,15 +75,17 @@ niet-gedefinieerde componenten de waarde $0$. Uit figuur~\ref{fig:hsv} blijkt da
 het HSV-model de vorm van een kegel heeft.
 
 Een kleur in het Irb-model bestaat uit een intensiteit en een genormaliseerde $r$ en $b$ 
-\cite{ohta:color_info_for_region_segm}:
+component \cite{ohta:color_info_for_region_segm}:
 \begin{displaymath}
  i = \frac{r+g+b}{3} \qquad r' = 
 \frac{r}{r+g+b} \qquad b' = \frac{b}{r+g+b}
 \end{displaymath}
 met $r,g,b \in [0,1]$ de co\"ordinaten van de beschouwde kleur in het RGB-model. 
 
-Het I1I2I3-model, dat werd voorgesteld door Ohta 
-\cite{ohta:color_info_for_region_segm}, is een \defin{opponent color space}. 
+Het I1I2I3-model, dat voorgesteld werd door Ohta 
+\cite{ohta:color_info_for_region_segm}, is een \defin{opponent color model}. 
+Dat wil zeggen dat het een additief kleurmodel is, waarbij elke as de overgang
+tussen twee constrasterende kleuren voorstelt (rood-groen, geel-blauw en zwart-wit).
 We zetten een kleur $(r,g,b) \in 
 [0,1]^3$ uit het RGB-model als volgt om:
 \begin{displaymath}
@@ -89,10 +94,10 @@ i_1 = \frac{r+g+b}{3} \qquad i_2 = \frac{r-b}{2} \qquad i_3 = \frac{2 \cdot g -
 r - b}{4}
 %\end{array}
 \end{displaymath}
-De eerste component is achromatisch (\emph{white-black}), terwijl de overige 
-twee chromatisch zijn (\emph{red-green} en \emph{yellow-blue}).
+Daarbij is $i_1$ dan de achromatische component (zwart-wit). 
+%terwijl de overige twee de chromatische zijn (rood-groen en geel-blauw).
 We gebruiken hier, zoals in \cite{wang:cbir_using_daubechies_wavelets}, een 
-genormaliseerde vorm van dit model:
+genormaliseerde vorm van het I1I2I3-model:
 \begin{displaymath}
 %\begin{array}{rcl}
 c_1 = \frac{r+g+b}{3} \qquad c_2 = \frac{r + (1 - b)}{2} \qquad c_3 = \frac{r + 
@@ -119,7 +124,7 @@ x' = \frac{x}{x+y+z} \qquad y' = \frac{y}{x+y+z}
 In figuur~\ref{fig:lab} wordt de grafische voorstelling van het L*a*b*-model weergegeven. 
 Een kleurruimte op basis van dat model is \defin{perceptueel uniform} 
 \cite{sharma:digital_color_imaging}. Dat wil zeggen dat, in een dergelijke 
-ruimte, de Euclidische afstand een goede maat is voor het waargenomen verschil 
+ruimte, de Euclidische afstand een goede maat is voor het visueel waargenomen verschil 
 tussen twee kleuren. De co\"ordinaten $(l,a,b)$ van een kleur in het 
 L*a*b*-model kunnen als volgt benaderd worden
 \cite{debaets:similariteitsmaten_voor_kleurbeelden, philips:beeldverwerking}:
@@ -281,10 +286,10 @@ slagen we er zo in om 240 kleurtinten te onderscheiden, zonder het aantal bins t
 ``Perceptually Smooth Color Transition Histogram'' uit \cite{sural:perceptually_smooth_histogram} 
 gebaseerd is op deze kwantisatietechniek, spreken we van Smooth Color Transition (SCT) kwantisatie.  
 
-Een andere niet-uniforme manier om te kwantiseren, is het mappen van de kleuren op elf 
+Een andere niet-uniforme manier om te kwantiseren, is het afbeelden van de kleuren op elf 
 \defin{focale kleuren} \cite{van_den_broek:human_color_categorization_for_cbir}: zwart, wit, rood, groen, geel, blauw, bruin, paars, roze, oranje en grijs.
 Experimenten hebben aangetoond dat de mens geneigd is om enkel die kleurcategorie\"en te gebruiken bij 
-het beredeneren, onthouden en waarnemen van kleuren. We kunnen voor elke kleur de juiste mapping bepalen
+het beredeneren, onthouden en waarnemen van kleuren. We kunnen voor elke kleur de juiste omzetting bepalen
 door op zoek te gaan naar de focale kleur die in het L*a*b*-model het dichtst bij die gegeven kleur ligt.
 Daarbij kiezen we de RGB-co\"ordinaten uit tabel~\ref{tab:coords_focale_kleuren} voor de focale kleuren.
 
@@ -308,7 +313,8 @@ $(r,g,b)$ & $(255, 255,   0)$ & $(160,  32, 240)$ & $(192, 192, 192)$ & $(255, 1
 \cite{wu:color_quantization_by_dynamic_programming_and_principal_analysis} zijn twee
 populaire kwantisatietechnieken die, in tegenstelling tot de technieken die we 
 tot nu toe bekeken hebben, een variabel kleurenpalet gebruiken. De eerste techniek gebruikt een
-zogenaamd \emph{Kohonen neuraal netwerk} om clusters van kleuren te vormen. Vervolgens worden 
+zogenaamd \emph{Kohonen neuraal netwerk} \cite{kohonen:intro_to_neural_networks} om
+clusters van kleuren te vormen. Vervolgens worden 
 alle kleuren uit een cluster naar dezelfde kleur gekwantiseerd. Bij de tweede techniek 
 wordt er gebruik gemaakt van \emph{dynamisch programmeren} en van een statistische techniek voor 
 het reduceren van de dimensionaliteit van data, 
@@ -393,7 +399,7 @@ op een aantal verschillende manieren.}
 \centering
 \includegraphics[height=4cm]{images/probleem_focale_kwantisatie.eps}
 %\vspace{2pt}
-\caption{\label{fig:probleem_focale_kwantisatie}Onverwachte mapping bij focale kwantisatie.}
+\caption{\label{fig:probleem_focale_kwantisatie}Onverwachte omzetting bij focale kwantisatie.}
 \end{figure}
 
 \begin{figure}[bp]
@@ -504,13 +510,18 @@ slechts 8 kleuren op basis van (a) NeuQuant en (b) de Wu quantizer.}
 %Het valt op dat uniforme kwantisatie in L*a*b* geen goede resultaten geeft. 
 Het is duidelijk dat de L*a*b*-ruimte niet zo geschikt is voor uniforme kwantisatie. 
 Daarnaast valt het ook op
-dat de mapping naar focale kleuren vrij slecht werkt. Zo zouden we bijvoorbeeld verwachten
+dat de omzetting naar focale kleuren vrij slecht werkt. Dat is natuurlijk niet zo 
+verwonderlijk, vermits het eigenlijk niet eerlijk is om die kwantisatietechniek te 
+vergelijken met de andere technieken. We gebruiken immers slechts elf focale kleuren, 
+terwijl de andere technieken naar 256 kleuren kwantiseren. Maar zelfs als we niet
+vergelijken met de andere technieken, blijkt de omzetting naar focale kleuren 
+nog steeds behoorlijk slecht te werken. Zo zouden we bijvoorbeeld verwachten
 dat de achtergrondpixels van het ``bloemen'' beeld vervangen worden door blauwe of
 paarse pixels, in plaats van bruine. In figuur~\ref{fig:probleem_focale_kwantisatie} zien
-we echter dat bruin effectief de meeste nabije focale kleur is. Dergelijke problemen
-kunnen vermeden worden door een meer geavanceerde mapping te gebruiken 
+we echter dat bruin effectief de meest nabije focale kleur is. Dergelijke problemen
+kunnen vermeden worden door een meer geavanceerde omzetting te gebruiken 
 \cite{van_den_broek:human_color_categorization_for_cbir}, maar omwille van de eenvoud 
-beperken we ons toch tot de mapping op basis van de Euclidische afstand in L*a*b*.
+beperken we ons toch tot de afbeelding op basis van de Euclidische afstand in L*a*b*.
 
 De technieken met een variabel kleurenpalet doen het duidelijk beter dan diegene met een vast palet. 
 In figuur~\ref{fig:rekentijden_quant} merken we echter dat kwantisatie met een vast kleurenpalet 

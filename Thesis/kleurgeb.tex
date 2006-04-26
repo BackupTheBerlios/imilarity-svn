@@ -495,7 +495,7 @@ beduidend slechter presteren dan de overige vaagsimilariteitsmaten. Dat is niet
 verwonderlijk, vermits die maten de enige zijn die de corresponderende bins van de histogrammen 
 niet rechstreeks met elkaar vergelijken. Beschouw bijvoorbeeld een beeld $A$ dat enkel bestaat
 uit rode beeldpunten en een beeld $B$ dat volledig groen is. In beide beelden komen alle
-pixels in dezelfde bin terecht. Ze geven dus aanleiding tot pseudo-vage histogrammen $H_A$ en $H_B$  
+pixels in \'e\'en bin terecht. Ze geven dus aanleiding tot pseudo-vage histogrammen $H_A$ en $H_B$  
 die \'e\'en enkele piek bevatten, of tot vaaghistogrammen $\widetilde{H}_A$ en $\widetilde{H}_B$ 
 waarbij er ook nog een aantal ``naburige'' bins een waarde hebben die verschilt van nul 
 (zie figuur~\ref{fig:histogrammen_rood_en_groen}). 
@@ -863,7 +863,8 @@ similariteitsmaten op basis van pseudo-vage histogrammen.}
 \end{minipage}
 }
 \caption{\label{fig:histogrammen_rood_en_groen}Een volledig (a) rood en (b) groen beeld samen 
-met de corresponderende histogrammen.}
+met de corresponderende histogrammen (van links naar rechts: HSV, Irb, XYZ, Yxy, L*a*b*, 
+focale kleuren, SCT en vaag).}
 \end{figure}
 Stel nu dat $(\mathcal{H}_A,\mathcal{H}_B) \in \{(H_A,H_B), (\widetilde{H}_A,\widetilde{H}_B)\}$.
 Doordat rood en 
@@ -955,7 +956,7 @@ Zij $A$ een beeld en $w_{A,c}$ een $P - \mathbb{R}$ afbeelding. Een functie van 
  \forall c \in C'
 \end{array}
 \end{displaymath}
-met $\delta$ de Dirac functie, noemen we dan een uitgebreid histogram geassocieerd met $A$. 
+met $\delta$ de Diracfunctie, noemen we dan een uitgebreid histogram geassocieerd met $A$. 
 Voor $w_{A,c}(p)=\delta(bin(c)-bin(A(p)))$, $\forall p \in P$, vinden we:
 \begin{align*}
 \mathring{h}_A(c) 
@@ -1405,8 +1406,8 @@ figuur~\ref{fig:uitgebreide_sct-histogrammen_smooted_en_edgy}.
 Figuur~\ref{fig:histgeb_sct_gggrs_en_cputimes} toont de meetresultaten voor enkele
 similariteitsmaten die gebaseerd zijn op uitgebreide SCT-histogrammen. We stellen
 vast dat de gladde versies van de histogrammen vaak beter presteren. Ook de
-centrumhistogrammen leiden tot betere resultaten, in tegenstelling tot de randhistogrammen
-die meestal geen winst opleveren.
+centrumhistogrammen leiden dikwijls tot betere resultaten, in tegenstelling tot de 
+randhistogrammen die meestal geen winst opleveren.
 
 We merken ook hier dat $M_5$, $M_{5c}$, $M_{11}$ en $M_{11c}$ significant slechter
 presteren dan de overige vaagsimilariteitsmaten. De reden daarvoor is dezelfde als bij
@@ -1891,3 +1892,50 @@ voorbeeld bij de similariteitsmaat op basis van het glad SCT-histogram en $M_{I_
 \caption{\label{fig:results_sct_glad_centrum_histgeb}De GGR-waarde en de eerste tien resultaten voor elk 
 voorbeeld bij de similariteitsmaat op basis van het glad SCT-centrumhistogram en $M_{I_3}$.}
 \end{figure}
+
+
+\section{Conclusie}
+\label{sectie:conclusie_kleurgeb}
+
+Bij de pixelgebaseerde similariteitsmaten uit het vorige hoofdstuk, vormen de beeldpunten
+het universum. In dit hoofdstuk hebben we een aantal kleurgebaseerde similariteitsmaten 
+besproken. Daarbij bestaat het universum uit kleuren in plaats van pixels. 
+We hebben twee types van vaagverzamelingen in een kleurenuniversum beschouwd:
+\begin{enumerate}
+  \item Pseudo-vage histogrammen, die afgeleid worden uit een traditioneel
+  kleurhistogram door alle waarden te delen door de grootste waarde.
+  \item Vaaghistogrammen, die op een ``volledig vage'' manier opgebouwd worden.
+\end{enumerate}
+De vaaghistogrammen hebben als voordeel dat ze minder gevoelig zijn voor problemen
+die optreden als gevolg van de kleurkwantisatie. Door uitgebreide histogrammen
+te beschouwen, kunnen we echter ook pseudo-vage histogrammen met die eigenschap
+bekomen. Bovendien bieden uitgebreide histogrammen de mogelijkheid om rekening te houden
+met spatiale informatie. We hebben drie specifieke uitgebreide histogrammen
+besproken: 
+\begin{enumerate}
+  \item Gladde histogrammen, die minder gevoelig zijn voor de kwantisatieproblemen.
+  \item Centrumhistogrammen, waarbij enkel rekening gehouden wordt met de pixels
+  in het centrum van het beeld.
+  \item Randhistogrammen, die enkel de pixels in de omgeving van beeldranden beschouwen.
+\end{enumerate}
+Die uitgebreide histogrammen kunnen ook gecombineerd worden. Dit zijn de twee combinaties
+die we in deze scriptie vermeld hebben:
+\begin{enumerate}
+  \item Gladde centrumhistogrammen.
+  \item Gladde randhistogrammen.
+\end{enumerate}
+
+Onze experimenten tonen aan dat pseudo-vage uitgebreide histogrammen in bepaalde gevallen 
+beter preseteren dan ``gewone'' pseudo-vage histogrammen. Desalniettemin bekomen
+we toch de beste resultaten door ``gewone'' pseudo-vage Irb-histogrammen te 
+vergelijken met behulp van $M_{I_3}$. Het feit dat die vaagsimilariteitsmaat
+zeer geschikt is voor het vergelijken van histogrammen, is \'e\'en van de
+belangrijkste conclusies van dit hoofdstuk.
+
+In het voorgaande hoofdstuk bekwamen we de beste resultaten bij het
+vergelijken van intermediaire beelden op basis van kleurmomenten. 
+Globaal gezien geven die pixelgebaseerde similariteitsmaten nog steeds de laagste
+GGGR-waarde. Het verschil met de similariteitsmaat op basis van het Irb-histogram en
+$M_{I_3}$ is echter zeer klein. De kleurmomenten bevatten bovendien minder informatie dan
+het Irb-histogram, waardoor de mogelijkheid bestaat dat ze slechter zullen presteren 
+voor meer realistische beelden.
