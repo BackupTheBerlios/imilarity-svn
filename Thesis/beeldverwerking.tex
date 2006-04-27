@@ -226,9 +226,18 @@ col: & \{1,2,\ldots,N\} & \to & C \\ & n & \mapsto & (col_1(n), col_2(n),
 \end{displaymath}
 waarbij 
 \begin{displaymath}
-col_i(n) = \frac{n}{\prod_{j=1}^i N_j} + \frac{1}{2 \cdot N_i}
+col_i(n) = \frac{n-1}{\prod_{j=1}^i N_j} + \frac{1}{2 \cdot N_i}
 \end{displaymath} 
-voor alle $n \in \{1,2,\ldots,N\}$ en $i \in \{1,2,\ldots,l\}$.
+voor alle $n \in \{1,2,\ldots,N\}$ en $i \in \{1,2,\ldots,l\}$. Figuur~\ref{fig:bin_en_col}
+illustreert de werking van $bin$ en $col$ voor $l=1$ en $N=4$.
+
+\begin{figure}[!bp]
+\vspace{10pt}
+\centering
+\includegraphics[height=3.6cm]{images/bin_en_col.eps}
+\vspace{10pt}
+\caption{\label{fig:bin_en_col}Illustratie van $bin$ en $col$ voor $l=1$ en $N=1$.}
+\end{figure}
 
 Bij image retrieval is doorgaans vooral de kleurtint op zich belangrijk. Door
 minder belang te hechten aan de luminantie kan de prestatie zelfs verbeteren,
@@ -246,8 +255,8 @@ Via analoge redeneringen voor de andere kleurmodellen, bekomen we de zes maniere
 uit tabel~\ref{tab:uniforme_kwantisatie} om uniform te kwantiseren met een vast kleurenpalet.
 Elk van die manieren gebruikt $256$ bins.
 
-\begin{table}[bp]
-\vspace{5pt}
+\begin{table}[!bp]
+\vspace{10pt}
 \centering
 \begin{tabular}{c|cccccc}
 %\hline
@@ -258,7 +267,7 @@ $N_2$	& 4  & 8 & 8 & 4 & 8 & 8 \\
 $N_3$	& 4  & 8 & 8 & 8 & 8 & 8 \\
 %\hline
 \end{tabular}
-\vspace{5pt}
+\vspace{10pt}
 \caption{\label{tab:uniforme_kwantisatie}Zes manieren om uniform te kwantiseren met een vast 
 kleurenpalet.}
 \end{table}
@@ -293,7 +302,7 @@ het beredeneren, onthouden en waarnemen van kleuren. We kunnen voor elke kleur d
 door op zoek te gaan naar de focale kleur die in het L*a*b*-model het dichtst bij die gegeven kleur ligt.
 Daarbij kiezen we de RGB-co\"ordinaten uit tabel~\ref{tab:coords_focale_kleuren} voor de focale kleuren.
 
-\begin{table}[bp]
+\begin{table}[!bp]
 \vspace{10pt}
 \centering
 \begin{tabular}{c|c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c@{ }c}
@@ -327,8 +336,9 @@ geschikt voor kwantisatie naar een zeer klein aantal kleuren.
  
 
 \begin{figure}[bp]
-\vspace{10pt}
+\vspace{2pt}
 \centering
+\begin{tabular}{@{}c@{}}
 \subfigure[]{
 \begin{minipage}[t]{0.4\textwidth}
 \vspace{0pt}
@@ -341,7 +351,7 @@ geschikt voor kwantisatie naar een zeer klein aantal kleuren.
 \includegraphics[height=4.1cm]{plots/neuquant_vs_wu_small_filled.eps}
 \end{minipage}
 \label{fig:rekentijden_quant_small}
-}
+}\\
 \subfigure[]{
 \begin{minipage}[t]{0.4\textwidth}
 \vspace{0pt}
@@ -355,6 +365,8 @@ geschikt voor kwantisatie naar een zeer klein aantal kleuren.
 \end{minipage}
 \label{fig:rekentijden_quant_big}
 }
+\end{tabular}
+\vspace{5pt}
 \caption{\label{fig:rekentijden_quant}Vergelijking van de rekentijden bij kwantisatie van 
 (a) een klein en (b) een groot beeld.}
 \end{figure}
