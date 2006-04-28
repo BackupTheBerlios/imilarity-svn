@@ -60,14 +60,17 @@ van een sc\`ene meestal sterk verschillend zijn.
 
 Om uit meerdere similariteitsmaten de meest geschikte te kiezen, 
 moeten we een manier vinden om een dergelijke maat objectief te beoordelen. 
-Dat doen we door, voor een bepaald voorbeeld, elke maat toe te passen op eenzelfde collectie 
-van beelden. Vervolgens beoordelen we de zo bekomen rangschikking met behulp van een performantiemaat.
+Dat doen we door de beelden van een testcollectie te ordenen volgens similariteit
+met een bepaald voorbeeld, gebruik makend van de te evalueren similariteitsmaat.
+%, voor een bepaald voorbeeld, elke maat toe te passen op eenzelfde collectie 
+%van beelden. 
+Vervolgens beoordelen we de zo bekomen rangschikking met behulp van een performantiemaat.
 
-Figuur~\ref{fig:testcollectie} bevat de beelden van de collectie die we gaan 
+Figuur~\ref{fig:testcollectie} bevat de beelden van de testcollectie die we gaan 
 gebruiken. Die collectie is een selectie van beelden uit
 de \defin{Columbia object image library} \cite{coil-100}, die gegenereerd werd 
 door een aantal roterende objecten op bepaalde vaste momenten te fotograferen. 
-Onze testcollectie bestaat uit foto's van elf objecten. Van elk object zijn
+Ze bestaat uit foto's van elf objecten. Van elk object zijn
 er zes momentopnames, wat een totaal van $11 \cdot 6 = 66$ beelden geeft.
 
 \begin{figure}[p]
@@ -160,9 +163,9 @@ er zes momentopnames, wat een totaal van $11 \cdot 6 = 66$ beelden geeft.
 
 Voor het beoordelen van een rangschikking, gebruiken we de \defin{genormaliseerde gemiddelde rang} 
 (GGR) \cite{muller:perf_eval}. Die performantiemaat wordt toegepast op een collectie
-van $N$ beelden. Voor elk van die beelden bevat de collectie
-$N_R$ zogenaamde \defin{relevante beelden}. In het geval van onze testcollectie geldt $N = 66$.
-We gaan er in die collectie van uit dat foto's van eenzelfde object relevant zijn ten opzichte
+van $N$ beelden. In het geval van onze testcollectie geldt $N = 66$. 
+Voor elk van die beelden bevat de collectie $N_R$ zogenaamde \defin{relevante beelden}. 
+We gaan er bij onze testcollectie van uit dat foto's van eenzelfde object relevant zijn ten opzichte
 van elkaar: $N_R = 6$. Beschouw nu de vector 
 $(r_1,r_2,\ldots,r_{N_R}) \in \{1,2,\ldots,N\}^{N_R}$, waarbij $r_i$ het
 rangnummer van het $i$-de relevante beeld voorstelt. De performantiemaat
@@ -202,7 +205,7 @@ mogelijk rekentijd vereisen. De collecties van beelden waarop ze daarbij toegepa
 zijn immers beperkt in grootte. Bovendien worden de berekeningen aan de kant van de client
 uitgevoerd, waardoor er geen gevaar is voor overbelasting van de server.
 
-Indien we de similariteitsmaten zouden construeren voor een zuiver CBIR-systeem, zoals weergegeven
+Indien we similariteitsmaten zouden construeren voor een zuiver CBIR-systeem, zoals weergegeven
 in figuur~\ref{fig:cbir}, dan zou de rekentijd wel zeer belangrijk zijn. Hoewel het aantal
 beelden beperkt wordt door het gebruik van multidimensionale indexering, zal een dergelijk
 systeem de similariteitsmaten immers toch nog moeten toepassen op een groot aantal
@@ -227,7 +230,7 @@ ervan uiteraard geen kwaad. Door toch voldoende aandacht te schenken aan de reke
 we er zelfs voor zorgen dat similariteitsmaten waarvoor we zonder extra inspanning veel te lang zouden 
 moeten rekenen, toch nog bruikbaar zijn.
 
-Stel dat $A$ en $B$ twee vaagverzamelingen zijn in een zelfde universum $X$. Het kan dan voorkomen dat 
+Stel dat $A$ en $B$ twee vaagverzamelingen zijn in een eindig universum $X$. Het kan dan voorkomen dat 
 $X'= supp\ A \cup supp\ B$ veel minder elementen bevat dan $X$. In dat geval kunnen we de rekentijd sterk
 reduceren door het bereik van de sommaties in de vaagsimilariteitsmaten te beperken tot $X'$. Doordat
 $A(x)=B(x)=0$ voor alle $x \in X \setminus X'$ geldt er dan immers zowel
