@@ -258,7 +258,7 @@ kleur van dat onderdeel.
 door gebruik van beeldonderdelen.}
 \end{figure}
 
-De twee geordende lijsten die we zo bekomen, gebruiken we vervolgens voor het bepalen van 
+De twee geordende lijsten die we zo bekomen, gebruiken we voor het bepalen van 
 de similariteit tussen $A$ en $B$. Daartoe overlopen we de elementen van de 
 lijst die correspondeert met $B$. Voor
 elk element dat we tegenkomen, bepalen we de similariteit met $A_1$. Dat blijven we doen
@@ -280,21 +280,21 @@ pixelgebaseerde maat $M'$, wordt dus als volgt bepaald uit de geordende lijsten:
 %kleur, met behulp van $\leq_{RGB,lex}$
 %\STATE $(i,j) \leftarrow (1,1)$
 %\STATE $(prev,curr) \leftarrow (0,0)$
-\STATE $i \leftarrow 1$
-\STATE $j \leftarrow 1$
-\WHILE{$i \leq m \land j \leq n$}
+\STATE $(i,j) \leftarrow (0,0)$
+\WHILE{$i < m \land j < n$}
+\STATE $i \leftarrow i+1$
 \STATE $prev \leftarrow 0$
 \STATE $curr \leftarrow M'(A_i,B_j)$
-\WHILE{$prev < curr$}
+\WHILE{$prev < curr \land j < n$}
 \STATE $j \leftarrow j+1$
 \STATE $prev \leftarrow curr$
 \STATE $curr \leftarrow M'(A_i,B_j)$
 \ENDWHILE
 \STATE voeg $\max \{prev, curr\}$ toe aan $S$
-\STATE $i \leftarrow i+1$
 %\STATE $sum \leftarrow sum + prev$
 \ENDWHILE
-\IF{$prev \geq curr \land i \leq m$}
+\IF{$prev \geq curr \land i < m$}
+\STATE $i \leftarrow i+1$
 \STATE $curr \leftarrow M'(A_i,B_j)$
 \STATE voeg $curr$ toe aan $S$
 %\STATE $sum \leftarrow sum + sim$
@@ -365,8 +365,8 @@ geordende beeldonderdelen. In figuur~\ref{fig:multires_sim-matrix_2} wordt het
 pad voor het bepalen van $M(B,A)$ getoond. De similariteiten die daarbij toegevoegd 
 worden aan $S$, worden in figuur~\ref{fig:multires} weergegeven met stippellijnen.
 Figuur~\ref{fig:multires_sim-matrix_beide} toont beide paden tegelijkertijd. In die 
-figuur zien we duidelijk dat het gemiddelde van $M(A,B)$ en $M(B,A)$ moet gebruikt 
-worden om een symmetrische maat te bekomen.
+figuur zien we duidelijk dat $M(A,B)$ en $M(B,A)$ moeten gecombineerd worden
+om een symmetrische maat te bekomen.
 
 
 \section{Experimentele observaties}
@@ -1582,7 +1582,7 @@ doen voor kleurbeelden:
 De similariteitsmaten die we zo bekomen, zijn enkel toepasbaar op beelden van dezelfde
 resolutie. Voor dat laatste probleem hebben we twee oplossingen beschreven:
 \begin{enumerate}
-  \item De beelden omzetten naar intermediaire beelden die wel dezelfe resolutie
+  \item De beelden omzetten naar intermediaire beelden die wel dezelfde resolutie
   hebben.
   \item Elk beeld partitioneren in beeldonderdelen van gelijke grootte en vervolgens
   een globale similariteit berekenen op basis van de similariteiten tussen een aantal

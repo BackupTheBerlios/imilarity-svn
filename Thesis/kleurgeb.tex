@@ -10,10 +10,10 @@ similariteitsmaten zal opleveren.
 
 \section{Histogrammen}
 
-Een \defin{histogram} van een kleurbeeld is een voorstelling van de frequentieverdeling 
-van de verschillende kleuren. De waarde van het histogram voor een kleurbeeld 
-$A$ in de kleur $c \in C$ is dus gelijk aan het totaal aantal pixels in het beeld met 
-kleur $c$. Om de complexiteit te beperken wordt er in de praktijk gebruik gemaakt
+De waarde van het \defin{histogram} voor een kleurbeeld 
+$A$ in de kleur $c \in C$ is gelijk aan het totaal aantal pixels in het beeld met 
+kleur $c$. Het histogram van een kleurbeeld is dus een voorstelling van de frequentieverdeling 
+van de verschillende kleuren.  Om de complexiteit te beperken wordt er in de praktijk gebruik gemaakt
 van kleurkwantisatie. Het universum der kleuren $C$ wordt dus beperkt tot $C' \subset C$. 
 %Het histogram wordt dus berekend voor verzamelingen van
 %kleuren in plaats van individuele kleuren. 
@@ -56,7 +56,7 @@ de pseudo-vage histogrammen die we zo bekomen voor het ``geel bootje'' voorbeeld
 uit onze testcollectie. In figuur~\ref{fig:alle_histn_geel_bootje} worden de pseudo-vage histogrammen
 getoond van alle beelden uit de testcollectie, die relevant zijn ten opzichte van dat voorbeeld.
 Zoals ge\"illustreerd in figuur~\ref{fig:constr_sim_op_basis_van_pseudo-vaag_hist}, kunnen we 
-dan similariteitsmaten construeren door een vaagsimilariteitsmaat toe te passen op 
+similariteitsmaten construeren door een vaagsimilariteitsmaat toe te passen op 
 pseudo-vage histogrammen geassocieerd met de beelden in kwestie.
 
 \begin{figure}[!bp]
@@ -874,7 +874,7 @@ en ook $\mathcal{H}_B \setminus \mathcal{H}_A = \mathcal{H}_B$. Bovendien
 geldt dan
 $|\mathcal{H}_A|=|\mathcal{H}_B|$ en $|\mathcal{H}_{A}^c|=|\mathcal{H}_{B}^c|$, zodat
 \begin{displaymath}
-|\mathcal{H}_A \setminus \mathcal{H}_B|=|\mathcal{H}_A \cap \mathcal{H}_{B}^c|=|\mathcal{H}_A|=|\mathcal{H}_B|=|\mathcal{H}_B \cap \mathcal{H}_{A}^c|=|\mathcal{H}_B \setminus \mathcal{H}_A|
+|\mathcal{H}_A \setminus \mathcal{H}_B|=|\mathcal{H}_A|=|\mathcal{H}_B|=|\mathcal{H}_B \setminus \mathcal{H}_A|
 \end{displaymath}
 en ook
 \begin{displaymath}
@@ -1072,8 +1072,8 @@ andere woorden: $c$ is \'e\'en van de grijstinten) dan geldt:
  & = \displaystyle \sum_{c' \in C'} \sum_{p \in P} \delta (bin(c')-bin(A(p))) \cdot s(bin(c),bin(c')) \displaybreak[0] \\
  & = \displaystyle\sum_{c' \in C'} h_A(c') \cdot s(bin(c),bin(c')) \displaybreak[0] \\
  & = \displaystyle\sum_{c' \in C'_{gr}} h_A(c') \cdot s(bin(c),bin(c')) + \sum_{c' \in C' \setminus C'_{gr}} h_A(c') \cdot 0 \displaybreak[0] \\
- & = \displaystyle\sum_{c' \in C'_{gr}} h_A(c') \cdot s(bin(c),bin(c')) \displaybreak[0] \\
- & = \displaystyle\sum_{c' \in C'_{gr}} \mathring{g}(bin(c')) \cdot 2^{-2 \cdot R_1} \cdot \binom{2 \cdot R_1}{R_1+|bin(c)-bin(c')|} \displaybreak[0] \\
+ & = \displaystyle\sum_{c' \in C'_{gr}} \mathring{g}(bin(c')) \cdot s(bin(c),bin(c')) \displaybreak[0] \\
+ & = \displaystyle\sum_{k \in \mathbb{Z}} \mathring{g}(bin(c)+k) \cdot s(bin(c),bin(c)+k) \displaybreak[0] \\
  & = \displaystyle\sum_{k=-R_1}^{R_1} \mathring{g}(bin(c)+k) \cdot 2^{-2 \cdot R_1} \cdot \binom{2 \cdot R_1}{R_1+|k|}
 \end{align*}
 De transformatie van het deelhistogram voor de grijstinten kan dus inderdaad beschouwd worden
@@ -1410,7 +1410,7 @@ centrumhistogrammen leiden dikwijls tot betere resultaten, in tegenstelling tot 
 randhistogrammen die meestal geen winst opleveren.
 
 We merken ook hier dat $M_5$, $M_{5c}$, $M_{11}$ en $M_{11c}$ significant slechter
-presteren dan de overige vaagsimilariteitsmaten. De reden daarvoor is dezelfde als bij
+presteren dan de overige vaagsimilariteitsmaten. Dat heeft dezelfde reden als bij
 de ``gewone'' histogrammen. In het geval van de randhistogrammen geven ook $M_{8c}$, $M_{10}$, 
 $M_{10c}$, $M_{13}$ en (in mindere mate) $M_{8}$ aanleiding tot minder goede resultaten.
 De reden daarvoor is analoog aan de oorzaak voor de slechtere perfomantie van die 
