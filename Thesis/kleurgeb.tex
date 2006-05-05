@@ -493,7 +493,7 @@ XYZ-histogram toch iets minder goede resultaten geeft.
 Uit de meetresultaten blijkt dat $M_5$, $M_{5c}$, $M_{11}$ en $M_{11c}$ in deze context
 beduidend slechter presteren dan de overige vaagsimilariteitsmaten. Dat is niet
 verwonderlijk, vermits die maten de enige zijn die de corresponderende bins van de histogrammen 
-niet rechstreeks met elkaar vergelijken. Beschouw bijvoorbeeld een beeld $A$ dat enkel bestaat
+niet rechtstreeks met elkaar vergelijken. Beschouw bijvoorbeeld een beeld $A$ dat enkel bestaat
 uit rode beeldpunten en een beeld $B$ dat volledig groen is. In beide beelden komen alle
 pixels in \'e\'en bin terecht. Ze geven dus aanleiding tot pseudo-vage histogrammen $H_A$ en $H_B$  
 die \'e\'en enkele piek bevatten, of tot vaaghistogrammen $\widetilde{H}_A$ en $\widetilde{H}_B$ 
@@ -895,7 +895,7 @@ ander beeld voorkomen. Bijgevolg treden er ook hier valse positieven op.
 
 Histogrammen bevatten vaak een groot aantal bins met waarde $0$ \cite{berens:compressed_colour_histograms}. Uit 
 figuur~\ref{fig:alle_histn_geel_bootje} en figuur~\ref{fig:alle_vaaghistn_geel_bootje} blijkt 
-inderdaad dat dat het geval is bij de histogrammen voor de beelden uit onze testcollectie. 
+inderdaad dat dit het geval is bij de histogrammen voor de beelden uit onze testcollectie. 
 Doordat de vaagsimilariteitsmaten ge\"implementeerd werden op de manier die beschreven wordt in 
 \ref{sectie:beperken_rekentijd}, heeft dat als gevolg dat de rekentijd die nodig is voor het 
 vergelijken van de histogrammen beperkt blijft. Daardoor wordt de totale rekentijd gedomineerd door 
@@ -939,7 +939,7 @@ de praktijk zijn echter niet alle pixels even belangrijk. Zo kan het
 bijvoorbeeld wenselijk zijn om minder belang te hechten aan de kleur van
 de achtergrondpixels. Doordat de spatiale informatie genegeerd wordt,
 kunnen er bovendien ook valse positieven optreden. Als we de pixels van een
-beeld op een willekeurig manier verplaatsen, dan zal er immers niets veranderen aan
+beeld op een willekeurige manier verplaatsen, dan zal er immers niets veranderen aan
 de geassocieerde histogrammen. Het beeld zelf zal er dan meestal wel totaal anders uitzien.  
 
 We kunnen pseudo-vage histogrammen construeren die minder gevoelig zijn voor de bovenstaande problemen,
@@ -1010,7 +1010,7 @@ het histogram door de waarden van de bins te vervangen door nieuwe waarden die o
 afhangen van de waarden van ``naburige'' bins met een perceptueel similaire kleur. 
  
 In het SCT-histogram liggen de ``naburige'' bins van een bin ook letterlijk naast
-die bin. Het is bijgevolg zeer geschikt om
+die bin. Het is bijgevolg zeer geschikt om er
 \defin{smoothing} op toe te passen \cite{sural:perceptually_smooth_histogram}. De gladde versie van
 een SCT-histogram is dan een uitgebreid histogram waarbij bijvoorbeeld 
 $w_{A,c}(p)=s(bin(c),bin(A(p)))$, $\forall p \in P$, en
@@ -1903,7 +1903,7 @@ besproken. Daarbij bestaat het universum uit kleuren in plaats van pixels.
 We hebben twee types van vaagverzamelingen in een kleurenuniversum beschouwd:
 \begin{enumerate}
   \item Pseudo-vage histogrammen, die afgeleid worden uit een traditioneel
-  kleurhistogram door alle waarden te delen door de grootste waarde.
+  kleurhistogram door alle waarden te delen door de grootste waarde (i.e. door normalisatie).
   \item Vaaghistogrammen, die op een ``volledig vage'' manier opgebouwd worden.
 \end{enumerate}
 De vaaghistogrammen hebben als voordeel dat ze minder gevoelig zijn voor problemen
@@ -1926,7 +1926,7 @@ die we in deze scriptie vermeld hebben:
 \end{enumerate}
 
 Onze experimenten tonen aan dat pseudo-vage uitgebreide histogrammen in bepaalde gevallen 
-beter preseteren dan ``gewone'' pseudo-vage histogrammen. Desalniettemin bekomen
+beter presteren dan ``gewone'' pseudo-vage histogrammen. Desalniettemin bekomen
 we toch de beste resultaten door ``gewone'' pseudo-vage Irb-histogrammen te 
 vergelijken met behulp van $M_{I_3}$. Het feit dat die vaagsimilariteitsmaat
 zeer geschikt is voor het vergelijken van histogrammen, is \'e\'en van de

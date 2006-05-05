@@ -55,14 +55,14 @@ correspondeert met de kleurtint, terwijl de overige componenten de saturatie
 en de helderheid aangeven. Men kan een kleur $(r,g,b) \in [0,1]^3$ uit het RGB 
 model als volgt omzetten naar een kleur $(h,s,v) \in [0,1]^3$ in het HSV-model: 
 \begin{align*}
-h' & = \begin{cases}
-60 \cdot \frac{g - b}{\max \{r,g,b\} - \min \{r,g,b\}} & \textrm{als } \max \{r,g,b\} = r \\[2pt]
-60 \cdot \frac{b - r}{\max \{r,g,b\} - \min \{r,g,b\}} + 120 & \textrm{als } \max \{r,g,b\} = g \\[2pt]
-60 \cdot \frac{r - g}{\max \{r,g,b\} - \min \{r,g,b\}} + 240 & \textrm{als } \max \{r,g,b\} = b
-\end{cases} \\[2pt]
 h & = \begin{cases}
 \frac{h' \bmod 360}{360} & \textrm{als } h' \bmod 360 \geq 0 \\[2pt] 
 \frac{360 - (h' \bmod 360)}{360} & \textrm{als } h' \bmod 360 < 0 
+\end{cases} \\[2pt]
+& \text{\qquad met } h' = \begin{cases}
+60 \cdot \frac{g - b}{\max \{r,g,b\} - \min \{r,g,b\}} & \textrm{als } \max \{r,g,b\} = r \\[2pt]
+60 \cdot \frac{b - r}{\max \{r,g,b\} - \min \{r,g,b\}} + 120 & \textrm{als } \max \{r,g,b\} = g \\[2pt]
+60 \cdot \frac{r - g}{\max \{r,g,b\} - \min \{r,g,b\}} + 240 & \textrm{als } \max \{r,g,b\} = b
 \end{cases} \\[2pt]
 s & = \frac{\max \{r,g,b\} - \min \{r,g,b\}}{\max \{r,g,b\}} \\ %[6pt] 
 v & = \max \{r,g,b\}
@@ -379,7 +379,7 @@ geschikt voor kwantisatie naar een zeer klein aantal kleuren.
 \subsection{Enkele voorbeelden}
 
 We illustreren de bovenstaande technieken door ze toe te passen op de beelden uit 
-figuur~\ref{fig:kwantistatie_originelen}. De eerste twee van die beelden hebben we geconstueerd
+figuur~\ref{fig:kwantistatie_originelen}. De eerste twee van die beelden hebben we geconstrueerd
 door in het HSV-model twee componenten te laten vari\"eren en \'e\'en component constant te houden.
 Bij figuur~\ref{fig:hsv_constant_s} is de saturatie steeds gelijk aan $1$ en hebben we de kleurtint 
 horizontaal en de helderheid vertikaal laten vari\"eren. Figuur~\ref{fig:hsv_constant_v} werd 
@@ -622,19 +622,20 @@ de volgende formule gebruiken om randen te detecteren in $b$:
 \end{displaymath}
 met $lum$ de $\mathbb{N}^2 - [0,1]$ functie die met elk beeldpunt $(x,y)$ de juiste luminantiecomponent associeert.
 
-Doordat $lum$ in de praktijk geen continue maar een discrete functie is, moeten we de partieel afgeleiden benaderen.
+Doordat $lum$ in de praktijk een discrete functie is, moeten we de partieel afgeleiden benaderen.
 De Taylorreeksontwikkeling van een $\mathbb{R} - \mathbb{R}$ functie $f$ rond $x$ geeft
 \begin{displaymath}
-f(x+h) = f(x) + h D f(x) + \frac{h^2}{2!} D^2 f(x) + \ldots
+f(x+h) = f(x) + h D f(x) + \frac{h^2}{2!} D^2 f(x) + \frac{h^3}{3!} D^3 f(x) + \ldots
 \end{displaymath}
 en ook
 \begin{displaymath}
-f(x-h) = f(x) - h D f(x) + \frac{h^2}{2!} D^2 f(x) + \ldots
+f(x-h) = f(x) - h D f(x) + \frac{h^2}{2!} D^2 f(x) - \frac{h^3}{3!} D^3 f(x) + \ldots
 \end{displaymath}
 zodat
 \begin{displaymath}
-\frac{f(x+h) - f(x-h)}{2h} \approx D f(x)
+\frac{f(x+h) - f(x-h)}{2h} =  D f(x) + \frac{2 h^3}{3!} D^3 f(x) + \ldots \approx D f(x)
 \end{displaymath}
+als $h$ voldoende klein is.
 Bijgevolg geldt $D_1 lum(x,y) \approx (lum(x+1,y) - lum(x-1,y))/2$ en $D_2 lum(x,y) \approx (lum(x,y+1) - lum(x,y-1))/2$. We
 kunnen de eerste en tweede partieel afgeleiden dus berekenen met behulp van lineaire filters met filtermaskers:
 \begin{displaymath}

@@ -2,7 +2,7 @@
 
 De belangrijkste bijdrage van dit eindwerk is de bouw van een prototype
 dat het similariteitsgebaseerd rangschikken van zoekresultaten implementeert.
-Dat prototype wordt in dit hoofstuk in grote lijnen besproken. Voor de details
+Dat prototype wordt in dit hoofdstuk in grote lijnen besproken. Voor de details
 verwijzen we naar de broncode op de bijgevoegde CD-ROM.
 
 \section{Imilarity}
@@ -75,12 +75,12 @@ van het prototype meerdere voorbeelden wenst op te geven. Om dat toe te laten,
 maken we gebruik van aggregatieoperatoren. We berekenen eerst de similariteit met
 elk van de voorbeelden, om daarna dan die similariteiten te aggregeren tot \'e\'en
 getal met behulp van een aggregatieoperator. De huidige implementatie 
-ondersteunt het gemiddelde, het maximum, het minimum, het product en de 
+ondersteunt het rekenkundig gemiddelde, het maximum, het minimum, het product en de 
 algebra\"ische som. Het zou echter interessant zijn om na te gaan of er betere
 resultaten kunnen bekomen worden door meer geavanceerde operatoren te gebruiken.
 
 De klasse {\klassefont Imilarity} abstraheert het ophalen en rangschikken van
-beelden. Codefragement~\ref{code:simple_example} bevat een zeer eenvoudig 
+beelden. Codefragment~\ref{code:simple_example} bevat een zeer eenvoudig 
 \begin{code}[bp]
 \vspace{5pt}
 \begin{lgrind}

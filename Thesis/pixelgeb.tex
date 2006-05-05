@@ -398,7 +398,7 @@ Als we de similariteiten berekenen op intermediaire beelden van 8 pixels die
 geconstrueerd worden met behulp van NeuQuant en Wu kwantisatie, dan bekomen we
 de meetresultaten die in figuur~\ref{fig:dom_colors_gggrs_en_cputimes} worden weergegeven.
 De maten op basis van NeuQuant geven duidelijk minder goede resultaten. Dat is wellicht te wijten
-aan het feit dat NeuQuant minder geschikt is voor kwantistatie naar een zeer klein aantal 
+aan het feit dat NeuQuant minder geschikt is voor kwantisatie naar een zeer klein aantal 
 kleuren. Door $M_5$ componentsgewijs toe te passen, bekomen we in dit geval de beste resultaten. 
 Figuur~\ref{fig:results_beste_dom_colors} toont de resultaten van de componentgebaseerde aanpak
 in combinatie met Wu kwantisatie en $M_5$.
@@ -611,7 +611,7 @@ voor elk van de similariteitsmaten op basis van herschaalde beelden.}
 \vspace{5pt}
 \caption{\label{fig:results_beste_scaling}De GGR-waarde en de eerste tien resultaten voor elk 
 voorbeeld bij de similariteitsmaat die we bekomen door herschaalde beelden componentsgewijs 
-te vergelijken met behulp van $M_7$ en het gemiddelde.}
+te vergelijken met behulp van $M_7$ en het rekenkundig gemiddelde.}
 \end{figure}
 
 \begin{figure}[p]
@@ -779,7 +779,7 @@ van op basis van (a) NeuQuant en (b) Wu kwantisatie geconstrueerde intermediaire
 \caption{\label{fig:results_beste_dom_colors}De GGR-waarde en de eerste tien resultaten voor elk 
 voorbeeld bij de similariteitsmaat die we bekomen door op basis van Wu 
 kwantisatie geconstrueerde intermediaire beelden componentsgewijs te vergelijken met behulp van 
-$M_5$ en het gemiddelde.}
+$M_5$ en het rekenkundig gemiddelde.}
 \end{figure}
 
 \clearpage
@@ -939,7 +939,7 @@ van op basis van kleurmomenten geconstrueerde intermediaire beelden.}
 \caption{\label{fig:results_beste_moments_pixelgeb}De GGR-waarde en de eerste tien resultaten 
 voor elk voorbeeld bij de similariteitsmaat die we bekomen door op 
 basis van kleurmomenten geconstrueerde intermediaire beelden componentsgewijs te vergelijken 
-met behulp van $M_{9}$ en het gemiddelde.}
+met behulp van $M_{9}$ en het rekenkundig gemiddelde.}
 \end{figure}
 
 %\clearpage
@@ -1095,7 +1095,7 @@ beeldonderdelen.}
 \vspace{5pt}
 \caption{\label{fig:results_beste_multires_pixelgeb}De GGR-waarde en de eerste tien resultaten 
 voor elk voorbeeld bij de similariteitsmaat die we bekomen door 
-beeldonderdelen componentsgewijs te vergelijken met behulp van $M_{I_{3c}}$ en het gemiddelde.}
+beeldonderdelen componentsgewijs te vergelijken met behulp van $M_{I_{3c}}$ en het rekenkundig gemiddelde.}
 \end{figure}
 
 \begin{figure}[p]
@@ -1412,7 +1412,7 @@ te vergelijken met behulp van $M_{6}$ en het minimum.}
 
 Er zijn echter ook similariteitsmaten waarbij het minimum
 duidelijk minder goed werkt. Het product kan gezien worden als een soort van compromis
-tussen het gemiddelde en het minimum. Als het minimum slechter werkt dan het gemiddelde,
+tussen het rekenkundig gemiddelde en het minimum. Als het minimum slechter werkt dan het gemiddelde,
 dan zijn de resultaten van het product meestal ook minder goed dan die van het gemiddelde.
 Maar het product doet het in die gevallen doorgaans wel beter dan het minimum. Omgekeerd
 is de winst die we boeken door het gemiddelde te vervangen door het minimum vrijwel altijd
@@ -1433,7 +1433,7 @@ $B(0,0)=(0,1,0)$. Er geldt dan:
 |A_1|=1 \quad |A_2|=0 \quad |A_3|=0 \qquad |B_1|=0 \quad |B_2|=1 \quad |B_3|=0 \qquad |A|=|B|=\frac{\sqrt{1}}{\sqrt{3}}
 \end{displaymath}
 met $A(p)=(A_1(p),A_2(p),A_3(p))$ en $B(p)=(B_1(p),B_2(p),B_3(p))$ voor elke $p$ uit het universum. Als we
-$\frac{0}{0} = 0$ veronderstellen, dan geeft rechtstreekse componentgebaseerde toepassing van 
+$\frac{0}{0} = 0$ stellen, dan geeft rechtstreekse componentgebaseerde toepassing van 
 $M_5$ dus
 \begin{align*}
 \displaystyle\frac{M_5(A_1,B_1)+M_5(A_2,B_2)+M_5(A_3,B_3)}{3} 
@@ -1531,7 +1531,7 @@ $M_{10c}$ en $M_{13}$.
 Het minimum en het product zijn t-normen.
 In \ref{sectie:kleurbeelden_similariteitsmaten} hebben we reeds opgemerkt dat de 
 componentsgewijze aanpak strengere similariteitsmaten oplevert indien de
-aggregatie gebeurt met behulp van een t-norm in plaats van het gemiddelde. 
+aggregatie gebeurt met behulp van een t-norm in plaats van het rekenkundig gemiddelde. 
 Hoge similariteiten zijn dan immers enkel mogelijk als alle componenten
 zeer similair zijn. Als voorbeeld passen we
 $M_5$ opnieuw toe op twee beelden $A$ en $B$ die slechts \'e\'en enkele pixel bevatten. Deze
@@ -1549,7 +1549,7 @@ M_5(A_2,B_2)=\frac{0}{1}=0 \qquad M_5(A_3,B_3)=\frac{1}{1}=1
 \end{displaymath}
 waarbij ook hier $A(p)=(A_1(p),A_2(p),A_3(p))$ en $B(p)=(B_1(p),B_2(p),B_3(p))$ voor elke $p \in P$.
 Met behulp van het minimum en het product bekomen we dan $\min\{1,0,1\}=\min\{0,1\}=0$
-en $1 \cdot 0 \cdot 1 = 0$. Het gemiddelde daarentegen geeft $(1+0+1)/3=2/3$, wat
+en $1 \cdot 0 \cdot 1 = 0$. Het rekenkundig gemiddelde daarentegen geeft $(1+0+1)/3=2/3$, wat
 een te hoge waarde is vermits $A$ en $B$ eigenlijk helemaal niet similair zijn.
 Er bestaan dus inderdaad gevallen waarbij het minimum en het product beter presteren dan 
 het gemiddelde.
@@ -1595,7 +1595,7 @@ bij de traliegebaseerde similariteitsmaten is daar de oorzaak van. We bekomen de
 GGGR-waarde door momentgebaseerde intermediaire beelden componentsgewijs te vergelijken
 met behulp van $M_9$. Figuur~\ref{fig:results_beste_moments_pixelgeb} 
 toont de resultaten van die similariteitsmaat. Die resultaten kunnen nog verbeterd worden 
-door te aggregeren met behulp van het minimum in plaats van het gemiddelde. Hoewel de 
+door te aggregeren met behulp van het minimum in plaats van het rekenkundig gemiddelde. Hoewel de 
 resulterende rangschikkingen bijna identiek zijn, bekomen we in dat geval voor $M_3$, $M_6$, 
 $M_7$ en $M_{I_3}$ een GGGR-waarde die nog een fractie lager is dan diegene die correspondeert
 met $M_9$. In figuur~\ref{fig:results_beste_moments_comps_pixelgeb} worden de resultaten
