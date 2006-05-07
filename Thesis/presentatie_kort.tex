@@ -88,145 +88,145 @@
   \end{itemize}
 }
 
-\section{Enkele begrippen uit beeldverwerking}
-\subsection{Modellering van kleuren en beelden}
-\frame
-{
-  \frametitle{Modellering van kleuren en beelden}
-  
-  \centering
-  \begin{tabular}{@{}lr@{}}
-  \begin{minipage}{0.7\textwidth}
-  \begin{itemize}
-    \item \textbf{Kleurmodel}: abstract mathematisch model dat beschrijft
-    hoe kleuren gerepresenteerd kunnen worden als $n$-tallen uit $\mathbb{R}^n$.
-    \begin{itemize}
-    \item Voorbeelden: RGB, HSV en L*a*b*.
-    \end{itemize}
-    \item De kleuren die op basis van een bepaald model kunnen voorgesteld worden, vormen
-    een \textbf{kleurruimte}.
-    \begin{itemize}
-      \item Voorbeelden: sRGB, Adobe RGB.
-    \end{itemize}
-    \item Als we de $n$-tallen uit het
-    kleurmodel normaliseren tot $n$-tallen uit $[0,1]^n$, dan kunnen we een
-    tweedimensionaal kleurbeeld modelleren als een $\mathbb{N}^2 - [0,1]^n$
-    afbeelding.
-  \end{itemize}
-  \end{minipage} &
-  \begin{minipage}{0.3\textwidth}
-  \centering
-  \includegraphics[height=2.2cm]{images/rgb.eps}\\
-  \includegraphics[height=2.2cm]{images/hsv.eps}\\[2pt]
-  \includegraphics[height=2.2cm]{images/lab.eps}
-  \end{minipage}
-  \end{tabular}
-}
-\subsection{Kleurkwantisatie}
-\frame
-{
-  \frametitle{Kleurkwantisatie}
-  \begin{itemize}
-    \item \textbf{Kleurkwantisatie}: het aantal kleuren in een kleurruimte 
-    reduceren.
-    \item Principe:
-    \begin{enumerate}
-      \item De kleuren groeperen in zogenaamde \textbf{bins}.
-      \item Alle kleuren van een bin vervangen door \'e\'en enkele kleur.
-    \end{enumerate}
-    \item Wiskundig:
-    \begin{enumerate}
-    \item $C - \{1,2,\ldots,N\}$ afbeelding $bin$: associeert met elke kleur uit de 
-    kleurruimte $C$ het nummer van de corresponderende bin.
-    \item $\{1,2,\ldots,N\} - C$ afbeelding $col$: bepaalt de kleur van elke bin.
-    \end{enumerate}
-    \item \textbf{Uniforme kwantisatie}: 
-    \begin{itemize}
-      \item Elke kleurcomponent wordt uniform verdeeld in een aantal intervallen. 
-      \item De middelste waarden van de intervallen doen dienst
-      als componenten van de kleur van een bin.
-    \end{itemize}
-  \end{itemize}
-}
-\definecolor{zwart}{rgb}{0,0,0}
-\definecolor{blauw}{rgb}{0,0,1}
-\definecolor{groen}{rgb}{0,1,0}
-\definecolor{rood}{rgb}{1,0,0}
-\definecolor{bruin}{rgb}{0.5,0.16,0.16}
-\definecolor{oranje}{rgb}{1,0.5,0}
-\definecolor{geel}{rgb}{1,1,0}
-\definecolor{paars}{rgb}{0.62,0.125,0.94}
-\definecolor{grijs}{rgb}{0.75,0.75,0.75}
-\definecolor{roze}{rgb}{1,0.75,0.79}
-\definecolor{wit}{rgb}{1,1,1}
-\frame
-{
-  \frametitle{Beschouwde kwantisatietechnieken}
-  
-  \begin{itemize}
-  \item Zes manieren om uniform te kwantiseren, waarbij we telkens een ander
-  kleurmodel gebruiken.
-  \item Vier niet-uniforme kwantisatietechnieken:
-  \begin{enumerate}
-    \item \textbf{Smooth Color Transition (SCT) kwantisatie}: combinatie van twee uniforme
-    kwantisaties, \'e\'en voor grijstinten en \'e\'en voor kleurtinten. Als 
-    $s > 1 - 0.8\cdot v$ dan wordt de kleur benaderd met een kleurtint en anders met een
-    grijstint.
-    \item Afbeelding naar elf \textbf{focale kleuren} ({\color{zwart}zwart}, 
-    {\color{blauw}blauw}, {\color{groen}groen}, {\color{rood}rood}, 
-    {\color{bruin}bruin}, {\color{oranje}oranje}, {\color{geel}geel}, 
-    {\color{paars}paars}, {\color{grijs}grijs}, {\color{roze}roze} en {\color{wit}wit}): 
-    elke kleur vervangen door de focale kleur die het meest
-    nabij licht in het perceptueel uniforme L*a*b*-model.
-    \item \textbf{Neural Image Quantization (NeuQuant)}, waarbij gebruik gemaakt wordt van een 
-    Kohonen neuraal netwerk.
-    \item \textbf{Wu kwantisatie}, die gebaseerd is op dynamisch programmeren en principal 
-    component analysis.
-  \end{enumerate}
-  \end{itemize}
-}
-\frame
-{
-  \frametitle{Voorbeelden}
-
-  \begin{center}
-  \begin{tabular}{@{}c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{}}
-  \includegraphics[width=0.15\textwidth]{images/uniform_hsv_flowers.eps} &
-  \includegraphics[width=0.15\textwidth]{images/uniform_irb_flowers.eps} &
-  \includegraphics[width=0.15\textwidth]{images/uniform_i1i2i3_flowers.eps} &
-  \includegraphics[width=0.15\textwidth]{images/uniform_xyz_flowers.eps} &
-  \includegraphics[width=0.15\textwidth]{images/uniform_yxy_flowers.eps} &
-  \includegraphics[width=0.15\textwidth]{images/uniform_lab_flowers.eps} \\
-  HSV & Irb & I1I2I3 & XYZ & Yxy & L*a*b* \\
-  {\scriptsize $16 \cdot 4 \cdot 4$} & {\scriptsize $4 \cdot 8 \cdot 8$} & 
-  {\scriptsize $4 \cdot 8 \cdot 8$} & {\scriptsize $8 \cdot 4 \cdot 8$} &
-  {\scriptsize $4 \cdot 8 \cdot 8$} & {\scriptsize $4 \cdot 8 \cdot 8$} \vspace{5pt}\\
-  \includegraphics[width=0.15\textwidth]{images/sct_flowers.eps} &
-  \includegraphics[width=0.15\textwidth]{images/focal_flowers.eps} &
-  \includegraphics[width=0.15\textwidth]{images/neuquant_flowers.eps} &
-  \includegraphics[width=0.15\textwidth]{images/wu_flowers.eps} &
-  \includegraphics[width=0.15\textwidth]{images/neuquant_flowers_8.eps} &
-  \includegraphics[width=0.15\textwidth]{images/wu_flowers_8.eps} \\
-  SCT & focaal & NeuQuant & Wu & NeuQuant & Wu \\
-  {\scriptsize $256$} & {\scriptsize $11$} & 
-  {\scriptsize $256$} & {\scriptsize $256$} &
-  {\scriptsize $8$} & {\scriptsize $8$}
-  \end{tabular}
-  \end{center}
-
-  \begin{center}
-  \begin{tabular}{@{}rl@{}}
-  \begin{minipage}{0.5\textwidth}
-  \centering
-  \includegraphics[width=\textwidth]{images/probleem_focale_kwantisatie.eps}\\
-  \end{minipage} &
-  \begin{minipage}{0.3\textwidth}
-  \raggedright
-  Onverwachte omzetting bij focale kwantisatie.
-  \end{minipage}
-  \end{tabular}
-  \end{center}
-}
+% \section{Enkele begrippen uit beeldverwerking}
+% \subsection{Modellering van kleuren en beelden}
+% \frame
+% {
+%   \frametitle{Modellering van kleuren en beelden}
+%   
+%   \centering
+%   \begin{tabular}{@{}lr@{}}
+%   \begin{minipage}{0.7\textwidth}
+%   \begin{itemize}
+%     \item \textbf{Kleurmodel}: abstract mathematisch model dat beschrijft
+%     hoe kleuren gerepresenteerd kunnen worden als $n$-tallen uit $\mathbb{R}^n$.
+%     \begin{itemize}
+%     \item Voorbeelden: RGB, HSV en L*a*b*.
+%     \end{itemize}
+%     \item De kleuren die op basis van een bepaald model kunnen voorgesteld worden, vormen
+%     een \textbf{kleurruimte}.
+%     \begin{itemize}
+%       \item Voorbeelden: sRGB, Adobe RGB.
+%     \end{itemize}
+%     \item Als we de $n$-tallen uit het
+%     kleurmodel normaliseren tot $n$-tallen uit $[0,1]^n$, dan kunnen we een
+%     tweedimensionaal kleurbeeld modelleren als een $\mathbb{N}^2 - [0,1]^n$
+%     afbeelding.
+%   \end{itemize}
+%   \end{minipage} &
+%   \begin{minipage}{0.3\textwidth}
+%   \centering
+%   \includegraphics[height=2.2cm]{images/rgb.eps}\\
+%   \includegraphics[height=2.2cm]{images/hsv.eps}\\[2pt]
+%   \includegraphics[height=2.2cm]{images/lab.eps}
+%   \end{minipage}
+%   \end{tabular}
+% }
+% \subsection{Kleurkwantisatie}
+% \frame
+% {
+%   \frametitle{Kleurkwantisatie}
+%   \begin{itemize}
+%     \item \textbf{Kleurkwantisatie}: het aantal kleuren in een kleurruimte 
+%     reduceren.
+%     \item Principe:
+%     \begin{enumerate}
+%       \item De kleuren groeperen in zogenaamde \textbf{bins}.
+%       \item Alle kleuren van een bin vervangen door \'e\'en enkele kleur.
+%     \end{enumerate}
+%     \item Wiskundig:
+%     \begin{enumerate}
+%     \item $C - \{1,2,\ldots,N\}$ afbeelding $bin$: associeert met elke kleur uit de 
+%     kleurruimte $C$ het nummer van de corresponderende bin.
+%     \item $\{1,2,\ldots,N\} - C$ afbeelding $col$: bepaalt de kleur van elke bin.
+%     \end{enumerate}
+%     \item \textbf{Uniforme kwantisatie}: 
+%     \begin{itemize}
+%       \item Elke kleurcomponent wordt uniform verdeeld in een aantal intervallen. 
+%       \item De middelste waarden van de intervallen doen dienst
+%       als componenten van de kleur van een bin.
+%     \end{itemize}
+%   \end{itemize}
+% }
+% \definecolor{zwart}{rgb}{0,0,0}
+% \definecolor{blauw}{rgb}{0,0,1}
+% \definecolor{groen}{rgb}{0,1,0}
+% \definecolor{rood}{rgb}{1,0,0}
+% \definecolor{bruin}{rgb}{0.5,0.16,0.16}
+% \definecolor{oranje}{rgb}{1,0.5,0}
+% \definecolor{geel}{rgb}{1,1,0}
+% \definecolor{paars}{rgb}{0.62,0.125,0.94}
+% \definecolor{grijs}{rgb}{0.75,0.75,0.75}
+% \definecolor{roze}{rgb}{1,0.75,0.79}
+% \definecolor{wit}{rgb}{1,1,1}
+% \frame
+% {
+%   \frametitle{Beschouwde kwantisatietechnieken}
+%   
+%   \begin{itemize}
+%   \item Zes manieren om uniform te kwantiseren, waarbij we telkens een ander
+%   kleurmodel gebruiken.
+%   \item Vier niet-uniforme kwantisatietechnieken:
+%   \begin{enumerate}
+%     \item \textbf{Smooth Color Transition (SCT) kwantisatie}: combinatie van twee uniforme
+%     kwantisaties, \'e\'en voor grijstinten en \'e\'en voor kleurtinten. Als 
+%     $s > 1 - 0.8\cdot v$ dan wordt de kleur benaderd met een kleurtint en anders met een
+%     grijstint.
+%     \item Afbeelding naar elf \textbf{focale kleuren} ({\color{zwart}zwart}, 
+%     {\color{blauw}blauw}, {\color{groen}groen}, {\color{rood}rood}, 
+%     {\color{bruin}bruin}, {\color{oranje}oranje}, {\color{geel}geel}, 
+%     {\color{paars}paars}, {\color{grijs}grijs}, {\color{roze}roze} en {\color{wit}wit}): 
+%     elke kleur vervangen door de focale kleur die het meest
+%     nabij licht in het perceptueel uniforme L*a*b*-model.
+%     \item \textbf{Neural Image Quantization (NeuQuant)}, waarbij gebruik gemaakt wordt van een 
+%     Kohonen neuraal netwerk.
+%     \item \textbf{Wu kwantisatie}, die gebaseerd is op dynamisch programmeren en principal 
+%     component analysis.
+%   \end{enumerate}
+%   \end{itemize}
+% }
+% \frame
+% {
+%   \frametitle{Voorbeelden}
+% 
+%   \begin{center}
+%   \begin{tabular}{@{}c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{}}
+%   \includegraphics[width=0.15\textwidth]{images/uniform_hsv_flowers.eps} &
+%   \includegraphics[width=0.15\textwidth]{images/uniform_irb_flowers.eps} &
+%   \includegraphics[width=0.15\textwidth]{images/uniform_i1i2i3_flowers.eps} &
+%   \includegraphics[width=0.15\textwidth]{images/uniform_xyz_flowers.eps} &
+%   \includegraphics[width=0.15\textwidth]{images/uniform_yxy_flowers.eps} &
+%   \includegraphics[width=0.15\textwidth]{images/uniform_lab_flowers.eps} \\
+%   HSV & Irb & I1I2I3 & XYZ & Yxy & L*a*b* \\
+%   {\scriptsize $16 \cdot 4 \cdot 4$} & {\scriptsize $4 \cdot 8 \cdot 8$} & 
+%   {\scriptsize $4 \cdot 8 \cdot 8$} & {\scriptsize $8 \cdot 4 \cdot 8$} &
+%   {\scriptsize $4 \cdot 8 \cdot 8$} & {\scriptsize $4 \cdot 8 \cdot 8$} \vspace{5pt}\\
+%   \includegraphics[width=0.15\textwidth]{images/sct_flowers.eps} &
+%   \includegraphics[width=0.15\textwidth]{images/focal_flowers.eps} &
+%   \includegraphics[width=0.15\textwidth]{images/neuquant_flowers.eps} &
+%   \includegraphics[width=0.15\textwidth]{images/wu_flowers.eps} &
+%   \includegraphics[width=0.15\textwidth]{images/neuquant_flowers_8.eps} &
+%   \includegraphics[width=0.15\textwidth]{images/wu_flowers_8.eps} \\
+%   SCT & focaal & NeuQuant & Wu & NeuQuant & Wu \\
+%   {\scriptsize $256$} & {\scriptsize $11$} & 
+%   {\scriptsize $256$} & {\scriptsize $256$} &
+%   {\scriptsize $8$} & {\scriptsize $8$}
+%   \end{tabular}
+%   \end{center}
+% 
+%   \begin{center}
+%   \begin{tabular}{@{}rl@{}}
+%   \begin{minipage}{0.5\textwidth}
+%   \centering
+%   \includegraphics[width=\textwidth]{images/probleem_focale_kwantisatie.eps}\\
+%   \end{minipage} &
+%   \begin{minipage}{0.3\textwidth}
+%   \raggedright
+%   Onverwachte omzetting bij focale kwantisatie.
+%   \end{minipage}
+%   \end{tabular}
+%   \end{center}
+% }
 
 \section{Similariteitsmaten voor beelden}
 \subsection{Definitie en eigenschappen}
@@ -367,14 +367,16 @@
 
   \begin{itemize}
   \item De \textbf{genormaliseerde gemiddelde rang} (GGR) wordt gegeven door de volgende afbeelding:
-  \begin{displaymath}
-  \scriptsize\begin{array}{lrcl}
+  \begin{minipage}{\textwidth}
+  \vspace{3pt}
+  \centering
+  \scriptsize$\begin{array}{lrcl}
   \text{GGR}: & \{1,2,\ldots,N\}^{N_R} & \to 	& [0,1] \\
 		& (r_1,r_2,\ldots,r_{N_R}) & \mapsto &
 	{\displaystyle\frac{1}{N \cdot N_R}\left[ \left(\sum_{i=1}^{N_R}r_i\right) - \frac{N_R \cdot (N_R + 1)}{2} \right]},\\[15pt]
 	& & & \qquad \quad \forall (r_1, r_2, ..., r_{N_R}) \in \{1,2,\ldots,N\}^{N_R}
-  \end{array}
-  \end{displaymath}
+  \end{array}$
+  \end{minipage}
   \item Evaluatie:
   \begin{enumerate}
     \item De te evalueren similariteitsmaat gebruiken om de testcollectie te rangschikken 
@@ -383,6 +385,12 @@
     van het $i$-de relevante beeld voorstelt. Hoe groter de bekomen waarde, hoe 
     slechter de performantie.
   \end{enumerate}
+  \item Voorbeeld voor onze testcollectie:
+  \begin{itemize}
+    \item Stel dat alle relevante beelden vooraan gerangschikt worden: 
+    $(r_1,r_2,\ldots,r_6) = (1,2,\ldots,6)$.
+    \item Dan: $\text{GGR}(1,2,\ldots,6)=\frac{1}{66 \cdot 6} \left[21 - \frac{6 \cdot 7}{2}\right]=0$
+  \end{itemize}
   \end{itemize}
 }
 \frame
@@ -484,7 +492,7 @@
   A(p) \in\ ]0,1[ & \iff & p \text{ is een beeldpunt met een grijstint}
   \end{array}
   \end{displaymath}
-  waarbij geldt: hoe groter de grijswaarde, hoe lichter de grijstint.
+  waarbij geldt: hoe groter de lidmaatschapsgraad, hoe lichter de grijstint.
   \item Door die representatie te combineren met een vaagsimilariteitsmaat,
   bekomen we een similariteitsmaat voor grijswaardebeelden. 
   \item Omdat het universum daarbij bestaat uit beeldpunten (pixels), spreken we van
@@ -503,9 +511,13 @@
      \begin{enumerate}
        \item Beelden eerst omzetten naar grijswaardebeelden, bijvoorbeeld aan de 
        hand van de formule $0.3 \cdot r + 0.59 \cdot g + 0.11 \cdot b$.
+       \item Componentsgewijze aanpak:
+       \begin{enumerate}
        \item Een similariteitsmaat voor grijswaardebeelden toepassen op elke
-       kleurcomponent en vervolgens de resultaten voor de verschillende componenten
+       kleurcomponent. 
+       \item De resultaten voor de verschillende componenten
        aggregeren tot \'e\'en getal.
+       \end{enumerate}
        \item Traliegebaseerde aanpak:
         \begin{enumerate}
           \item L-vaagverzamelingen gebruiken om kleurbeelden te representeren.
@@ -515,36 +527,36 @@
      \end{enumerate}
    \end{itemize}
 }
-\frame
-{
-  \frametitle{Traliegebaseerde aanpak}
-
-  \begin{enumerate}
-  \item Kleurbeelden representeren als een L-vaagverzameling in $\mathbb{N}^2$,
-  waarbij we de complete tralie $([0,1]^3, \le_{RGB,lex})$ gebruiken:
-  \begin{minipage}{\textwidth}
-  \vspace{7pt}
-  \scriptsize
-  \centering
-  $\begin{array}{@{}r@{}l@{}}
-   c <_{RGB} c' & \ \iff d(c,Bl) < d(c',Bl)\ \lor \\
-			 & \ \qquad \qquad (d(c,Bl) = d(c',Bl) \land d(c,Wh) > d(c',Wh)) \\[4pt]
-   c >_{RGB} c' & \ \iff d(c,Wh) < d(c',Wh)\ \lor \\
-			 & \ \qquad \qquad (d(c,Wh) = d(c',Wh) \land d(c,Bl) > d(c',Bl)) \\[4pt]
-   c =_{RGB} c' & \ \iff (d(c,Bl) = d(c',Bl) \land d(c,Wh) = d(c',Wh)) \\[4pt]
-   c \leq_{lex} c' & \ \iff r < r' \lor (r = r' \land g < g') \lor (r = r' \land g = g' \land b \leq b') \\[4pt]
-   c \leq_{RGB,lex} c' & \ \iff c <_{RGB} c' \lor (c =_{RGB} c' \land c \leq_{lex} c')
-  \end{array}$
-  \vspace{7pt}
-  \end{minipage}
-  met $Bl = (0,0,0)$, $Wh = (1,1,1)$ en $d$ de Euclidische afstand.
-  \item Veralgemenen van de bewerkingen waarvan de vaagsimilariteitsmaten gebruik maken.
-  \begin{itemize}
-    \item Voorbeeld: $|A|=\frac{1}{\sqrt{3}}\sum_{p \in P}\sqrt{(A_1(p))^2+(A_2(p))^2+(A_3(p))^2}$
-    met $A(p)=(A_1(p),A_2(p),A_3(p))$ voor alle $p$ uit het universum der beeldpunten $P$.
-  \end{itemize}
-  \end{enumerate}
-}
+% \frame
+% {
+%   \frametitle{Traliegebaseerde aanpak}
+% 
+%   \begin{enumerate}
+%   \item Kleurbeelden representeren als een L-vaagverzameling in $\mathbb{N}^2$,
+%   waarbij we de complete tralie $([0,1]^3, \le_{RGB,lex})$ gebruiken:
+%   \begin{minipage}{\textwidth}
+%   \vspace{7pt}
+%   \scriptsize
+%   \centering
+%   $\begin{array}{@{}r@{}l@{}}
+%    c <_{RGB} c' & \ \iff d(c,Bl) < d(c',Bl)\ \lor \\
+% 			 & \ \qquad \qquad (d(c,Bl) = d(c',Bl) \land d(c,Wh) > d(c',Wh)) \\[4pt]
+%    c >_{RGB} c' & \ \iff d(c,Wh) < d(c',Wh)\ \lor \\
+% 			 & \ \qquad \qquad (d(c,Wh) = d(c',Wh) \land d(c,Bl) > d(c',Bl)) \\[4pt]
+%    c =_{RGB} c' & \ \iff (d(c,Bl) = d(c',Bl) \land d(c,Wh) = d(c',Wh)) \\[4pt]
+%    c \leq_{lex} c' & \ \iff r < r' \lor (r = r' \land g < g') \lor (r = r' \land g = g' \land b \leq b') \\[4pt]
+%    c \leq_{RGB,lex} c' & \ \iff c <_{RGB} c' \lor (c =_{RGB} c' \land c \leq_{lex} c')
+%   \end{array}$
+%   \vspace{7pt}
+%   \end{minipage}
+%   met $Bl = (0,0,0)$, $Wh = (1,1,1)$ en $d$ de Euclidische afstand.
+%   \item Veralgemenen van de bewerkingen waarvan de vaagsimilariteitsmaten gebruik maken.
+%   \begin{itemize}
+%     \item Voorbeeld: $|A|=\frac{1}{\sqrt{3}}\sum_{p \in P}\sqrt{(A_1(p))^2+(A_2(p))^2+(A_3(p))^2}$
+%     met $A(p)=(A_1(p),A_2(p),A_3(p))$ voor alle $p$ uit het universum der beeldpunten $P$.
+%   \end{itemize}
+%   \end{enumerate}
+% }
 \subsection{Resolutie-onafhankelijke similariteitsmaten}
 \frame
 {
@@ -615,7 +627,7 @@
     \item Beelden partitioneren in beeldonderdelen met dezelfde resolutie 
     ($8 \cdot 8$ pixels).
     \item De beeldonderdelen (van groot naar klein) ordenen op basis van
-    hun gemiddelde kleur, met behulp van $\le_{RGB,lex}$.
+    hun gemiddelde kleur.
     \item Gebruik maken van de ordening om grote similariteiten te vinden.
     \item Het gemiddelde van de grote similariteiten bepalen.
   \end{enumerate}
@@ -738,18 +750,31 @@
   \item Om de complexiteit te beperken,
 %   beperken we daarbij het aantal kleuren met behulp van kleurkwantisatie.
 %   De gekwantiseerde versie van het universum der kleuren $C$ noemen we $C'$. 
-  reduceren we het universum der kleuren $C$ daarbij tot $C'$ met behulp van
-  kleurkwantisatie.
+  reduceren we het universum der kleuren $C$ tot $C'$ met behulp van
+  \textbf{kleurkwantisatie}:
+  \begin{itemize}
+  \item Principe:
+  \begin{enumerate}
+   \item De kleuren groeperen in zogenaamde \textbf{bins}.
+   \item Alle kleuren van een bin vervangen door \'e\'en enkele kleur.
+  \end{enumerate}
+  \item Wiskundig:
+  \begin{enumerate}
+    \item $C - \{1,2,\ldots,N\}$ afbeelding $bin$: associeert met elke kleur uit de
+    kleurruimte $C$ het nummer van de corresponderende bin.
+    \item $\{1,2,\ldots,N\} - C$ afbeelding $col$: bepaalt de kleur van een bin.
+  \end{enumerate}
+  \end{itemize}
   \item Het \textbf{histogram} van een kleurbeeld $A$:
-  \begin{displaymath}
-  h_A(c) = \sum_{p \in P} \delta (bin(c) - bin(A(p))) 
-  \end{displaymath} 
-  met 
+  \begin{minipage}{\textwidth}
+  \vspace{4pt}
+  \centering
+  $\displaystyle h_A(c) = \sum_{p \in P} \delta (bin(c) - bin(A(p)))$
+  \end{minipage} 
+  voor alle $c\in C'$, met 
   \begin{itemize}
     \item $\delta$ de Diracfunctie, 
-    \item $P$ het universum der beeldpunten en 
-    \item $bin$ de $C - \{1,2,\ldots,N\}$ afbeelding die met 
-    elke kleur het nummer van \'e\'en van de $N$ bins associeert (zie kleurkwantisatie).
+    \item $P$ het universum der beeldpunten.
   \end{itemize}
   \end{itemize}
 }
@@ -845,7 +870,7 @@
   \begin{tabular}{@{}c@{}c@{}}
   \begin{minipage}{0.5\textwidth}
   \raggedright
-  Op basis van een pseudo-vaag histogram kunnen we een similariteitsmaat construeren:
+  Op basis van een (pseudo-)vaag histogram kunnen we een similariteitsmaat construeren:
   \end{minipage} &
   \begin{minipage}{0.5\textwidth}
   \vspace{8pt}
@@ -1014,6 +1039,12 @@
     \item gladde histogrammen
     \item centrumhistogrammen
     \item randhistogrammen
+  \end{itemize}
+  
+  \item Ook combinaties mogelijk:
+  \begin{itemize}
+    \item gladde centrumhistogrammen
+    \item gladde randhistogrammen
   \end{itemize}
   \end{itemize}
 }

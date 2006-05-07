@@ -613,31 +613,38 @@ filteren met een binomiaalfilter (b).}
 \section{Eenvoudige randdetectie}
 \label{sectie:randdetectie}
 
-In een tweedimensionaal beeld $b$ zijn randen plaatsen waar de luminantiecomponent $lum(x,y)$ van $b(x,y)$ 
-sterk varieert als functie van $x$ en/of $y$. Op die plaatsen zullen de partieel afgeleiden $D_1 lum(x,y)$ en 
-$D_2 lum(x,y)$ dus groot zijn, zodat ook de \defin{gradi\"ent} $\nabla lum$ daar groot zal zijn. Bijgevolg kunnen we
-de volgende formule gebruiken om randen te detecteren in $b$: 
+Een digitaal tweedimensionaal beeld $b$ kan ge\"interpreteerd worden als de discretisatie 
+van een ``re\"eel'' beeld $b'$. Het is immers een rooster dat bestaat uit een eindig aantal
+beeldpunten, terwijl het werkelijke beeld oneindig veel beeldpunten bevat. Wiskundig
+gezien is $b$ dus de restrictie van de $\mathbb{R}^2 - [0,1]^n$ functie $b'$ tot
+$P \subset \mathbb{N}^2$. Dat wil zeggen dat $b$ de $P - [0,1]^n$ afbeelding is
+waarvoor $b(x,y)=b'(x,y), \forall (x,y) \in P$. Stel nu dat $lum$ de $\mathbb{R}^2 - [0,1]$ 
+functie is die met elk beeldpunt van $b'$ de juiste luminantiecomponent associeert.
+De beeldranden in $b'$ zijn dan plaatsen waar $lum(x,y)$ sterk varieert als 
+functie van $x$ en/of $y$. Op die plaatsen zullen de partieel afgeleiden $D_1 lum(x,y)$ en 
+$D_2 lum(x,y)$ dus groot zijn, zodat ook de \defin{gradi\"ent} $\nabla lum$ daar groot 
+zal zijn. Bijgevolg kunnen we de volgende formule gebruiken om randen te detecteren in $b'$: 
 \begin{displaymath}
 |\nabla lum(x,y)| / \sqrt{2} = \sqrt{(D_1 lum(x,y))^2 + (D_2 lum(x,y))^2} / \sqrt{2}
 \end{displaymath}
-met $lum$ de $\mathbb{N}^2 - [0,1]$ functie die met elk beeldpunt $(x,y)$ de juiste luminantiecomponent associeert.
 
-Doordat $lum$ in de praktijk een discrete functie is, moeten we de partieel afgeleiden benaderen.
-De Taylorreeksontwikkeling van een $\mathbb{R} - \mathbb{R}$ functie $f$ rond $x$ geeft
-\begin{displaymath}
-f(x+h) = f(x) + h D f(x) + \frac{h^2}{2!} D^2 f(x) + \frac{h^3}{3!} D^3 f(x) + \ldots
-\end{displaymath}
-en ook
-\begin{displaymath}
-f(x-h) = f(x) - h D f(x) + \frac{h^2}{2!} D^2 f(x) - \frac{h^3}{3!} D^3 f(x) + \ldots
-\end{displaymath}
-zodat
+Als we die formule berekenen voor elk beeldpunt van $b$, dan bekomen we een nieuw beeld
+dat de randen in $b$ weergeeft. Doordat we de waarde van $lum$ enkel kennen voor een 
+eindig aantal beeldpunten, kunnen we de partieel afgeleiden daarbij niet exact berekenen. 
+We kunnen ze echter wel benaderen. Beschouw de volgende Taylorreeksontwikkelingen van 
+een $\mathbb{R} - \mathbb{R}$ functie 
+$f$ rond $x$:
+\begin{align*}
+f(x+h) &= f(x) + h D f(x) + \frac{h^2}{2!} D^2 f(x) + \frac{h^3}{3!} D^3 f(x) + \ldots \\
+f(x-h) &= f(x) - h D f(x) + \frac{h^2}{2!} D^2 f(x) - \frac{h^3}{3!} D^3 f(x) + \ldots
+\end{align*}
+Wanneer we die twee gelijkheden lid aan lid van elkaar aftrekken, dan vinden we dat
 \begin{displaymath}
 \frac{f(x+h) - f(x-h)}{2h} =  D f(x) + \frac{2 h^3}{3!} D^3 f(x) + \ldots \approx D f(x)
 \end{displaymath}
-als $h$ voldoende klein is.
-Bijgevolg geldt $D_1 lum(x,y) \approx (lum(x+1,y) - lum(x-1,y))/2$ en $D_2 lum(x,y) \approx (lum(x,y+1) - lum(x,y-1))/2$. We
-kunnen de eerste en tweede partieel afgeleiden dus berekenen met behulp van lineaire filters met filtermaskers:
+indien $h$ voldoende klein is.
+In het bijzonder geldt $D_1 lum(x,y) \approx (lum(x+1,y) - lum(x-1,y))/2$ en $D_2 lum(x,y) \approx (lum(x,y+1) - lum(x,y-1))/2$. We
+kunnen de eerste en tweede partieel afgeleiden dus benaderen met behulp van lineaire filters met filtermaskers:
 \begin{displaymath}
 D_1 lum(x,y)\textrm{: }\quad \frac{1}{2} \left[ \begin{array}{ccc} -1 & 0 & 1 \end{array} \right] \qquad \textrm{ en } 
 \qquad D_2 lum(x,y)\textrm{: }\quad \frac{1}{2} \left[ \begin{array}{c} -1 \\ 0 \\ 1 \end{array} \right]
