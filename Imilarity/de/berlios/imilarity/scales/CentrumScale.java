@@ -38,7 +38,7 @@ public class CentrumScale implements Scale {
 	}
 	
 	public String getDescription() {
-		return "Spatial scale";
+		return "Centrum scale";
 	}
 
 }

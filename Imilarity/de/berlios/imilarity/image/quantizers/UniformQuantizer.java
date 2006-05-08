@@ -88,6 +88,7 @@ public class UniformQuantizer implements Quantizer {
 		doMainTest();
 		doSpeedTest();
 		doOptBinsTest();
+		doCalcTest();
 	}
 	
 	private static void doMainTest() throws IOException {
@@ -265,5 +266,16 @@ public class UniformQuantizer implements Quantizer {
 		return bi;
 		//ImageIO.write(bi, "png", file);
 		//System.out.println("done.");
+	}
+	
+	private static void doCalcTest() {
+		Quantizer quantizer = new UniformQuantizer(new int[] {4,4});
+		for (int n = 0; n < 16; n++) {
+			double[] comps = quantizer.getBinColor(n).getComponents();
+			for (int i = 0; i < comps.length; i++) {
+				System.out.println("component "+i+" = "+comps[i]);
+			}
+			System.out.println();
+		}
 	}
 }
