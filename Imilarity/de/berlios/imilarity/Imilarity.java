@@ -112,14 +112,12 @@ public class Imilarity {
 			return null;
 		if (page < 1 || page > getPageCount())
 			throw new IOException("wrong page number");
-		if (!pageLoaded[page-1]) {
-			pageLoaded[page-1] = true;
-			pages[page-1] = provider.getPage(page);
+		synchronized (provider) {
+			if (!pageLoaded[page-1]) {
+				pageLoaded[page-1] = true;
+				pages[page-1] = provider.getPage(page);
+			}
 		}
-		// Als deze methode in twee aparte draden uitgevoerd wordt dan kan het 
-		// voorkomen dat 'pages[x]' nog gelijk is aan 'null', terwijl de inhoud
-		// van 'pages[x]' wel al berekend wordt. In dat geval moet er gewacht worden...
-		else while (pages[page-1] == null) Thread.yield();
 		return pages[page-1];
 	}
 	
